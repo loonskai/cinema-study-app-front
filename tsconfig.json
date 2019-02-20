@@ -8,5 +8,6 @@
     "jsx": "react",
     "lib": ["es6", "dom"]
   },
-  "include": ["./src/**/*"]
+  "include": ["./src/**/*"],
+  "exclude": ["react-native"]
 }
