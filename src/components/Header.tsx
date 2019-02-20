@@ -8,18 +8,29 @@ import Typography from '@material-ui/core/Typography';
 import MenuIcon from '@material-ui/icons/Menu';
 import styled from 'styled-components';
 
-const Container = styled.header`
-  background: red;
+const StyledAppBar = styled(({ color, ...other }) => (
+  <AppBar
+    color="default"
+    classes={{ colorDefault: 'default-colors' }}
+    {...other}
+  />
+))`
+  flex-grow: 1;
+  background: #f57c00;
+
+  &.default-colors {
+    background-color: ${props => props.color};
+  }
 `;
 
-const Header = props => {
+const Header = () => {
   return (
-    <Container>
-      <AppBar position="static">
+    <React.Fragment>
+      <StyledAppBar color="red">
+        <IconButton aria-label="Menu">
+          <MenuIcon />
+        </IconButton>
         <Toolbar>
-          <IconButton color="inherit" aria-label="Menu">
-            <MenuIcon />
-          </IconButton>
           <Typography variant="h6" color="inherit">
             <NavLink to="/">Main Page</NavLink>
           </Typography>
@@ -28,8 +39,8 @@ const Header = props => {
           </Typography>
           <Button color="inherit">Login</Button>
         </Toolbar>
-      </AppBar>
-    </Container>
+      </StyledAppBar>
+    </React.Fragment>
   );
 };
 
