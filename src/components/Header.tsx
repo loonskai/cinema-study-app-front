@@ -6,6 +6,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const StyledAppBar = styled(({ color, ...other }) => (
@@ -104,9 +105,19 @@ class Header extends React.Component {
                 Cinema App
               </StyledTypography>
             </StyledLogo>
-            <Tabs value={value} onChange={this.handleChange}>
-              <StyledTab label="Find Movie" />
-              <StyledTab label="Buy Ticket" />
+            <Tabs value={location.pathname}>
+              <StyledTab
+                value={'/'}
+                label="Find Movie"
+                component={Link}
+                to="/"
+              />
+              <StyledTab
+                value={'/profile'}
+                label="Buy Ticket"
+                component={Link}
+                to="/profile"
+              />
             </Tabs>
           </StyledToolBar>
           <StyledAvatar>{letter}</StyledAvatar>
