@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Header from './Header';
 
 const Container = styled.div`
-  background: red;
+  font-family: 'Bitter', serif;
 `;
 
 const Layout = ({ children }) => {

@@ -5,6 +5,7 @@ import MovieFilter from '@material-ui/icons/MovieFilter';
 import Avatar from '@material-ui/core/Avatar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import Typography from '@material-ui/core/Typography';
 import styled from 'styled-components';
 
 const StyledAppBar = styled(({ color, ...other }) => (
@@ -34,7 +35,24 @@ const StyledToolBar = styled(Toolbar)`
   }
 `;
 
-const StyledLogo = styled.div``;
+const StyledLogo = styled.div`
+  display: flex;
+  @media screen and (min-width: 375px) {
+    margin-right: 20px;
+  }
+`;
+
+const StyledTypography = styled(Typography)`
+  && {
+    font-family: 'ZCOOL QingKe HuangYou', cursive;
+    display: none;
+    @media screen and (min-width: 470px) {
+      display: flex;
+      align-items: center;
+      font-size: 18px;
+    }
+  }
+`;
 
 const StyledMovieFilter = styled(({ color, ...other }) => (
   <MovieFilter classes={{ root: 'colors' }} {...other} />
@@ -44,9 +62,6 @@ const StyledMovieFilter = styled(({ color, ...other }) => (
     height: 40px;
     margin-right: 10px;
     color: ${props => props.color};
-    @media screen and (min-width: 375px) {
-      margin-right: 20px;
-    }
   }
 `;
 
@@ -54,6 +69,16 @@ const StyledAvatar = styled(Avatar)`
   && {
     background-color: red;
     margin-left: 10px;
+    @media screen and (max-width: 375px) {
+      width: 35px;
+      height: 35px;
+    }
+  }
+`;
+
+const StyledTab = styled(Tab)`
+  && {
+    font-family: 'Bitter', serif;
   }
 `;
 
@@ -75,10 +100,13 @@ class Header extends React.Component {
           <StyledToolBar>
             <StyledLogo>
               <StyledMovieFilter color="red" />
+              <StyledTypography component="span" variant="title">
+                Cinema App
+              </StyledTypography>
             </StyledLogo>
             <Tabs value={value} onChange={this.handleChange}>
-              <Tab label="Find Movie" />
-              <Tab label="Buy Ticket" />
+              <StyledTab label="Find Movie" />
+              <StyledTab label="Buy Ticket" />
             </Tabs>
           </StyledToolBar>
           <StyledAvatar>{letter}</StyledAvatar>
