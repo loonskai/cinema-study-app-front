@@ -1,47 +1,91 @@
 import * as React from 'react';
-import { NavLink } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import MenuIcon from '@material-ui/icons/Menu';
+import MovieFilter from '@material-ui/icons/MovieFilter';
+import Avatar from '@material-ui/core/Avatar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 import styled from 'styled-components';
 
 const StyledAppBar = styled(({ color, ...other }) => (
   <AppBar
     color="default"
-    classes={{ colorDefault: 'default-colors' }}
+    position="static"
+    classes={{ colorDefault: 'default-colors', root: 'root' }}
     {...other}
   />
 ))`
-  flex-grow: 1;
-  background: #f57c00;
-
+  justify-content: space-between;
+  align-items: center;
+  text-transform: uppercase;
+  &.root {
+    flex-direction: row;
+    padding: 0 10px;
+  }
   &.default-colors {
     background-color: ${props => props.color};
   }
 `;
 
-const Header = () => {
-  return (
-    <React.Fragment>
-      <StyledAppBar color="red">
-        <IconButton aria-label="Menu">
-          <MenuIcon />
-        </IconButton>
-        <Toolbar>
-          <Typography variant="h6" color="inherit">
-            <NavLink to="/">Main Page</NavLink>
-          </Typography>
-          <Typography variant="h6" color="inherit">
-            <NavLink to="/profile">Profile</NavLink>
-          </Typography>
-          <Button color="inherit">Login</Button>
-        </Toolbar>
-      </StyledAppBar>
-    </React.Fragment>
-  );
-};
+const StyledToolBar = styled(Toolbar)`
+  && {
+    padding-left: 0;
+    padding-right: 0;
+  }
+`;
+
+const StyledLogo = styled.div``;
+
+const StyledMovieFilter = styled(({ color, ...other }) => (
+  <MovieFilter classes={{ root: 'colors' }} {...other} />
+))`
+  &.colors {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    color: ${props => props.color};
+    @media screen and (min-width: 375px) {
+      margin-right: 20px;
+    }
+  }
+`;
+
+const StyledAvatar = styled(Avatar)`
+  && {
+    background-color: red;
+    margin-left: 10px;
+  }
+`;
+
+class Header extends React.Component {
+  state = {
+    value: 0
+  };
+
+  handleChange = (e, value) => {
+    this.setState({ value });
+  };
+
+  render() {
+    const { value } = this.state;
+    const letter = 'S'; // Here should be first letter of user name
+    return (
+      <React.Fragment>
+        <StyledAppBar color="#fff">
+          <StyledToolBar>
+            <StyledLogo>
+              <StyledMovieFilter color="red" />
+            </StyledLogo>
+            <Tabs value={value} onChange={this.handleChange}>
+              <Tab label="Find Movie" />
+              <Tab label="Buy Ticket" />
+            </Tabs>
+          </StyledToolBar>
+          <StyledAvatar>{letter}</StyledAvatar>
+        </StyledAppBar>
+      </React.Fragment>
+    );
+  }
+}
 
 export default Header;
