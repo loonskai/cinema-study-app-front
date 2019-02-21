@@ -5,12 +5,10 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Root from './Root';
 
 ReactDOM.render(
-  <React.Fragment>
-    <CssBaseline>
-      <BrowserRouter>
-        <Root />
-      </BrowserRouter>
-    </CssBaseline>
-  </React.Fragment>,
+  <CssBaseline>
+    <BrowserRouter>
+      <Root />
+    </BrowserRouter>
+  </CssBaseline>,
   document.getElementById('root')
 );

@@ -9,8 +9,15 @@ const TabContainer = styled(Tab)`
   }
 `;
 
-const MenuTab = ({ value, label, to }) => (
-  <TabContainer value={value} label={label} component={Link} to={to} />
-);
+interface Props {
+  value: string;
+  label: string;
+  to: string;
+}
+
+const MenuTab = (props: Props) => {
+  const { value, label, to } = props;
+  return <TabContainer value={value} label={label} component={Link} to={to} />;
+};
 
 export default MenuTab;

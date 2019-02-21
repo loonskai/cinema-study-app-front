@@ -7,7 +7,7 @@ import Profile from './pages/Profile';
 const Root = () => {
   return (
     <Switch>
-      <Route exact path="/" component={Home} />
+      <Route exact={true} path="/" component={Home} />
       <Route path="/profile" component={Profile} />
     </Switch>
   );

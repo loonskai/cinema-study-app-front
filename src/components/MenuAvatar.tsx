@@ -13,8 +13,8 @@ const AvatarContainer = styled(Avatar)`
   }
 `;
 
-const MenuAvatar = ({ name }) => {
-  const firstLetter = name[0].toUpperCase();
+const MenuAvatar = ({ name }: { name: string }) => {
+  const firstLetter: string = name[0].toUpperCase();
   return <AvatarContainer>{firstLetter}</AvatarContainer>;
 };
 
