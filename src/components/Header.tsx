@@ -11,7 +11,7 @@ import MenuAvatar from './MenuAvatar';
 const StyledAppBar = styled(({ color, ...other }) => (
   <AppBar
     color="default"
-    position="static"
+    position="fixed"
     classes={{ colorDefault: 'default-colors', root: 'root' }}
     {...other}
   />
@@ -19,6 +19,7 @@ const StyledAppBar = styled(({ color, ...other }) => (
   justify-content: space-between;
   align-items: center;
   text-transform: uppercase;
+  z-index: 100;
   &.root {
     flex-direction: row;
     padding: 0 10px;

@@ -4,7 +4,20 @@ import styled from 'styled-components';
 import Header from './Header';
 
 const Container = styled.div`
+  height: inherit;
+  padding-top: 64px;
   font-family: 'Bitter', serif;
+  background: #f7f7f7;
+`;
+
+const ContentContainer = styled.div`
+  min-height: 100%;
+  padding: 20px;
+  margin: 0 auto;
+  background: #fff;
+  @media screen and (min-width: 1378px) {
+    max-width: 1200px;
+  }
 `;
 
 interface Props {
@@ -15,7 +28,7 @@ const Layout = ({ children }: Props) => {
   return (
     <Container>
       <Header />
-      {children}
+      <ContentContainer>{children}</ContentContainer>
     </Container>
   );
 };
