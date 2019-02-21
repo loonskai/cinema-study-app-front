@@ -9,6 +9,8 @@ import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
+import MenuTab from './MenuTab';
+
 const StyledAppBar = styled(({ color, ...other }) => (
   <AppBar
     color="default"
@@ -77,12 +79,6 @@ const StyledAvatar = styled(Avatar)`
   }
 `;
 
-const StyledTab = styled(Tab)`
-  && {
-    font-family: 'Bitter', serif;
-  }
-`;
-
 class Header extends React.Component {
   state = {
     value: 0
@@ -106,18 +102,8 @@ class Header extends React.Component {
               </StyledTypography>
             </StyledLogo>
             <Tabs value={location.pathname}>
-              <StyledTab
-                value={'/'}
-                label="Find Movie"
-                component={Link}
-                to="/"
-              />
-              <StyledTab
-                value={'/profile'}
-                label="Buy Ticket"
-                component={Link}
-                to="/profile"
-              />
+              <MenuTab value={'/'} label="Find Movie" to="/" />
+              <MenuTab value={'/profile'} label="Buy Ticket" to="/profile" />
             </Tabs>
           </StyledToolBar>
           <StyledAvatar>{letter}</StyledAvatar>
