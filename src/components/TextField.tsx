@@ -91,17 +91,18 @@ function getSuggestions(value) {
   const inputLength = inputValue.length;
   let count = 0;
 
-  return inputLength === 0
-    ? []
-    : suggestions.filter(suggestion => {
-        const keep =
-          count < 5 &&
-          suggestion.label.slice(0, inputLength).toLowerCase() === inputValue;
-        if (keep) {
-          count += 1;
-        }
-        return keep;
-      });
+  const suggestionFiltered = suggestions.filter(suggestion => {
+    const keep =
+      count < 5 &&
+      suggestion.label.slice(0, inputLength).toLowerCase() === inputValue;
+    if (keep) {
+      count += 1;
+    }
+    return keep;
+  });
+  return inputLength === 0 || suggestionFiltered.length === 0
+    ? [{ label: 'Nothing found' }]
+    : suggestionFiltered;
 }
 
 function renderSuggestion(suggestion, { query, isHighlighted }) {
