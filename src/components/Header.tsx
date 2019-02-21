@@ -1,14 +1,11 @@
 import * as React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import MovieFilter from '@material-ui/icons/MovieFilter';
 import Avatar from '@material-ui/core/Avatar';
 import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
+import Logo from './Logo';
 import MenuTab from './MenuTab';
 
 const StyledAppBar = styled(({ color, ...other }) => (
@@ -35,36 +32,6 @@ const StyledToolBar = styled(Toolbar)`
   && {
     padding-left: 0;
     padding-right: 0;
-  }
-`;
-
-const StyledLogo = styled.div`
-  display: flex;
-  @media screen and (min-width: 375px) {
-    margin-right: 20px;
-  }
-`;
-
-const StyledTypography = styled(Typography)`
-  && {
-    font-family: 'ZCOOL QingKe HuangYou', cursive;
-    display: none;
-    @media screen and (min-width: 470px) {
-      display: flex;
-      align-items: center;
-      font-size: 18px;
-    }
-  }
-`;
-
-const StyledMovieFilter = styled(({ color, ...other }) => (
-  <MovieFilter classes={{ root: 'colors' }} {...other} />
-))`
-  &.colors {
-    width: 40px;
-    height: 40px;
-    margin-right: 10px;
-    color: ${props => props.color};
   }
 `;
 
@@ -95,12 +62,7 @@ class Header extends React.Component {
       <React.Fragment>
         <StyledAppBar color="#fff">
           <StyledToolBar>
-            <StyledLogo>
-              <StyledMovieFilter color="red" />
-              <StyledTypography component="span" variant="title">
-                Cinema App
-              </StyledTypography>
-            </StyledLogo>
+            <Logo />
             <Tabs value={location.pathname}>
               <MenuTab value={'/'} label="Find Movie" to="/" />
               <MenuTab value={'/profile'} label="Buy Ticket" to="/profile" />
