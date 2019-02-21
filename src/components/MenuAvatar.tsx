@@ -13,7 +13,11 @@ const AvatarContainer = styled(Avatar)`
   }
 `;
 
-const MenuAvatar = ({ name }: { name: string }) => {
+interface Props {
+  name: string;
+}
+
+const MenuAvatar = ({ name }: Props) => {
   const firstLetter: string = name[0].toUpperCase();
   return <AvatarContainer>{firstLetter}</AvatarContainer>;
 };

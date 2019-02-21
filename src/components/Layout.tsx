@@ -7,7 +7,11 @@ const Container = styled.div`
   font-family: 'Bitter', serif;
 `;
 
-const Layout = ({ children }: { children: React.ReactChild }) => {
+interface Props {
+  children: React.ReactChild;
+}
+
+const Layout = ({ children }: Props) => {
   return (
     <Container>
       <Header />
