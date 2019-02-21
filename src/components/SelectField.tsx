@@ -9,9 +9,24 @@ import styled from 'styled-components';
 
 const StyledFormControl = styled(FormControl)`
   && {
-    min-width: 120px;
+    width: 100%;
+    margin-top: 16px;
+    margin-bottom: 8px;
   }
 `;
+
+const StyledInputLabel = styled(InputLabel)`
+  &&.focused {
+    color: #009688;
+  }
+`;
+
+const StyledOutlinedInput = styled(OutlinedInput)`
+  &&.outlined fieldset {
+    border-color: #009688;
+  }
+`;
+
 class SelectField extends React.Component {
   state = {
     age: '',
@@ -32,22 +47,28 @@ class SelectField extends React.Component {
     const { label } = this.props;
     return (
       <StyledFormControl variant="outlined">
-        <InputLabel
+        <StyledInputLabel
           ref={ref => {
             this.InputLabelRef = ref;
           }}
           htmlFor="outlined-age-simple"
+          classes={{
+            focused: 'focused'
+          }}
         >
           {label}
-        </InputLabel>
+        </StyledInputLabel>
         <Select
           value={this.state.age}
           onChange={this.handleChange}
           input={
-            <OutlinedInput
+            <StyledOutlinedInput
               labelWidth={this.state.labelWidth}
               name="age"
               id="outlined-age-simple"
+              classes={{
+                focused: 'outlined'
+              }}
             />
           }
         >

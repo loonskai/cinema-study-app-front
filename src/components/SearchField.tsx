@@ -1,9 +1,10 @@
 import * as React from 'react';
 import Grid from '@material-ui/core/Grid';
-import styled from 'styled-components';
 import LocalMovies from '@material-ui/icons/LocalMovies';
 import LocationCity from '@material-ui/icons/LocationCity';
 import Weekend from '@material-ui/icons/Weekend';
+import styled from 'styled-components';
+
 import TextField from './TextField';
 import SelectField from './SelectField';
 
