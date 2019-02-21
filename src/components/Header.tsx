@@ -19,7 +19,6 @@ const StyledAppBar = styled(({ color, ...other }) => (
   justify-content: space-between;
   align-items: center;
   text-transform: uppercase;
-  z-index: 100;
   &.root {
     flex-direction: row;
     padding: 0 10px;

@@ -5,13 +5,18 @@ import Header from './Header';
 
 const Container = styled.div`
   height: inherit;
-  padding-top: 64px;
+  padding-top: 48px;
   font-family: 'Bitter', serif;
   background: #f7f7f7;
+  @media screen and (min-width: 600px) {
+    padding-top: 64px;
+  }
 `;
 
 const ContentContainer = styled.div`
   min-height: 100%;
+  display: flex;
+  flex-wrap: wrap;
   padding: 20px;
   margin: 0 auto;
   background: #fff;
