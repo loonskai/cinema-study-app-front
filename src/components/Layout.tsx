@@ -16,6 +16,7 @@ const Container = styled.div`
 const ContentContainer = styled.div`
   min-height: 100%;
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
   padding: 20px;
   margin: 0 auto;
