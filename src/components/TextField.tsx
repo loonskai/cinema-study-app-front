@@ -29,6 +29,15 @@ const IconStyled = styled(({ icon, ...other }) => {
   }
 `;
 
+const InputStyled = styled(({ ...other }) => <TextField {...other} />)`
+  .cssLabel.cssFocused {
+    color: #009688;
+  }
+  .cssOutlinedInput.cssFocused .notchedOutline {
+    border-color: #009688;
+  }
+`;
+
 const TextFieldStyled = ({ label, icon }: Props) => {
   return (
     <Grid container={true} spacing={8} justify="center" alignItems="center">
@@ -36,13 +45,26 @@ const TextFieldStyled = ({ label, icon }: Props) => {
         <IconStyled icon={icon} />
       </Grid>
       <Grid item={true} lg={7}>
-        <TextField
+        <InputStyled
           id="outlined-search"
           label={label}
           type="search"
           margin="normal"
           variant="outlined"
           fullWidth={true}
+          InputLabelProps={{
+            classes: {
+              root: 'cssLabel',
+              focused: 'cssFocused'
+            }
+          }}
+          InputProps={{
+            classes: {
+              root: 'cssOutlinedInput',
+              focused: 'cssFocused',
+              notchedOutline: 'notchedOutline'
+            }
+          }}
         />
       </Grid>
     </Grid>
