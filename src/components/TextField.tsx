@@ -26,6 +26,29 @@ const InputStyled = styled(({ ...other }) => <TextField {...other} />)`
   }
 `;
 
+const AutosuggestContainer = styled.div`
+  && .container {
+    position: relative;
+  }
+`;
+
+const StyledPaper = styled(Paper)`
+  &&.suggestions-container-open {
+    position: absolute;
+    max-height: 250px;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    left: 0;
+    right: 0;
+    z-index: 200;
+  }
+  &&.suggestions-container-open .suggestions-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+`;
+
 function renderInputComponent(inputProps: any) {
   const { ref, inputRef = () => {} } = inputProps;
   return (
@@ -164,7 +187,7 @@ class TextFieldStyled extends React.Component<Props, State> {
     value: string;
   }) => {
     const inputValue = value.trim().toLowerCase();
-    if (!inputValue || inputValue.length < 2) {
+    if (!inputValue) {
       return;
     }
     this.setState({
@@ -200,19 +223,27 @@ class TextFieldStyled extends React.Component<Props, State> {
     };
 
     return (
-      <Autosuggest
-        {...autosuggestProps}
-        inputProps={{
-          label: this.props.label,
-          value: this.state.single,
-          onChange: this.handleChange('single')
-        }}
-        renderSuggestionsContainer={options => (
-          <Paper {...options.containerProps} square={true}>
-            {options.children}
-          </Paper>
-        )}
-      />
+      <AutosuggestContainer>
+        <Autosuggest
+          {...autosuggestProps}
+          inputProps={{
+            label: this.props.label,
+            value: this.state.single,
+            onChange: this.handleChange('single')
+          }}
+          theme={{
+            container: 'container',
+            suggestionsContainerOpen: 'suggestions-container-open',
+            suggestionsList: 'suggestions-list',
+            suggestion: 'suggestion'
+          }}
+          renderSuggestionsContainer={options => (
+            <StyledPaper {...options.containerProps} square={true}>
+              {options.children}
+            </StyledPaper>
+          )}
+        />
+      </AutosuggestContainer>
     );
   }
 }
