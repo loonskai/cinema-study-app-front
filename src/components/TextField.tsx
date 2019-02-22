@@ -27,6 +27,7 @@ const InputStyled = styled(({ ...other }) => <TextField {...other} />)`
 `;
 
 function renderInputComponent(inputProps: any) {
+  const { ref, inputRef = () => {} } = inputProps;
   return (
     <InputStyled
       fullWidth={true}
@@ -39,6 +40,10 @@ function renderInputComponent(inputProps: any) {
         }
       }}
       InputProps={{
+        inputRef: node => {
+          ref(node);
+          inputRef(node);
+        },
         classes: {
           root: 'cssOutlinedInput',
           focused: 'cssFocused',
