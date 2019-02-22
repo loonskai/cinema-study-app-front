@@ -16,6 +16,8 @@
     "switch-default": true,
     "triple-equals": [true, "allow-null-check"],
     "variable-name": [true, "ban-keywords"],
-    "interface-name": false
+    "interface-name": false,
+    "jsx-no-lambda": false,
+    "member-access": false
   }
 }

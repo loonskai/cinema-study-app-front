@@ -2,14 +2,19 @@ import * as React from 'react';
 import TextField from '@material-ui/core/TextField';
 import styled from 'styled-components';
 import * as Autosuggest from 'react-autosuggest';
-import * as match from 'autosuggest-highlight/umd/match';
-import * as parse 'autosuggest-highlight/umd/parse';
+import { match } from './../helpers/autosuggestHighlightMatch';
+import * as parse from 'autosuggest-highlight/umd/parse';
 import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper';
 
-/* interface Props {
+interface State {
+  single: string;
+  suggestions: Array<null | { label: string }>;
+}
+
+interface Props {
   label: string;
-} */
+}
 
 const InputStyled = styled(({ ...other }) => <TextField {...other} />)`
   .cssLabel.cssFocused {
@@ -20,7 +25,7 @@ const InputStyled = styled(({ ...other }) => <TextField {...other} />)`
   }
 `;
 
-function renderInputComponent(inputProps) {
+function renderInputComponent(inputProps: any) {
   return (
     <InputStyled
       fullWidth={true}
@@ -44,8 +49,8 @@ function renderInputComponent(inputProps) {
   );
 }
 
-function getSuggestionValue(suggestion) {
-  return suggestion.label;
+function getSuggestionValue(suggestion: { label: string } | null): string {
+  return suggestion ? suggestion.label : '';
 }
 
 const suggestions = [
@@ -73,37 +78,32 @@ const suggestions = [
 ];
 
 // Here we should run request for suggestion list
-function getSuggestions(value) {
-  const inputValue = value.trim().toLowerCase();
-  const inputLength = inputValue.length;
-  let count = 0;
-
-  const suggestionsFiltered = suggestions.filter(suggestion => {
-    const keep =
-      count < 5 &&
-      suggestion.label.slice(0, inputLength).toLowerCase() === inputValue;
-    if (keep) {
-      count += 1;
-    }
-    return keep;
-  });
-  console.log(suggestionsFiltered);
-  return inputLength === 0 || suggestionsFiltered.length === 0
-    ? [{ label: 'Nothing found' }]
-    : suggestionsFiltered;
+function getSuggestions(value: string): Array<null | { label: string }> {
+  const suggestionsFiltered = suggestions.filter(suggestion =>
+    suggestion.label.toLowerCase().includes(value)
+  );
+  return suggestionsFiltered.length === 0 ? [null] : suggestionsFiltered;
 }
 
-function renderSuggestion(suggestion, { query, isHighlighted }) {
+function renderSuggestion(
+  suggestion: null | { label: string },
+  { query, isHighlighted }: { query: string; isHighlighted: boolean }
+) {
+  if (!suggestion) {
+    return (
+      <MenuItem component="div">
+        <span>Nothing found</span>
+      </MenuItem>
+    );
+  }
   const matches = match(suggestion.label, query);
-  const parts = parse(suggestion.label, matches);
-  console.log('query---', query);
-  console.log('isHighlighted---', isHighlighted);
-  console.log('matches---', matches);
-  console.log('parts---', parts)
+  const parts: Array<{ text: string; highlight: boolean }> =
+    matches && parse(suggestion.label, matches);
   return (
     <MenuItem selected={isHighlighted} component="div">
       <div>
-        {parts.map((part, index) => part.highlight ? (
+        {parts.map((part, index: number) =>
+          part.highlight ? (
             <span key={index.toString()} style={{ fontWeight: 'bold' }}>
               {part.text}
             </span>
@@ -118,15 +118,22 @@ function renderSuggestion(suggestion, { query, isHighlighted }) {
   );
 }
 
-class TextFieldStyled extends React.Component {
-  state = {
-    single: '',
-    suggestions: []
-  };
+class TextFieldStyled extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      single: '',
+      suggestions: []
+    };
+  }
 
-  handleSuggestionsFetchRequested = ({ value }) => {
+  handleSuggestionsFetchRequested = ({ value }: { value: string }) => {
+    const inputValue = value.trim().toLowerCase();
+    if (!inputValue || inputValue.length < 2) {
+      return;
+    }
     this.setState({
-      suggestions: getSuggestions(value)
+      suggestions: getSuggestions(inputValue)
     });
   };
 
@@ -136,9 +143,12 @@ class TextFieldStyled extends React.Component {
     });
   };
 
-  handleChange = name => (event, { newValue }) => {
+  handleChange = (name: string | number) => (
+    event: React.FormEvent<HTMLInputElement>,
+    { newValue }: { newValue: string }
+  ) => {
     this.setState({
-      [name]: newValue
+      single: newValue
     });
   };
 
@@ -169,31 +179,5 @@ class TextFieldStyled extends React.Component {
     );
   }
 }
-
-/* const TextFieldStyled = ({ label }: Props) => {
-  return (
-    <InputStyled
-      id="outlined-search"
-      label={label}
-      type="search"
-      margin="normal"
-      variant="outlined"
-      fullWidth={true}
-      InputLabelProps={{
-        classes: {
-          root: 'cssLabel',
-          focused: 'cssFocused'
-        }
-      }}
-      InputProps={{
-        classes: {
-          root: 'cssOutlinedInput',
-          focused: 'cssFocused',
-          notchedOutline: 'notchedOutline'
-        }
-      }}
-    />
-  );
-}; */
 
 export default TextFieldStyled;
