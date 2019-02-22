@@ -38,25 +38,25 @@ interface Props extends FieldProps {
   icon?: string;
 }
 
-const getField = ({ type, label }: FieldProps) => {
+const getField = ({ type, label, entity }: FieldProps) => {
   switch (type) {
     case 'text':
-      return <TextField label={label} />;
+      return <TextField label={label} entity={entity} />;
     case 'select':
-      return <SelectField label={label} />;
+      return <SelectField label={label} entity={entity} />;
     default:
       return null;
   }
 };
 
-const SearchField = ({ type, label, icon }: Props) => {
+const SearchField = ({ type, label, icon, entity }: Props) => {
   return (
     <Grid container={true} spacing={8} justify="center" alignItems="center">
       <Grid item={true}>
         <IconStyled icon={icon} />
       </Grid>
       <Grid item={true} lg={7}>
-        {getField({ type, label })}
+        {getField({ type, label, entity })}
       </Grid>
     </Grid>
   );

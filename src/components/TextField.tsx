@@ -14,6 +14,7 @@ interface State {
 
 interface Props {
   label: string;
+  entity: string;
 }
 
 const InputStyled = styled(({ ...other }) => <TextField {...other} />)`
@@ -53,32 +54,57 @@ function getSuggestionValue(suggestion: { label: string } | null): string {
   return suggestion ? suggestion.label : '';
 }
 
-const suggestions = [
-  { label: 'The Shawshank Redemption' },
-  { label: 'The Godfather' },
-  { label: 'The Dark Knight' },
-  { label: '12 Angry Men' },
-  { label: "Schindler's List" },
-  { label: 'Pulp Fiction' },
-  { label: 'The Lord of the Rings: The Return of the King' },
-  { label: 'The Good, the Bad and the Ugly' },
-  { label: 'Fight Club' },
-  { label: 'Forrest Gump' },
-  { label: 'Inception' },
-  { label: 'Star Wars: Episode V - The Empire Strikes Back' },
-  { label: 'Seven Samurai' },
-  { label: 'The Matrix' },
-  { label: 'Leon: The Professional ' },
-  { label: 'American History X' },
-  { label: 'Interstellar (2014)' },
-  { label: 'Casablanca' },
-  { label: 'Psycho' },
-  { label: 'Once Upon a Time in the West' },
-  { label: 'The Pianist' }
-];
-
 // Here we should run request for suggestion list
-function getSuggestions(value: string): Array<null | { label: string }> {
+function getSuggestions(
+  entity: string,
+  value: string
+): Array<null | { label: string }> {
+  // Get suggestion options depending on props.entity
+  let suggestions;
+  switch (entity) {
+    case 'movie': {
+      suggestions = [
+        { label: 'The Shawshank Redemption' },
+        { label: 'The Godfather' },
+        { label: 'The Dark Knight' },
+        { label: '12 Angry Men' },
+        { label: "Schindler's List" },
+        { label: 'Pulp Fiction' },
+        { label: 'The Lord of the Rings: The Return of the King' },
+        { label: 'The Good, the Bad and the Ugly' },
+        { label: 'Fight Club' },
+        { label: 'Forrest Gump' },
+        { label: 'Inception' },
+        { label: 'Star Wars: Episode V - The Empire Strikes Back' },
+        { label: 'Seven Samurai' },
+        { label: 'The Matrix' },
+        { label: 'Leon: The Professional ' },
+        { label: 'American History X' },
+        { label: 'Interstellar (2014)' },
+        { label: 'Casablanca' },
+        { label: 'Psycho' },
+        { label: 'Once Upon a Time in the West' },
+        { label: 'The Pianist' }
+      ];
+      break;
+    }
+    case 'city': {
+      suggestions = [
+        { label: 'Minsk' },
+        { label: 'Brest' },
+        { label: 'Vitebsk' },
+        { label: 'Grodno' },
+        { label: 'Gomel' },
+        { label: 'Mogilev' }
+      ];
+      break;
+    }
+    default: {
+      suggestions = [];
+      break;
+    }
+  }
+
   const suggestionsFiltered = suggestions.filter(suggestion =>
     suggestion.label.toLowerCase().includes(value)
   );
@@ -127,13 +153,17 @@ class TextFieldStyled extends React.Component<Props, State> {
     };
   }
 
-  handleSuggestionsFetchRequested = ({ value }: { value: string }) => {
+  handleSuggestionsFetchRequested = entity => ({
+    value
+  }: {
+    value: string;
+  }) => {
     const inputValue = value.trim().toLowerCase();
     if (!inputValue || inputValue.length < 2) {
       return;
     }
     this.setState({
-      suggestions: getSuggestions(inputValue)
+      suggestions: getSuggestions(entity, inputValue)
     });
   };
 
@@ -156,7 +186,9 @@ class TextFieldStyled extends React.Component<Props, State> {
     const autosuggestProps = {
       renderInputComponent,
       suggestions: this.state.suggestions,
-      onSuggestionsFetchRequested: this.handleSuggestionsFetchRequested,
+      onSuggestionsFetchRequested: this.handleSuggestionsFetchRequested(
+        this.props.entity
+      ),
       onSuggestionsClearRequested: this.handleSuggestionClearRequested,
       getSuggestionValue,
       renderSuggestion

@@ -45,8 +45,33 @@ class SelectField extends React.Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
+  getOptions = (entity: string) => {
+    let options;
+    switch (entity) {
+      case 'cinema': {
+        options = [
+          { label: 'Avrora' },
+          { label: 'Oktyabr' },
+          { label: 'Moskva' },
+          { label: 'Silver Screen' },
+          { label: 'Pobeda' }
+        ];
+        break;
+      }
+      default: {
+        options = [];
+        break;
+      }
+    }
+    return options.map((option, index) => (
+      <MenuItem key={index.toString()} value={index}>
+        {option.label}
+      </MenuItem>
+    ));
+  };
+
   render() {
-    const { label } = this.props;
+    const { label, entity } = this.props;
     return (
       <StyledFormControl margin="normal" fullWidth={true} variant="outlined">
         <StyledInputLabel
@@ -78,9 +103,7 @@ class SelectField extends React.Component {
           <MenuItem value="">
             <em>None</em>
           </MenuItem>
-          <MenuItem value={10}>Centralny Cinema</MenuItem>
-          <MenuItem value={20}>Avrora</MenuItem>
-          <MenuItem value={30}>Pobeda</MenuItem>
+          {this.getOptions(entity)}
         </Select>
       </StyledFormControl>
     );
