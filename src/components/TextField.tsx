@@ -2,8 +2,8 @@ import * as React from 'react';
 import TextField from '@material-ui/core/TextField';
 import styled from 'styled-components';
 import * as Autosuggest from 'react-autosuggest';
-import AutosuggestHighlightMatch from 'autosuggest-highlight/umd/match';
-import AutosuggestHighlightParse from 'autosuggest-highlight/umd/parse';
+import * as match from 'autosuggest-highlight/umd/match';
+import * as parse 'autosuggest-highlight/umd/parse';
 import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper';
 
@@ -49,40 +49,27 @@ function getSuggestionValue(suggestion) {
 }
 
 const suggestions = [
-  { label: 'Afghanistan' },
-  { label: 'Aland Islands' },
-  { label: 'Albania' },
-  { label: 'Algeria' },
-  { label: 'American Samoa' },
-  { label: 'Andorra' },
-  { label: 'Angola' },
-  { label: 'Anguilla' },
-  { label: 'Antarctica' },
-  { label: 'Antigua and Barbuda' },
-  { label: 'Argentina' },
-  { label: 'Armenia' },
-  { label: 'Aruba' },
-  { label: 'Australia' },
-  { label: 'Austria' },
-  { label: 'Azerbaijan' },
-  { label: 'Bahamas' },
-  { label: 'Bahrain' },
-  { label: 'Bangladesh' },
-  { label: 'Barbados' },
-  { label: 'Belarus' },
-  { label: 'Belgium' },
-  { label: 'Belize' },
-  { label: 'Benin' },
-  { label: 'Bermuda' },
-  { label: 'Bhutan' },
-  { label: 'Bolivia, Plurinational State of' },
-  { label: 'Bonaire, Sint Eustatius and Saba' },
-  { label: 'Bosnia and Herzegovina' },
-  { label: 'Botswana' },
-  { label: 'Bouvet Island' },
-  { label: 'Brazil' },
-  { label: 'British Indian Ocean Territory' },
-  { label: 'Brunei Darussalam' }
+  { label: 'The Shawshank Redemption' },
+  { label: 'The Godfather' },
+  { label: 'The Dark Knight' },
+  { label: '12 Angry Men' },
+  { label: "Schindler's List" },
+  { label: 'Pulp Fiction' },
+  { label: 'The Lord of the Rings: The Return of the King' },
+  { label: 'The Good, the Bad and the Ugly' },
+  { label: 'Fight Club' },
+  { label: 'Forrest Gump' },
+  { label: 'Inception' },
+  { label: 'Star Wars: Episode V - The Empire Strikes Back' },
+  { label: 'Seven Samurai' },
+  { label: 'The Matrix' },
+  { label: 'Leon: The Professional ' },
+  { label: 'American History X' },
+  { label: 'Interstellar (2014)' },
+  { label: 'Casablanca' },
+  { label: 'Psycho' },
+  { label: 'Once Upon a Time in the West' },
+  { label: 'The Pianist' }
 ];
 
 // Here we should run request for suggestion list
@@ -91,7 +78,7 @@ function getSuggestions(value) {
   const inputLength = inputValue.length;
   let count = 0;
 
-  const suggestionFiltered = suggestions.filter(suggestion => {
+  const suggestionsFiltered = suggestions.filter(suggestion => {
     const keep =
       count < 5 &&
       suggestion.label.slice(0, inputLength).toLowerCase() === inputValue;
@@ -100,29 +87,32 @@ function getSuggestions(value) {
     }
     return keep;
   });
-  return inputLength === 0 || suggestionFiltered.length === 0
+  console.log(suggestionsFiltered);
+  return inputLength === 0 || suggestionsFiltered.length === 0
     ? [{ label: 'Nothing found' }]
-    : suggestionFiltered;
+    : suggestionsFiltered;
 }
 
 function renderSuggestion(suggestion, { query, isHighlighted }) {
-  /*   const matches = AutosuggestHighlightMatch(suggestion.label, query);
-  const parts = AutosuggestHighlightParse(suggestion.label, matches); */
+  const matches = match(suggestion.label, query);
+  const parts = parse(suggestion.label, matches);
+  console.log('query---', query);
+  console.log('isHighlighted---', isHighlighted);
+  console.log('matches---', matches);
+  console.log('parts---', parts)
   return (
     <MenuItem selected={isHighlighted} component="div">
       <div>
-        {/* {parts.map((part, index) =>
-          part.highlight ? (
-            <span key={String(index)} style={{ fontWeight: 500 }}>
+        {parts.map((part, index) => part.highlight ? (
+            <span key={index.toString()} style={{ fontWeight: 'bold' }}>
               {part.text}
             </span>
           ) : (
-            <strong key={String(index)} style={{ fontWeight: 300 }}>
+            <strong key={index.toString()} style={{ fontWeight: 'normal' }}>
               {part.text}
             </strong>
           )
-        )} */}
-        {suggestion.label}
+        )}
       </div>
     </MenuItem>
   );
