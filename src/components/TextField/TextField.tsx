@@ -1,12 +1,10 @@
 import * as React from 'react';
-import TextField from '@material-ui/core/TextField';
-import styled from 'styled-components';
 import * as Autosuggest from 'react-autosuggest';
 import { match } from './../../helpers/autosuggestHighlightMatch';
 import * as parse from 'autosuggest-highlight/umd/parse';
 import MenuItem from '@material-ui/core/MenuItem';
-import Paper from '@material-ui/core/Paper';
 import * as StyledContainers from './styled';
+import { movies, cities } from './../../mocks';
 const { useState } = React;
 
 /* const InputStyled = styled(({ ...other }) => <TextField {...other} />)`
@@ -82,40 +80,11 @@ function getSuggestions(
   let suggestions;
   switch (entity) {
     case 'movie': {
-      suggestions = [
-        { label: 'The Shawshank Redemption' },
-        { label: 'The Godfather' },
-        { label: 'The Dark Knight' },
-        { label: '12 Angry Men' },
-        { label: "Schindler's List" },
-        { label: 'Pulp Fiction' },
-        { label: 'The Lord of the Rings: The Return of the King' },
-        { label: 'The Good, the Bad and the Ugly' },
-        { label: 'Fight Club' },
-        { label: 'Forrest Gump' },
-        { label: 'Inception' },
-        { label: 'Star Wars: Episode V - The Empire Strikes Back' },
-        { label: 'Seven Samurai' },
-        { label: 'The Matrix' },
-        { label: 'Leon: The Professional ' },
-        { label: 'American History X' },
-        { label: 'Interstellar (2014)' },
-        { label: 'Casablanca' },
-        { label: 'Psycho' },
-        { label: 'Once Upon a Time in the West' },
-        { label: 'The Pianist' }
-      ];
+      suggestions = movies;
       break;
     }
     case 'city': {
-      suggestions = [
-        { label: 'Minsk' },
-        { label: 'Brest' },
-        { label: 'Vitebsk' },
-        { label: 'Grodno' },
-        { label: 'Gomel' },
-        { label: 'Mogilev' }
-      ];
+      suggestions = cities;
       break;
     }
     default: {
