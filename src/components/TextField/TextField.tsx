@@ -7,8 +7,21 @@ import * as StyledContainers from './styled';
 import { movies, cities } from './../../mocks';
 const { useState } = React;
 
+interface Props {
+  entity: string;
+  id: string;
+  label: string;
+  type: string;
+  value: string;
+  handleChange: (param: string) => string;
+}
+
 function renderInputComponent(inputProps: any) {
   const { ref, inputRef = () => {} } = inputProps;
+  // Get rid of 'passing refs to functional component' error
+  const propsWithoutRefs = Object.assign({}, inputProps, {
+    ref: null
+  });
   return (
     <StyledContainers.Input
       fullWidth={true}
@@ -21,7 +34,7 @@ function renderInputComponent(inputProps: any) {
         }
       }}
       InputProps={{
-        inputRef: node => {
+        inputRef: (node: HTMLElement) => {
           ref(node);
           inputRef(node);
         },
@@ -31,7 +44,7 @@ function renderInputComponent(inputProps: any) {
           notchedOutline: 'notchedOutline'
         }
       }}
-      {...inputProps}
+      {...propsWithoutRefs}
     />
   );
 }
@@ -48,15 +61,15 @@ function getSuggestions(
   let suggestions;
   switch (entity) {
     case 'movie': {
-      suggestions = movies;
+      suggestions = movies as Array<{ label: string }>;
       break;
     }
     case 'city': {
-      suggestions = cities;
+      suggestions = cities as Array<{ label: string }>;
       break;
     }
     default: {
-      suggestions = [];
+      suggestions = [] as Array<{ label: string }>;
       break;
     }
   }
@@ -100,10 +113,13 @@ function renderSuggestion(
   );
 }
 
-const TextField = props => {
+const TextField = (props: Props) => {
   const [suggestions, setSuggestions] = useState([]);
 
-  const handleSuggestionsFetchRequested = entity => obj => {
+  const handleSuggestionsFetchRequested = (entity: string) => (obj: {
+    value: string;
+    reason: string;
+  }) => {
     const { value } = obj;
     const inputValue = value.trim().toLowerCase();
     if (!inputValue) {

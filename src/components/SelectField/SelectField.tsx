@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { findDOMNode } from 'react-dom';
-
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 
@@ -8,14 +7,17 @@ import * as StyledContainers from './styled';
 import { cinemas } from './../../mocks';
 const { useState, useEffect } = React;
 
-const SelectField = props => {
-  const [labelWidth, setLabelWidth] = useState(0);
+interface Props {
+  entity: string;
+  id: string;
+  label: string;
+  type: string;
+  value: string;
+  handleChange: (param: string) => string;
+}
 
-  useEffect(() => {
-    setLabelWidth(findDOMNode(this.InputLabelRef).offsetWidth);
-  });
-
-  const handleChange = event => {
+const SelectField = (props: Props) => {
+  const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
     props.handleChange(event.target.value);
   };
 
@@ -23,11 +25,11 @@ const SelectField = props => {
     let options;
     switch (entity) {
       case 'cinema': {
-        options = cinemas;
+        options = cinemas as Array<{ label: string }>;
         break;
       }
       default: {
-        options = [];
+        options = [] as Array<{ label: string }>;
         break;
       }
     }
@@ -60,7 +62,7 @@ const SelectField = props => {
         onChange={handleChange}
         input={
           <StyledContainers.OutlinedInputStyled
-            labelWidth={labelWidth}
+            labelWidth={115}
             name="age"
             id="outlined-age-simple"
             fullWidth={true}

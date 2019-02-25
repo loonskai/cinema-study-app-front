@@ -5,6 +5,15 @@ import { MuiPickersUtilsProvider, DatePicker } from 'material-ui-pickers';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import styled from 'styled-components';
 
+interface Props {
+  entity: string;
+  id: string;
+  label: string;
+  type: string;
+  value: string;
+  handleChange: (param: Date) => Date;
+}
+
 const StyledPicker = styled(DatePicker)`
   && {
     width: 100%;
@@ -21,11 +30,14 @@ const muiTheme = createMuiTheme({
     secondary: {
       main: '#009688'
     }
+  },
+  typography: {
+    useNextVariants: true
   }
 });
 
-const DateField = props => {
-  const handleDateChange = date => {
+const DateField = (props: Props) => {
+  const handleDateChange = (date: Date) => {
     props.handleChange(date);
   };
 
