@@ -6,7 +6,7 @@ import SearchField from './../components/SearchField';
 const { useState } = React;
 
 const Home = () => {
-  const handleChange = e => {
+  /*   const handleChange = e => {
     switch (e.target.id) {
       case 'movie': {
         setMovie(e.target.value);
@@ -20,7 +20,7 @@ const Home = () => {
       default:
         return null;
     }
-  };
+  }; */
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -43,6 +43,7 @@ const Home = () => {
           entity="movie"
           label="Movie Title"
           value={movie}
+          handleChange={setMovie}
         />
         <SearchField
           id="city"
@@ -50,6 +51,7 @@ const Home = () => {
           entity="city"
           label="Where do you live?"
           value={city}
+          handleChange={setCity}
         />
         <SearchField
           id="cinema"
@@ -57,6 +59,7 @@ const Home = () => {
           entity="cinema"
           label="Choose Cinema"
           value={cinema}
+          handleChange={setCinema}
         />
         <button type="submit">Submit</button>
       </form>

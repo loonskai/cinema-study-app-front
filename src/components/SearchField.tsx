@@ -5,7 +5,7 @@ import LocationCity from '@material-ui/icons/LocationCity';
 import Weekend from '@material-ui/icons/Weekend';
 import styled from 'styled-components';
 
-import TextField from './TextField';
+import TextField from './TextField/TextField';
 import SelectField from './SelectField';
 
 const IconStyled = styled(({ entity, ...other }) => {
@@ -29,16 +29,7 @@ const IconStyled = styled(({ entity, ...other }) => {
   }
 `;
 
-interface FieldProps {
-  type: 'text' | 'select';
-  label: string;
-}
-
-interface Props extends FieldProps {
-  icon?: string;
-}
-
-const getField = (props: FieldProps) => {
+const getField = props => {
   switch (props.type) {
     case 'text':
       return <TextField {...props} />;
@@ -49,7 +40,7 @@ const getField = (props: FieldProps) => {
   }
 };
 
-const SearchField = (props: Props) => {
+const SearchField = props => {
   return (
     <Grid container={true} spacing={8} justify="center" alignItems="center">
       <Grid item={true}>

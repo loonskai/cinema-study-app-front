@@ -2,33 +2,33 @@ import * as React from 'react';
 import TextField from '@material-ui/core/TextField';
 import styled from 'styled-components';
 import * as Autosuggest from 'react-autosuggest';
-import { match } from './../helpers/autosuggestHighlightMatch';
+import { match } from './../../helpers/autosuggestHighlightMatch';
 import * as parse from 'autosuggest-highlight/umd/parse';
 import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper';
+import * as StyledContainers from './styled';
 const { useState } = React;
 
-const InputStyled = styled(({ ...other }) => <TextField {...other} />)`
+/* const InputStyled = styled(({ ...other }) => <TextField {...other} />)`
   .cssLabel.cssFocused {
     color: #009688;
   }
   .cssOutlinedInput.cssFocused .notchedOutline {
     border-color: #009688;
   }
-`;
+`; */
 
-const AutosuggestContainer = styled.div`
+/* const AutosuggestContainer = styled.div`
   && .container {
     position: relative;
   }
-`;
+`; */
 
-const StyledPaper = styled(Paper)`
+/* const StyledPaper = styled(Paper)`
   &&.suggestions-container-open {
     position: absolute;
     max-height: 250px;
     overflow-y: scroll;
-    scrollbar-width: none;
     left: 0;
     right: 0;
     z-index: 200;
@@ -38,12 +38,12 @@ const StyledPaper = styled(Paper)`
     padding: 0;
     list-style: none;
   }
-`;
+`; */
 
 function renderInputComponent(inputProps: any) {
   const { ref, inputRef = () => {} } = inputProps;
   return (
-    <InputStyled
+    <StyledContainers.Input
       fullWidth={true}
       margin="normal"
       variant="outlined"
@@ -163,7 +163,10 @@ function renderSuggestion(
   );
 }
 
-function TextFieldStyled(props) {
+const TextFieldStyled = props => {
+  const [suggestions, setSuggestions] = useState([]);
+  // const [single, setSingle] = useState('');
+
   const handleSuggestionsFetchRequested = entity => ({
     value
   }: {
@@ -178,15 +181,12 @@ function TextFieldStyled(props) {
 
   const handleSuggestionClearRequested = () => setSuggestions([]);
 
-  const handleChange = (name: string | number) => (
+  /*   const handleChange = (name: string | number) => (
     event: React.FormEvent<HTMLInputElement>,
     { newValue }: { newValue: string }
   ) => {
     setSingle(newValue);
-  };
-
-  const [suggestions, setSuggestions] = useState([]);
-  const [single, setSingle] = useState('');
+  }; */
 
   const autosuggestProps = {
     renderInputComponent,
@@ -198,13 +198,13 @@ function TextFieldStyled(props) {
   };
 
   return (
-    <AutosuggestContainer>
+    <StyledContainers.Autosuggest>
       <Autosuggest
         {...autosuggestProps}
         inputProps={{
           label: props.label,
-          value: single,
-          onChange: handleChange('single')
+          value: props.value,
+          onChange: props.handleChange
         }}
         theme={{
           container: 'container',
@@ -213,13 +213,16 @@ function TextFieldStyled(props) {
           suggestion: 'suggestion'
         }}
         renderSuggestionsContainer={options => (
-          <StyledPaper {...options.containerProps} square={true}>
+          <StyledContainers.PaperStyled
+            {...options.containerProps}
+            square={true}
+          >
             {options.children}
-          </StyledPaper>
+          </StyledContainers.PaperStyled>
         )}
       />
-    </AutosuggestContainer>
+    </StyledContainers.Autosuggest>
   );
-}
+};
 
 export default TextFieldStyled;
