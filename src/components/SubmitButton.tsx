@@ -16,10 +16,15 @@ const StyledButton = styled(Button)`
   }
 `;
 
-const SubmitButton = ({ text, handleClick }) => {
+const SubmitButton = ({ text, handleClick, disabled }) => {
   return (
     <Container>
-      <StyledButton variant="contained" color="primary" onClick={handleClick}>
+      <StyledButton
+        variant="contained"
+        color="primary"
+        onClick={handleClick}
+        disabled={disabled}
+      >
         <SearchIcon />
         {text}
       </StyledButton>

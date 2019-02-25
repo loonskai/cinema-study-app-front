@@ -5,7 +5,7 @@ import PageTitle from './../components/PageTitle';
 import SearchField from './../components/SearchField';
 import SubmitButton from './../components/SubmitButton';
 
-const { useState } = React;
+const { useState, useEffect } = React;
 
 const Home = () => {
   const handleSubmit = e => {
@@ -18,6 +18,15 @@ const Home = () => {
   const [movie, setMovie] = useState('');
   const [city, setCity] = useState('');
   const [cinema, setCinema] = useState('');
+  const [buttonDisabled, setButtonDisabled] = useState(true);
+
+  useEffect(() => {
+    if (movie !== '' || city !== '' || cinema !== '') {
+      setButtonDisabled(false);
+    } else {
+      setButtonDisabled(true);
+    }
+  });
 
   return (
     <Layout>
@@ -47,7 +56,11 @@ const Home = () => {
           value={cinema}
           handleChange={setCinema}
         />
-        <SubmitButton text="Search" handleClick={handleSubmit} />
+        <SubmitButton
+          text="Search"
+          handleClick={handleSubmit}
+          disabled={buttonDisabled}
+        />
       </form>
     </Layout>
   );
