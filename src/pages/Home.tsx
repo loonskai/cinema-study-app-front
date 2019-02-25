@@ -61,6 +61,7 @@ const Home = () => {
         <SearchField
           id="date"
           type="date"
+          entity="date"
           label="Choose Date"
           value={date}
           handleChange={setDate}
