@@ -1,7 +1,9 @@
 import * as React from 'react';
+
 import Layout from './../components/Layout';
 import PageTitle from './../components/PageTitle';
 import SearchField from './../components/SearchField';
+import SubmitButton from './../components/SubmitButton';
 
 const { useState } = React;
 
@@ -19,7 +21,7 @@ const Home = () => {
 
   return (
     <Layout>
-      <form onSubmit={handleSubmit}>
+      <form>
         <PageTitle text="Let's find something interesting" />
         <SearchField
           id="movie"
@@ -45,7 +47,7 @@ const Home = () => {
           value={cinema}
           handleChange={setCinema}
         />
-        <button type="submit">Submit</button>
+        <SubmitButton text="Search" handleClick={handleSubmit} />
       </form>
     </Layout>
   );
