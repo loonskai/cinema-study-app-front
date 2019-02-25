@@ -1,33 +1,11 @@
 import * as React from 'react';
 import { findDOMNode } from 'react-dom';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
+
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import styled from 'styled-components';
 
-const StyledFormControl = styled(FormControl)`
-  && {
-    margin-top: 16px;
-    margin-bottom: 8px;
-  }
-`;
-
-const StyledInputLabel = styled(InputLabel)`
-  &&.focused {
-    color: #009688;
-  }
-`;
-
-const StyledOutlinedInput = styled(OutlinedInput)`
-  && {
-    min-width: 230px;
-  }
-  &&.outlined fieldset {
-    border-color: #009688;
-  }
-`;
+import * as StyledContainers from './styled';
+const { useState } = React;
 
 class SelectField extends React.Component {
   state = {
@@ -73,8 +51,12 @@ class SelectField extends React.Component {
   render() {
     const { label, entity } = this.props;
     return (
-      <StyledFormControl margin="normal" fullWidth={true} variant="outlined">
-        <StyledInputLabel
+      <StyledContainers.FormControlStyled
+        margin="normal"
+        fullWidth={true}
+        variant="outlined"
+      >
+        <StyledContainers.InputLabelStyled
           ref={ref => {
             this.InputLabelRef = ref;
           }}
@@ -84,12 +66,12 @@ class SelectField extends React.Component {
           }}
         >
           {label}
-        </StyledInputLabel>
+        </StyledContainers.InputLabelStyled>
         <Select
           value={this.state.age}
           onChange={this.handleChange}
           input={
-            <StyledOutlinedInput
+            <StyledContainers.OutlinedInputStyled
               labelWidth={this.state.labelWidth}
               name="age"
               id="outlined-age-simple"
@@ -105,7 +87,7 @@ class SelectField extends React.Component {
           </MenuItem>
           {this.getOptions(entity)}
         </Select>
-      </StyledFormControl>
+      </StyledContainers.FormControlStyled>
     );
   }
 }

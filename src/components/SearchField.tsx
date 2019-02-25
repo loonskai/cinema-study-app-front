@@ -6,7 +6,7 @@ import Weekend from '@material-ui/icons/Weekend';
 import styled from 'styled-components';
 
 import TextField from './TextField/TextField';
-import SelectField from './SelectField';
+import SelectField from './SelectField/SelectField';
 
 const IconStyled = styled(({ entity, ...other }) => {
   switch (entity) {
