@@ -6,22 +6,6 @@ import SearchField from './../components/SearchField';
 const { useState } = React;
 
 const Home = () => {
-  /*   const handleChange = e => {
-    switch (e.target.id) {
-      case 'movie': {
-        setMovie(e.target.value);
-      }
-      case 'city': {
-        setCity(e.target.value);
-      }
-      case 'cinema': {
-        setCinema(e.target.value);
-      }
-      default:
-        return null;
-    }
-  }; */
-
   const handleSubmit = e => {
     e.preventDefault();
     console.log(movie);

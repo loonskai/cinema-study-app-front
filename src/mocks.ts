@@ -31,4 +31,10 @@ export const cities = [
   { label: 'Mogilev' }
 ];
 
-export const cinemas = [];
+export const cinemas = [
+  { label: 'Avrora' },
+  { label: 'Oktyabr' },
+  { label: 'Moskva' },
+  { label: 'Silver Screen' },
+  { label: 'Pobeda' }
+];

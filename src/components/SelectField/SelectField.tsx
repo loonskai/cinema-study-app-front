@@ -5,35 +5,25 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import * as StyledContainers from './styled';
-const { useState } = React;
+import { cinemas } from './../../mocks';
+const { useState, useEffect } = React;
 
-class SelectField extends React.Component {
-  state = {
-    age: '',
-    labelWidth: 0
+const SelectField = props => {
+  const [labelWidth, setLabelWidth] = useState(0);
+
+  useEffect(() => {
+    setLabelWidth(findDOMNode(this.InputLabelRef).offsetWidth);
+  });
+
+  const handleChange = event => {
+    props.handleChange(event.target.value);
   };
 
-  componentDidMount() {
-    this.setState({
-      labelWidth: findDOMNode(this.InputLabelRef).offsetWidth
-    });
-  }
-
-  handleChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
-  };
-
-  getOptions = (entity: string) => {
+  const getOptions = (entity: string) => {
     let options;
     switch (entity) {
       case 'cinema': {
-        options = [
-          { label: 'Avrora' },
-          { label: 'Oktyabr' },
-          { label: 'Moskva' },
-          { label: 'Silver Screen' },
-          { label: 'Pobeda' }
-        ];
+        options = cinemas;
         break;
       }
       default: {
@@ -42,54 +32,51 @@ class SelectField extends React.Component {
       }
     }
     return options.map((option, index) => (
-      <MenuItem key={index.toString()} value={index}>
+      <MenuItem key={index.toString()} value={option.label}>
         {option.label}
       </MenuItem>
     ));
   };
 
-  render() {
-    const { label, entity } = this.props;
-    return (
-      <StyledContainers.FormControlStyled
-        margin="normal"
-        fullWidth={true}
-        variant="outlined"
+  return (
+    <StyledContainers.FormControlStyled
+      margin="normal"
+      fullWidth={true}
+      variant="outlined"
+    >
+      <StyledContainers.InputLabelStyled
+        ref={ref => {
+          this.InputLabelRef = ref;
+        }}
+        htmlFor="outlined-age-simple"
+        classes={{
+          focused: 'focused'
+        }}
       >
-        <StyledContainers.InputLabelStyled
-          ref={ref => {
-            this.InputLabelRef = ref;
-          }}
-          htmlFor="outlined-age-simple"
-          classes={{
-            focused: 'focused'
-          }}
-        >
-          {label}
-        </StyledContainers.InputLabelStyled>
-        <Select
-          value={this.state.age}
-          onChange={this.handleChange}
-          input={
-            <StyledContainers.OutlinedInputStyled
-              labelWidth={this.state.labelWidth}
-              name="age"
-              id="outlined-age-simple"
-              fullWidth={true}
-              classes={{
-                focused: 'outlined'
-              }}
-            />
-          }
-        >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          {this.getOptions(entity)}
-        </Select>
-      </StyledContainers.FormControlStyled>
-    );
-  }
-}
+        {props.label}
+      </StyledContainers.InputLabelStyled>
+      <Select
+        value={props.value}
+        onChange={handleChange}
+        input={
+          <StyledContainers.OutlinedInputStyled
+            labelWidth={labelWidth}
+            name="age"
+            id="outlined-age-simple"
+            fullWidth={true}
+            classes={{
+              focused: 'outlined'
+            }}
+          />
+        }
+      >
+        <MenuItem value="">
+          <em>None</em>
+        </MenuItem>
+        {getOptions(props.entity)}
+      </Select>
+    </StyledContainers.FormControlStyled>
+  );
+};
 
 export default SelectField;

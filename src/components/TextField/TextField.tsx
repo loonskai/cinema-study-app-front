@@ -40,7 +40,6 @@ function getSuggestionValue(suggestion: { label: string } | null): string {
   return suggestion ? suggestion.label : '';
 }
 
-// Here we should run request for suggestion list
 function getSuggestions(
   entity: string,
   value: string
