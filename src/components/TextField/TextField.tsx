@@ -7,37 +7,6 @@ import * as StyledContainers from './styled';
 import { movies, cities } from './../../mocks';
 const { useState } = React;
 
-/* const InputStyled = styled(({ ...other }) => <TextField {...other} />)`
-  .cssLabel.cssFocused {
-    color: #009688;
-  }
-  .cssOutlinedInput.cssFocused .notchedOutline {
-    border-color: #009688;
-  }
-`; */
-
-/* const AutosuggestContainer = styled.div`
-  && .container {
-    position: relative;
-  }
-`; */
-
-/* const StyledPaper = styled(Paper)`
-  &&.suggestions-container-open {
-    position: absolute;
-    max-height: 250px;
-    overflow-y: scroll;
-    left: 0;
-    right: 0;
-    z-index: 200;
-  }
-  &&.suggestions-container-open .suggestions-list {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-`; */
-
 function renderInputComponent(inputProps: any) {
   const { ref, inputRef = () => {} } = inputProps;
   return (
@@ -132,15 +101,11 @@ function renderSuggestion(
   );
 }
 
-const TextFieldStyled = props => {
+const TextField = props => {
   const [suggestions, setSuggestions] = useState([]);
-  // const [single, setSingle] = useState('');
 
-  const handleSuggestionsFetchRequested = entity => ({
-    value
-  }: {
-    value: string;
-  }) => {
+  const handleSuggestionsFetchRequested = entity => obj => {
+    const { value } = obj;
     const inputValue = value.trim().toLowerCase();
     if (!inputValue) {
       return;
@@ -150,12 +115,12 @@ const TextFieldStyled = props => {
 
   const handleSuggestionClearRequested = () => setSuggestions([]);
 
-  /*   const handleChange = (name: string | number) => (
+  const handleChange = (
     event: React.FormEvent<HTMLInputElement>,
     { newValue }: { newValue: string }
   ) => {
-    setSingle(newValue);
-  }; */
+    props.handleChange(newValue);
+  };
 
   const autosuggestProps = {
     renderInputComponent,
@@ -173,7 +138,7 @@ const TextFieldStyled = props => {
         inputProps={{
           label: props.label,
           value: props.value,
-          onChange: props.handleChange
+          onChange: handleChange
         }}
         theme={{
           container: 'container',
@@ -194,4 +159,4 @@ const TextFieldStyled = props => {
   );
 };
 
-export default TextFieldStyled;
+export default TextField;
