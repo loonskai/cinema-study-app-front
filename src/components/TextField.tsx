@@ -6,16 +6,7 @@ import { match } from './../helpers/autosuggestHighlightMatch';
 import * as parse from 'autosuggest-highlight/umd/parse';
 import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper';
-
-interface State {
-  single: string;
-  suggestions: Array<null | { label: string }>;
-}
-
-interface Props {
-  label: string;
-  entity: string;
-}
+const { useState } = React;
 
 const InputStyled = styled(({ ...other }) => <TextField {...other} />)`
   .cssLabel.cssFocused {
@@ -172,16 +163,8 @@ function renderSuggestion(
   );
 }
 
-class TextFieldStyled extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      single: '',
-      suggestions: []
-    };
-  }
-
-  handleSuggestionsFetchRequested = entity => ({
+function TextFieldStyled(props) {
+  const handleSuggestionsFetchRequested = entity => ({
     value
   }: {
     value: string;
@@ -190,62 +173,53 @@ class TextFieldStyled extends React.Component<Props, State> {
     if (!inputValue) {
       return;
     }
-    this.setState({
-      suggestions: getSuggestions(entity, inputValue)
-    });
+    setSuggestions(getSuggestions(entity, inputValue));
   };
 
-  handleSuggestionClearRequested = () => {
-    this.setState({
-      suggestions: []
-    });
-  };
+  const handleSuggestionClearRequested = () => setSuggestions([]);
 
-  handleChange = (name: string | number) => (
+  const handleChange = (name: string | number) => (
     event: React.FormEvent<HTMLInputElement>,
     { newValue }: { newValue: string }
   ) => {
-    this.setState({
-      single: newValue
-    });
+    setSingle(newValue);
   };
 
-  render() {
-    const autosuggestProps = {
-      renderInputComponent,
-      suggestions: this.state.suggestions,
-      onSuggestionsFetchRequested: this.handleSuggestionsFetchRequested(
-        this.props.entity
-      ),
-      onSuggestionsClearRequested: this.handleSuggestionClearRequested,
-      getSuggestionValue,
-      renderSuggestion
-    };
+  const [suggestions, setSuggestions] = useState([]);
+  const [single, setSingle] = useState('');
 
-    return (
-      <AutosuggestContainer>
-        <Autosuggest
-          {...autosuggestProps}
-          inputProps={{
-            label: this.props.label,
-            value: this.state.single,
-            onChange: this.handleChange('single')
-          }}
-          theme={{
-            container: 'container',
-            suggestionsContainerOpen: 'suggestions-container-open',
-            suggestionsList: 'suggestions-list',
-            suggestion: 'suggestion'
-          }}
-          renderSuggestionsContainer={options => (
-            <StyledPaper {...options.containerProps} square={true}>
-              {options.children}
-            </StyledPaper>
-          )}
-        />
-      </AutosuggestContainer>
-    );
-  }
+  const autosuggestProps = {
+    renderInputComponent,
+    suggestions,
+    onSuggestionsFetchRequested: handleSuggestionsFetchRequested(props.entity),
+    onSuggestionsClearRequested: handleSuggestionClearRequested,
+    getSuggestionValue,
+    renderSuggestion
+  };
+
+  return (
+    <AutosuggestContainer>
+      <Autosuggest
+        {...autosuggestProps}
+        inputProps={{
+          label: props.label,
+          value: single,
+          onChange: handleChange('single')
+        }}
+        theme={{
+          container: 'container',
+          suggestionsContainerOpen: 'suggestions-container-open',
+          suggestionsList: 'suggestions-list',
+          suggestion: 'suggestion'
+        }}
+        renderSuggestionsContainer={options => (
+          <StyledPaper {...options.containerProps} square={true}>
+            {options.children}
+          </StyledPaper>
+        )}
+      />
+    </AutosuggestContainer>
+  );
 }
 
 export default TextFieldStyled;

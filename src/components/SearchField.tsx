@@ -8,8 +8,8 @@ import styled from 'styled-components';
 import TextField from './TextField';
 import SelectField from './SelectField';
 
-const IconStyled = styled(({ icon, ...other }) => {
-  switch (icon) {
+const IconStyled = styled(({ entity, ...other }) => {
+  switch (entity) {
     case 'movie':
       return (
         <LocalMovies fontSize="large" classes={{ root: 'root' }} {...other} />
@@ -38,25 +38,25 @@ interface Props extends FieldProps {
   icon?: string;
 }
 
-const getField = ({ type, label, entity }: FieldProps) => {
-  switch (type) {
+const getField = (props: FieldProps) => {
+  switch (props.type) {
     case 'text':
-      return <TextField label={label} entity={entity} />;
+      return <TextField {...props} />;
     case 'select':
-      return <SelectField label={label} entity={entity} />;
+      return <SelectField {...props} />;
     default:
       return null;
   }
 };
 
-const SearchField = ({ type, label, icon, entity }: Props) => {
+const SearchField = (props: Props) => {
   return (
     <Grid container={true} spacing={8} justify="center" alignItems="center">
       <Grid item={true}>
-        <IconStyled icon={icon} />
+        <IconStyled entity={props.entity} />
       </Grid>
       <Grid item={true} lg={7}>
-        {getField({ type, label, entity })}
+        {getField(props)}
       </Grid>
     </Grid>
   );
