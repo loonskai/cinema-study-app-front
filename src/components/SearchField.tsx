@@ -3,10 +3,12 @@ import Grid from '@material-ui/core/Grid';
 import LocalMovies from '@material-ui/icons/LocalMovies';
 import LocationCity from '@material-ui/icons/LocationCity';
 import Weekend from '@material-ui/icons/Weekend';
+import CalendarToday from '@material-ui/icons/CalendarToday';
 import styled from 'styled-components';
 
 import TextField from './TextField/TextField';
 import SelectField from './SelectField/SelectField';
+import DateField from './DateField';
 
 const IconStyled = styled(({ entity, ...other }) => {
   switch (entity) {
@@ -20,6 +22,10 @@ const IconStyled = styled(({ entity, ...other }) => {
       );
     case 'cinema':
       return <Weekend fontSize="large" classes={{ root: 'root' }} {...other} />;
+    case 'date':
+      return (
+        <CalendarToday fontSize="large" classes={{ root: 'root' }} {...other} />
+      );
     default:
       return null;
   }
@@ -35,6 +41,8 @@ const getField = props => {
       return <TextField {...props} />;
     case 'select':
       return <SelectField {...props} />;
+    case 'date':
+      return <DateField {...props} />;
     default:
       return null;
   }

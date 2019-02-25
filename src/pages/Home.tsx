@@ -13,11 +13,13 @@ const Home = () => {
     console.log(movie);
     console.log(city);
     console.log(cinema);
+    console.log(date);
   };
 
   const [movie, setMovie] = useState('');
   const [city, setCity] = useState('');
   const [cinema, setCinema] = useState('');
+  const [date, setDate] = useState(new Date());
   const [buttonDisabled, setButtonDisabled] = useState(true);
 
   useEffect(() => {
@@ -55,6 +57,13 @@ const Home = () => {
           label="Choose Cinema"
           value={cinema}
           handleChange={setCinema}
+        />
+        <SearchField
+          id="date"
+          type="date"
+          label="Choose Date"
+          value={date}
+          handleChange={setDate}
         />
         <SubmitButton
           text="Search"

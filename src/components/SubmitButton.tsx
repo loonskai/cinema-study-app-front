@@ -11,6 +11,7 @@ const Container = styled.div`
 
 const StyledButton = styled(Button)`
   && {
+    min-width: 220px;
     margin-top: 16px;
     margin-bottom: 8px;
   }
