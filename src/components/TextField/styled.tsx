@@ -18,7 +18,7 @@ export const Autosuggest = styled.div`
   }
 `;
 
-export const PaperStyled = styled(Paper)`
+export const PaperStyled = styled(Paper)<any>`
   &&.suggestions-container-open {
     position: absolute;
     max-height: 250px;

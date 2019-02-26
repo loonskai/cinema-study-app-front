@@ -2,7 +2,7 @@ import * as React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import styled from 'styled-components';
 
-const AvatarContainer = styled(Avatar)`
+const AvatarContainer = styled(Avatar)<any>`
   && {
     background-color: red;
     margin-left: 10px;

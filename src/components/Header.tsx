@@ -28,7 +28,7 @@ const StyledAppBar = styled(({ color, ...other }) => (
   }
 `;
 
-const StyledToolBar = styled(Toolbar)`
+const StyledToolBar = styled(Toolbar)<any>`
   && {
     padding-left: 0;
     padding-right: 0;

@@ -10,6 +10,15 @@ import TextField from './TextField/TextField';
 import SelectField from './SelectField/SelectField';
 import DateField from './DateField';
 
+interface Props {
+  entity: string;
+  handleChange: (data: any) => any;
+  id: string;
+  label: string;
+  type: string;
+  value: string | Date;
+}
+
 const IconStyled = styled(({ entity, ...other }) => {
   switch (entity) {
     case 'movie':
@@ -35,7 +44,7 @@ const IconStyled = styled(({ entity, ...other }) => {
   }
 `;
 
-const getField = props => {
+const getField = (props: Props) => {
   switch (props.type) {
     case 'text':
       return <TextField {...props} />;
@@ -48,7 +57,7 @@ const getField = props => {
   }
 };
 
-const SearchField = props => {
+const SearchField = (props: Props) => {
   return (
     <Grid container={true} spacing={8} justify="center" alignItems="center">
       <Grid item={true}>

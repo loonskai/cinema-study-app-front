@@ -21,7 +21,7 @@ const StyledIcon = styled(({ color, ...other }) => (
   }
 `;
 
-const StyledText = styled(Typography)`
+const StyledText = styled(Typography)<any>`
   && {
     font-family: 'ZCOOL QingKe HuangYou', cursive;
     display: none;

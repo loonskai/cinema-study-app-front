@@ -1,7 +1,7 @@
 import * as React from 'react';
-import * as Autosuggest from 'react-autosuggest';
+import Autosuggest from 'react-autosuggest';
 import { match } from './../../helpers/autosuggestHighlightMatch';
-import * as parse from 'autosuggest-highlight/umd/parse';
+import parse from 'autosuggest-highlight/umd/parse';
 import MenuItem from '@material-ui/core/MenuItem';
 import * as StyledContainers from './styled';
 import { movies, cities } from './../../mocks';
@@ -12,7 +12,7 @@ interface Props {
   id: string;
   label: string;
   type: string;
-  value: string;
+  value: string | Date;
   handleChange: (param: string) => string;
 }
 
@@ -114,7 +114,7 @@ function renderSuggestion(
 }
 
 const TextField = (props: Props) => {
-  const [suggestions, setSuggestions] = useState([]);
+  const [suggestions, setSuggestions]: [any, any] = useState([]);
 
   const handleSuggestionsFetchRequested = (entity: string) => (obj: {
     value: string;
@@ -152,7 +152,7 @@ const TextField = (props: Props) => {
         {...autosuggestProps}
         inputProps={{
           label: props.label,
-          value: props.value,
+          value: props.value as string,
           onChange: handleChange
         }}
         theme={{
@@ -161,7 +161,7 @@ const TextField = (props: Props) => {
           suggestionsList: 'suggestions-list',
           suggestion: 'suggestion'
         }}
-        renderSuggestionsContainer={options => (
+        renderSuggestionsContainer={(options: any) => (
           <StyledContainers.PaperStyled
             {...options.containerProps}
             square={true}

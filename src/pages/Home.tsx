@@ -8,7 +8,7 @@ import SubmitButton from './../components/SubmitButton';
 const { useState, useEffect } = React;
 
 const Home = () => {
-  const handleSubmit = e => {
+  const handleSubmit = (e: React.FormEvent<HTMLInputElement>) => {
     e.preventDefault();
     console.log(movie);
     console.log(city);

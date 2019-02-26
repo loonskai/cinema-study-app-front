@@ -10,11 +10,11 @@ interface Props {
   id: string;
   label: string;
   type: string;
-  value: string;
-  handleChange: (param: Date) => Date;
+  value: Date | string;
+  handleChange: (param: any) => any;
 }
 
-const StyledPicker = styled(DatePicker)`
+const StyledPicker = styled(DatePicker)<any>`
   && {
     width: 100%;
   }

@@ -1,23 +1,21 @@
 import * as React from 'react';
-import { findDOMNode } from 'react-dom';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import * as StyledContainers from './styled';
 import { cinemas } from './../../mocks';
-const { useState, useEffect } = React;
 
 interface Props {
   entity: string;
   id: string;
   label: string;
   type: string;
-  value: string;
+  value: string | Date;
   handleChange: (param: string) => string;
 }
 
 const SelectField = (props: Props) => {
-  const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
+  const handleChange = (event: any) => {
     props.handleChange(event.target.value);
   };
 
@@ -47,7 +45,7 @@ const SelectField = (props: Props) => {
       variant="outlined"
     >
       <StyledContainers.InputLabelStyled
-        ref={ref => {
+        ref={(ref: React.RefObject<HTMLInputElement>) => {
           this.InputLabelRef = ref;
         }}
         htmlFor="outlined-age-simple"
