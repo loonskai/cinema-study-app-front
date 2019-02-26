@@ -7,6 +7,7 @@
     "target": "es5",
     "jsx": "react",
     "esModuleInterop": true,
+    "noImplicitThis": false,
     "lib": ["es6", "dom"]
   },
   "include": ["./src/**/*"],

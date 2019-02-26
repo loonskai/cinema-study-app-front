@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Autosuggest from 'react-autosuggest';
 import { match } from './../../helpers/autosuggestHighlightMatch';
-import parse from 'autosuggest-highlight/umd/parse';
+import parse from 'autosuggest-highlight/parse';
 import MenuItem from '@material-ui/core/MenuItem';
 import * as StyledContainers from './styled';
 import { movies, cities } from './../../mocks';
