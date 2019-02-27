@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Redirect } from 'react-router';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Tabs from '@material-ui/core/Tabs';
@@ -45,6 +46,7 @@ const StyledTabs = styled(Tabs)<any>`
 
 const handleSignUp = () => {
   console.log('auth page');
+  <Redirect push to="/auth" />;
 };
 
 const Header = () => {
@@ -61,7 +63,7 @@ const Header = () => {
         </StyledTabs>
       </StyledToolBar>
       {/* <MenuAvatar name="John" /> */}
-      <SignUpButton text="Sign Up" handleClick={handleSignUp} />
+      <SignUpButton text="Sign Up" handleClick={handleSignUp} to="/auth" />
     </StyledAppBar>
   );
 };

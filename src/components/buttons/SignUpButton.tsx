@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import styled from 'styled-components';
@@ -6,6 +7,7 @@ import { mainDarkColor } from './../../constants';
 
 interface Props {
   text: string;
+  to: string;
   handleClick: (e: React.FormEvent<HTMLInputElement>) => void;
 }
 
@@ -31,10 +33,10 @@ const StyledText = styled.span<any>`
   }
 `;
 
-const SignUpButton = ({ text, handleClick }: Props) => {
+const SignUpButton = ({ text, to, handleClick }: Props) => {
   return (
     <Container>
-      <StyledButton variant="contained" onClick={handleClick}>
+      <StyledButton variant="contained" component={Link} to={to}>
         <VpnKeyIcon />
         <StyledText>{text}</StyledText>
       </StyledButton>
