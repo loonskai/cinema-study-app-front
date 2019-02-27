@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-import Layout from './../components/Layout';
 import PageTitle from './../components/PageTitle';
 import SearchField from './../components/SearchField';
 import SubmitButton from './../components/SubmitButton';
@@ -31,48 +30,46 @@ const Home = () => {
   });
 
   return (
-    <Layout>
-      <form>
-        <PageTitle text="Let's find something interesting" />
-        <SearchField
-          id="movie"
-          type="text"
-          entity="movie"
-          label="Movie Title"
-          value={movie}
-          handleChange={setMovie}
-        />
-        <SearchField
-          id="city"
-          type="text"
-          entity="city"
-          label="Where do you live?"
-          value={city}
-          handleChange={setCity}
-        />
-        <SearchField
-          id="cinema"
-          type="select"
-          entity="cinema"
-          label="Choose Cinema"
-          value={cinema}
-          handleChange={setCinema}
-        />
-        <SearchField
-          id="date"
-          type="date"
-          entity="date"
-          label="Choose Date"
-          value={date}
-          handleChange={setDate}
-        />
-        <SubmitButton
-          text="Search"
-          handleClick={handleSubmit}
-          disabled={buttonDisabled}
-        />
-      </form>
-    </Layout>
+    <form>
+      <PageTitle text="Let's find something interesting" />
+      <SearchField
+        id="movie"
+        type="text"
+        entity="movie"
+        label="Movie Title"
+        value={movie}
+        handleChange={setMovie}
+      />
+      <SearchField
+        id="city"
+        type="text"
+        entity="city"
+        label="Where do you live?"
+        value={city}
+        handleChange={setCity}
+      />
+      <SearchField
+        id="cinema"
+        type="select"
+        entity="cinema"
+        label="Choose Cinema"
+        value={cinema}
+        handleChange={setCinema}
+      />
+      <SearchField
+        id="date"
+        type="date"
+        entity="date"
+        label="Choose Date"
+        value={date}
+        handleChange={setDate}
+      />
+      <SubmitButton
+        text="Search"
+        handleClick={handleSubmit}
+        disabled={buttonDisabled}
+      />
+    </form>
   );
 };
 

@@ -1,7 +1,8 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-import Header from './Header';
+import Header from './components/Header';
+import Root from './Root';
 
 const Container = styled.div`
   height: inherit;
@@ -26,15 +27,13 @@ const ContentContainer = styled.div`
   }
 `;
 
-interface Props {
-  children: React.ReactChild;
-}
-
-const Layout = ({ children }: Props) => {
+const Layout = () => {
   return (
     <Container>
       <Header />
-      <ContentContainer>{children}</ContentContainer>
+      <ContentContainer>
+        <Root />
+      </ContentContainer>
     </Container>
   );
 };
