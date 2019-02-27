@@ -2,6 +2,7 @@ import * as React from 'react';
 import Button from '@material-ui/core/Button';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import styled from 'styled-components';
+import { mainDarkColor } from './../../constants';
 
 interface Props {
   text: string;
@@ -12,6 +13,12 @@ const Container = styled.div<any>``;
 
 const StyledButton = styled(Button)<any>`
   && {
+    background-color: #fff;
+    color: ${mainDarkColor};
+    @media screen and (max-width: 470px) {
+      padding: 6px;
+      min-width: 40px;
+    }
   }
 `;
 
@@ -27,7 +34,7 @@ const StyledText = styled.span<any>`
 const SignUpButton = ({ text, handleClick }: Props) => {
   return (
     <Container>
-      <StyledButton variant="contained" color="primary" onClick={handleClick}>
+      <StyledButton variant="contained" onClick={handleClick}>
         <VpnKeyIcon />
         <StyledText>{text}</StyledText>
       </StyledButton>
