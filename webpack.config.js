@@ -12,6 +12,10 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.json']
   },
+  devServer: {
+    publicPath: '/',
+    historyApiFallback: true
+  },
   module: {
     rules: [
       {

@@ -41,8 +41,8 @@ const Header = () => {
       <StyledToolBar>
         <Logo />
         <Tabs value={location.pathname}>
-          <MenuTab value={'/'} label="Find Movie" to="/" />
-          <MenuTab value={'/profile'} label="Buy Ticket" to="/profile" />
+          <MenuTab value={'/'} label="Main Page" to="/" />
+          <MenuTab value={'/movies'} label="Movies" to="/movies" />
         </Tabs>
       </StyledToolBar>
       <MenuAvatar name="John" />
