@@ -10,6 +10,8 @@ import TextField from './TextField/TextField';
 import SelectField from './SelectField/SelectField';
 import DateField from './DateField';
 
+import { mainDarkColor } from './../constants';
+
 interface Props {
   entity: string;
   handleChange: (data: any) => any;
@@ -40,7 +42,7 @@ const IconStyled = styled(({ entity, ...other }) => {
   }
 })`
   &.root {
-    color: #009688;
+    color: ${mainDarkColor};
   }
 `;
 

@@ -2,6 +2,7 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import styled from 'styled-components';
+import { mainColor } from './../../constants';
 
 export const FormControlStyled = styled(FormControl)<any>`
   && {
@@ -12,7 +13,7 @@ export const FormControlStyled = styled(FormControl)<any>`
 
 export const InputLabelStyled = styled(InputLabel)<any>`
   &&.focused {
-    color: #009688;
+    color: ${mainColor};
   }
 `;
 
@@ -21,6 +22,6 @@ export const OutlinedInputStyled = styled(OutlinedInput)<any>`
     min-width: 230px;
   }
   &&.outlined fieldset {
-    border-color: #009688;
+    border-color: ${mainColor};
   }
 `;

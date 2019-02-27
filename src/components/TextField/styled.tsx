@@ -2,13 +2,14 @@ import * as React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import styled from 'styled-components';
+import { mainColor } from './../../constants';
 
 export const Input = styled(({ ...other }) => <TextField {...other} />)`
   .cssLabel.cssFocused {
-    color: #009688;
+    color: ${mainColor};
   }
   .cssOutlinedInput.cssFocused .notchedOutline {
-    border-color: #009688;
+    border-color: ${mainColor};
   }
 `;
 

@@ -5,6 +5,8 @@ import styled from 'styled-components';
 
 const TabContainer = styled(Tab)<any>`
   && {
+    color: #fff;
+    opacity: 1;
     font-family: 'Bitter', serif;
   }
 `;

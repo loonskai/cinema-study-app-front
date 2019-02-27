@@ -4,6 +4,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, DatePicker } from 'material-ui-pickers';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import styled from 'styled-components';
+import { mainColor, mainDarkColor } from './../constants';
 
 interface Props {
   entity: string;
@@ -23,12 +24,12 @@ const StyledPicker = styled(DatePicker)<any>`
 const muiTheme = createMuiTheme({
   palette: {
     primary: {
-      main: '#009688',
-      light: '#009688',
-      dark: '#009688'
+      main: mainColor,
+      light: mainColor,
+      dark: mainColor
     },
     secondary: {
-      main: '#009688'
+      main: mainColor
     }
   },
   typography: {

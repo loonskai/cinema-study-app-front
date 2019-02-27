@@ -8,6 +8,7 @@ import Logo from './Logo';
 import MenuTab from './MenuTab';
 // import MenuAvatar from './MenuAvatar';
 import SignUpButton from './buttons/SignUpButton';
+import { mainDarkColor, mainColor } from './../constants';
 
 const StyledAppBar = styled(({ color, ...other }) => (
   <AppBar
@@ -36,19 +37,28 @@ const StyledToolBar = styled(Toolbar)<any>`
   }
 `;
 
+const StyledTabs = styled(Tabs)<any>`
+  && .indicator {
+    background-color: ${mainColor};
+  }
+`;
+
 const handleSignUp = () => {
   console.log('auth page');
 };
 
 const Header = () => {
   return (
-    <StyledAppBar color="#fff">
+    <StyledAppBar color={mainDarkColor}>
       <StyledToolBar>
         <Logo />
-        <Tabs value={location.pathname}>
+        <StyledTabs
+          value={location.pathname}
+          classes={{ indicator: 'indicator' }}
+        >
           <MenuTab value={'/'} label="Main Page" to="/" />
           <MenuTab value={'/movies'} label="Movies" to="/movies" />
-        </Tabs>
+        </StyledTabs>
       </StyledToolBar>
       {/* <MenuAvatar name="John" /> */}
       <SignUpButton text="Sign Up" handleClick={handleSignUp} />
