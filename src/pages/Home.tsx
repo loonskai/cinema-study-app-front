@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import PageTitle from './../components/PageTitle';
 import SearchField from './../components/SearchField';
-import SubmitButton from './../components/SubmitButton';
+import SubmitButton from './../components/buttons/SubmitButton';
 
 const { useState, useEffect } = React;
 

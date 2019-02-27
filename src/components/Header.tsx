@@ -6,7 +6,8 @@ import styled from 'styled-components';
 
 import Logo from './Logo';
 import MenuTab from './MenuTab';
-import MenuAvatar from './MenuAvatar';
+// import MenuAvatar from './MenuAvatar';
+import SignUpButton from './buttons/SignUpButton';
 
 const StyledAppBar = styled(({ color, ...other }) => (
   <AppBar
@@ -35,6 +36,10 @@ const StyledToolBar = styled(Toolbar)<any>`
   }
 `;
 
+const handleSignUp = () => {
+  console.log('auth page');
+};
+
 const Header = () => {
   return (
     <StyledAppBar color="#fff">
@@ -45,7 +50,8 @@ const Header = () => {
           <MenuTab value={'/movies'} label="Movies" to="/movies" />
         </Tabs>
       </StyledToolBar>
-      <MenuAvatar name="John" />
+      {/* <MenuAvatar name="John" /> */}
+      <SignUpButton text="Sign Up" handleClick={handleSignUp} />
     </StyledAppBar>
   );
 };
