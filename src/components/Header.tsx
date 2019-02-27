@@ -44,11 +44,6 @@ const StyledTabs = styled(Tabs)<any>`
   }
 `;
 
-const handleSignUp = () => {
-  console.log('auth page');
-  <Redirect push to="/auth" />;
-};
-
 const Header = () => {
   return (
     <StyledAppBar color={mainDarkColor}>
@@ -63,7 +58,7 @@ const Header = () => {
         </StyledTabs>
       </StyledToolBar>
       {/* <MenuAvatar name="John" /> */}
-      <SignUpButton text="Sign Up" handleClick={handleSignUp} to="/auth" />
+      <SignUpButton text="Sign Up" to="/auth" />
     </StyledAppBar>
   );
 };

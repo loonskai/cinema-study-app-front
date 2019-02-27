@@ -8,7 +8,6 @@ import { mainDarkColor } from './../../constants';
 interface Props {
   text: string;
   to: string;
-  handleClick: (e: React.FormEvent<HTMLInputElement>) => void;
 }
 
 const Container = styled.div<any>``;
@@ -33,7 +32,7 @@ const StyledText = styled.span<any>`
   }
 `;
 
-const SignUpButton = ({ text, to, handleClick }: Props) => {
+const SignUpButton = ({ text, to }: Props) => {
   return (
     <Container>
       <StyledButton variant="contained" component={Link} to={to}>
