@@ -1,7 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 
-const Movies = () => {
+import actions from './../redux/actions/index';
+
+const Movies = ({ loadMoviesList }: { loadMoviesList: any }) => {
+  useEffect(() => {
+    loadMoviesList();
+  });
+
   return <div>Movies</div>;
 };
 
-export default Movies;
+export default connect(
+  null,
+  actions
+)(Movies);
