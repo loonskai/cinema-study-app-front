@@ -6,8 +6,8 @@ const api = new ApiService();
 const loadMoviesList = () => {
   try {
     return async (dispatch: any) => {
-      const res = await api.loadMoviesList();
-      console.log('inside action ---', res);
+      const data = await api.loadMoviesList();
+      dispatch({ type: LOAD_MOVIES_LIST, payload: data });
     };
   } catch (error) {
     console.log(error);

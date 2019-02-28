@@ -10,10 +10,10 @@ export default class ApiService {
 
   async loadMoviesList() {
     try {
-      const data = await this.client.get(
+      const { data } = await this.client.get(
         `https://api.themoviedb.org/4/list/1?page=1&api_key=${apiKey}`
       );
-      console.log('inside api service', data);
+      return data.results;
     } catch (error) {
       console.error(error);
     }
