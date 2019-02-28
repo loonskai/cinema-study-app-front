@@ -9,7 +9,7 @@ export default (state = initialState, action: any) => {
 
   switch (type) {
     case LOAD_MOVIES_LIST:
-      return { movies: payload };
+      return payload;
     default:
       return state;
   }
