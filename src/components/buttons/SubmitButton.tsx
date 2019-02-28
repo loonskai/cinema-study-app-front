@@ -2,7 +2,7 @@ import * as React from 'react';
 import Button from '@material-ui/core/Button';
 import SearchIcon from '@material-ui/icons/Search';
 import styled from 'styled-components';
-import { mainColor, mainDarkColor, mainDarkColorSub } from './../../constants';
+import { whiteColor, mainDarkColor, mainDarkColorSub } from './../../constants';
 
 interface Props {
   text: string;
@@ -22,7 +22,7 @@ const StyledButton = styled(Button)<any>`
     margin-top: 16px;
     margin-bottom: 8px;
     background-color: ${mainDarkColor};
-    color: #fff;
+    color: ${whiteColor};
   }
 
   &&:hover {

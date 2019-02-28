@@ -1,10 +1,10 @@
 import 'date-fns';
-import * as React from 'react';
+import React from 'react';
+import styled from 'styled-components';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, DatePicker } from 'material-ui-pickers';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import styled from 'styled-components';
-import { mainColor, mainDarkColor } from './../constants';
+import { mainColor } from './../constants';
 
 interface Props {
   entity: string;
@@ -37,9 +37,9 @@ const muiTheme = createMuiTheme({
   }
 });
 
-const DateField = (props: Props) => {
+const DateField = ({ label, value, handleChange }: Props) => {
   const handleDateChange = (date: Date) => {
-    props.handleChange(date);
+    handleChange(date);
   };
 
   return (
@@ -48,8 +48,8 @@ const DateField = (props: Props) => {
         <StyledPicker
           variant="outlined"
           margin="normal"
-          label={props.label}
-          value={props.value}
+          label={label}
+          value={value}
           minDate={new Date()}
           onChange={handleDateChange}
           classes={{

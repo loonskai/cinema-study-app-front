@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import styled from 'styled-components';
-import { mainDarkColor } from './../../constants';
+import { mainDarkColor, whiteColor } from './../../constants';
 
 interface Props {
   text: string;
@@ -14,7 +14,7 @@ const Container = styled.div<any>``;
 
 const StyledButton = styled(Button)<any>`
   && {
-    background-color: #fff;
+    background-color: ${whiteColor};
     color: ${mainDarkColor};
     @media screen and (max-width: 470px) {
       padding: 6px;

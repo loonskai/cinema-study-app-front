@@ -3,12 +3,13 @@ import styled from 'styled-components';
 
 import Header from './components/Header';
 import Root from './Root';
+import { whiteColor, containerGreyColor } from './constants';
 
 const Container = styled.div`
   height: inherit;
   padding-top: 48px;
   font-family: 'Bitter', serif;
-  background: #f7f7f7;
+  background: ${containerGreyColor};
   @media screen and (min-width: 600px) {
     padding-top: 64px;
   }
@@ -21,7 +22,7 @@ const ContentContainer = styled.div`
   flex-wrap: wrap;
   padding: 20px;
   margin: 0 auto;
-  background: #fff;
+  background: ${whiteColor};
   @media screen and (min-width: 1378px) {
     max-width: 1200px;
   }

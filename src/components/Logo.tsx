@@ -2,7 +2,7 @@ import * as React from 'react';
 import MovieFilter from '@material-ui/icons/MovieFilter';
 import Typography from '@material-ui/core/Typography';
 import styled from 'styled-components';
-import { mainColor } from './../constants';
+import { mainColor, whiteColor } from './../constants';
 
 const LogoContainer = styled.div`
   display: flex;
@@ -26,7 +26,7 @@ const StyledText = styled(Typography)<any>`
   && {
     font-family: 'ZCOOL QingKe HuangYou', cursive;
     display: none;
-    color: #fff;
+    color: ${whiteColor};
     @media screen and (min-width: 470px) {
       display: flex;
       align-items: center;
