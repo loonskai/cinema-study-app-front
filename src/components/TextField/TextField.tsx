@@ -19,7 +19,7 @@ interface Props {
 function renderInputComponent(inputProps: any) {
   const { ref, inputRef = () => {} } = inputProps;
   // Hide 'passing refs to functional component' error
-  const propsWithoutRefs = Object.assign({}, inputProps, {
+  const propsWithoutRef = Object.assign({}, inputProps, {
     ref: null
   });
   return (
@@ -44,7 +44,7 @@ function renderInputComponent(inputProps: any) {
           notchedOutline: 'notchedOutline'
         }
       }}
-      {...propsWithoutRefs}
+      {...propsWithoutRef}
     />
   );
 }
@@ -113,7 +113,7 @@ function renderSuggestion(
   );
 }
 
-const TextField = (props: Props) => {
+const TextField = ({ handleChange, entity, label, value }: Props) => {
   const [suggestions, setSuggestions]: [any, any] = useState([]);
 
   const handleSuggestionsFetchRequested = (entity: string) => (obj: {
@@ -130,17 +130,10 @@ const TextField = (props: Props) => {
 
   const handleSuggestionClearRequested = () => setSuggestions([]);
 
-  const handleChange = (
-    event: React.FormEvent<HTMLInputElement>,
-    { newValue }: { newValue: string }
-  ) => {
-    props.handleChange(newValue);
-  };
-
   const autosuggestProps = {
     renderInputComponent,
     suggestions,
-    onSuggestionsFetchRequested: handleSuggestionsFetchRequested(props.entity),
+    onSuggestionsFetchRequested: handleSuggestionsFetchRequested(entity),
     onSuggestionsClearRequested: handleSuggestionClearRequested,
     getSuggestionValue,
     renderSuggestion
@@ -151,9 +144,14 @@ const TextField = (props: Props) => {
       <Autosuggest
         {...autosuggestProps}
         inputProps={{
-          label: props.label,
-          value: props.value as string,
-          onChange: handleChange
+          label,
+          value: value as string,
+          onChange: (
+            e: React.FormEvent<HTMLInputElement>,
+            { newValue }: { newValue: string }
+          ) => {
+            handleChange(newValue);
+          }
         }}
         theme={{
           container: 'container',

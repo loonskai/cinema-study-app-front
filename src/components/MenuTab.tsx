@@ -19,8 +19,6 @@ interface Props {
   to: string;
 }
 
-const MenuTab = ({ value, label, to }: Props) => (
-  <TabContainer value={value} label={label} component={Link} to={to} />
-);
+const MenuTab = (props: Props) => <TabContainer component={Link} {...props} />;
 
 export default MenuTab;
