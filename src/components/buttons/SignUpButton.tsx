@@ -18,15 +18,15 @@ const StyledButton = styled(Button)<any>`
     background-color: ${whiteColor};
     color: ${mainDarkColor};
     @media screen and (max-width: 470px) {
-      padding: 6px;
-      min-width: 40px;
+      padding: 0.5rem;
+      min-width: 2.5rem;
     }
   }
 `;
 
 const StyledText = styled.span`
   && {
-    margin-left: 5px;
+    margin-left: 0.3rem;
     @media screen and (max-width: 470px) {
       display: none;
     }

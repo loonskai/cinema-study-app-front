@@ -8,15 +8,15 @@ import { mainColor, whiteColor } from './../constants';
 const LogoContainer = styled.div`
   display: flex;
   @media screen and (min-width: 375px) {
-    margin-right: 20px;
+    margin-right: 1.25rem;
   }
 `;
 
 const StyledIcon = styled(MovieFilter)<any>`
   && {
-    width: 40px;
-    height: 40px;
-    margin-right: 10px;
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-right: 0.625rem;
     color: ${mainColor};
   }
 `;
@@ -29,7 +29,7 @@ const StyledText = styled(Typography)<any>`
     @media screen and (min-width: 470px) {
       display: flex;
       align-items: center;
-      font-size: 18px;
+      font-size: 1.125rem;
     }
   }
 `;

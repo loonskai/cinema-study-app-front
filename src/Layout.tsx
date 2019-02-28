@@ -7,11 +7,11 @@ import { whiteColor, containerGreyColor } from './constants';
 
 const Container = styled.div`
   height: inherit;
-  padding-top: 48px;
+  padding-top: 3rem;
   font-family: 'Bitter', serif;
   background: ${containerGreyColor};
   @media screen and (min-width: 600px) {
-    padding-top: 64px;
+    padding-top: 4rem;
   }
 `;
 
@@ -20,7 +20,7 @@ const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  padding: 20px;
+  padding: 1.25rem;
   margin: 0 auto;
   background: ${whiteColor};
   @media screen and (min-width: 1378px) {

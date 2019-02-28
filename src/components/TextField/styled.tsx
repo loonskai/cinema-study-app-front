@@ -23,7 +23,7 @@ export const Autosuggest = styled.div`
 export const PaperStyled = styled(Paper)<any>`
   &&.suggestions-container-open {
     position: absolute;
-    max-height: 250px;
+    max-height: 15.625rem;
     overflow-y: scroll;
     left: 0;
     right: 0;

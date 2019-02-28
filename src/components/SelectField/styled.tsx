@@ -7,8 +7,8 @@ import { mainColor } from './../../constants';
 
 export const FormControlStyled = styled(FormControl)<any>`
   && {
-    margin-top: 16px;
-    margin-bottom: 8px;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
   }
 `;
 
@@ -20,7 +20,7 @@ export const InputLabelStyled = styled(InputLabel)<any>`
 
 export const OutlinedInputStyled = styled(OutlinedInput)<any>`
   && {
-    min-width: 230px;
+    min-width: 14.375rem;
   }
   &&.outlined fieldset {
     border-color: ${mainColor};

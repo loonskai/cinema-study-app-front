@@ -5,10 +5,10 @@ import Avatar from '@material-ui/core/Avatar';
 const AvatarContainer = styled(Avatar)<any>`
   && {
     background-color: red;
-    margin-left: 10px;
+    margin-left: 0.625rem;
     @media screen and (max-width: 375px) {
-      width: 35px;
-      height: 35px;
+      width: 2.1875rem;
+      height: 2.1875rem;
     }
   }
 `;

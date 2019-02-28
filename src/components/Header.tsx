@@ -16,7 +16,7 @@ const StyledAppBar = styled(AppBar)<any>`
     align-items: center;
     text-transform: uppercase;
     flex-direction: row;
-    padding: 0 10px;
+    padding: 0 0.625rem;
     background-color: ${mainDarkColor};
   }
 `;

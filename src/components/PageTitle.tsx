@@ -6,11 +6,11 @@ import { mainDarkColor } from './../constants';
 const StyledTitle = styled.h1`
   width: 100%;
   margin: 0;
-  font-size: 18px;
+  font-size: 1.125rem;
   text-align: center;
   color: ${mainDarkColor};
   @media screen and (min-width: 768px) {
-    font-size: 24px;
+    font-size: 1.5rem;
   }
 `;
 
