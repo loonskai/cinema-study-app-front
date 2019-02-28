@@ -5,11 +5,11 @@ import Paper from '@material-ui/core/Paper';
 
 import { mainColor } from './../../constants';
 
-export const Input = styled(({ ...other }) => <TextField {...other} />)`
-  .cssLabel.cssFocused {
+export const Input = styled(TextField)`
+  && .cssLabel.cssFocused {
     color: ${mainColor};
   }
-  .cssOutlinedInput.cssFocused .notchedOutline {
+  && .cssOutlinedInput.cssFocused .notchedOutline {
     border-color: ${mainColor};
   }
 `;

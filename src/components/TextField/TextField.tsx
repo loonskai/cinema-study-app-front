@@ -18,7 +18,7 @@ interface Props {
 
 function renderInputComponent(inputProps: any) {
   const { ref, inputRef = () => {} } = inputProps;
-  // Get rid of 'passing refs to functional component' error
+  // Hide 'passing refs to functional component' error
   const propsWithoutRefs = Object.assign({}, inputProps, {
     ref: null
   });

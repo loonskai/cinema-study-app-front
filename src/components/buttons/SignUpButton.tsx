@@ -24,7 +24,7 @@ const StyledButton = styled(Button)<any>`
   }
 `;
 
-const StyledText = styled.span<any>`
+const StyledText = styled.span`
   && {
     margin-left: 5px;
     @media screen and (max-width: 470px) {

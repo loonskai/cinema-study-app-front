@@ -15,10 +15,6 @@ interface Props {
 }
 
 const SelectField = (props: Props) => {
-  const handleChange = (event: any) => {
-    props.handleChange(event.target.value);
-  };
-
   const getOptions = (entity: string) => {
     let options;
     switch (entity) {
@@ -57,7 +53,9 @@ const SelectField = (props: Props) => {
       </StyledContainers.InputLabelStyled>
       <Select
         value={props.value}
-        onChange={handleChange}
+        onChange={(e: any) => {
+          props.handleChange(e.target.value);
+        }}
         input={
           <StyledContainers.OutlinedInputStyled
             labelWidth={115}

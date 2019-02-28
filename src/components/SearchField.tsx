@@ -23,24 +23,18 @@ interface Props {
 const IconStyled = styled(({ entity, ...other }) => {
   switch (entity) {
     case 'movie':
-      return (
-        <LocalMovies fontSize="large" classes={{ root: 'root' }} {...other} />
-      );
+      return <LocalMovies fontSize="large" {...other} />;
     case 'city':
-      return (
-        <LocationCity fontSize="large" classes={{ root: 'root' }} {...other} />
-      );
+      return <LocationCity fontSize="large" {...other} />;
     case 'cinema':
-      return <Weekend fontSize="large" classes={{ root: 'root' }} {...other} />;
+      return <Weekend fontSize="large" {...other} />;
     case 'date':
-      return (
-        <CalendarToday fontSize="large" classes={{ root: 'root' }} {...other} />
-      );
+      return <CalendarToday fontSize="large" {...other} />;
     default:
       return null;
   }
 })`
-  &.root {
+  && {
     color: ${mainDarkColor};
   }
 `;

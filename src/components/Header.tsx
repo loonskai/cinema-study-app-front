@@ -10,23 +10,14 @@ import MenuTab from './MenuTab';
 import SignUpButton from './buttons/SignUpButton';
 import { mainDarkColor, mainColor } from './../constants';
 
-const StyledAppBar = styled(({ color, ...other }) => (
-  <AppBar
-    color="default"
-    position="fixed"
-    classes={{ colorDefault: 'default-colors', root: 'root' }}
-    {...other}
-  />
-))`
-  justify-content: space-between;
-  align-items: center;
-  text-transform: uppercase;
-  &.root {
+const StyledAppBar = styled(AppBar)<any>`
+  && {
+    justify-content: space-between;
+    align-items: center;
+    text-transform: uppercase;
     flex-direction: row;
     padding: 0 10px;
-  }
-  &.default-colors {
-    background-color: ${props => props.color};
+    background-color: ${mainDarkColor};
   }
 `;
 
@@ -45,7 +36,7 @@ const StyledTabs = styled(Tabs)<any>`
 
 const Header = () => {
   return (
-    <StyledAppBar color={mainDarkColor}>
+    <StyledAppBar position="fixed">
       <StyledToolBar>
         <Logo />
         <StyledTabs

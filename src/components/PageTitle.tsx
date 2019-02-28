@@ -14,10 +14,8 @@ const StyledTitle = styled.h1`
   }
 `;
 
-interface Props {
-  text: string;
-}
-
-const PageTitle = ({ text }: Props) => <StyledTitle>{text}</StyledTitle>;
+const PageTitle = ({ text }: { text: string }) => (
+  <StyledTitle>{text}</StyledTitle>
+);
 
 export default PageTitle;

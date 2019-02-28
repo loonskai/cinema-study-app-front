@@ -12,14 +12,12 @@ const LogoContainer = styled.div`
   }
 `;
 
-const StyledIcon = styled(({ color, ...other }) => (
-  <MovieFilter classes={{ root: 'colors' }} {...other} />
-))`
-  &.colors {
+const StyledIcon = styled(MovieFilter)<any>`
+  && {
     width: 40px;
     height: 40px;
     margin-right: 10px;
-    color: ${props => props.color};
+    color: ${mainColor};
   }
 `;
 
@@ -38,7 +36,7 @@ const StyledText = styled(Typography)<any>`
 
 const Logo = () => (
   <LogoContainer>
-    <StyledIcon color={mainColor} />
+    <StyledIcon />
     <StyledText component="span" variant="title">
       Cinema App
     </StyledText>
