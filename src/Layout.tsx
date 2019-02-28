@@ -28,15 +28,13 @@ const ContentContainer = styled.div`
   }
 `;
 
-const Layout = () => {
-  return (
-    <Container>
-      <Header />
-      <ContentContainer>
-        <Root />
-      </ContentContainer>
-    </Container>
-  );
-};
+const Layout = () => (
+  <Container>
+    <Header />
+    <ContentContainer>
+      <Root />
+    </ContentContainer>
+  </Container>
+);
 
 export default Layout;

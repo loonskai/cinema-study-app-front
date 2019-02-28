@@ -5,6 +5,12 @@ import SearchField from './../components/SearchField';
 import SubmitButton from './../components/buttons/SubmitButton';
 
 const Home = () => {
+  const [movie, setMovie] = useState('');
+  const [city, setCity] = useState('');
+  const [cinema, setCinema] = useState('');
+  const [date, setDate] = useState(new Date());
+  const [buttonDisabled, setButtonDisabled] = useState(true);
+
   const handleSubmit = (e: React.FormEvent<HTMLInputElement>) => {
     e.preventDefault();
     console.log(movie);
@@ -12,12 +18,6 @@ const Home = () => {
     console.log(cinema);
     console.log(date);
   };
-
-  const [movie, setMovie] = useState('');
-  const [city, setCity] = useState('');
-  const [cinema, setCinema] = useState('');
-  const [date, setDate] = useState(new Date());
-  const [buttonDisabled, setButtonDisabled] = useState(true);
 
   useEffect(() => {
     if (movie !== '' || city !== '' || cinema !== '') {

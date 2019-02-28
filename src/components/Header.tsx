@@ -34,23 +34,21 @@ const StyledTabs = styled(Tabs)<any>`
   }
 `;
 
-const Header = () => {
-  return (
-    <StyledAppBar position="fixed">
-      <StyledToolBar>
-        <Logo />
-        <StyledTabs
-          value={location.pathname}
-          classes={{ indicator: 'indicator' }}
-        >
-          <MenuTab value={'/'} label="Main Page" to="/" />
-          <MenuTab value={'/movies'} label="Movies" to="/movies" />
-        </StyledTabs>
-      </StyledToolBar>
-      {/* <MenuAvatar name="John" /> */}
-      <SignUpButton text="Sign Up" to="/auth" />
-    </StyledAppBar>
-  );
-};
+const Header = () => (
+  <StyledAppBar position="fixed">
+    <StyledToolBar>
+      <Logo />
+      <StyledTabs
+        value={location.pathname}
+        classes={{ indicator: 'indicator' }}
+      >
+        <MenuTab value={'/'} label="Main Page" to="/" />
+        <MenuTab value={'/movies'} label="Movies" to="/movies" />
+      </StyledTabs>
+    </StyledToolBar>
+    {/* <MenuAvatar name="John" /> */}
+    <SignUpButton text="Sign Up" to="/auth" />
+  </StyledAppBar>
+);
 
 export default Header;

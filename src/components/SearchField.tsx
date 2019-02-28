@@ -52,17 +52,15 @@ const getField = (props: Props) => {
   }
 };
 
-const SearchField = (props: Props) => {
-  return (
-    <Grid container={true} spacing={8} justify="center" alignItems="center">
-      <Grid item={true}>
-        <IconStyled entity={props.entity} />
-      </Grid>
-      <Grid item={true} lg={7}>
-        {getField(props)}
-      </Grid>
+const SearchField = (props: Props) => (
+  <Grid container={true} spacing={8} justify="center" alignItems="center">
+    <Grid item={true}>
+      <IconStyled entity={props.entity} />
     </Grid>
-  );
-};
+    <Grid item={true} lg={7}>
+      {getField(props)}
+    </Grid>
+  </Grid>
+);
 
 export default SearchField;

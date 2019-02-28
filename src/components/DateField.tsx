@@ -38,28 +38,24 @@ const muiTheme = createMuiTheme({
   }
 });
 
-const DateField = ({ label, value, handleChange }: Props) => {
-  const handleDateChange = (date: Date) => {
-    handleChange(date);
-  };
-
-  return (
-    <MuiThemeProvider theme={muiTheme}>
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <StyledPicker
-          variant="outlined"
-          margin="normal"
-          label={label}
-          value={value}
-          minDate={new Date()}
-          onChange={handleDateChange}
-          classes={{
-            root: 'root'
-          }}
-        />
-      </MuiPickersUtilsProvider>
-    </MuiThemeProvider>
-  );
-};
+const DateField = ({ label, value, handleChange }: Props) => (
+  <MuiThemeProvider theme={muiTheme}>
+    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+      <StyledPicker
+        variant="outlined"
+        margin="normal"
+        label={label}
+        value={value}
+        minDate={new Date()}
+        onChange={(date: Date) => {
+          handleChange(date);
+        }}
+        classes={{
+          root: 'root'
+        }}
+      />
+    </MuiPickersUtilsProvider>
+  </MuiThemeProvider>
+);
 
 export default DateField;

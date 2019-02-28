@@ -31,20 +31,18 @@ const StyledButton = styled(Button)<any>`
   }
 `;
 
-const SubmitButton = ({ text, handleClick, disabled }: Props) => {
-  return (
-    <Container>
-      <StyledButton
-        variant="contained"
-        color="primary"
-        onClick={handleClick}
-        disabled={disabled}
-      >
-        <SearchIcon />
-        {text}
-      </StyledButton>
-    </Container>
-  );
-};
+const SubmitButton = ({ text, handleClick, disabled }: Props) => (
+  <Container>
+    <StyledButton
+      variant="contained"
+      color="primary"
+      onClick={handleClick}
+      disabled={disabled}
+    >
+      <SearchIcon />
+      {text}
+    </StyledButton>
+  </Container>
+);
 
 export default SubmitButton;

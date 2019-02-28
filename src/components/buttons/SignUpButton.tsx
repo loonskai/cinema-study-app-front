@@ -33,15 +33,13 @@ const StyledText = styled.span`
   }
 `;
 
-const SignUpButton = ({ text, to }: Props) => {
-  return (
-    <Container>
-      <StyledButton variant="contained" component={Link} to={to}>
-        <VpnKeyIcon />
-        <StyledText>{text}</StyledText>
-      </StyledButton>
-    </Container>
-  );
-};
+const SignUpButton = ({ text, to }: Props) => (
+  <Container>
+    <StyledButton variant="contained" component={Link} to={to}>
+      <VpnKeyIcon />
+      <StyledText>{text}</StyledText>
+    </StyledButton>
+  </Container>
+);
 
 export default SignUpButton;
