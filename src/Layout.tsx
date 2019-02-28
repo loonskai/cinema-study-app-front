@@ -1,8 +1,8 @@
-import * as React from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
-import Header from './components/Header';
 import Root from './Root';
+import Header from './components/Header';
 import { whiteColor, containerGreyColor } from './constants';
 
 const Container = styled.div`

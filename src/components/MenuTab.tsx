@@ -1,7 +1,8 @@
-import * as React from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import Tab from '@material-ui/core/Tab';
 import styled from 'styled-components';
+import Tab from '@material-ui/core/Tab';
+
 import { whiteColor } from './../constants';
 
 const TabContainer = styled(Tab)<any>`

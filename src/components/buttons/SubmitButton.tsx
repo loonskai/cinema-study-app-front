@@ -1,7 +1,8 @@
-import * as React from 'react';
+import React from 'react';
+import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
 import SearchIcon from '@material-ui/icons/Search';
-import styled from 'styled-components';
+
 import { whiteColor, mainDarkColor, mainDarkColorSub } from './../../constants';
 
 interface Props {

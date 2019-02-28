@@ -1,5 +1,6 @@
-import * as React from 'react';
+import React from 'react';
 import styled from 'styled-components';
+
 import { mainDarkColor } from './../constants';
 
 const StyledTitle = styled.h1`

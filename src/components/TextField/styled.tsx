@@ -1,7 +1,8 @@
-import * as React from 'react';
+import React from 'react';
+import styled from 'styled-components';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
-import styled from 'styled-components';
+
 import { mainColor } from './../../constants';
 
 export const Input = styled(({ ...other }) => <TextField {...other} />)`

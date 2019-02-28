@@ -1,11 +1,11 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import Autosuggest from 'react-autosuggest';
-import { match } from './../../helpers/autosuggestHighlightMatch';
 import parse from 'autosuggest-highlight/parse';
 import MenuItem from '@material-ui/core/MenuItem';
+
 import * as StyledContainers from './styled';
+import { match } from './../../helpers/autosuggestHighlightMatch';
 import { movies, cities } from './../../mocks';
-const { useState } = React;
 
 interface Props {
   entity: string;

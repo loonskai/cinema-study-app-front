@@ -1,7 +1,8 @@
-import * as React from 'react';
+import React from 'react';
+import styled from 'styled-components';
 import MovieFilter from '@material-ui/icons/MovieFilter';
 import Typography from '@material-ui/core/Typography';
-import styled from 'styled-components';
+
 import { mainColor, whiteColor } from './../constants';
 
 const LogoContainer = styled.div`

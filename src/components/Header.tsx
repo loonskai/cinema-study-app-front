@@ -1,9 +1,8 @@
-import * as React from 'react';
-import { Redirect } from 'react-router';
+import React from 'react';
+import styled from 'styled-components';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Tabs from '@material-ui/core/Tabs';
-import styled from 'styled-components';
 
 import Logo from './Logo';
 import MenuTab from './MenuTab';

@@ -1,8 +1,9 @@
-import * as React from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
-import styled from 'styled-components';
+
 import { mainDarkColor, whiteColor } from './../../constants';
 
 interface Props {

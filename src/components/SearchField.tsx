@@ -1,15 +1,14 @@
-import * as React from 'react';
+import React from 'react';
+import styled from 'styled-components';
 import Grid from '@material-ui/core/Grid';
 import LocalMovies from '@material-ui/icons/LocalMovies';
 import LocationCity from '@material-ui/icons/LocationCity';
 import Weekend from '@material-ui/icons/Weekend';
 import CalendarToday from '@material-ui/icons/CalendarToday';
-import styled from 'styled-components';
 
 import TextField from './TextField/TextField';
 import SelectField from './SelectField/SelectField';
 import DateField from './DateField';
-
 import { mainDarkColor } from './../constants';
 
 interface Props {

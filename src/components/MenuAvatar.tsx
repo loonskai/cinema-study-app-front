@@ -1,6 +1,6 @@
-import * as React from 'react';
-import Avatar from '@material-ui/core/Avatar';
+import React from 'react';
 import styled from 'styled-components';
+import Avatar from '@material-ui/core/Avatar';
 
 const AvatarContainer = styled(Avatar)<any>`
   && {
