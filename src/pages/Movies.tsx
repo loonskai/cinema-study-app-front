@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import actions from './../redux/actions/index';
 import MovieItem from './../components/MovieItem';
-import loader from './../static/images/spinner.svg';
+import Loader from './../components/Loader';
 
 interface Props {
   loadMoviesList: any;
@@ -16,7 +16,7 @@ const MoviesContainer = styled.div`
   flex-wrap: wrap;
 `;
 
-class Movies extends React.Component {
+class Movies extends React.Component<any, any> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -30,18 +30,14 @@ class Movies extends React.Component {
   }
 
   render() {
-    return (
-      <div>
-        {this.state.isLoading ? (
-          <span dangerouslySetInnerHTML={{ __html: loader }} />
-        ) : (
-          <MoviesContainer>
-            {this.props.movies.map(movie => (
-              <MovieItem key={movie.id} data={movie} />
-            ))}
-          </MoviesContainer>
-        )}
-      </div>
+    return this.state.isLoading ? (
+      <Loader />
+    ) : (
+      <MoviesContainer>
+        {this.props.movies.map((movie: any) => (
+          <MovieItem key={movie.id} data={movie} />
+        ))}
+      </MoviesContainer>
     );
   }
 }
@@ -49,4 +45,4 @@ class Movies extends React.Component {
 export default connect(
   ({ movies }: { movies: any }) => ({ movies }),
   actions
-)(Movies);
+)(Movies as any);

@@ -9,7 +9,7 @@ const StyledPoster = styled.img`
   height: auto;
 `;
 
-const MovieItem = ({ data }) => {
+const MovieItem = ({ data }: { data: any }) => {
   return (
     <div>
       <h3>{data.original_title}</h3>
