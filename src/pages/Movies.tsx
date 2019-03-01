@@ -13,6 +13,7 @@ interface Props {
 
 const MoviesContainer = styled.div`
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
 `;
 
