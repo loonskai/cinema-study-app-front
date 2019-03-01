@@ -10,6 +10,6 @@ const composeEnhancers =
     ? (<any>window).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
     : compose;
 
-const enhancer = compose(applyMiddleware(thunk, logger));
+const enhancer = composeEnhancers(applyMiddleware(thunk, logger));
 
 export default createStore(reducer, enhancer);
