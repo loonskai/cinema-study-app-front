@@ -1,11 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+
+const Container = styled.div``;
+
+const StyledPoster = styled.img`
+  width: 180px;
+  height: auto;
+`;
 
 const MovieItem = ({ data }) => {
   return (
     <div>
       <h3>{data.original_title}</h3>
-      <img
+      <StyledPoster
         src={`https://image.tmdb.org/t/p/w500${data.poster_path}`}
         alt={data.original_title}
       />

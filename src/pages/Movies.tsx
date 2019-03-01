@@ -1,13 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
 
 import actions from './../redux/actions/index';
 import MovieItem from './../components/MovieItem';
+import loader from './../static/images/spinner.svg';
 
 interface Props {
   loadMoviesList: any;
   movies: Array<any>;
 }
+
+const MoviesContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;
 
 class Movies extends React.Component {
   constructor(props: Props) {
@@ -26,11 +33,13 @@ class Movies extends React.Component {
     return (
       <div>
         {this.state.isLoading ? (
-          <div>...Loading</div>
+          <span dangerouslySetInnerHTML={{ __html: loader }} />
         ) : (
-          this.props.movies.map(movie => (
-            <MovieItem key={movie.id} data={movie} />
-          ))
+          <MoviesContainer>
+            {this.props.movies.map(movie => (
+              <MovieItem key={movie.id} data={movie} />
+            ))}
+          </MoviesContainer>
         )}
       </div>
     );
