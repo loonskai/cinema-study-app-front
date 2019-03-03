@@ -8,12 +8,13 @@ import { match } from './../../helpers/autosuggestHighlightMatch';
 import { movies, cities } from './../../mocks';
 
 interface Props {
-  entity: string;
-  id: string;
-  label: string;
-  type: string;
-  value: string | Date;
-  handleChange: (param: string) => string;
+  entity?: string;
+  id?: string;
+  label?: string;
+  type?: string;
+  value?: string | Date;
+  handleChange: (param: any) => any;
+  withoutSuggestions?: boolean;
 }
 
 function renderInputComponent(inputProps: any) {
@@ -24,24 +25,10 @@ function renderInputComponent(inputProps: any) {
   });
   return (
     <StyledContainers.Input
-      fullWidth={true}
-      margin="normal"
-      variant="outlined"
-      InputLabelProps={{
-        classes: {
-          root: 'cssLabel',
-          focused: 'cssFocused'
-        }
-      }}
       InputProps={{
         inputRef: (node: HTMLElement) => {
           ref(node);
           inputRef(node);
-        },
-        classes: {
-          root: 'cssOutlinedInput',
-          focused: 'cssFocused',
-          notchedOutline: 'notchedOutline'
         }
       }}
       {...propsWithoutRef}
@@ -113,10 +100,21 @@ function renderSuggestion(
   );
 }
 
-const TextField = ({ handleChange, entity, label, value }: Props) => {
+const TextField = ({
+  handleChange,
+  entity,
+  label,
+  value,
+  withoutSuggestions = false
+}: Props) => {
+  /* Returns in case when we don't need suggestions list */
+  if (withoutSuggestions) {
+    return <StyledContainers.Input label={label} />;
+  }
+
   const [suggestions, setSuggestions]: [any, any] = useState([]);
 
-  const handleSuggestionsFetchRequested = (entity: string) => (obj: {
+  const handleSuggestionsFetchRequested = (entity: any) => (obj: {
     value: string;
     reason: string;
   }) => {

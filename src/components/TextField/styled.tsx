@@ -5,7 +5,33 @@ import Paper from '@material-ui/core/Paper';
 
 import { mainColor } from './../../constants';
 
-export const Input = styled(TextField)`
+export const Input = styled(initialProps => {
+  /* We can expand InputProps with inputRef if necessary (i.e. for react-autosuggest renderInputComponent method) */
+  const InputProps = {
+    classes: {
+      root: 'cssOutlinedInput',
+      focused: 'cssFocused',
+      notchedOutline: 'notchedOutline'
+    },
+    ...initialProps.InputProps
+  };
+
+  return (
+    <TextField
+      fullWidth={true}
+      margin="normal"
+      variant="outlined"
+      InputLabelProps={{
+        classes: {
+          root: 'cssLabel',
+          focused: 'cssFocused'
+        }
+      }}
+      {...initialProps}
+      InputProps={InputProps}
+    />
+  );
+})`
   && .cssLabel.cssFocused {
     color: ${mainColor};
   }

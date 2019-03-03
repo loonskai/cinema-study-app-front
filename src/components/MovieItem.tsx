@@ -4,7 +4,7 @@ import Card from '@material-ui/core/Card';
 
 import DefaultButton from './../components/buttons/DefaultButton';
 
-const Container = styled(Card)`
+const Container = styled(Card)<any>`
   && {
     width: 100%;
     max-width: 200px;
