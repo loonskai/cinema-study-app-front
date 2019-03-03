@@ -15,6 +15,7 @@ const AuthForm = ({ type }: any) => {
       return (
         <div>
           <RadioFieldGroup
+            groupTitle="Sign in using:"
             handleChange={handleToggleSignInWith}
             fields={[
               {
