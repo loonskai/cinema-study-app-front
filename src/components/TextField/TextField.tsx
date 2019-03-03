@@ -13,6 +13,7 @@ interface Props {
   label?: string;
   type?: string;
   value?: string | Date;
+  disabled?: boolean;
   handleChange: (param: any) => any;
   withoutSuggestions?: boolean;
 }
@@ -105,11 +106,20 @@ const TextField = ({
   entity,
   label,
   value,
+  type,
+  disabled,
   withoutSuggestions = false
 }: Props) => {
   /* Returns in case when we don't need suggestions list */
   if (withoutSuggestions) {
-    return <StyledContainers.Input label={label} onChange={handleChange} />;
+    return (
+      <StyledContainers.Input
+        label={label}
+        onChange={handleChange}
+        type={type}
+        disabled={disabled}
+      />
+    );
   }
 
   const [suggestions, setSuggestions]: [any, any] = useState([]);
