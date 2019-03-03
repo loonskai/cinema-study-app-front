@@ -38,3 +38,11 @@ export const cinemas = [
   { label: 'Silver Screen' },
   { label: 'Pobeda' }
 ];
+
+export const users = [
+  {
+    email: 'client@mail.com',
+    username: 'client',
+    password: 'Password123'
+  }
+];
