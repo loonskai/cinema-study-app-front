@@ -15,7 +15,7 @@ interface Props {
 
 const MoviesContainer = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   flex-wrap: wrap;
 `;
 
@@ -48,6 +48,7 @@ class Movies extends React.Component<any, any> {
         : movies.filter((movie: any) =>
             movie.original_title.toLowerCase().includes(filterText)
           );
+    if (filteredMovies.length === 0) return 'Nothing found';
     return filteredMovies.map((movie: any) => (
       <MovieItem key={movie.id} data={movie} />
     ));
