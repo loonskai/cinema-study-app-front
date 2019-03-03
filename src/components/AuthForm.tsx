@@ -1,13 +1,27 @@
 import React, { useState } from 'react';
+import PersonIcon from '@material-ui/icons/Person';
 
 import RadioFieldGroup from './RadioFieldGroup';
 import TextField from './TextField/TextField';
+import SubmitButton from './../components/buttons/SubmitButton';
 
-const AuthForm = ({ type }: any) => {
+const AuthForm = ({ type, handleSubmit, buttonDisabled }: any) => {
   const [signInWith, setSignInWith] = useState('email');
 
-  const handleToggleSignInWith = e => {
+  const handleToggleSignInWith = (e: any) => {
     setSignInWith(e.target.value);
+  };
+
+  const handleEmailChange = (e: any) => {
+    console.log(e.target.value);
+  };
+
+  const handleUsernameChange = (e: any) => {
+    console.log(e.target.value);
+  };
+
+  const handlePasswordChange = (e: any) => {
+    console.log(e.target.value);
   };
 
   switch (type) {
@@ -30,15 +44,31 @@ const AuthForm = ({ type }: any) => {
             value={signInWith}
           />
           {signInWith === 'email' && (
-            <TextField withoutSuggestions={true} label="Email" type="email" />
+            <TextField
+              withoutSuggestions={true}
+              label="Email"
+              type="email"
+              handleChange={handleEmailChange}
+            />
           )}
           {signInWith === 'username' && (
-            <TextField withoutSuggestions={true} label="Username" />
+            <TextField
+              withoutSuggestions={true}
+              label="Username"
+              handleChange={handleUsernameChange}
+            />
           )}
           <TextField
             withoutSuggestions={true}
             label="Password"
             type="password"
+            handleChange={handlePasswordChange}
+          />
+          <SubmitButton
+            text="Sign in"
+            icon={<PersonIcon />}
+            handleClick={handleSubmit}
+            disabled={buttonDisabled}
           />
         </div>
       );

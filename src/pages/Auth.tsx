@@ -41,9 +41,14 @@ const StyledTab = styled.div<any>`
 
 const Auth = () => {
   const [tabSelected, setTab] = useState('signup');
+  const [signInDisabled, setSignInButton] = useState(true);
 
   const toggleTab = (value: string) => () => {
     setTab(value);
+  };
+
+  const handleSignIn = () => {
+    console.log('sign in');
   };
 
   return (
@@ -65,7 +70,11 @@ const Auth = () => {
           </StyledTab>
         </FormTabs>
         <FormContainer>
-          <AuthForm type={tabSelected} />
+          <AuthForm
+            type={tabSelected}
+            handleSubmit={handleSignIn}
+            buttonDisabled={signInDisabled}
+          />
         </FormContainer>
       </Container>
     </React.Fragment>

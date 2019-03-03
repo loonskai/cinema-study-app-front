@@ -6,6 +6,13 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import { mainColor } from './../constants';
 
+interface Props {
+  handleChange: any;
+  fields: any;
+  value: any;
+  groupTitle: any;
+}
+
 const StyledTitle = styled.span`
   margin-bottom: 5px;
 `;
@@ -21,11 +28,16 @@ const StyledRadio = styled(Radio)<any>`
   }
 `;
 
-const RadioFieldGroup = ({ handleChange, fields, value, groupTitle }) => {
+const RadioFieldGroup = ({
+  handleChange,
+  fields,
+  value,
+  groupTitle
+}: Props) => {
   return (
     <RadioGroup onChange={handleChange} value={value}>
       <StyledTitle>{groupTitle}</StyledTitle>
-      {fields.map(field => (
+      {fields.map((field: any) => (
         <FormControlLabel
           key={field.value}
           value={field.value}

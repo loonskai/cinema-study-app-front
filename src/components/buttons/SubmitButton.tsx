@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
-import SearchIcon from '@material-ui/icons/Search';
 
 import { whiteColor, mainDarkColor, mainDarkColorSub } from './../../constants';
 
@@ -9,6 +8,7 @@ interface Props {
   text: string;
   handleClick: (e: React.FormEvent<HTMLInputElement>) => void;
   disabled: boolean;
+  icon: any;
 }
 
 const Container = styled.div`
@@ -31,7 +31,7 @@ const StyledButton = styled(Button)<any>`
   }
 `;
 
-const SubmitButton = ({ text, handleClick, disabled }: Props) => (
+const SubmitButton = ({ text, handleClick, disabled, icon }: Props) => (
   <Container>
     <StyledButton
       variant="contained"
@@ -39,7 +39,7 @@ const SubmitButton = ({ text, handleClick, disabled }: Props) => (
       onClick={handleClick}
       disabled={disabled}
     >
-      <SearchIcon />
+      {icon}
       {text}
     </StyledButton>
   </Container>

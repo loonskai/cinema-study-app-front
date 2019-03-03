@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import SearchIcon from '@material-ui/icons/Search';
 
 import PageTitle from './../components/PageTitle';
 import SearchField from './../components/SearchField';
@@ -64,6 +65,7 @@ const Home = () => {
       />
       <SubmitButton
         text="Search"
+        icon={<SearchIcon />}
         handleClick={handleSubmit}
         disabled={buttonDisabled}
       />
