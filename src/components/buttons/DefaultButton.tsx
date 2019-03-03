@@ -10,12 +10,14 @@ const Container = styled.div<any>`
   padding: 10px 0;
 `;
 
+const StyledButton = styled(Button)<any>``;
+
 const DefaultButton = ({ text, to }: { text: string; to: string }) => {
   return (
     <Container>
-      <Button variant="outlined" component={Link} to={to}>
+      <StyledButton variant="outlined" component={Link} to={to}>
         {text}
-      </Button>
+      </StyledButton>
     </Container>
   );
 };

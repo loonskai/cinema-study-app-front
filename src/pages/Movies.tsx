@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import actions from './../redux/actions/index';
+import PageTitle from './../components/PageTitle';
 import MovieItem from './../components/MovieItem';
 import Loader from './../components/Loader';
 import TextField from './../components/TextField/TextField';
@@ -32,14 +33,28 @@ class Movies extends React.Component<any, any> {
     this.setState({ isLoading: false });
   }
 
-  filterMovies = (filterText: string) => {
+  handleSearchBar = (e: any) => {
     this.setState({
-      filterText
+      filterText: e.target.value.toLowerCase().trim()
     });
   };
 
+  getMoviesList = () => {
+    const { movies } = this.props;
+    const { filterText } = this.state;
+    const filteredMovies =
+      filterText === ''
+        ? movies
+        : movies.filter((movie: any) =>
+            movie.original_title.toLowerCase().includes(filterText)
+          );
+    return filteredMovies.map((movie: any) => (
+      <MovieItem key={movie.id} data={movie} />
+    ));
+  };
+
   render() {
-    const { isLoading, filterText } = this.state;
+    const { isLoading } = this.state;
     return isLoading ? (
       <Loader />
     ) : (
@@ -47,11 +62,10 @@ class Movies extends React.Component<any, any> {
         <TextField
           withoutSuggestions={true}
           label="Find a movie"
-          handleChange={this.filterMovies}
+          handleChange={this.handleSearchBar}
         />
-        {this.props.movies.map((movie: any) => (
-          <MovieItem key={movie.id} data={movie} />
-        ))}
+        <PageTitle text="Movies" />
+        {this.getMoviesList()}
       </MoviesContainer>
     );
   }

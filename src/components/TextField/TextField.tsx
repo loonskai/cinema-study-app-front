@@ -109,7 +109,7 @@ const TextField = ({
 }: Props) => {
   /* Returns in case when we don't need suggestions list */
   if (withoutSuggestions) {
-    return <StyledContainers.Input label={label} />;
+    return <StyledContainers.Input label={label} onChange={handleChange} />;
   }
 
   const [suggestions, setSuggestions]: [any, any] = useState([]);
