@@ -1,9 +1,11 @@
 import { combineReducers } from 'redux';
 
-import movies from './movies';
 import auth from './auth';
+import movies from './movies';
+import sessions from './sessions';
 
 export default combineReducers({
+  auth,
   movies,
-  auth
+  sessions
 });

@@ -6,7 +6,8 @@ export const containerGreyColor = '#f7f7f7';
 export const greyColor = '#bdbdbd';
 
 /* redux actions */
-export const LOAD_MOVIES_LIST = 'LOAD_MOVIES_LIST';
 export const SIGN_IN = 'SIGN_IN';
 export const SIGN_UP = 'SIGN_UP';
 export const SIGN_OUT = 'SIGN_OUT';
+export const LOAD_MOVIES_LIST = 'LOAD_MOVIES_LIST';
+export const LOAD_SESSIONS_LIST = 'LOAD_SESSIONS_LIST';

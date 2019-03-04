@@ -2,6 +2,8 @@ import axios from 'axios';
 import { apiKey } from './credentials';
 import randomstring from 'randomstring';
 
+import { sessions } from './mocks';
+
 class ApiService {
   client: any;
 
@@ -57,6 +59,16 @@ class ApiService {
         `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}`
       );
       return data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async loadSessionsList(options: any) {
+    try {
+      return new Promise((res, rej) => {
+        return res(sessions);
+      });
     } catch (error) {
       console.error(error);
     }

@@ -46,3 +46,27 @@ export const users = [
     password: 'Password123'
   }
 ];
+
+export const sessions = [
+  {
+    id: 1,
+    date: '04-03-2019',
+    time: '19:00',
+    hallId: 1,
+    movieId: 24428
+  },
+  {
+    id: 2,
+    date: '04-03-2019',
+    time: '20:00',
+    hallId: 2,
+    movieId: 24427
+  },
+  {
+    id: 3,
+    date: '04-03-2019',
+    time: '20:00',
+    hallId: 4,
+    movieId: 24428
+  }
+];
