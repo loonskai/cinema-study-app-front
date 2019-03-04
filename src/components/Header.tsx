@@ -1,16 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Tabs from '@material-ui/core/Tabs';
+import VpnKeyIcon from '@material-ui/icons/VpnKey';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import UndoIcon from '@material-ui/icons/Undo';
 
 import actions from './../redux/actions/index';
 import Logo from './Logo';
 import MenuTab from './MenuTab';
-import MenuAvatar from './MenuAvatar';
-import SignUpButton from './buttons/SignUpButton';
+import HeaderButton from './buttons/HeaderButton';
 import { mainDarkColor, mainColor } from './../constants';
+import { th } from 'date-fns/esm/locale';
 
 const StyledAppBar = styled(AppBar)<any>`
   && {
@@ -36,8 +40,29 @@ const StyledTabs = styled(Tabs)<any>`
   }
 `;
 
+const StyledAuthMenu = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const StyledAccountCircle = styled(AccountCircle)<any>`
+  && {
+    margin: 0 0.5rem;
+    cursor: pointer;
+  }
+`;
+
 const Header = (props: any) => {
   const { isAuth, signOut } = props;
+
+  const handleSignOut = () => {
+    console.log('sign out');
+  };
+
+  const handleProfileRedirect = () => {
+    props.history.push('/profile');
+  };
+
   return (
     <StyledAppBar position="fixed">
       <StyledToolBar>
@@ -50,11 +75,20 @@ const Header = (props: any) => {
           <MenuTab value={'/movies'} label="Movies" to="/movies" />
         </StyledTabs>
       </StyledToolBar>
-      {isAuth ? (
-        <MenuAvatar name="John" />
-      ) : (
-        <SignUpButton text="Sign Up" to="/auth" />
-      )}
+      <StyledAuthMenu>
+        {isAuth ? (
+          <React.Fragment>
+            <StyledAccountCircle onClick={handleProfileRedirect} />
+            <HeaderButton
+              text="Sign Out"
+              icon={<UndoIcon />}
+              handleClick={handleSignOut}
+            />
+          </React.Fragment>
+        ) : (
+          <HeaderButton text="Sign Up" to="/auth" icon={<VpnKeyIcon />} />
+        )}
+      </StyledAuthMenu>
     </StyledAppBar>
   );
 };
@@ -68,4 +102,4 @@ const mapStateToProps = ({ auth }: any) => {
 export default connect(
   mapStateToProps,
   actions
-)(Header);
+)(withRouter(Header));
