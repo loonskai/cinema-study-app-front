@@ -1,19 +1,38 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
+import { Provider, connect } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 import store from './redux/store';
+import actions from './redux/actions';
 import Layout from './Layout';
 
-ReactDOM.render(
-  <Provider store={store}>
+const App = ({ validateToken }: any) => {
+  useEffect(() => {
+    const token = sessionStorage.getItem('token');
+    if (token) {
+      validateToken(token);
+    }
+  }, []);
+
+  return (
     <CssBaseline>
-      <BrowserRouter basename={'/'}>
+      <BrowserRouter>
         <Layout />
       </BrowserRouter>
     </CssBaseline>
+  );
+};
+
+const ConnectedApp = connect(
+  null,
+  actions
+)(App);
+
+ReactDOM.render(
+  <Provider store={store}>
+    <ConnectedApp />
   </Provider>,
   document.getElementById('root')
 );

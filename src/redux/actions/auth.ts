@@ -28,8 +28,22 @@ const signOut = () => {
 
 const signUp = () => {};
 
+const validateToken = (token: string) => {
+  try {
+    return async (dispatch: any) => {
+      const tokenIsValid = await api.validateToken(token);
+      if (tokenIsValid) {
+        dispatch({ type: SIGN_IN, payload: true });
+      }
+    };
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export default {
   signIn,
   signUp,
-  signOut
+  signOut,
+  validateToken
 };

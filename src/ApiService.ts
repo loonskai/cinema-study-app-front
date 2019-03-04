@@ -29,6 +29,17 @@ class ApiService {
     }
   }
 
+  async validateToken(token: string) {
+    try {
+      // Here we make request to validate token that has been received from sessionStorage while app initialization
+      return new Promise((res, rej) => {
+        return res(true);
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   async loadMoviesList() {
     try {
       const { data } = await this.client.get(
