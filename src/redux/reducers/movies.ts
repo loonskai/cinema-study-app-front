@@ -1,7 +1,7 @@
 import { LOAD_MOVIES_LIST } from './../../constants';
 
 const initialState = {
-  movies: []
+  data: []
 };
 
 export default (state = initialState, action: any) => {
@@ -9,7 +9,7 @@ export default (state = initialState, action: any) => {
 
   switch (type) {
     case LOAD_MOVIES_LIST:
-      return payload;
+      return { data: payload };
     default:
       return state;
   }

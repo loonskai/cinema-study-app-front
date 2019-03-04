@@ -1,16 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-const MoviePage = ({ data }: { data: any }) => {
-  if (!data) return <div>Data not loaded</div>;
+const MoviePage = ({ movie }: { movie: any }) => {
+  if (!movie) return <div>Data not loaded</div>;
   return (
     <div>
-      <h1>{data.original_title}</h1>
+      <h1>{movie.original_title}</h1>
       <img
-        src={`https://image.tmdb.org/t/p/w500${data.poster_path}`}
-        alt={data.original_title}
+        src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+        alt={movie.original_title}
       />
-      <p>{data.overview}</p>
+      <p>{movie.overview}</p>
     </div>
   );
 };
@@ -18,6 +18,8 @@ const MoviePage = ({ data }: { data: any }) => {
 export default connect(({ movies }: { movies: any }, initialProps: any) => {
   const { match } = initialProps;
   return {
-    data: movies.find((movie: any) => movie.id.toString() === match.params.id)
+    movie: movies.data.find(
+      (movie: any) => movie.id.toString() === match.params.id
+    )
   };
 })(MoviePage);
