@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import PageTitle from './../components/PageTitle';
-import AuthForm from './../components/AuthForm';
+import SignUpForm from './../components/SignUpForm';
+import SignInForm from './../components/SignInForm';
 import {
   whiteColor,
   containerGreyColor,
@@ -41,14 +42,20 @@ const StyledTab = styled.div<any>`
 
 const Auth = () => {
   const [tabSelected, setTab] = useState('signup');
-  const [signInDisabled, setSignInButton] = useState(true);
 
   const toggleTab = (value: string) => () => {
     setTab(value);
   };
 
-  const handleSignIn = () => {
-    console.log('sign in');
+  const getForm = () => {
+    switch (tabSelected) {
+      case 'signup':
+        return <SignUpForm />;
+      case 'signin':
+        return <SignInForm />;
+      default:
+        return null;
+    }
   };
 
   return (
@@ -69,13 +76,7 @@ const Auth = () => {
             Sign In
           </StyledTab>
         </FormTabs>
-        <FormContainer>
-          <AuthForm
-            type={tabSelected}
-            handleSubmit={handleSignIn}
-            buttonDisabled={signInDisabled}
-          />
-        </FormContainer>
+        <FormContainer>{getForm()}</FormContainer>
       </Container>
     </React.Fragment>
   );
