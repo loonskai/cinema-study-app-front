@@ -4,17 +4,35 @@ import PersonIcon from '@material-ui/icons/Person';
 import RadioFieldGroup from './RadioFieldGroup';
 import TextField from './TextField/TextField';
 import SubmitButton from './../components/buttons/SubmitButton';
+import { users } from './../mocks';
 
 const SignInForm = () => {
   const [signInWith, setSignInWith] = useState('email');
   const [values, setValues] = useState({
     email: '',
     username: '',
-    password: ''
+    password: 'Password123'
   });
 
+  const handleChange = (e: any) => {
+    setValues({
+      ...values,
+      [e.target.name]: e.target.value
+    });
+  };
+
   const handleSubmit = () => {
-    console.log('sign in');
+    const { email, username, password } = values;
+    const user = users.find(
+      user => user.email === email || user.username === username
+    );
+    if (!user) {
+      console.error('user not found');
+    } else if (user.password !== password) {
+      console.error('wrong password');
+    } else {
+      console.log('succesfully signed in');
+    }
   };
 
   const handleToggleSignInWith = (e: any) => {
@@ -34,13 +52,6 @@ const SignInForm = () => {
     setValues({
       ...values,
       [targetToClear as string]: ''
-    });
-  };
-
-  const handleChange = (e: any) => {
-    setValues({
-      ...values,
-      [e.target.name]: e.target.value
     });
   };
 
