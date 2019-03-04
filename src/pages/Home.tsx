@@ -12,7 +12,7 @@ const Home = () => {
   const [date, setDate] = useState(new Date());
   const [buttonDisabled, setButtonDisabled] = useState(true);
 
-  const handleSubmit = (e: React.FormEvent<HTMLInputElement>) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
     console.log(movie);
     console.log(city);
@@ -29,7 +29,7 @@ const Home = () => {
   });
 
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <PageTitle text="Let's find something interesting" />
       <SearchField
         id="movie"
@@ -66,7 +66,6 @@ const Home = () => {
       <SubmitButton
         text="Search"
         icon={<SearchIcon />}
-        handleClick={handleSubmit}
         disabled={buttonDisabled}
       />
     </form>

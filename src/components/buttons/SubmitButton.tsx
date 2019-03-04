@@ -6,7 +6,7 @@ import { whiteColor, mainDarkColor, mainDarkColorSub } from './../../constants';
 
 interface Props {
   text: string;
-  handleClick: (e: React.FormEvent<HTMLInputElement>) => void;
+  handleClick?: (e: React.FormEvent<HTMLInputElement>) => void;
   disabled: boolean;
   icon: any;
 }
@@ -31,13 +31,13 @@ const StyledButton = styled(Button)<any>`
   }
 `;
 
-const SubmitButton = ({ text, handleClick, disabled, icon }: Props) => (
+const SubmitButton = ({ text, disabled, icon }: Props) => (
   <Container>
     <StyledButton
       variant="contained"
       color="primary"
-      onClick={handleClick}
       disabled={disabled}
+      type="submit"
     >
       {icon}
       {text}

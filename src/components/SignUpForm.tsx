@@ -20,7 +20,8 @@ const SignUpForm = () => {
     });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
     const { email, username, password, confirmPassword } = values;
     const user = users.find(
       user => user.email === email || user.username === username
@@ -39,7 +40,7 @@ const SignUpForm = () => {
   };
 
   return (
-    <div>
+    <form onSubmit={handleSubmit}>
       <TextField
         name="email"
         label="Email"
@@ -74,7 +75,6 @@ const SignUpForm = () => {
       <SubmitButton
         text="Sign up"
         icon={<PersonAddIcon />}
-        handleClick={handleSubmit}
         disabled={
           values.email === '' ||
           values.username === '' ||
@@ -82,7 +82,7 @@ const SignUpForm = () => {
           values.confirmPassword === ''
         }
       />
-    </div>
+    </form>
   );
 };
 

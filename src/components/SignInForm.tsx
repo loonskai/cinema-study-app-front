@@ -21,7 +21,8 @@ const SignInForm = () => {
     });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
     const { email, username, password } = values;
     const user = users.find(
       user => user.email === email || user.username === username
@@ -56,7 +57,7 @@ const SignInForm = () => {
   };
 
   return (
-    <div>
+    <form onSubmit={handleSubmit}>
       <RadioFieldGroup
         groupTitle="Sign in using:"
         handleChange={handleToggleSignInWith}
@@ -102,7 +103,6 @@ const SignInForm = () => {
       <SubmitButton
         text="Sign in"
         icon={<PersonIcon />}
-        handleClick={handleSubmit}
         disabled={
           !(
             (values.email !== '' && values.password !== '') ||
@@ -110,7 +110,7 @@ const SignInForm = () => {
           )
         }
       />
-    </div>
+    </form>
   );
 };
 
