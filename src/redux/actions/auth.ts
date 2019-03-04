@@ -7,7 +7,7 @@ const signIn = (values: any) => {
       const token = await api.signIn(values);
       if (!token) throw new Error('cannot get token from api service');
       dispatch({ type: SIGN_IN, payload: true });
-      localStorage.setItem('token', token.toString());
+      sessionStorage.setItem('token', token.toString());
     };
   } catch (error) {
     console.log(error);
@@ -19,7 +19,7 @@ const signOut = () => {
     return async (dispatch: any) => {
       await api.signOut();
       dispatch({ type: SIGN_OUT });
-      localStorage.removeItem('token');
+      sessionStorage.removeItem('token');
     };
   } catch (error) {
     console.log(error);

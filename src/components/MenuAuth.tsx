@@ -27,6 +27,7 @@ const MenuAuth = (props: any) => {
   const handleSignOut = async () => {
     await signOut();
     console.log('succesfully signed out');
+    props.history.push('/auth');
   };
 
   const handleProfileRedirect = () => {
