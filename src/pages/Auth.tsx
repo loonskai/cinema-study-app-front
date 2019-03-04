@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router';
 import styled from 'styled-components';
 
 import PageTitle from './../components/PageTitle';
@@ -40,7 +42,7 @@ const StyledTab = styled.div<any>`
   padding: 1rem;
 `;
 
-const Auth = () => {
+const Auth = ({ isAuth }: any) => {
   const [tabSelected, setTab] = useState('signup');
 
   const toggleTab = (value: string) => () => {
@@ -57,6 +59,10 @@ const Auth = () => {
         return null;
     }
   };
+
+  if (isAuth) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <React.Fragment>
@@ -82,4 +88,4 @@ const Auth = () => {
   );
 };
 
-export default Auth;
+export default connect(({ auth }: any) => ({ isAuth: auth.isAuth }))(Auth);

@@ -1,7 +1,7 @@
 import { SIGN_IN, SIGN_UP, SIGN_OUT } from './../../constants';
 
 const initialState = {
-  token: null
+  isAuth: false
 };
 
 export default (state = initialState, action: any) => {
@@ -9,7 +9,7 @@ export default (state = initialState, action: any) => {
 
   switch (type) {
     case SIGN_IN:
-      return payload;
+      return { isAuth: true };
     default:
       return state;
   }

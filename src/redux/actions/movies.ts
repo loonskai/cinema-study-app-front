@@ -1,7 +1,5 @@
 import { LOAD_MOVIES_LIST } from './../../constants';
-import ApiService from './../../ApiService';
-
-const api = new ApiService();
+import api from './../../ApiService';
 
 const loadMoviesList = () => {
   try {

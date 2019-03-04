@@ -2,7 +2,7 @@ import axios from 'axios';
 import { apiKey } from './credentials';
 import randomstring from 'randomstring';
 
-export default class ApiService {
+class ApiService {
   client: any;
 
   constructor() {
@@ -32,3 +32,6 @@ export default class ApiService {
     }
   }
 }
+
+const api = new ApiService();
+export default api;
