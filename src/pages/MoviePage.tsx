@@ -1,16 +1,37 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
-const MoviePage = ({ movie }: { movie: any }) => {
-  if (!movie) return <div>Data not loaded</div>;
-  return (
+import api from './../ApiService';
+import Loader from './../components/Loader';
+
+const MoviePage = ({ movie, match }: any) => {
+  const [loadedMovie, setMovie] = useState(movie);
+  const [isLoading, setLoading] = useState(!movie);
+
+  const loadMovieById = async (id: string) => {
+    if (!movie) {
+      const singleMovie = await api.loadMovieById(id);
+      setMovie(singleMovie);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (!loadedMovie) {
+      loadMovieById(match.params.id);
+    }
+  });
+
+  return isLoading ? (
+    <Loader />
+  ) : (
     <div>
-      <h1>{movie.original_title}</h1>
+      <h1>{loadedMovie.original_title}</h1>
       <img
-        src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-        alt={movie.original_title}
+        src={`https://image.tmdb.org/t/p/w500${loadedMovie.poster_path}`}
+        alt={loadedMovie.original_title}
       />
-      <p>{movie.overview}</p>
+      <p>{loadedMovie.overview}</p>
     </div>
   );
 };

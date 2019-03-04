@@ -50,6 +50,17 @@ class ApiService {
       console.error(error);
     }
   }
+
+  async loadMovieById(id: string) {
+    try {
+      const { data } = await this.client.get(
+        `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}`
+      );
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }
 
 const api = new ApiService();
