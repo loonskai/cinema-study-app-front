@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import PersonIcon from '@material-ui/icons/Person';
 
+import actions from './../redux/actions/index';
 import RadioFieldGroup from './RadioFieldGroup';
 import TextField from './TextField/TextField';
 import SubmitButton from './../components/buttons/SubmitButton';
 import { users } from './../mocks';
 
-const SignInForm = () => {
+const SignInForm = ({ signIn }: any) => {
   const [signInWith, setSignInWith] = useState('email');
   const [values, setValues] = useState({
-    email: '',
+    email: 'client@mail.com',
     username: '',
     password: 'Password123'
   });
@@ -21,7 +23,7 @@ const SignInForm = () => {
     });
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     const { email, username, password } = values;
     const user = users.find(
@@ -32,6 +34,7 @@ const SignInForm = () => {
     } else if (user.password !== password) {
       console.error('wrong password');
     } else {
+      await signIn(values);
       console.log('succesfully signed in');
     }
   };
@@ -114,4 +117,7 @@ const SignInForm = () => {
   );
 };
 
-export default SignInForm;
+export default connect(
+  null,
+  actions
+)(SignInForm);
