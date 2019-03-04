@@ -21,6 +21,14 @@ class ApiService {
     }
   }
 
+  async signOut() {
+    try {
+      return true;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   async loadMoviesList() {
     try {
       const { data } = await this.client.get(

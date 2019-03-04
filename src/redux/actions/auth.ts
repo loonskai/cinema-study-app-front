@@ -14,9 +14,19 @@ const signIn = (values: any) => {
   }
 };
 
-const signUp = () => {};
+const signOut = () => {
+  try {
+    return async (dispatch: any) => {
+      await api.signOut();
+      dispatch({ type: SIGN_OUT });
+      localStorage.removeItem('token');
+    };
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-const signOut = () => {};
+const signUp = () => {};
 
 export default {
   signIn,

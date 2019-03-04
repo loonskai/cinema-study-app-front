@@ -10,6 +10,8 @@ export default (state = initialState, action: any) => {
   switch (type) {
     case SIGN_IN:
       return { isAuth: true };
+    case SIGN_OUT:
+      return { isAuth: false };
     default:
       return state;
   }

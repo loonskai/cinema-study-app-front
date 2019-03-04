@@ -24,8 +24,9 @@ const StyledAccountCircle = styled(AccountCircle)<any>`
 const MenuAuth = (props: any) => {
   const { isAuth, signOut } = props;
 
-  const handleSignOut = () => {
-    console.log('sign out');
+  const handleSignOut = async () => {
+    await signOut();
+    console.log('succesfully signed out');
   };
 
   const handleProfileRedirect = () => {
