@@ -6,7 +6,8 @@ module.exports = {
   entry: './src/App.tsx',
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, './dist')
+    path: __dirname + '/dist',
+    publicPath: '/'
   },
   devtool: 'source-map',
   resolve: {

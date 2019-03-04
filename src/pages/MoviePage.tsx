@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 const MoviePage = ({ data }: { data: any }) => {
+  if (!data) return <div>Data not loaded</div>;
   return (
     <div>
       <h1>{data.original_title}</h1>
