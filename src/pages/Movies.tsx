@@ -6,7 +6,7 @@ import actions from './../redux/actions/index';
 import PageTitle from './../components/PageTitle';
 import MovieItem from './../components/MovieItem';
 import Loader from './../components/Loader';
-import TextField from './../components/TextField/TextField';
+import SearchField from './../components/SearchField';
 
 interface Props {
   loadMoviesList: any;
@@ -48,7 +48,9 @@ class Movies extends React.Component<any, any> {
         : movies.filter((movie: any) =>
             movie.original_title.toLowerCase().includes(filterText)
           );
-    if (filteredMovies.length === 0) return 'Nothing found';
+    if (filteredMovies.length === 0) {
+      return 'Nothing found';
+    }
     return filteredMovies.map((movie: any) => (
       <MovieItem key={movie.id} data={movie} />
     ));
@@ -60,10 +62,14 @@ class Movies extends React.Component<any, any> {
       <Loader />
     ) : (
       <MoviesContainer>
-        <TextField
-          withoutSuggestions={true}
-          label="Find a movie"
+        <SearchField
+          id="movie"
+          type="text"
+          icon="search"
+          entity="movie"
+          label="Movie Title"
           handleChange={this.handleSearchBar}
+          withoutSuggestions={true}
         />
         <PageTitle text="Movies" />
         {this.getMoviesList()}

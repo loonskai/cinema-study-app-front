@@ -12,7 +12,7 @@ interface Props {
   id: string;
   label: string;
   type: string;
-  value: Date | string;
+  value?: Date | string;
   handleChange: (param: any) => any;
 }
 

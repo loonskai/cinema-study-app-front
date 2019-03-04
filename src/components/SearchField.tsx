@@ -4,6 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import LocalMovies from '@material-ui/icons/LocalMovies';
 import LocationCity from '@material-ui/icons/LocationCity';
 import Weekend from '@material-ui/icons/Weekend';
+import Search from '@material-ui/icons/Search';
 import CalendarToday from '@material-ui/icons/CalendarToday';
 
 import TextField from './TextField/TextField';
@@ -17,11 +18,13 @@ interface Props {
   id: string;
   label: string;
   type: string;
-  value: string | Date;
+  value?: string | Date;
+  icon?: string;
+  withoutSuggestions?: boolean;
 }
 
-const IconStyled = styled(({ entity, ...other }) => {
-  switch (entity) {
+const IconStyled = styled(({ icon, ...other }) => {
+  switch (icon) {
     case 'movie':
       return <LocalMovies fontSize="large" {...other} />;
     case 'city':
@@ -30,6 +33,8 @@ const IconStyled = styled(({ entity, ...other }) => {
       return <Weekend fontSize="large" {...other} />;
     case 'date':
       return <CalendarToday fontSize="large" {...other} />;
+    case 'search':
+      return <Search fontSize="large" {...other} />;
     default:
       return null;
   }
@@ -55,7 +60,7 @@ const getField = (props: Props) => {
 const SearchField = (props: Props) => (
   <Grid container={true} spacing={8} justify="center" alignItems="center">
     <Grid item={true}>
-      <IconStyled entity={props.entity} />
+      <IconStyled icon={props.icon || props.entity} />
     </Grid>
     <Grid item={true} lg={7}>
       {getField(props)}
