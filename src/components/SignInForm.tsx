@@ -7,25 +7,41 @@ import SubmitButton from './../components/buttons/SubmitButton';
 
 const SignInForm = () => {
   const [signInWith, setSignInWith] = useState('email');
+  const [values, setValues] = useState({
+    email: '',
+    username: '',
+    password: ''
+  });
 
   const handleSubmit = () => {
     console.log('sign in');
   };
 
   const handleToggleSignInWith = (e: any) => {
-    setSignInWith(e.target.value);
+    const { value } = e.target;
+    let targetToClear;
+    switch (value) {
+      case 'email':
+        targetToClear = 'username';
+        break;
+      case 'username':
+        targetToClear = 'email';
+        break;
+      default:
+        break;
+    }
+    setSignInWith(value);
+    setValues({
+      ...values,
+      [targetToClear as string]: ''
+    });
   };
 
-  const handleEmailChange = (e: any) => {
-    console.log(e.target.value);
-  };
-
-  const handleUsernameChange = (e: any) => {
-    console.log(e.target.value);
-  };
-
-  const handlePasswordChange = (e: any) => {
-    console.log(e.target.value);
+  const handleChange = (e: any) => {
+    setValues({
+      ...values,
+      [e.target.name]: e.target.value
+    });
   };
 
   return (
@@ -47,30 +63,41 @@ const SignInForm = () => {
       />
       {signInWith === 'email' && (
         <TextField
-          withoutSuggestions={true}
+          name="email"
           label="Email"
           type="email"
-          handleChange={handleEmailChange}
+          value={values.email}
+          handleChange={handleChange}
+          withoutSuggestions={true}
         />
       )}
       {signInWith === 'username' && (
         <TextField
-          withoutSuggestions={true}
+          name="username"
           label="Username"
-          handleChange={handleUsernameChange}
+          value={values.username}
+          handleChange={handleChange}
+          withoutSuggestions={true}
         />
       )}
       <TextField
-        withoutSuggestions={true}
+        name="password"
         label="Password"
         type="password"
-        handleChange={handlePasswordChange}
+        value={values.password}
+        handleChange={handleChange}
+        withoutSuggestions={true}
       />
       <SubmitButton
         text="Sign in"
         icon={<PersonIcon />}
         handleClick={handleSubmit}
-        disabled={true}
+        disabled={
+          !(
+            (values.email !== '' && values.password !== '') ||
+            (values.username !== '' && values.password !== '')
+          )
+        }
       />
     </div>
   );

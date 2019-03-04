@@ -10,6 +10,7 @@ import { movies, cities } from './../../mocks';
 interface Props {
   entity?: string;
   id?: string;
+  name?: string;
   label?: string;
   type?: string;
   value?: string | Date;
@@ -108,15 +109,18 @@ const TextField = ({
   value,
   type,
   disabled,
+  name,
   withoutSuggestions = false
 }: Props) => {
   /* Returns in case when we don't need suggestions list */
   if (withoutSuggestions) {
     return (
       <StyledContainers.Input
-        label={label}
-        onChange={handleChange}
+        name={name}
         type={type}
+        label={label}
+        value={value}
+        onChange={handleChange}
         disabled={disabled}
       />
     );
