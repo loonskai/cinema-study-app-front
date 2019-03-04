@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import api from './../ApiService';
 import Loader from './../components/Loader';
 import PageTitle from './../components/PageTitle';
+import SearchSessionForm from './../components/SearchSessionForm';
 
 const MovieInfoContainer = styled.div`
   display: flex;
@@ -58,7 +59,10 @@ const MoviePage = ({ movie, match }: any) => {
           src={`https://image.tmdb.org/t/p/w500${loadedMovie.poster_path}`}
           alt={loadedMovie.original_title}
         />
-        <StyledDescription>{loadedMovie.overview}</StyledDescription>
+        <StyledDescription>
+          <div>{loadedMovie.overview}</div>
+          <SearchSessionForm />
+        </StyledDescription>
       </MovieInfoContainer>
     </div>
   );
