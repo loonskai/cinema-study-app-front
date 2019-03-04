@@ -13,10 +13,18 @@ interface Props {
   movies: Array<any>;
 }
 
-const MoviesContainer = styled.div`
+const Container = styled.div`
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   flex-wrap: wrap;
+`;
+
+const MoviesContainer = styled.div`
+  margin: 0 auto;
+  max-width: 80%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 `;
 
 class Movies extends React.Component<any, any> {
@@ -61,7 +69,7 @@ class Movies extends React.Component<any, any> {
     return isLoading ? (
       <Loader />
     ) : (
-      <MoviesContainer>
+      <Container>
         <SearchField
           id="movie"
           type="text"
@@ -72,8 +80,8 @@ class Movies extends React.Component<any, any> {
           withoutSuggestions={true}
         />
         <PageTitle text="Movies" />
-        {this.getMoviesList()}
-      </MoviesContainer>
+        <MoviesContainer>{this.getMoviesList()}</MoviesContainer>
+      </Container>
     );
   }
 }

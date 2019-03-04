@@ -6,7 +6,6 @@ import DefaultButton from './../components/buttons/DefaultButton';
 
 const Container = styled(Card)<any>`
   && {
-    width: 100%;
     max-width: 200px;
     margin: 1rem;
     display: flex;
