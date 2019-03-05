@@ -53,6 +53,8 @@ export const sessions = [
     date: '04-03-2019',
     time: '19:00',
     hallId: 1,
+    city: 'Minsk',
+    cinema: "Oktybr'",
     movieId: 24428
   },
   {
@@ -60,6 +62,8 @@ export const sessions = [
     date: '04-03-2019',
     time: '20:00',
     hallId: 2,
+    city: 'Brest',
+    cinema: 'Belarus',
     movieId: 24427
   },
   {
@@ -67,6 +71,8 @@ export const sessions = [
     date: '04-03-2019',
     time: '20:00',
     hallId: 4,
+    city: 'Minsk',
+    cinema: 'Pobeda',
     movieId: 24428
   }
 ];

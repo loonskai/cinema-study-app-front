@@ -22,7 +22,7 @@ const StyledPoster = styled.img`
   max-width: 350px;
   height: auto;
   margin: 1rem 0;
-  align-self: center;
+  align-self: flex-start;
 `;
 
 const StyledDescription = styled.div`

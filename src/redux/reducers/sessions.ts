@@ -1,7 +1,9 @@
 import { LOAD_SESSIONS_LIST } from './../../constants';
 
+import { sessions } from './../../mocks';
+
 const initialState = {
-  data: []
+  data: sessions // empty array default
 };
 
 export default (state = initialState, action: any) => {
