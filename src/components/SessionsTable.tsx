@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import DefaultButton from './../components/buttons/DefaultButton';
 import { greyColor, whiteColor, containerGreyColor } from './../constants';
 
 const Container = styled.div`
@@ -33,17 +34,34 @@ const TableCell = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
   flex-grow: 1;
-  padding: 0.5rem 0;
+  padding: 0.5rem 0.2rem;
+  font-size: 14px;
+  text-align: center;
 
   &&:not(:last-child) {
     border-right: 1px solid ${greyColor};
   }
 `;
 
+const CellLine = styled.span`
+  width: 100%;
+`;
+
+const WideCell = styled(TableCell)`
+  grid-column: 1 / 5;
+`;
+
 const SessionsTable = ({ sessions }: any) => {
   const getRows = () => {
-    if (sessions.length === 0) return <div>No sessions found</div>;
+    if (sessions.length === 0) {
+      return (
+        <TableRow>
+          <WideCell>No sessions found</WideCell>
+        </TableRow>
+      );
+    }
     return sessions.map((session: any) => (
       <TableRow key={session.id.toString()}>
         <TableCell>
@@ -53,10 +71,16 @@ const SessionsTable = ({ sessions }: any) => {
           <span>{session.cinema}</span>
         </TableCell>
         <TableCell>
-          <span>{session.date}</span>
-          <span>{session.time}</span>
+          <CellLine>{session.date}</CellLine>
+          <CellLine>{session.time}</CellLine>
         </TableCell>
-        <TableCell />
+        <TableCell>
+          <DefaultButton
+            text="Buy Ticket"
+            to={`/sessions/${session.id.toString()}`}
+            color={whiteColor}
+          />
+        </TableCell>
       </TableRow>
     ));
   };

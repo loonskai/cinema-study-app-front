@@ -6,6 +6,7 @@ import Movies from './pages/Movies';
 import Auth from './pages/Auth';
 import MoviePage from './pages/MoviePage';
 import UserProfile from './pages/UserProfile';
+import SessionPage from './pages/SessionPage';
 
 const Root = () => (
   <Switch>
@@ -14,6 +15,7 @@ const Root = () => (
     <Route path="/movies/:id" component={MoviePage} />
     <Route path="/auth" component={Auth} />
     <Route path="/profile" component={UserProfile} />
+    <Route path="/sessions/:id" component={SessionPage} />
   </Switch>
 );
 
