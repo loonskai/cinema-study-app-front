@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import api from './../ApiService';
 import Loader from './../components/Loader';
 import PageTitle from './../components/PageTitle';
 import SearchSessionForm from './../components/SearchSessionForm';
+import { StyledPoster } from './../components/styled/images';
 
 const MovieInfoContainer = styled.div`
   display: flex;
@@ -16,14 +17,6 @@ const MovieInfoContainer = styled.div`
   }
 `;
 
-const StyledPoster = styled.img`
-  width: 100%;
-  max-width: 350px;
-  height: auto;
-  margin: 1rem 0;
-  align-self: flex-start;
-`;
-
 const StyledDescription = styled.div`
   @media screen and (min-width: 768px) {
     padding: 1.5rem;
@@ -31,12 +24,12 @@ const StyledDescription = styled.div`
 `;
 
 const MoviePage = ({ match }: any) => {
-  const [loadedMovie, setMovie]: [any, any] = useState({});
+  const [movie, setMovie]: [any, any] = useState({});
   const [isLoading, setLoading] = useState(true);
 
   const loadData = async (id: string) => {
-    const singleMovie = await api.loadMovieById(id);
-    setMovie(singleMovie);
+    const movieLoaded = await api.loadMovieById(id);
+    setMovie(movieLoaded);
     setLoading(false);
   };
 
@@ -47,19 +40,19 @@ const MoviePage = ({ match }: any) => {
   return isLoading ? (
     <Loader />
   ) : (
-    <div>
-      <PageTitle text={loadedMovie.original_title} />
+    <Fragment>
+      <PageTitle text={movie.original_title} />
       <MovieInfoContainer>
         <StyledPoster
-          src={`https://image.tmdb.org/t/p/w500${loadedMovie.poster_path}`}
-          alt={loadedMovie.original_title}
+          src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+          alt={movie.original_title}
         />
         <StyledDescription>
-          <div>{loadedMovie.overview}</div>
+          <div>{movie.overview}</div>
           <SearchSessionForm />
         </StyledDescription>
       </MovieInfoContainer>
-    </div>
+    </Fragment>
   );
 };
 
