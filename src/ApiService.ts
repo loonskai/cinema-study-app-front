@@ -64,6 +64,16 @@ class ApiService {
     }
   }
 
+  async loadSessionById(id: number) {
+    try {
+      return new Promise((res, rej) => {
+        return res(sessions.find(session => session.id === id));
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   async loadSessionsList(options: any) {
     try {
       return new Promise((res, rej) => {
