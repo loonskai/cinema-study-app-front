@@ -1,3 +1,11 @@
+export const users = [
+  {
+    email: 'client@mail.com',
+    username: 'client',
+    password: 'Password123'
+  }
+];
+
 export const movies = [
   { label: 'The Shawshank Redemption' },
   { label: 'The Godfather' },
@@ -32,18 +40,43 @@ export const cities = [
 ];
 
 export const cinemas = [
-  { label: 'Avrora' },
-  { label: 'Oktyabr' },
-  { label: 'Moskva' },
-  { label: 'Silver Screen' },
-  { label: 'Pobeda' }
+  {
+    id: 1,
+    name: 'Avrora'
+  },
+  {
+    id: 2,
+    name: 'Oktyabr'
+  },
+  {
+    id: 3,
+    name: 'Moskva'
+  },
+  {
+    id: 4,
+    name: 'Silver Screen'
+  },
+  {
+    id: 5,
+    name: 'Pobeda'
+  }
 ];
 
-export const users = [
+export const halls = [
   {
-    email: 'client@mail.com',
-    username: 'client',
-    password: 'Password123'
+    id: 1,
+    cinemaId: 1,
+    name: 'Main Hall'
+  },
+  {
+    id: 2,
+    cinemaId: 1,
+    name: '3D Hall'
+  },
+  {
+    id: 3,
+    cinemaId: 3,
+    name: 'Adults only'
   }
 ];
 

@@ -33,7 +33,12 @@ const StyledCheckbox = styled(Checkbox)<any>`
   }
 `;
 
-const SeatsMenu = ({ onHallChange, onOptionsChange, options }: any) => {
+const SeatsMenu = ({
+  onHallChange,
+  onOptionsChange,
+  options,
+  hallSelected
+}: any) => {
   const handleCheckboxChange = (e: any) => {
     onOptionsChange(e.target.value);
   };
@@ -65,7 +70,7 @@ const SeatsMenu = ({ onHallChange, onOptionsChange, options }: any) => {
           type="select"
           entity="hall"
           label="Choose Hall"
-          value=""
+          value={hallSelected}
           handleChange={onHallChange}
         />
       </Row>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import SeatsMenu from './SeatsMenu';
@@ -23,7 +23,7 @@ const StyledTitle = styled.span`
 `;
 
 const SeatsContainer = () => {
-  const [hall, setHall]: [any, any] = useState(null);
+  const [hall, setHall]: [any, any] = useState('');
   const [options, setOptions]: [any, any] = useState({
     vip: {
       label: 'VIP',
@@ -37,6 +37,11 @@ const SeatsContainer = () => {
       label: 'Front Seats',
       value: false
     }
+  });
+
+  useEffect(() => {
+    console.log(options);
+    console.log(hall);
   });
 
   const changeHall = (value: any) => {
@@ -60,6 +65,7 @@ const SeatsContainer = () => {
         onHallChange={changeHall}
         onOptionsChange={changeOptions}
         options={options}
+        hallSelected={hall}
       />
       <SeatsItems />
     </Container>

@@ -3,7 +3,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import * as StyledContainers from './styled';
-import { cinemas } from './../../mocks';
+import { cinemas, halls } from './../../mocks';
 
 interface Props {
   entity: string;
@@ -18,7 +18,11 @@ const getOptions = (entity: string) => {
   let options;
   switch (entity) {
     case 'cinema': {
-      options = cinemas as Array<{ label: string }>;
+      options = cinemas.map(cinema => ({ label: cinema.name }));
+      break;
+    }
+    case 'hall': {
+      options = halls.map(hall => ({ label: hall.name }));
       break;
     }
     default: {
