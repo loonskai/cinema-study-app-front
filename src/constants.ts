@@ -6,6 +6,10 @@ export const containerGreyColor = '#f7f7f7';
 export const greyColor = '#bdbdbd';
 export const screenBgColor = '#DBE6EC';
 export const screenTxtColor = '#81A8B8';
+export const seatFreeBg = '#A8DBA8';
+export const seatFreeTxt = '#3B8686';
+export const seatBookedBg = '#E2DDD9';
+export const seatBookedTxt = '#A8A39D';
 
 /* redux actions */
 export const SIGN_IN = 'SIGN_IN';

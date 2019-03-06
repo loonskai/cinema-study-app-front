@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import api from './../ApiService';
+import VipScheme from './schemes/VipScheme';
+import BasicScheme from './schemes/BasicScheme';
 import {
   screenBgColor,
   screenTxtColor,
   containerGreyColor
 } from './../constants';
-import SeatItem from './SeatItem';
 
 const Container = styled.div`
   width: 100%;
@@ -26,10 +27,15 @@ const Screen = styled.div`
   justify-content: center;
   align-items: center;
   padding: 2rem;
+  margin-bottom: 2rem;
   border-radius: 1rem;
   text-transform: uppercase;
   background: ${screenBgColor};
   color: ${screenTxtColor};
+`;
+
+const SeatsContainer = styled.div`
+  width: 100%;
 `;
 
 const SeatsScheme = ({ options, hall }: any) => {
@@ -49,8 +55,18 @@ const SeatsScheme = ({ options, hall }: any) => {
   }, [hall]);
 
   const renderSeats = () => {
-    // if (!seats || seats.length === 0) return 'No seats found';
-    console.log(seats);
+    if (!seats || seats.length === 0) return 'No seats found';
+    const seatElements = seats.map((type: any) => {
+      switch (type.category) {
+        case 'vip':
+          return <VipScheme key={type.category} items={type.items} />;
+        case 'basic':
+          return <BasicScheme key={type.category} items={type.items} />;
+        default:
+          return null;
+      }
+    });
+    return seatElements;
   };
 
   // if (!hall) return <div>Please, choose a hall</div>;
@@ -58,7 +74,7 @@ const SeatsScheme = ({ options, hall }: any) => {
   return (
     <Container>
       <Screen>Screen</Screen>
-      {renderSeats()}
+      <SeatsContainer>{renderSeats()}</SeatsContainer>
     </Container>
   );
 };
