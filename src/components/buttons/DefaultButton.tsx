@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
 
+import { whiteColor } from './../../constants';
+
 const Container = styled.div`
   width: 100%;
   display: flex;
@@ -12,22 +14,14 @@ const Container = styled.div`
 
 const StyledButton = styled(Button)<any>`
   && {
-    background: ${({ color }) => color};
+    background: ${whiteColor};
   }
 `;
 
-const DefaultButton = ({
-  text,
-  to,
-  color
-}: {
-  text: string;
-  to: string;
-  color?: string;
-}) => {
+const DefaultButton = ({ text, to }: { text: string; to: string }) => {
   return (
     <Container>
-      <StyledButton variant="outlined" component={Link} to={to} color={color}>
+      <StyledButton variant="outlined" component={Link} to={to}>
         {text}
       </StyledButton>
     </Container>

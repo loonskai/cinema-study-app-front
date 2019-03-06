@@ -9,7 +9,7 @@ const SessionPage = ({ match }: any) => {
   const [movie, setMovie]: [any, any] = useState({});
   const [isLoading, setLoading] = useState(true);
 
-  const loadSessionData = async (id: string) => {
+  const loadData = async (id: string) => {
     const singleSession: any = await api.loadSessionById(+id);
     const singleMovie = await api.loadMovieById(singleSession.movieId);
     setSession(singleSession);
@@ -18,7 +18,7 @@ const SessionPage = ({ match }: any) => {
   };
 
   useEffect(() => {
-    loadSessionData(match.params.id);
+    loadData(match.params.id);
   }, []);
 
   return isLoading ? (

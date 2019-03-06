@@ -78,7 +78,6 @@ const SessionsTable = ({ sessions }: any) => {
           <DefaultButton
             text="Buy Ticket"
             to={`/sessions/${session.id.toString()}`}
-            color={whiteColor}
           />
         </TableCell>
       </TableRow>

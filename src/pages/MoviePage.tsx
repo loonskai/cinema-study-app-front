@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import api from './../ApiService';
@@ -31,22 +30,18 @@ const StyledDescription = styled.div`
   }
 `;
 
-const MoviePage = ({ movie, match }: any) => {
-  const [loadedMovie, setMovie] = useState(movie);
-  const [isLoading, setLoading] = useState(!movie);
+const MoviePage = ({ match }: any) => {
+  const [loadedMovie, setMovie]: [any, any] = useState({});
+  const [isLoading, setLoading] = useState(true);
 
-  const loadMovieById = async (id: string) => {
-    if (!movie) {
-      const singleMovie = await api.loadMovieById(id);
-      setMovie(singleMovie);
-      setLoading(false);
-    }
+  const loadData = async (id: string) => {
+    const singleMovie = await api.loadMovieById(id);
+    setMovie(singleMovie);
+    setLoading(false);
   };
 
   useEffect(() => {
-    if (!loadedMovie) {
-      loadMovieById(match.params.id);
-    }
+    loadData(match.params.id);
   });
 
   return isLoading ? (
@@ -68,11 +63,4 @@ const MoviePage = ({ movie, match }: any) => {
   );
 };
 
-export default connect(({ movies }: { movies: any }, initialProps: any) => {
-  const { match } = initialProps;
-  return {
-    movie: movies.data.find(
-      (movie: any) => movie.id.toString() === match.params.id
-    )
-  };
-})(MoviePage);
+export default MoviePage;
