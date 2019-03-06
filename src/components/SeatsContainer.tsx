@@ -39,11 +39,6 @@ const SeatsContainer = () => {
     }
   });
 
-  useEffect(() => {
-    console.log(options);
-    console.log(hall);
-  });
-
   const changeHall = (value: any) => {
     setHall(value);
   };
@@ -67,7 +62,7 @@ const SeatsContainer = () => {
         options={options}
         hallSelected={hall}
       />
-      <SeatsItems />
+      <SeatsItems options={options} hall={hall} />
     </Container>
   );
 };

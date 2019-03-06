@@ -18,11 +18,14 @@ const getOptions = (entity: string) => {
   let options;
   switch (entity) {
     case 'cinema': {
-      options = cinemas.map(cinema => ({ label: cinema.name }));
+      options = cinemas.map(cinema => ({
+        label: cinema.name,
+        value: cinema.id
+      }));
       break;
     }
     case 'hall': {
-      options = halls.map(hall => ({ label: hall.name }));
+      options = halls.map(hall => ({ label: hall.name, value: hall.id }));
       break;
     }
     default: {
@@ -30,8 +33,8 @@ const getOptions = (entity: string) => {
       break;
     }
   }
-  return options.map((option, index) => (
-    <MenuItem key={index.toString()} value={option.label}>
+  return options.map((option: any, index) => (
+    <MenuItem key={index.toString()} value={option.value}>
       {option.label}
     </MenuItem>
   ));

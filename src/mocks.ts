@@ -80,6 +80,255 @@ export const halls = [
   }
 ];
 
+export const seats = [
+  {
+    hallId: 1,
+    data: [
+      {
+        category: 'vip',
+        price: 10,
+        items: [
+          {
+            row: 1,
+            seats: [
+              {
+                id: 1,
+                free: true
+              },
+              {
+                id: 2,
+                free: true
+              },
+              {
+                id: 3,
+                free: true
+              },
+              {
+                id: 4,
+                free: true
+              },
+              {
+                id: 5,
+                free: true
+              },
+              {
+                id: 6,
+                free: true
+              },
+              {
+                id: 7,
+                free: true
+              },
+              {
+                id: 8,
+                free: true
+              },
+              {
+                id: 9,
+                free: true
+              },
+              {
+                id: 10,
+                free: true
+              }
+            ]
+          },
+          {
+            row: 2,
+            seats: [
+              {
+                id: 1,
+                free: true
+              },
+              {
+                id: 2,
+                free: true
+              },
+              {
+                id: 3,
+                free: true
+              },
+              {
+                id: 4,
+                free: false
+              },
+              {
+                id: 5,
+                free: true
+              },
+              {
+                id: 6,
+                free: true
+              },
+              {
+                id: 7,
+                free: false
+              },
+              {
+                id: 8,
+                free: false
+              },
+              {
+                id: 9,
+                free: true
+              },
+              {
+                id: 10,
+                free: true
+              }
+            ]
+          }
+        ]
+      },
+      {
+        category: 'basic',
+        price: 5,
+        items: [
+          {
+            row: 1,
+            seats: [
+              {
+                id: 1,
+                free: false
+              },
+              {
+                id: 2,
+                free: false
+              },
+              {
+                id: 3,
+                free: true
+              },
+              {
+                id: 4,
+                free: false
+              },
+              {
+                id: 5,
+                free: true
+              },
+              {
+                id: 6,
+                free: true
+              },
+              {
+                id: 7,
+                free: true
+              },
+              {
+                id: 8,
+                free: true
+              },
+              {
+                id: 9,
+                free: true
+              },
+              {
+                id: 10,
+                free: false
+              }
+            ]
+          },
+          {
+            row: 2,
+            seats: [
+              {
+                id: 1,
+                free: true
+              },
+              {
+                id: 2,
+                free: true
+              },
+              {
+                id: 3,
+                free: false
+              },
+              {
+                id: 4,
+                free: false
+              },
+              {
+                id: 5,
+                free: true
+              },
+              {
+                id: 6,
+                free: true
+              },
+              {
+                id: 7,
+                free: false
+              },
+              {
+                id: 8,
+                free: false
+              },
+              {
+                id: 9,
+                free: true
+              },
+              {
+                id: 10,
+                free: false
+              }
+            ]
+          },
+          {
+            row: 3,
+            seats: [
+              {
+                id: 1,
+                free: false
+              },
+              {
+                id: 2,
+                free: true
+              },
+              {
+                id: 3,
+                free: true
+              },
+              {
+                id: 4,
+                free: false
+              },
+              {
+                id: 5,
+                free: true
+              },
+              {
+                id: 6,
+                free: true
+              },
+              {
+                id: 7,
+                free: false
+              },
+              {
+                id: 8,
+                free: true
+              },
+              {
+                id: 9,
+                free: false
+              },
+              {
+                id: 10,
+                free: false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    hallId: 2,
+    data: []
+  }
+];
+
 export const sessions = [
   {
     id: 1,
