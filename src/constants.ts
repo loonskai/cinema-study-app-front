@@ -4,6 +4,8 @@ export const mainColor = '#F7A21B';
 export const whiteColor = '#fff';
 export const containerGreyColor = '#f7f7f7';
 export const greyColor = '#bdbdbd';
+export const screenBgColor = '#DBE6EC';
+export const screenTxtColor = '#81A8B8';
 
 /* redux actions */
 export const SIGN_IN = 'SIGN_IN';

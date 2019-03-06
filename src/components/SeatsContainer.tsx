@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import SeatsMenu from './SeatsMenu';
-import SeatsItems from './SeatsItems';
+import SeatsScheme from './SeatsScheme';
 
 const Container = styled.div`
   width: 100%;
@@ -62,7 +62,7 @@ const SeatsContainer = () => {
         options={options}
         hallSelected={hall}
       />
-      <SeatsItems options={options} hall={hall} />
+      <SeatsScheme options={options} hall={hall} />
     </Container>
   );
 };
