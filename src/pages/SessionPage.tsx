@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import api from './../ApiService';
 import Loader from './../components/Loader';
 import PageTitle from './../components/PageTitle';
+import SeatsContainer from './../components/SeatsContainer';
 import { StyledPoster } from './../components/styled/images';
 import { containerGreyColor, whiteColor, greyColor } from './../constants';
 
@@ -109,6 +110,7 @@ const SessionPage = ({ match }: any) => {
           </SessionInfo>
         </SessionOverview>
       </Container>
+      <SeatsContainer />
     </Fragment>
   );
 };
