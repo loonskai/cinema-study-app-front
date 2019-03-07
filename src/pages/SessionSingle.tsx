@@ -14,9 +14,9 @@ const Container = styled.div`
   flex-wrap: wrap;
   margin: 1rem 0;
   justify-content: center;
-  padding: 20px;
+  padding: 1.25rem;
   background: ${containerGreyColor};
-  border-radius: 5px;
+  border-radius: 0.3125rem;
   box-shadow: 0px 0px 0px 1px ${greyColor};
   overflow: hidden;
   @media screen and (min-width: 768px) {
@@ -53,7 +53,7 @@ const SessionInfo = styled.div`
   margin-top: 1rem;
   padding: 1rem;
   background: ${whiteColor};
-  border-radius: 5px;
+  border-radius: 0.3125rem;
   box-shadow: 0px 0px 0px 1px ${greyColor};
 `;
 

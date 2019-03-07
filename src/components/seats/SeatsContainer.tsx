@@ -17,7 +17,7 @@ const Container = styled.div`
 
 const StyledTitle = styled.span`
   font-weight: 700;
-  font-size: 20px;
+  font-size: 1.25rem;
   width: 100%;
   margin-bottom: 1rem;
   text-align: center;

@@ -8,7 +8,7 @@ const Container = styled.span`
   justify-content: center;
   align-items: center;
   padding: 0 1rem;
-  font-size: 12px;
+  font-size: 0.75rem;
 `;
 
 const RowTitle = ({ row }: { row: number }) => <Container>row {row}</Container>;

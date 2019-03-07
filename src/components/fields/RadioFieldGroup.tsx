@@ -14,13 +14,13 @@ interface Props {
 }
 
 const StyledTitle = styled.span`
-  margin-bottom: 5px;
+  margin-bottom: 0.3125rem;
 `;
 
 const StyledRadio = styled(Radio)<any>`
   && {
-    padding: 5px;
-    margin-left: 10px;
+    padding: 0.3125rem;
+    margin-left: 0.625rem;
   }
 
   &&.checked {

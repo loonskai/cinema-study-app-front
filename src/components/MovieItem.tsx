@@ -20,7 +20,7 @@ const StyledTitle = styled.span`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 5px;
+  padding: 0.3125rem;
   text-align: center;
 `;
 

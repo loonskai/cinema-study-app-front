@@ -17,7 +17,7 @@ const Container = styled.div`
   max-width: 600px;
   width: 100%;
   margin: 1rem auto;
-  border-radius: 5px;
+  border-radius: 0.3125rem;
   box-shadow: 0px 0px 0px 1px ${greyColor};
   overflow: hidden;
 `;

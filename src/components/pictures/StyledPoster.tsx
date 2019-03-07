@@ -6,7 +6,7 @@ const StyledPoster = styled.img`
   height: auto;
   margin: 1rem 0;
   align-self: flex-start;
-  border-radius: 10px;
+  border-radius: 0.625rem;
 `;
 
 export default StyledPoster;

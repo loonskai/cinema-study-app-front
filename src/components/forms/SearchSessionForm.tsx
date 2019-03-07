@@ -15,7 +15,7 @@ const Container = styled.div`
 
 const StyledTitle = styled.h2`
   width: 100%;
-  font-size: 20px;
+  font-size: 1.25rem;
   text-align: center;
 `;
 

@@ -20,10 +20,10 @@ const Container = styled.div<any>`
   justify-content: center;
   align-items: center;
   padding: 0.5rem;
-  border-radius: 5px;
+  border-radius: 0.3125rem;
   background: ${({ theme }: any) => theme.bgColor};
   color: ${({ theme }: any) => theme.txtColor};
-  font-size: 12px;
+  font-size: 0.75rem;
   cursor: ${({ isFree }: any) => (isFree ? 'pointer' : 'not-allowed')};
 
   &:not(:last-child) {

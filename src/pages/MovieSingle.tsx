@@ -35,7 +35,7 @@ const MovieSingle = ({ match }: any) => {
 
   useEffect(() => {
     loadData(match.params.id);
-  });
+  }, []);
 
   return isLoading ? (
     <Loader />

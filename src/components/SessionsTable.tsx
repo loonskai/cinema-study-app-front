@@ -6,8 +6,8 @@ import { greyColor, whiteColor, containerGreyColor } from './../constants';
 
 const Container = styled.div`
   width: 100%;
-  margin: 10px 0;
-  border-radius: 5px;
+  margin: 0.625rem 0;
+  border-radius: 0.3125rem;
   box-shadow: 0px 0px 0px 1px ${greyColor};
   background: ${containerGreyColor};
   overflow: hidden;
@@ -37,7 +37,7 @@ const TableCell = styled.div`
   flex-wrap: wrap;
   flex-grow: 1;
   padding: 0.5rem 0.2rem;
-  font-size: 14px;
+  font-size: 0.875rem;
   text-align: center;
 
   &&:not(:last-child) {

@@ -11,7 +11,7 @@ const Container = styled.div`
   margin-bottom: 1rem;
   padding: 1rem 0;
   background: ${whiteColor};
-  border-radius: 5px;
+  border-radius: 0.3125rem;
   box-shadow: 0px 0px 0px 1px ${greyColor};
 `;
 
