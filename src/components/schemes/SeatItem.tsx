@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import {
   seatFreeBg,
   seatFreeTxt,
   seatBookedBg,
-  seatBookedTxt
+  seatBookedTxt,
+  seatSelectedBg,
+  seatSelectedTxt
 } from './../../constants';
 
 const Container = styled.div<any>`
@@ -17,8 +19,8 @@ const Container = styled.div<any>`
   align-items: center;
   padding: 0.5rem;
   border-radius: 5px;
-  background: ${({ isFree }: any) => (isFree ? seatFreeBg : seatBookedBg)};
-  color: ${({ isFree }: any) => (isFree ? seatFreeTxt : seatBookedTxt)};
+  background: ${({ theme }: any) => theme.bgColor};
+  color: ${({ theme }: any) => theme.txtColor};
   font-size: 12px;
   cursor: ${({ isFree }: any) => (isFree ? 'pointer' : 'not-allowed')};
 
@@ -28,7 +30,35 @@ const Container = styled.div<any>`
 `;
 
 const SeatItem = ({ row, seat, isFree }: any) => {
-  return <Container isFree={isFree}>{seat}</Container>;
+  const initialTheme = {
+    bgColor: isFree ? seatFreeBg : seatBookedBg,
+    txtColor: isFree ? seatFreeTxt : seatBookedTxt
+  };
+  const [isSelected, setSelected] = useState(false);
+  const [theme, setTheme] = useState(initialTheme);
+
+  useEffect(() => {
+    if (isSelected) {
+      setTheme({
+        bgColor: seatSelectedBg,
+        txtColor: seatSelectedTxt
+      });
+    } else {
+      setTheme(initialTheme);
+    }
+  });
+
+  const toggleSelect = (e: any) => {
+    if (!isFree) return;
+    setSelected(!isSelected);
+    console.log('selected ---', 'row: ', row, 'seat: ', seat);
+  };
+
+  return (
+    <Container isFree={isFree} theme={theme} onClick={toggleSelect}>
+      {seat}
+    </Container>
+  );
 };
 
 export default SeatItem;

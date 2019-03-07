@@ -10,6 +10,8 @@ export const seatFreeBg = '#A8DBA8';
 export const seatFreeTxt = '#3B8686';
 export const seatBookedBg = '#E2DDD9';
 export const seatBookedTxt = '#A8A39D';
+export const seatSelectedBg = '#1BB0CE';
+export const seatSelectedTxt = '#fff';
 
 /* redux actions */
 export const SIGN_IN = 'SIGN_IN';
