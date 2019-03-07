@@ -15,6 +15,8 @@ export const seatPurchasedTxt = '#A8A39D';
 export const seatSelectedBg = '#1BB0CE';
 export const seatSelectedTxt = '#fff';
 
+export const schemeVipSectionBg = '#FEFBAF';
+
 /* redux actions */
 export const SIGN_IN = 'SIGN_IN';
 export const SIGN_UP = 'SIGN_UP';

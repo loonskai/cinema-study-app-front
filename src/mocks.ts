@@ -83,38 +83,46 @@ export const halls = [
 export const seats = [
   {
     hallId: 1,
-    data: [
+    rows: [
       {
         category: 'vip',
         price: 10,
-        items: [
-          {
-            seatsNumber: 10,
-            seatsReserved: [1, 3, 6, 10],
-            seatsPurchased: [2]
-          },
-          {
-            seatsNumber: 10,
-            seatsReserved: [],
-            seatsPurchased: [1, 5]
-          }
-        ]
+        seats: 10,
+        reserved: [1, 3, 6, 10],
+        ordered: [2],
+        lastInSection: false
       },
       {
-        category: 'basic',
-        price: 5,
-        items: [
-          {
-            seatsNumber: 10,
-            seatsReserved: [1, 3, 6, 10],
-            seatsPurchased: [2]
-          },
-          {
-            seatsNumber: 10,
-            seatsReserved: [],
-            seatsPurchased: [1, 5]
-          }
-        ]
+        category: 'vip',
+        price: 10,
+        seats: 10,
+        reserved: [1, 3, 6, 10],
+        ordered: [2],
+        lastInSection: false
+      },
+      {
+        category: 'vip',
+        price: 10,
+        seats: 10,
+        reserved: [1, 3, 6, 10],
+        ordered: [2],
+        lastInSection: false
+      },
+      {
+        category: 'vip',
+        price: 10,
+        seats: 10,
+        reserved: [1, 3, 6, 10],
+        ordered: [2],
+        lastInSection: false
+      },
+      {
+        category: 'vip',
+        price: 10,
+        seats: 10,
+        reserved: [1, 3, 6, 10],
+        ordered: [2],
+        lastInSection: true
       }
     ]
   }

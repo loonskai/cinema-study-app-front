@@ -1,8 +1,8 @@
-import React, { useState, useEffect, createContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import SeatsMenu from './SeatsMenu';
-import SchemeContainer from '../schemes/SchemeContainer';
+import SeatsScheme from '../schemes/SeatsScheme';
 import api from '../../ApiService';
 
 const Container = styled.div`
@@ -97,7 +97,7 @@ const SeatsContainer = ({ sessionId }: { sessionId: number }) => {
         options={options}
         hallSelected={hall}
       />
-      <SchemeContainer
+      <SeatsScheme
         options={options}
         hall={hall}
         handleReservation={handleReservation}
