@@ -94,6 +94,17 @@ class ApiService {
       console.error(error);
     }
   }
+
+  async reserve(options: any) {
+    try {
+      return new Promise((res, rej) => {
+        console.log('reserve seats -->', options);
+        return res(true);
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }
 
 const api = new ApiService();

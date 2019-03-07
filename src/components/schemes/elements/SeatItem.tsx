@@ -29,7 +29,7 @@ const Container = styled.div<any>`
   }
 `;
 
-const SeatItem = ({ row, seat, isFree }: any) => {
+const SeatItem = ({ row, seat, isFree, handleClick }: any) => {
   const initialTheme = {
     bgColor: isFree ? seatFreeBg : seatBookedBg,
     txtColor: isFree ? seatFreeTxt : seatBookedTxt
@@ -51,7 +51,7 @@ const SeatItem = ({ row, seat, isFree }: any) => {
   const toggleSelect = (e: any) => {
     if (!isFree) return;
     setSelected(!isSelected);
-    console.log('selected ---', 'row: ', row, 'seat: ', seat);
+    handleClick(!isSelected, row, seat);
   };
 
   return (

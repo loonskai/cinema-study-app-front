@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, createContext } from 'react';
 import styled from 'styled-components';
 
 import SeatsMenu from './SeatsMenu';
 import SchemeContainer from '../schemes/SchemeContainer';
+import api from '../../ApiService';
 
 const Container = styled.div`
   width: 100%;
@@ -22,7 +23,9 @@ const StyledTitle = styled.span`
   text-align: center;
 `;
 
-const SeatsContainer = () => {
+export const ReservationContext = createContext({});
+
+const SeatsContainer = ({ sessionId }: { sessionId: number }) => {
   const [hall, setHall]: [any, any] = useState('');
   const [options, setOptions]: [any, any] = useState({
     vip: {
@@ -38,6 +41,23 @@ const SeatsContainer = () => {
       value: false
     }
   });
+  const [seatsReserved, setReservation]: [any, any] = useState([]);
+
+  const reserve = async () => {
+    try {
+      await api.reserve({
+        sessionId,
+        hall,
+        seatsReserved
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    reserve();
+  }, [seatsReserved]);
 
   const changeHall = (value: any) => {
     setHall(value);
@@ -53,6 +73,18 @@ const SeatsContainer = () => {
     setOptions(newOptions);
   };
 
+  const handleReservation = (include: boolean, row: number, seat: number) => {
+    let newSeatsReserved;
+    if (include) {
+      newSeatsReserved = seatsReserved.concat({ row, seat });
+    } else {
+      newSeatsReserved = seatsReserved.filter(
+        (item: any) => !(item.row === row && item.seat === seat)
+      );
+    }
+    setReservation(newSeatsReserved);
+  };
+
   return (
     <Container>
       <StyledTitle>Seats</StyledTitle>
@@ -62,7 +94,9 @@ const SeatsContainer = () => {
         options={options}
         hallSelected={hall}
       />
-      <SchemeContainer options={options} hall={hall} />
+      <ReservationContext.Provider value={{ handleReservation }}>
+        <SchemeContainer options={options} hall={hall} />
+      </ReservationContext.Provider>
     </Container>
   );
 };
