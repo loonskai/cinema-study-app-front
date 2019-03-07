@@ -20,7 +20,7 @@ const SeatsContainer = styled.div`
   width: 100%;
 `;
 
-const SchemeContainer = ({ options, hall }: any) => {
+const SchemeContainer = ({ options, hall, handleReservation }: any) => {
   const [seats, setSeats]: [any, any] = useState(null);
 
   const loadSeats = async () => {
@@ -41,9 +41,21 @@ const SchemeContainer = ({ options, hall }: any) => {
     const seatElements = seats.map((type: any) => {
       switch (type.category) {
         case 'vip':
-          return <VipScheme key={type.category} items={type.items} />;
+          return (
+            <VipScheme
+              key={type.category}
+              items={type.items}
+              handleClick={handleReservation}
+            />
+          );
         case 'basic':
-          return <BasicScheme key={type.category} items={type.items} />;
+          return (
+            <BasicScheme
+              key={type.category}
+              items={type.items}
+              handleClick={handleReservation}
+            />
+          );
         default:
           return null;
       }

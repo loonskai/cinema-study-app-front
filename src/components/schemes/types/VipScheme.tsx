@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { ReservationContext } from '../../seats/SeatsContainer';
 import SeatItem from '../elements/SeatItem';
 import RowTitle from '../elements/RowTitle';
 
@@ -13,8 +12,8 @@ const RowItem = styled.div`
   justify-content: center;
 `;
 
-const VipScheme = ({ items }: any) => {
-  const renderItems = (/*handleReservation: any*/) => {
+const VipScheme = ({ items, handleClick }: any) => {
+  const renderItems = () => {
     return items.map((row: any, rowIndex: number) => {
       const seatsArr = new Array(row.seatsNumber).fill(true);
       return (
@@ -27,7 +26,6 @@ const VipScheme = ({ items }: any) => {
               seat={seatIndex + 1}
               isReserved={row.seatsReserved.includes(seatIndex + 1)}
               isPurchased={row.seatsPurchased.includes(seatIndex + 1)}
-              // handleClick={handleReservation}
             />
           ))}
         </RowItem>
@@ -35,19 +33,7 @@ const VipScheme = ({ items }: any) => {
     });
   };
 
-  const handleSchemeClick = (e: any) => {
-    console.dir(e.target);
-  };
-
-  return (
-    <Container onClick={handleSchemeClick}>
-      <ReservationContext.Consumer>
-        {({ handleReservation }: any) => {
-          return renderItems();
-        }}
-      </ReservationContext.Consumer>
-    </Container>
-  );
+  return <Container onClick={handleClick}>{renderItems()}</Container>;
 };
 
 export default VipScheme;

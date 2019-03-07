@@ -31,12 +31,7 @@ const Container = styled.div<any>`
   }
 `;
 
-const SeatItem = ({
-  row,
-  seat,
-  isReserved,
-  isPurchased /*handleClick*/
-}: any) => {
+const SeatItem = ({ row, seat, isReserved, isPurchased }: any) => {
   const computeColors = () => {
     if (isReserved) {
       return {
@@ -75,7 +70,6 @@ const SeatItem = ({
       return;
     }
     setSelected(!isSelected);
-    // handleClick(!isSelected, row, seat);
   };
 
   return (
@@ -83,6 +77,10 @@ const SeatItem = ({
       isFree={!isReserved && !isPurchased}
       theme={theme}
       onClick={toggleSelect}
+      data-seat={seat}
+      data-row={row}
+      data-free={!isReserved && !isPurchased}
+      data-selected={!isSelected}
     >
       {seat}
     </Container>

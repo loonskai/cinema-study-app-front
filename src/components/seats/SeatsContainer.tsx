@@ -23,8 +23,6 @@ const StyledTitle = styled.span`
   text-align: center;
 `;
 
-export const ReservationContext = createContext({});
-
 const SeatsContainer = ({ sessionId }: { sessionId: number }) => {
   const [hall, setHall]: [any, any] = useState('');
   const [options, setOptions]: [any, any] = useState({
@@ -73,9 +71,14 @@ const SeatsContainer = ({ sessionId }: { sessionId: number }) => {
     setOptions(newOptions);
   };
 
-  const handleReservation = (include: boolean, row: number, seat: number) => {
+  const handleReservation = (e: any) => {
+    const row = +e.target.dataset.row;
+    const seat = +e.target.dataset.seat;
+    const free = e.target.dataset.free === 'true';
+    const selected = e.target.dataset.selected === 'true';
+    if (!row || !seat || !free) return;
     let newSeatsReserved;
-    if (include) {
+    if (selected) {
       newSeatsReserved = seatsReserved.concat({ row, seat });
     } else {
       newSeatsReserved = seatsReserved.filter(
@@ -94,9 +97,11 @@ const SeatsContainer = ({ sessionId }: { sessionId: number }) => {
         options={options}
         hallSelected={hall}
       />
-      <ReservationContext.Provider value={{ handleReservation }}>
-        <SchemeContainer options={options} hall={hall} />
-      </ReservationContext.Provider>
+      <SchemeContainer
+        options={options}
+        hall={hall}
+        handleReservation={handleReservation}
+      />
     </Container>
   );
 };
