@@ -6,22 +6,43 @@ import Screen from './elements/Screen';
 import Row from './elements/Row';
 import RowTitle from './elements/RowTitle';
 import SeatItem from './elements/SeatItem';
+import HeaderButton from '../buttons/HeaderButton';
 import { containerGreyColor } from '../../constants';
 
 const Container = styled.div`
+  position: relative;
   width: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   padding: 2rem;
   background: ${containerGreyColor};
+  overflow: scroll;
 `;
 
 const SchemeWrapper = styled.div`
   width: 100%;
 `;
 
-const SeatsScheme = ({ options, hall, handleReservation }: any) => {
+const OrderMenu = styled.div`
+  position: absolute;
+  top: 10px;
+  left: 10px;
+`;
+
+const TotalPrice = styled.div`
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+`;
+
+const SeatsScheme = ({
+  options,
+  hall,
+  handleReservation,
+  totalPrice,
+  clearOrder,
+  seatsReserved
+}: any) => {
   const [seats, setSeats]: [any, any] = useState(null);
 
   const loadSeats = async () => {
@@ -45,25 +66,45 @@ const SeatsScheme = ({ options, hall, handleReservation }: any) => {
       return (
         <Row key={rowIndex.toString()} lastInSection={row.lastInSection}>
           <RowTitle row={rowIndex + 1} />
-          {seatsArr.map((el, seatIndex) => (
-            <SeatItem
-              key={seatIndex}
-              category={row.category}
-              row={rowIndex + 1}
-              seat={seatIndex + 1}
-              isReserved={row.reserved.includes(seatIndex + 1)}
-              isOrdered={row.ordered.includes(seatIndex + 1)}
-            />
-          ))}
+          {seatsArr.map((el, seatIndex) => {
+            const selected = seatsReserved.some(
+              (item: any) =>
+                item && item.row === rowIndex + 1 && item.row === seatIndex + 1
+            );
+            console.log(selected);
+            return (
+              <SeatItem
+                key={seatIndex}
+                category={row.category}
+                row={rowIndex + 1}
+                seat={seatIndex + 1}
+                price={row.price}
+                selected={selected}
+                isReserved={row.reserved.includes(seatIndex + 1)}
+                isOrdered={row.ordered.includes(seatIndex + 1)}
+              />
+            );
+          })}
         </Row>
       );
     });
   };
 
   // if (!hall) return <div>Please, choose a hall</div>;
+  const handleOrderReset = () => {
+    clearOrder();
+  };
 
   return (
     <Container>
+      <OrderMenu>
+        <TotalPrice>Total price: ${totalPrice.toFixed(2)}</TotalPrice>
+        <HeaderButton
+          handleClick={handleOrderReset}
+          disabled={totalPrice === 0}
+          text="Reset"
+        />
+      </OrderMenu>
       <Screen>Screen</Screen>
       <SchemeWrapper onClick={handleReservation}>{renderSeats()}</SchemeWrapper>
     </Container>

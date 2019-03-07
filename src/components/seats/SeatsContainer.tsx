@@ -40,6 +40,7 @@ const SeatsContainer = ({ sessionId }: { sessionId: number }) => {
     }
   });
   const [seatsReserved, setReservation]: [any, any] = useState([]);
+  const [totalPrice, setTotalPrice]: [any, any] = useState(0);
 
   const reserve = async () => {
     try {
@@ -76,16 +77,28 @@ const SeatsContainer = ({ sessionId }: { sessionId: number }) => {
     const seat = +e.target.dataset.seat;
     const free = e.target.dataset.free === 'true';
     const selected = e.target.dataset.selected === 'true';
+    const price = +e.target.dataset.price;
     if (!row || !seat || !free) return;
     let newSeatsReserved;
+
     if (selected) {
-      newSeatsReserved = seatsReserved.concat({ row, seat });
+      newSeatsReserved = seatsReserved.concat({ row, seat, price });
     } else {
       newSeatsReserved = seatsReserved.filter(
         (item: any) => !(item.row === row && item.seat === seat)
       );
     }
+    const newTotalPrice = newSeatsReserved.reduce(
+      (sum: number, seat: any) => seat.price + sum,
+      0
+    );
+    setTotalPrice(newTotalPrice);
     setReservation(newSeatsReserved);
+  };
+
+  const clearOrder = () => {
+    setReservation([]);
+    setTotalPrice(0);
   };
 
   return (
@@ -98,9 +111,12 @@ const SeatsContainer = ({ sessionId }: { sessionId: number }) => {
         hallSelected={hall}
       />
       <SeatsScheme
+        seatsReserved={seatsReserved}
         options={options}
         hall={hall}
         handleReservation={handleReservation}
+        totalPrice={totalPrice}
+        clearOrder={clearOrder}
       />
     </Container>
   );

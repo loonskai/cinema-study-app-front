@@ -14,7 +14,7 @@ import {
 } from '../../../constants';
 
 const Container = styled.div<any>`
-  width: 30px;
+  min-width: 30px;
   height: 30px;
   margin-bottom: 0.5rem;
   display: flex;
@@ -32,7 +32,14 @@ const Container = styled.div<any>`
   }
 `;
 
-const SeatItem = ({ row, seat, category, isReserved, isOrdered }: any) => {
+const SeatItem = ({
+  row,
+  seat,
+  price,
+  category,
+  isReserved,
+  isOrdered
+}: any) => {
   const computeColors = () => {
     if (isReserved) {
       return {
@@ -70,7 +77,7 @@ const SeatItem = ({ row, seat, category, isReserved, isOrdered }: any) => {
     } else {
       setTheme(computeColors());
     }
-  });
+  }, [isSelected]);
 
   const toggleSelect = (e: any) => {
     if (isReserved || isOrdered) {
@@ -87,6 +94,7 @@ const SeatItem = ({ row, seat, category, isReserved, isOrdered }: any) => {
       onClick={toggleSelect}
       data-seat={seat}
       data-row={row}
+      data-price={price}
       data-free={!isReserved && !isOrdered}
       data-selected={!isSelected}
     >

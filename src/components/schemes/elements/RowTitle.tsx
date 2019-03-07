@@ -8,7 +8,6 @@ const Container = styled.span`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0 1rem;
   font-size: 0.75rem;
 `;
 

@@ -4,8 +4,7 @@ import styled from 'styled-components';
 import { screenBgColor, screenTxtColor } from '../../../constants';
 
 const Screen = styled.div`
-  width: 100%;
-  max-width: 300px;
+  min-width: 300px;
   height: 30px;
   display: flex;
   justify-content: center;

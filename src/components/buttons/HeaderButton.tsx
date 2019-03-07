@@ -10,6 +10,7 @@ interface Props {
   to?: string;
   handleClick?: any;
   icon?: any;
+  disabled?: boolean;
 }
 
 const Container = styled.div<any>``;
@@ -34,13 +35,14 @@ const StyledText = styled.span`
   }
 `;
 
-const HeaderButton = ({ text, to, icon, handleClick }: Props) => (
+const HeaderButton = ({ text, to, icon, handleClick, disabled }: Props) => (
   <Container>
     <StyledButton
       variant="contained"
       component={to && Link}
       to={to}
       onClick={handleClick}
+      disabled={disabled}
     >
       {icon}
       <StyledText>{text}</StyledText>
