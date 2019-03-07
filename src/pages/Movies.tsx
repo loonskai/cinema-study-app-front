@@ -6,7 +6,7 @@ import actions from './../redux/actions/index';
 import PageTitle from './../components/PageTitle';
 import MovieItem from './../components/MovieItem';
 import Loader from './../components/Loader';
-import SearchField from './../components/SearchField';
+import FieldContainer from '../components/fields/FieldContainer';
 
 interface Props {
   loadMoviesList: any;
@@ -70,7 +70,7 @@ class Movies extends React.Component<any, any> {
       <Loader />
     ) : (
       <Container>
-        <SearchField
+        <FieldContainer
           id="movie"
           type="text"
           icon="search"

@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import SearchIcon from '@material-ui/icons/Search';
 
-import actions from './../redux/actions';
-import SearchField from './../components/SearchField';
-import SubmitButton from './../components/buttons/SubmitButton';
-import SessionsTable from './../components/SessionsTable';
+import actions from '../../redux/actions';
+import FieldContainer from '../fields/FieldContainer';
+import SubmitButton from '../buttons/SubmitButton';
+import SessionsTable from '../SessionsTable';
 
 const Container = styled.div`
   display: flex;
@@ -49,7 +49,7 @@ const SearchSessionForm = ({ loadSessionsList, sessions }: any) => {
     <Container>
       <StyledTitle>Where can I watch it?</StyledTitle>
       <StyledForm onSubmit={handleSubmit}>
-        <SearchField
+        <FieldContainer
           id="city"
           type="text"
           entity="city"
@@ -57,7 +57,7 @@ const SearchSessionForm = ({ loadSessionsList, sessions }: any) => {
           value={city}
           handleChange={setCity}
         />
-        <SearchField
+        <FieldContainer
           id="cinema"
           type="select"
           entity="cinema"
@@ -65,7 +65,7 @@ const SearchSessionForm = ({ loadSessionsList, sessions }: any) => {
           value={cinema}
           handleChange={setCinema}
         />
-        <SearchField
+        <FieldContainer
           id="date"
           type="date"
           entity="date"

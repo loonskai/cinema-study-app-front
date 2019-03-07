@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
-import TextField from './TextField/TextField';
-import SubmitButton from './../components/buttons/SubmitButton';
-import { users } from './../mocks';
+import TextField from '../fields/TextField/TextField';
+import SubmitButton from '../buttons/SubmitButton';
+import { users } from '../../mocks';
 
 const SignUpForm = () => {
   const [values, setValues] = useState({

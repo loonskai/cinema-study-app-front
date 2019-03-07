@@ -3,7 +3,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import * as StyledContainers from './styled';
-import { cinemas, halls } from './../../mocks';
+import { cinemas, halls } from '../../../mocks';
 
 interface Props {
   entity: string;

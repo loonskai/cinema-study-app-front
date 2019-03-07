@@ -1,11 +1,11 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import styled from 'styled-components';
 
-import api from './../ApiService';
-import Loader from './../components/Loader';
-import PageTitle from './../components/PageTitle';
-import SearchSessionForm from './../components/SearchSessionForm';
-import { StyledPoster } from './../components/styled/images';
+import api from '../ApiService';
+import Loader from '../components/Loader';
+import PageTitle from '../components/PageTitle';
+import SearchSessionForm from '../components/forms/SearchSessionForm';
+import StyledPoster from '../components/pictures/StyledPoster';
 
 const MovieInfoContainer = styled.div`
   display: flex;
@@ -23,7 +23,7 @@ const StyledDescription = styled.div`
   }
 `;
 
-const MoviePage = ({ match }: any) => {
+const MovieSingle = ({ match }: any) => {
   const [movie, setMovie]: [any, any] = useState({});
   const [isLoading, setLoading] = useState(true);
 
@@ -56,4 +56,4 @@ const MoviePage = ({ match }: any) => {
   );
 };
 
-export default MoviePage;
+export default MovieSingle;

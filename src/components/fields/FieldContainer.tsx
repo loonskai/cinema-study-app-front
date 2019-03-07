@@ -10,7 +10,7 @@ import CalendarToday from '@material-ui/icons/CalendarToday';
 import TextField from './TextField/TextField';
 import SelectField from './SelectField/SelectField';
 import DateField from './DateField';
-import { mainDarkColor } from './../constants';
+import { mainDarkColor } from '../../constants';
 
 interface Props {
   entity: string;
@@ -57,7 +57,7 @@ const getField = (props: Props) => {
   }
 };
 
-const SearchField = (props: Props) => (
+const FieldContainer = (props: Props) => (
   <Grid container={true} spacing={8} justify="center" alignItems="center">
     <Grid item={true}>
       <IconStyled icon={props.icon || props.entity} />
@@ -68,4 +68,4 @@ const SearchField = (props: Props) => (
   </Grid>
 );
 
-export default SearchField;
+export default FieldContainer;

@@ -5,7 +5,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, DatePicker } from 'material-ui-pickers';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
-import { mainColor } from './../constants';
+import { mainColor } from '../../constants';
 
 interface Props {
   entity: string;

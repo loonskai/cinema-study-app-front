@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
 
-import { whiteColor } from './../../constants';
+import { whiteColor } from '../../constants';
 
 const Container = styled.div`
   width: 100%;

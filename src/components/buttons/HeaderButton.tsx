@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
 
-import { mainDarkColor, whiteColor } from './../../constants';
+import { mainDarkColor, whiteColor } from '../../constants';
 
 interface Props {
   text: string;

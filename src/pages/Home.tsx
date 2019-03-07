@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import SearchIcon from '@material-ui/icons/Search';
 
-import PageTitle from './../components/PageTitle';
-import SearchField from './../components/SearchField';
-import SubmitButton from './../components/buttons/SubmitButton';
+import PageTitle from '../components/PageTitle';
+import FieldContainer from '../components/fields/FieldContainer';
+import SubmitButton from '../components/buttons/SubmitButton';
 
 const Home = () => {
   const [movie, setMovie] = useState('');
@@ -31,7 +31,7 @@ const Home = () => {
   return (
     <form onSubmit={handleSubmit}>
       <PageTitle text="Let's find something interesting" />
-      <SearchField
+      <FieldContainer
         id="movie"
         type="text"
         entity="movie"
@@ -39,7 +39,7 @@ const Home = () => {
         value={movie}
         handleChange={setMovie}
       />
-      <SearchField
+      <FieldContainer
         id="city"
         type="text"
         entity="city"
@@ -47,7 +47,7 @@ const Home = () => {
         value={city}
         handleChange={setCity}
       />
-      <SearchField
+      <FieldContainer
         id="cinema"
         type="select"
         entity="cinema"
@@ -55,7 +55,7 @@ const Home = () => {
         value={cinema}
         handleChange={setCinema}
       />
-      <SearchField
+      <FieldContainer
         id="date"
         type="date"
         entity="date"

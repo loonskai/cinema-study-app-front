@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PersonIcon from '@material-ui/icons/Person';
 
-import actions from './../redux/actions/index';
-import RadioFieldGroup from './RadioFieldGroup';
-import TextField from './TextField/TextField';
-import SubmitButton from './../components/buttons/SubmitButton';
-import { users } from './../mocks';
+import actions from '../../redux/actions/index';
+import RadioFieldGroup from '../fields/RadioFieldGroup';
+import TextField from '../fields/TextField/TextField';
+import SubmitButton from '../buttons/SubmitButton';
+import { users } from '../../mocks';
 
 const SignInForm = ({ signIn }: any) => {
   const [signInWith, setSignInWith] = useState('email');

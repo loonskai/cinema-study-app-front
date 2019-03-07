@@ -4,8 +4,8 @@ import parse from 'autosuggest-highlight/parse';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import * as StyledContainers from './styled';
-import { match } from './../../helpers/autosuggestHighlightMatch';
-import { movies, cities } from './../../mocks';
+import { match } from '../../../helpers/autosuggestHighlightMatch';
+import { movies, cities } from '../../../mocks';
 
 interface Props {
   entity?: string;

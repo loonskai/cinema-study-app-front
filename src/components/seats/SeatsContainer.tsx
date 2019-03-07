@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import SeatsMenu from './SeatsMenu';
-import SchemeContainer from './schemes/SchemeContainer';
+import SchemeContainer from '../schemes/SchemeContainer';
 
 const Container = styled.div`
   width: 100%;

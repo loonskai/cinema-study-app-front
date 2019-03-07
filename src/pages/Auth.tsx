@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import styled from 'styled-components';
 
-import PageTitle from './../components/PageTitle';
-import SignUpForm from './../components/SignUpForm';
-import SignInForm from './../components/SignInForm';
+import PageTitle from '../components/PageTitle';
+import SignUpForm from '../components/forms/SignUpForm';
+import SignInForm from '../components/forms/SignInForm';
 import {
   whiteColor,
   containerGreyColor,

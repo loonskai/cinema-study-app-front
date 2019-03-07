@@ -1,12 +1,12 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import styled from 'styled-components';
 
-import api from './../ApiService';
-import Loader from './../components/Loader';
-import PageTitle from './../components/PageTitle';
-import SeatsContainer from './../components/SeatsContainer';
-import { StyledPoster } from './../components/styled/images';
-import { containerGreyColor, whiteColor, greyColor } from './../constants';
+import api from '../ApiService';
+import Loader from '../components/Loader';
+import PageTitle from '../components/PageTitle';
+import SeatsContainer from '../components/seats/SeatsContainer';
+import StyledPoster from '../components/pictures/StyledPoster';
+import { containerGreyColor, whiteColor, greyColor } from '../constants';
 
 const Container = styled.div`
   width: 100%;
@@ -57,7 +57,7 @@ const SessionInfo = styled.div`
   box-shadow: 0px 0px 0px 1px ${greyColor};
 `;
 
-const SessionPage = ({ match }: any) => {
+const SessionSingle = ({ match }: any) => {
   const [session, setSession]: [any, any] = useState({});
   const [movie, setMovie]: [any, any] = useState({});
   const [isLoading, setLoading] = useState(true);
@@ -115,4 +115,4 @@ const SessionPage = ({ match }: any) => {
   );
 };
 
-export default SessionPage;
+export default SessionSingle;

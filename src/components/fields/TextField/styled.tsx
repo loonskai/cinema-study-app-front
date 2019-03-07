@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 
-import { mainColor } from './../../constants';
+import { mainColor } from '../../../constants';
 
 export const Input = styled(initialProps => {
   /* We can expand InputProps with inputRef if necessary (i.e. for react-autosuggest renderInputComponent method) */

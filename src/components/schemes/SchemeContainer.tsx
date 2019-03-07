@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import api from './../../ApiService';
+import api from '../../ApiService';
 import VipScheme from './types/VipScheme';
 import BasicScheme from './types/BasicScheme';
-import {
-  screenBgColor,
-  screenTxtColor,
-  containerGreyColor
-} from './../../constants';
+import Screen from './elements/Screen';
+import { containerGreyColor } from '../../constants';
 
 const Container = styled.div`
   width: 100%;
@@ -17,21 +14,6 @@ const Container = styled.div`
   justify-content: center;
   padding: 2rem;
   background: ${containerGreyColor};
-`;
-
-const Screen = styled.div`
-  width: 100%;
-  max-width: 300px;
-  height: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 2rem;
-  margin-bottom: 2rem;
-  border-radius: 1rem;
-  text-transform: uppercase;
-  background: ${screenBgColor};
-  color: ${screenTxtColor};
 `;
 
 const SeatsContainer = styled.div`

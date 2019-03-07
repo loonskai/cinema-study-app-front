@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
 
-import { whiteColor, mainDarkColor, mainDarkColorSub } from './../../constants';
+import { whiteColor, mainDarkColor, mainDarkColorSub } from '../../constants';
 
 interface Props {
   text: string;

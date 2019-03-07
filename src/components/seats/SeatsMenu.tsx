@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
-import SelectField from './SelectField/SelectField';
-import { greyColor, whiteColor, mainColor } from './../constants';
+import SelectField from '../fields/SelectField/SelectField';
+import { greyColor, whiteColor, mainColor } from '../../constants';
 
 const Container = styled.div`
   width: 100%;
