@@ -4,8 +4,10 @@ import styled from 'styled-components';
 import {
   seatFreeBg,
   seatFreeTxt,
-  seatBookedBg,
-  seatBookedTxt,
+  seatReservedBg,
+  seatReservedTxt,
+  seatPurchasedBg,
+  seatPurchasedTxt,
   seatSelectedBg,
   seatSelectedTxt
 } from '../../../constants';
@@ -29,13 +31,33 @@ const Container = styled.div<any>`
   }
 `;
 
-const SeatItem = ({ row, seat, isFree, handleClick }: any) => {
-  const initialTheme = {
-    bgColor: isFree ? seatFreeBg : seatBookedBg,
-    txtColor: isFree ? seatFreeTxt : seatBookedTxt
+const SeatItem = ({
+  row,
+  seat,
+  isReserved,
+  isPurchased /*handleClick*/
+}: any) => {
+  const computeColors = () => {
+    if (isReserved) {
+      return {
+        bgColor: seatReservedBg,
+        txtColor: seatReservedTxt
+      };
+    }
+    if (isPurchased) {
+      return {
+        bgColor: seatPurchasedBg,
+        txtColor: seatPurchasedTxt
+      };
+    }
+    return {
+      bgColor: seatFreeBg,
+      txtColor: seatFreeTxt
+    };
   };
+
   const [isSelected, setSelected] = useState(false);
-  const [theme, setTheme] = useState(initialTheme);
+  const [theme, setTheme] = useState(computeColors());
 
   useEffect(() => {
     if (isSelected) {
@@ -44,18 +66,24 @@ const SeatItem = ({ row, seat, isFree, handleClick }: any) => {
         txtColor: seatSelectedTxt
       });
     } else {
-      setTheme(initialTheme);
+      setTheme(computeColors());
     }
   });
 
   const toggleSelect = (e: any) => {
-    if (!isFree) return;
+    if (isReserved || isPurchased) {
+      return;
+    }
     setSelected(!isSelected);
-    handleClick(!isSelected, row, seat);
+    // handleClick(!isSelected, row, seat);
   };
 
   return (
-    <Container isFree={isFree} theme={theme} onClick={toggleSelect}>
+    <Container
+      isFree={!isReserved && !isPurchased}
+      theme={theme}
+      onClick={toggleSelect}
+    >
       {seat}
     </Container>
   );

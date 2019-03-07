@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { ReservationContext } from '../../seats/SeatsContainer';
 import SeatItem from '../elements/SeatItem';
 import RowTitle from '../elements/RowTitle';
-import { seats } from '../../../mocks';
 
 const Container = styled.div``;
 
@@ -15,28 +14,36 @@ const RowItem = styled.div`
 `;
 
 const VipScheme = ({ items }: any) => {
-  const renderItems = (handleReservation: any) => {
-    return items.map((item: { row: number; seats: any }, index: number) => (
-      <RowItem key={index}>
-        <RowTitle row={item.row} />
-        {item.seats.map((seat: any, index: number) => (
-          <SeatItem
-            key={index}
-            row={item.row}
-            seat={seat.id}
-            isFree={seat.free}
-            handleClick={handleReservation}
-          />
-        ))}
-      </RowItem>
-    ));
+  const renderItems = (/*handleReservation: any*/) => {
+    return items.map((row: any, rowIndex: number) => {
+      const seatsArr = new Array(row.seatsNumber).fill(true);
+      return (
+        <RowItem key={rowIndex.toString()}>
+          <RowTitle row={rowIndex + 1} />
+          {seatsArr.map((el, seatIndex) => (
+            <SeatItem
+              key={seatIndex}
+              row={rowIndex + 1}
+              seat={seatIndex + 1}
+              isReserved={row.seatsReserved.includes(seatIndex + 1)}
+              isPurchased={row.seatsPurchased.includes(seatIndex + 1)}
+              // handleClick={handleReservation}
+            />
+          ))}
+        </RowItem>
+      );
+    });
+  };
+
+  const handleSchemeClick = (e: any) => {
+    console.dir(e.target);
   };
 
   return (
-    <Container>
+    <Container onClick={handleSchemeClick}>
       <ReservationContext.Consumer>
         {({ handleReservation }: any) => {
-          return renderItems(handleReservation);
+          return renderItems();
         }}
       </ReservationContext.Consumer>
     </Container>

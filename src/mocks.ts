@@ -89,94 +89,14 @@ export const seats = [
         price: 10,
         items: [
           {
-            row: 1,
-            seats: [
-              {
-                id: 1,
-                free: true
-              },
-              {
-                id: 2,
-                free: true
-              },
-              {
-                id: 3,
-                free: true
-              },
-              {
-                id: 4,
-                free: true
-              },
-              {
-                id: 5,
-                free: true
-              },
-              {
-                id: 6,
-                free: true
-              },
-              {
-                id: 7,
-                free: true
-              },
-              {
-                id: 8,
-                free: true
-              },
-              {
-                id: 9,
-                free: true
-              },
-              {
-                id: 10,
-                free: true
-              }
-            ]
+            seatsNumber: 10,
+            seatsReserved: [1, 3, 6, 10],
+            seatsPurchased: [2]
           },
           {
-            row: 2,
-            seats: [
-              {
-                id: 1,
-                free: true
-              },
-              {
-                id: 2,
-                free: true
-              },
-              {
-                id: 3,
-                free: true
-              },
-              {
-                id: 4,
-                free: false
-              },
-              {
-                id: 5,
-                free: true
-              },
-              {
-                id: 6,
-                free: true
-              },
-              {
-                id: 7,
-                free: false
-              },
-              {
-                id: 8,
-                free: false
-              },
-              {
-                id: 9,
-                free: true
-              },
-              {
-                id: 10,
-                free: true
-              }
-            ]
+            seatsNumber: 10,
+            seatsReserved: [],
+            seatsPurchased: [1, 5]
           }
         ]
       },
@@ -185,147 +105,18 @@ export const seats = [
         price: 5,
         items: [
           {
-            row: 1,
-            seats: [
-              {
-                id: 1,
-                free: false
-              },
-              {
-                id: 2,
-                free: false
-              },
-              {
-                id: 3,
-                free: true
-              },
-              {
-                id: 4,
-                free: false
-              },
-              {
-                id: 5,
-                free: true
-              },
-              {
-                id: 6,
-                free: true
-              },
-              {
-                id: 7,
-                free: true
-              },
-              {
-                id: 8,
-                free: true
-              },
-              {
-                id: 9,
-                free: true
-              },
-              {
-                id: 10,
-                free: false
-              }
-            ]
+            seatsNumber: 10,
+            seatsReserved: [1, 3, 6, 10],
+            seatsPurchased: [2]
           },
           {
-            row: 2,
-            seats: [
-              {
-                id: 1,
-                free: true
-              },
-              {
-                id: 2,
-                free: true
-              },
-              {
-                id: 3,
-                free: false
-              },
-              {
-                id: 4,
-                free: false
-              },
-              {
-                id: 5,
-                free: true
-              },
-              {
-                id: 6,
-                free: true
-              },
-              {
-                id: 7,
-                free: false
-              },
-              {
-                id: 8,
-                free: false
-              },
-              {
-                id: 9,
-                free: true
-              },
-              {
-                id: 10,
-                free: false
-              }
-            ]
-          },
-          {
-            row: 3,
-            seats: [
-              {
-                id: 1,
-                free: false
-              },
-              {
-                id: 2,
-                free: true
-              },
-              {
-                id: 3,
-                free: true
-              },
-              {
-                id: 4,
-                free: false
-              },
-              {
-                id: 5,
-                free: true
-              },
-              {
-                id: 6,
-                free: true
-              },
-              {
-                id: 7,
-                free: false
-              },
-              {
-                id: 8,
-                free: true
-              },
-              {
-                id: 9,
-                free: false
-              },
-              {
-                id: 10,
-                free: false
-              }
-            ]
+            seatsNumber: 10,
+            seatsReserved: [],
+            seatsPurchased: [1, 5]
           }
         ]
       }
     ]
-  },
-  {
-    hallId: 2,
-    data: []
   }
 ];
 
