@@ -6,7 +6,7 @@ import {
   seatFreeTxt,
   seatBookedBg,
   seatBookedTxt
-} from './../constants';
+} from './../../constants';
 
 const Container = styled.div<any>`
   width: 30px;
