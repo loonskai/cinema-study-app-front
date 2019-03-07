@@ -9,7 +9,8 @@ import {
   seatPurchasedBg,
   seatPurchasedTxt,
   seatSelectedBg,
-  seatSelectedTxt
+  seatSelectedTxt,
+  goldColor
 } from '../../../constants';
 
 const Container = styled.div<any>`
@@ -31,7 +32,7 @@ const Container = styled.div<any>`
   }
 `;
 
-const SeatItem = ({ row, seat, isReserved, isPurchased }: any) => {
+const SeatItem = ({ row, seat, category, isReserved, isOrdered }: any) => {
   const computeColors = () => {
     if (isReserved) {
       return {
@@ -39,10 +40,16 @@ const SeatItem = ({ row, seat, isReserved, isPurchased }: any) => {
         txtColor: seatReservedTxt
       };
     }
-    if (isPurchased) {
+    if (isOrdered) {
       return {
         bgColor: seatPurchasedBg,
         txtColor: seatPurchasedTxt
+      };
+    }
+    if (category === 'vip') {
+      return {
+        bgColor: goldColor,
+        txtColor: seatFreeTxt
       };
     }
     return {
@@ -66,7 +73,7 @@ const SeatItem = ({ row, seat, isReserved, isPurchased }: any) => {
   });
 
   const toggleSelect = (e: any) => {
-    if (isReserved || isPurchased) {
+    if (isReserved || isOrdered) {
       return;
     }
     setSelected(!isSelected);
@@ -74,12 +81,13 @@ const SeatItem = ({ row, seat, isReserved, isPurchased }: any) => {
 
   return (
     <Container
-      isFree={!isReserved && !isPurchased}
+      isFree={!isReserved && !isOrdered}
       theme={theme}
+      category={category}
       onClick={toggleSelect}
       data-seat={seat}
       data-row={row}
-      data-free={!isReserved && !isPurchased}
+      data-free={!isReserved && !isOrdered}
       data-selected={!isSelected}
     >
       {seat}

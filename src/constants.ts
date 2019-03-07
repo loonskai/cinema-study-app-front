@@ -8,13 +8,14 @@ export const screenBgColor = '#DBE6EC';
 export const screenTxtColor = '#81A8B8';
 export const seatFreeBg = '#A8DBA8';
 export const seatFreeTxt = '#3B8686';
-export const seatReservedBg = '#FEE5AD';
-export const seatReservedTxt = '#F7A541';
+export const seatReservedBg = '#EBEFC9';
+export const seatReservedTxt = '#C4CBB7';
 export const seatPurchasedBg = '#E2DDD9';
 export const seatPurchasedTxt = '#A8A39D';
 export const seatSelectedBg = '#1BB0CE';
 export const seatSelectedTxt = '#fff';
 
+export const goldColor = '#FACA66';
 export const schemeVipSectionBg = '#FEFBAF';
 
 /* redux actions */

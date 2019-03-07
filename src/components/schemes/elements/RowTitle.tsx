@@ -3,7 +3,8 @@ import styled from 'styled-components';
 
 const Container = styled.span`
   height: 30px;
-  margin-left: -50px;
+  width: 80px;
+  margin-left: -80px;
   display: flex;
   justify-content: center;
   align-items: center;

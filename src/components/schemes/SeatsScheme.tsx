@@ -48,6 +48,7 @@ const SeatsScheme = ({ options, hall, handleReservation }: any) => {
           {seatsArr.map((el, seatIndex) => (
             <SeatItem
               key={seatIndex}
+              category={row.category}
               row={rowIndex + 1}
               seat={seatIndex + 1}
               isReserved={row.reserved.includes(seatIndex + 1)}

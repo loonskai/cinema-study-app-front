@@ -88,8 +88,8 @@ export const seats = [
         category: 'vip',
         price: 10,
         seats: 10,
-        reserved: [1, 3, 6, 10],
-        ordered: [2],
+        reserved: [4, 10],
+        ordered: [1, 2, 3, 5, 6],
         lastInSection: false
       },
       {
@@ -109,7 +109,7 @@ export const seats = [
         lastInSection: false
       },
       {
-        category: 'vip',
+        category: 'basic',
         price: 10,
         seats: 10,
         reserved: [1, 3, 6, 10],
@@ -117,12 +117,52 @@ export const seats = [
         lastInSection: false
       },
       {
-        category: 'vip',
+        category: 'basic',
         price: 10,
         seats: 10,
         reserved: [1, 3, 6, 10],
         ordered: [2],
         lastInSection: true
+      },
+      {
+        category: 'basic',
+        price: 5,
+        seats: 12,
+        reserved: [8],
+        ordered: [1],
+        lastInSection: false
+      },
+      {
+        category: 'basic',
+        price: 5,
+        seats: 14,
+        reserved: [8],
+        ordered: [1],
+        lastInSection: false
+      },
+      {
+        category: 'basic',
+        price: 5,
+        seats: 16,
+        reserved: [8],
+        ordered: [1],
+        lastInSection: false
+      },
+      {
+        category: 'basic',
+        price: 5,
+        seats: 16,
+        reserved: [],
+        ordered: [],
+        lastInSection: false
+      },
+      {
+        category: 'basic',
+        price: 5,
+        seats: 16,
+        reserved: [],
+        ordered: [],
+        lastInSection: false
       }
     ]
   }
