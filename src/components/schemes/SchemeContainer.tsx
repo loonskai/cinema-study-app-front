@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import api from './../ApiService';
-import VipScheme from './schemes/VipScheme';
-import BasicScheme from './schemes/BasicScheme';
+import api from './../../ApiService';
+import VipScheme from './types/VipScheme';
+import BasicScheme from './types/BasicScheme';
 import {
   screenBgColor,
   screenTxtColor,
   containerGreyColor
-} from './../constants';
+} from './../../constants';
 
 const Container = styled.div`
   width: 100%;
@@ -38,7 +38,7 @@ const SeatsContainer = styled.div`
   width: 100%;
 `;
 
-const SeatsScheme = ({ options, hall }: any) => {
+const SchemeContainer = ({ options, hall }: any) => {
   const [seats, setSeats]: [any, any] = useState(null);
 
   const loadSeats = async () => {
@@ -79,4 +79,4 @@ const SeatsScheme = ({ options, hall }: any) => {
   );
 };
 
-export default SeatsScheme;
+export default SchemeContainer;

@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import SeatItem from './SeatItem';
-import RowTitle from './RowTitle';
-import { seats } from '../../mocks';
+import SeatItem from '../elements/SeatItem';
+import RowTitle from '../elements/RowTitle';
+import { seats } from '../../../mocks';
 
 const Container = styled.div``;
 
