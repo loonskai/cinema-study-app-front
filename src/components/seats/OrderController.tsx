@@ -1,10 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import DeleteIcon from '@material-ui/icons/Delete';
+import LocalGroceryStoreIcon from '@material-ui/icons/LocalGroceryStore';
 
 import HeaderButton from '../buttons/HeaderButton';
+import SubmitButton from '../buttons/SubmitButton';
 
-const Container = styled.div`
+const Container = styled.form`
   padding: 1rem 0;
 `;
 
@@ -13,14 +15,29 @@ const TotalPrice = styled.div`
   margin-bottom: 0.5rem;
 `;
 
+const TicketsAmount = styled.div`
+  margin-bottom: 1rem;
+`;
+
 const OrderController = ({ handleOrderClear, totalPrice, order }: any) => {
+  const handleOrderSubmit = (e: any) => {
+    e.preventDefault();
+    console.log('submit order', order);
+  };
+  const isEmpty = order.seatsPicked.length === 0;
   return (
-    <Container>
+    <Container onSubmit={handleOrderSubmit}>
       <TotalPrice>Total price: ${totalPrice}</TotalPrice>
+      <TicketsAmount>Tickets amount: {order.seatsPicked.length}</TicketsAmount>
+      <SubmitButton
+        text="Buy tickets"
+        icon={<LocalGroceryStoreIcon />}
+        disabled={isEmpty}
+      />
       <HeaderButton
         handleClick={handleOrderClear}
-        disabled={order.seatsPicked.length === 0}
-        text="Reset"
+        disabled={isEmpty}
+        text="Clear order"
         icon={<DeleteIcon />}
       />
     </Container>

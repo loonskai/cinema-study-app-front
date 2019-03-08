@@ -53,6 +53,8 @@ const SeatsContainer = ({ sessionId }: { sessionId: number }) => {
 
   const changeHall = (value: any) => {
     setHall(value);
+    setTotalPrice(0);
+    setPickedSeats([]);
   };
 
   const changeOptions = (key: any) => {
@@ -108,15 +110,6 @@ const SeatsContainer = ({ sessionId }: { sessionId: number }) => {
         options={options}
         hallSelected={hall}
       />
-      {/*       <OrderMenu>
-        <TotalPrice>Total price: ${totalPrice.toFixed(2)}</TotalPrice>
-        <HeaderButton
-          handleClick={clearOrder}
-          disabled={totalPrice === 0}
-          text="Reset"
-          icon={<DeleteIcon />}
-        />
-      </OrderMenu> */}
       <OrderController
         handleOrderClear={clearOrder}
         totalPrice={totalPrice.toFixed(2)}
