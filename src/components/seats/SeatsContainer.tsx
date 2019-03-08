@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import SeatsMenu from './SeatsMenu';
-import SeatsScheme from '../schemes/SeatsScheme';
+import OrderController from './OrderController';
+import SeatsScheme from './SeatsScheme';
 import api from '../../ApiService';
 
 const Container = styled.div`
@@ -106,6 +107,20 @@ const SeatsContainer = ({ sessionId }: { sessionId: number }) => {
         onOptionsChange={changeOptions}
         options={options}
         hallSelected={hall}
+      />
+      {/*       <OrderMenu>
+        <TotalPrice>Total price: ${totalPrice.toFixed(2)}</TotalPrice>
+        <HeaderButton
+          handleClick={clearOrder}
+          disabled={totalPrice === 0}
+          text="Reset"
+          icon={<DeleteIcon />}
+        />
+      </OrderMenu> */}
+      <OrderController
+        handleOrderClear={clearOrder}
+        totalPrice={totalPrice.toFixed(2)}
+        order={{ sessionId, seatsPicked }}
       />
       <SeatsScheme
         seatsPicked={seatsPicked}

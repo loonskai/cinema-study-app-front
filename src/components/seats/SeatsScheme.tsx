@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import DeleteIcon from '@material-ui/icons/Delete';
 
 import api from '../../ApiService';
 import Screen from './elements/Screen';
 import Row from './elements/Row';
 import RowTitle from './elements/RowTitle';
 import SeatItem from './elements/SeatItem';
-import HeaderButton from '../buttons/HeaderButton';
 import { containerGreyColor } from '../../constants';
 
 const Container = styled.div`
@@ -25,25 +23,7 @@ const SchemeWrapper = styled.div`
   width: 100%;
 `;
 
-const OrderMenu = styled.div`
-  position: absolute;
-  top: 10px;
-  left: 10px;
-`;
-
-const TotalPrice = styled.div`
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
-`;
-
-const SeatsScheme = ({
-  options,
-  hall,
-  handleSeatPick,
-  totalPrice,
-  clearOrder,
-  seatsPicked
-}: any) => {
+const SeatsScheme = ({ options, hall, handleSeatPick, seatsPicked }: any) => {
   const [seats, setSeats]: [any, any] = useState(null);
 
   const loadSeats = async () => {
@@ -90,22 +70,8 @@ const SeatsScheme = ({
     });
   };
 
-  // if (!hall) return <div>Please, choose a hall</div>;
-  const handleOrderReset = () => {
-    clearOrder();
-  };
-
   return (
     <Container>
-      <OrderMenu>
-        <TotalPrice>Total price: ${totalPrice.toFixed(2)}</TotalPrice>
-        <HeaderButton
-          handleClick={handleOrderReset}
-          disabled={totalPrice === 0}
-          text="Reset"
-          icon={<DeleteIcon />}
-        />
-      </OrderMenu>
       <Screen>Screen</Screen>
       <SchemeWrapper onClick={handleSeatPick}>{renderSeats()}</SchemeWrapper>
     </Container>
