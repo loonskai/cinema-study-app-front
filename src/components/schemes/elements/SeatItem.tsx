@@ -96,7 +96,6 @@ const SeatItem = ({
       data-row={row}
       data-price={price}
       data-free={!isReserved && !isOrdered}
-      data-selected={!isSelected}
     >
       {seat}
     </Container>

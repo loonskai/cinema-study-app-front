@@ -38,10 +38,10 @@ const TotalPrice = styled.div`
 const SeatsScheme = ({
   options,
   hall,
-  handleReservation,
+  handleSeatPick,
   totalPrice,
   clearOrder,
-  seatsReserved
+  seatsPicked
 }: any) => {
   const [seats, setSeats]: [any, any] = useState(null);
 
@@ -67,11 +67,10 @@ const SeatsScheme = ({
         <Row key={rowIndex.toString()} lastInSection={row.lastInSection}>
           <RowTitle row={rowIndex + 1} />
           {seatsArr.map((el, seatIndex) => {
-            const selected = seatsReserved.some(
+            const selected = seatsPicked.some(
               (item: any) =>
                 item && item.row === rowIndex + 1 && item.row === seatIndex + 1
             );
-            console.log(selected);
             return (
               <SeatItem
                 key={seatIndex}
@@ -106,7 +105,7 @@ const SeatsScheme = ({
         />
       </OrderMenu>
       <Screen>Screen</Screen>
-      <SchemeWrapper onClick={handleReservation}>{renderSeats()}</SchemeWrapper>
+      <SchemeWrapper onClick={handleSeatPick}>{renderSeats()}</SchemeWrapper>
     </Container>
   );
 };

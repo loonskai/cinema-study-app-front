@@ -39,24 +39,16 @@ const SeatsContainer = ({ sessionId }: { sessionId: number }) => {
       value: false
     }
   });
-  const [seatsReserved, setReservation]: [any, any] = useState([]);
+  const [seatsPicked, setPickedSeats]: [any, any] = useState([]);
   const [totalPrice, setTotalPrice]: [any, any] = useState(0);
 
-  const reserve = async () => {
-    try {
-      await api.reserve({
-        sessionId,
-        hall,
-        seatsReserved
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   useEffect(() => {
-    reserve();
-  }, [seatsReserved]);
+    api.reserve({
+      sessionId,
+      hall,
+      seatsPicked
+    });
+  }, [seatsPicked]);
 
   const changeHall = (value: any) => {
     setHall(value);
@@ -72,32 +64,37 @@ const SeatsContainer = ({ sessionId }: { sessionId: number }) => {
     setOptions(newOptions);
   };
 
-  const handleReservation = (e: any) => {
-    const row = +e.target.dataset.row;
-    const seat = +e.target.dataset.seat;
+  const handleSeatPick = (e: any) => {
+    const pickedRow = +e.target.dataset.row;
+    const pickedSeat = +e.target.dataset.seat;
     const free = e.target.dataset.free === 'true';
-    const selected = e.target.dataset.selected === 'true';
     const price = +e.target.dataset.price;
-    if (!row || !seat || !free) return;
-    let newSeatsReserved;
-
-    if (selected) {
-      newSeatsReserved = seatsReserved.concat({ row, seat, price });
+    if (!pickedRow || !pickedSeat || !free) return;
+    let newSeatsPicked;
+    const pickedBefore = seatsPicked.some(
+      (seat: any) => seat.row === pickedRow && seat.seat === pickedSeat
+    );
+    if (!pickedBefore) {
+      newSeatsPicked = seatsPicked.concat({
+        row: pickedRow,
+        seat: pickedSeat,
+        price
+      });
     } else {
-      newSeatsReserved = seatsReserved.filter(
-        (item: any) => !(item.row === row && item.seat === seat)
+      newSeatsPicked = seatsPicked.filter(
+        (item: any) => !(item.row === pickedRow && item.seat === pickedSeat)
       );
     }
-    const newTotalPrice = newSeatsReserved.reduce(
+    const newTotalPrice = newSeatsPicked.reduce(
       (sum: number, seat: any) => seat.price + sum,
       0
     );
     setTotalPrice(newTotalPrice);
-    setReservation(newSeatsReserved);
+    setPickedSeats(newSeatsPicked);
   };
 
   const clearOrder = () => {
-    setReservation([]);
+    setPickedSeats([]);
     setTotalPrice(0);
   };
 
@@ -111,10 +108,10 @@ const SeatsContainer = ({ sessionId }: { sessionId: number }) => {
         hallSelected={hall}
       />
       <SeatsScheme
-        seatsReserved={seatsReserved}
+        seatsPicked={seatsPicked}
         options={options}
         hall={hall}
-        handleReservation={handleReservation}
+        handleSeatPick={handleSeatPick}
         totalPrice={totalPrice}
         clearOrder={clearOrder}
       />
