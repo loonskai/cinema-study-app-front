@@ -75,8 +75,6 @@ const SeatItem = ({
   const [theme, setTheme] = useState(computeColors());
 
   useEffect(() => {
-    console.log('seat', seat);
-    console.log('row', row);
     setTheme(computeColors());
   }, [isSelected]);
 

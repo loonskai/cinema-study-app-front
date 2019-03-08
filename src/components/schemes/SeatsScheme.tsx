@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 import api from '../../ApiService';
 import Screen from './elements/Screen';
@@ -102,6 +103,7 @@ const SeatsScheme = ({
           handleClick={handleOrderReset}
           disabled={totalPrice === 0}
           text="Reset"
+          icon={<DeleteIcon />}
         />
       </OrderMenu>
       <Screen>Screen</Screen>
