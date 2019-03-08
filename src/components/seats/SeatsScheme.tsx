@@ -37,14 +37,12 @@ const SeatsScheme = ({ options, hall, handleSeatPick, seatsPicked }: any) => {
 
   useEffect(() => {
     loadSeats();
-    console.log(options);
   }, [hall]);
 
   const renderSeats = () => {
     if (!seats || seats.length === 0) return 'No seats found';
     const { rows } = seats;
     const optionsKeys = Object.keys(options);
-    console.log('seats render', options);
     return rows.map((row: any, rowIndex: number) => {
       const seatsArr = new Array(row.seats).fill(true);
       return (
