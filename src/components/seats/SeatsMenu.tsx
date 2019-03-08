@@ -74,10 +74,12 @@ const SeatsMenu = ({
           handleChange={onHallChange}
         />
       </Row>
-      <Row>
-        Choose seat options:
-        <CheckboxContainer>{renderOptions(options)}</CheckboxContainer>
-      </Row>
+      {hallSelected && (
+        <Row>
+          Choose seat options:
+          <CheckboxContainer>{renderOptions(options)}</CheckboxContainer>
+        </Row>
+      )}
     </Container>
   );
 };

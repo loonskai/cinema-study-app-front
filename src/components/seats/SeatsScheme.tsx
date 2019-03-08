@@ -16,7 +16,7 @@ const Container = styled.div`
   justify-content: center;
   padding: 2rem;
   background: ${containerGreyColor};
-  overflow: scroll;
+  overflow-x: scroll;
 `;
 
 const SchemeWrapper = styled.div`
@@ -37,11 +37,14 @@ const SeatsScheme = ({ options, hall, handleSeatPick, seatsPicked }: any) => {
 
   useEffect(() => {
     loadSeats();
+    console.log(options);
   }, [hall]);
 
   const renderSeats = () => {
     if (!seats || seats.length === 0) return 'No seats found';
     const { rows } = seats;
+    const optionsKeys = Object.keys(options);
+    console.log('seats render', options);
     return rows.map((row: any, rowIndex: number) => {
       const seatsArr = new Array(row.seats).fill(true);
       return (
@@ -52,6 +55,9 @@ const SeatsScheme = ({ options, hall, handleSeatPick, seatsPicked }: any) => {
               (item: any) =>
                 item && item.row === rowIndex + 1 && item.seat === seatIndex + 1
             );
+            const isMuted =
+              !options[row.category].value &&
+              optionsKeys.some((key: any) => options[key].value);
             return (
               <SeatItem
                 key={`seat-${seatIndex + 1}`}
@@ -62,6 +68,7 @@ const SeatsScheme = ({ options, hall, handleSeatPick, seatsPicked }: any) => {
                 isSelected={isSelected}
                 isReserved={row.reserved.includes(seatIndex + 1)}
                 isOrdered={row.ordered.includes(seatIndex + 1)}
+                isMuted={isMuted && !isSelected}
               />
             );
           })}

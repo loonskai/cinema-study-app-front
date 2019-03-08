@@ -25,7 +25,9 @@ const Container = styled.div<any>`
   background: ${({ theme }: any) => theme.bgColor};
   color: ${({ theme }: any) => theme.txtColor};
   font-size: 0.75rem;
-  cursor: ${({ isFree }: any) => (isFree ? 'pointer' : 'not-allowed')};
+  cursor: ${({ isFree }: { isFree: boolean }) =>
+    isFree ? 'pointer' : 'not-allowed'};
+  opacity: ${({ isMuted }: { isMuted: boolean }) => (isMuted ? '0.3' : '1')};
 
   &:not(:last-child) {
     margin-right: 0.5rem;
@@ -39,7 +41,8 @@ const SeatItem = ({
   category,
   isSelected,
   isReserved,
-  isOrdered
+  isOrdered,
+  isMuted
 }: any) => {
   const computeColors = () => {
     if (isReserved) {
@@ -81,6 +84,7 @@ const SeatItem = ({
   return (
     <Container
       isFree={!isReserved && !isOrdered}
+      isMuted={isMuted}
       theme={theme}
       category={category}
       data-seat={seat}

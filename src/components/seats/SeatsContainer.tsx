@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import SeatsMenu from './SeatsMenu';
@@ -29,14 +29,10 @@ const SeatsContainer = ({ sessionId }: { sessionId: number }) => {
   const [options, setOptions]: [any, any] = useState({
     vip: {
       label: 'VIP',
-      value: true
-    },
-    forCouples: {
-      label: 'For Couples',
       value: false
     },
-    frontSeats: {
-      label: 'Front Seats',
+    basic: {
+      label: 'Basic',
       value: false
     }
   });
@@ -110,19 +106,23 @@ const SeatsContainer = ({ sessionId }: { sessionId: number }) => {
         options={options}
         hallSelected={hall}
       />
-      <OrderController
-        handleOrderClear={clearOrder}
-        totalPrice={totalPrice.toFixed(2)}
-        order={{ sessionId, seatsPicked }}
-      />
-      <SeatsScheme
-        seatsPicked={seatsPicked}
-        options={options}
-        hall={hall}
-        handleSeatPick={handleSeatPick}
-        totalPrice={totalPrice}
-        clearOrder={clearOrder}
-      />
+      {hall && (
+        <Fragment>
+          <OrderController
+            handleOrderClear={clearOrder}
+            totalPrice={totalPrice.toFixed(2)}
+            order={{ sessionId, seatsPicked }}
+          />
+          <SeatsScheme
+            seatsPicked={seatsPicked}
+            options={options}
+            hall={hall}
+            handleSeatPick={handleSeatPick}
+            totalPrice={totalPrice}
+            clearOrder={clearOrder}
+          />
+        </Fragment>
+      )}
     </Container>
   );
 };
