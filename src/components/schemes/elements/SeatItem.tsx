@@ -37,6 +37,7 @@ const SeatItem = ({
   seat,
   price,
   category,
+  isSelected,
   isReserved,
   isOrdered
 }: any) => {
@@ -53,6 +54,12 @@ const SeatItem = ({
         txtColor: seatPurchasedTxt
       };
     }
+    if (isSelected) {
+      return {
+        bgColor: seatSelectedBg,
+        txtColor: seatSelectedTxt
+      };
+    }
     if (category === 'vip') {
       return {
         bgColor: goldColor,
@@ -65,33 +72,19 @@ const SeatItem = ({
     };
   };
 
-  const [isSelected, setSelected] = useState(false);
   const [theme, setTheme] = useState(computeColors());
 
   useEffect(() => {
-    if (isSelected) {
-      setTheme({
-        bgColor: seatSelectedBg,
-        txtColor: seatSelectedTxt
-      });
-    } else {
-      setTheme(computeColors());
-    }
+    console.log('seat', seat);
+    console.log('row', row);
+    setTheme(computeColors());
   }, [isSelected]);
-
-  const toggleSelect = (e: any) => {
-    if (isReserved || isOrdered) {
-      return;
-    }
-    setSelected(!isSelected);
-  };
 
   return (
     <Container
       isFree={!isReserved && !isOrdered}
       theme={theme}
       category={category}
-      onClick={toggleSelect}
       data-seat={seat}
       data-row={row}
       data-price={price}

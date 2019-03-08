@@ -64,21 +64,21 @@ const SeatsScheme = ({
     return rows.map((row: any, rowIndex: number) => {
       const seatsArr = new Array(row.seats).fill(true);
       return (
-        <Row key={rowIndex.toString()} lastInSection={row.lastInSection}>
+        <Row key={`row-${rowIndex + 1}`} lastInSection={row.lastInSection}>
           <RowTitle row={rowIndex + 1} />
           {seatsArr.map((el, seatIndex) => {
-            const selected = seatsPicked.some(
+            const isSelected = seatsPicked.some(
               (item: any) =>
-                item && item.row === rowIndex + 1 && item.row === seatIndex + 1
+                item && item.row === rowIndex + 1 && item.seat === seatIndex + 1
             );
             return (
               <SeatItem
-                key={seatIndex}
+                key={`seat-${seatIndex + 1}`}
                 category={row.category}
                 row={rowIndex + 1}
                 seat={seatIndex + 1}
                 price={row.price}
-                selected={selected}
+                isSelected={isSelected}
                 isReserved={row.reserved.includes(seatIndex + 1)}
                 isOrdered={row.ordered.includes(seatIndex + 1)}
               />
