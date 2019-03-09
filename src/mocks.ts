@@ -6,6 +6,10 @@ export const users = [
   }
 ];
 
+export const userData = {
+  username: 'Johny'
+};
+
 export const movies = [
   { label: 'The Shawshank Redemption' },
   { label: 'The Godfather' },

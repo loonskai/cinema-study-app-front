@@ -2,7 +2,7 @@ import axios from 'axios';
 import { apiKey } from './credentials';
 import randomstring from 'randomstring';
 
-import { sessions, seats, bonus } from './mocks';
+import { sessions, seats, bonus, userData } from './mocks';
 
 class ApiService {
   client: any;
@@ -36,6 +36,16 @@ class ApiService {
       // Here we make request to validate token that has been received from sessionStorage while app initialization
       return new Promise((res, rej) => {
         return res(true);
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async loadUserInfo() {
+    try {
+      return new Promise((res, rej) => {
+        return res(userData);
       });
     } catch (error) {
       console.error(error);
