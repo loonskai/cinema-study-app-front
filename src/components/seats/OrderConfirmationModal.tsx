@@ -63,8 +63,22 @@ const OrderConfirmationModal = ({ order }: any) => {
   useEffect(() => {
     if (!loadedBonuses) {
       loadBonuses();
+    } else if (!pickedBonuses) {
+      const bonusesKeys = Object.keys(loadedBonuses);
+      const initialPickedBonuses = bonusesKeys.reduce((acc: any, bonus) => {
+        acc[bonus] = 0;
+        return acc;
+      }, {});
+      setPickedBonuses(initialPickedBonuses);
+    } else if (pickedBonuses) {
+      const bonusesKeys = Object.keys(loadedBonuses);
+      console.log('keys', bonusesKeys);
+      const bonusesTotalPrice = bonusesKeys
+        .map(key => loadedBonuses[key].price * pickedBonuses[key])
+        .reduce((sum, num: any) => Math.round((sum + num) * 10) / 10);
+      console.log(bonusesTotalPrice);
     }
-  }, [loadedBonuses, pickedBonuses]);
+  }, [pickedBonuses, loadedBonuses]);
 
   const loadBonuses = async () => {
     try {
@@ -76,8 +90,27 @@ const OrderConfirmationModal = ({ order }: any) => {
   };
 
   const handleBonusesUpdate = (type: any, bonus: any) => {
-    console.log('type', type);
-    console.log('bonus', bonus);
+    const bonusType = Object.keys(bonus)[0];
+    let updatedPickedBonuses;
+    switch (type) {
+      case 'add': {
+        updatedPickedBonuses = Object.assign({}, pickedBonuses, {
+          [bonusType]: pickedBonuses[bonusType] + 1
+        });
+        break;
+      }
+      case 'remove': {
+        updatedPickedBonuses = Object.assign({}, pickedBonuses, {
+          [bonusType]: pickedBonuses[bonusType] - 1
+        });
+        break;
+      }
+      default:
+        return null;
+    }
+    if (updatedPickedBonuses) {
+      setPickedBonuses(updatedPickedBonuses);
+    }
   };
 
   return (
@@ -86,6 +119,7 @@ const OrderConfirmationModal = ({ order }: any) => {
         <TotalPrice>Total price: ${totalPrice}</TotalPrice>
         <TicketsAmount>Tickets amount: {seatsPicked.length}</TicketsAmount>
         <BonusContainer
+          pickedBonuses={pickedBonuses}
           loadedBonuses={loadedBonuses}
           handleBonusesUpdate={handleBonusesUpdate}
         />

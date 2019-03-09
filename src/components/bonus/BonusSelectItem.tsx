@@ -15,7 +15,7 @@ const Container = styled.div`
 
 const BonusController = styled.div``;
 
-const BonusSelectItem = ({ bonus, handleBonusesUpdate }: any) => {
+const BonusSelectItem = ({ bonus, handleBonusesUpdate, value }: any) => {
   const bonusKey = Object.keys(bonus)[0];
   const bonusTitle =
     Object.keys(bonus)[0]
@@ -30,6 +30,7 @@ const BonusSelectItem = ({ bonus, handleBonusesUpdate }: any) => {
     <Container>
       {bonusTitle}
       <BonusController>
+        <div>{value}</div>
         <RoundButton
           bgColor={addButtonColor}
           icon={<AddIcon />}
@@ -40,6 +41,7 @@ const BonusSelectItem = ({ bonus, handleBonusesUpdate }: any) => {
           bgColor={removeButtonColor}
           icon={<RemoveIcon />}
           type="remove"
+          disabled={value === 0}
           handleClick={handleBonusClick}
         />
       </BonusController>
