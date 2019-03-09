@@ -17,6 +17,7 @@ const StyledAppBar = styled(AppBar)<any>`
     flex-direction: row;
     padding: 0 0.625rem;
     background-color: ${mainDarkColor};
+    z-index: 100;
   }
 `;
 

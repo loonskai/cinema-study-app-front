@@ -1,8 +1,10 @@
 import React, { Fragment, useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import api from '../ApiService';
 import Loader from '../components/Loader';
+import OrderConfirmationModal from '../components/seats/OrderConfirmationModal';
 import PageTitle from '../components/PageTitle';
 import SeatsContainer from '../components/seats/SeatsContainer';
 import StyledPoster from '../components/pictures/StyledPoster';
@@ -57,7 +59,7 @@ const SessionInfo = styled.div`
   box-shadow: 0px 0px 0px 1px ${greyColor};
 `;
 
-const SessionSingle = ({ match }: any) => {
+const SessionSingle = ({ match, orderModalDisplayed }: any) => {
   const [session, setSession]: [any, any] = useState({});
   const [movie, setMovie]: [any, any] = useState({});
   const [isLoading, setLoading] = useState(true);
