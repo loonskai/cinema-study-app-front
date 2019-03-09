@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
+import LocalGroceryStoreIcon from '@material-ui/icons/LocalGroceryStore';
 
 import api from '../../ApiService';
 import BonusContainer from '../../components/bonus/BonusContainer';
+import SubmitButton from '../buttons/SubmitButton';
 import { whiteColor, greyColor } from '../../constants';
 
 const Container = styled.div`
@@ -46,14 +48,8 @@ const TicketsAmount = styled.div`
 `;
 
 const OrderConfirmationModal = ({ order }: any) => {
-  /* REMOVE default order value */
-  const defaultOrder = {
-    sessionId: 1,
-    seatsPicked: [{ row: 1, seat: 1 }],
-    totalPrice: 10.0
-  };
-
-  const { sessionId, seatsPicked, totalPrice } = order || defaultOrder;
+  const { sessionId, seatsPicked } = order;
+  const totalPrice = +order.totalPrice;
 
   const [loadedBonuses, setLoadedBonuses]: [any, any] = useState(null);
   const [pickedBonuses, setPickedBonuses]: [any, any] = useState(null);
@@ -112,6 +108,12 @@ const OrderConfirmationModal = ({ order }: any) => {
     }
   };
 
+  const handleSubmitOrder = (e: any) => {
+    e.preventDefault();
+    const orderComplete = Object.assign({}, order, pickedBonuses);
+    console.log('submit order', orderComplete);
+  };
+
   return (
     <Container>
       <ModalWindow>
@@ -122,6 +124,13 @@ const OrderConfirmationModal = ({ order }: any) => {
           loadedBonuses={loadedBonuses}
           handleBonusesUpdate={handleBonusesUpdate}
         />
+        <form onSubmit={handleSubmitOrder}>
+          <SubmitButton
+            icon={<LocalGroceryStoreIcon />}
+            text="Submit Order"
+            disabled={false}
+          />
+        </form>
       </ModalWindow>
     </Container>
   );
