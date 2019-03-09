@@ -53,10 +53,8 @@ const OrderConfirmationModal = ({ order }: any) => {
     totalPrice: 10.0
   };
 
-  const { sessionId, seatsPicked } = order || defaultOrder;
-  const [totalPrice, setTotalPrice]: [any, any] = useState(
-    defaultOrder.totalPrice
-  );
+  const { sessionId, seatsPicked, totalPrice } = order || defaultOrder;
+
   const [loadedBonuses, setLoadedBonuses]: [any, any] = useState(null);
   const [pickedBonuses, setPickedBonuses]: [any, any] = useState(null);
 
@@ -70,13 +68,6 @@ const OrderConfirmationModal = ({ order }: any) => {
         return acc;
       }, {});
       setPickedBonuses(initialPickedBonuses);
-    } else if (pickedBonuses) {
-      const bonusesKeys = Object.keys(loadedBonuses);
-      console.log('keys', bonusesKeys);
-      const bonusesTotalPrice = bonusesKeys
-        .map(key => loadedBonuses[key].price * pickedBonuses[key])
-        .reduce((sum, num: any) => Math.round((sum + num) * 10) / 10);
-      console.log(bonusesTotalPrice);
     }
   }, [pickedBonuses, loadedBonuses]);
 
@@ -87,6 +78,14 @@ const OrderConfirmationModal = ({ order }: any) => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const calculateTotalPrice = () => {
+    if (!loadedBonuses || !pickedBonuses) return totalPrice;
+    const bonusesTotalPrice = Object.keys(loadedBonuses)
+      .map(key => loadedBonuses[key].price * pickedBonuses[key])
+      .reduce((sum, num: any) => Math.round((sum + num) * 10) / 10);
+    return bonusesTotalPrice + totalPrice;
   };
 
   const handleBonusesUpdate = (type: any, bonus: any) => {
@@ -116,7 +115,7 @@ const OrderConfirmationModal = ({ order }: any) => {
   return (
     <Container>
       <ModalWindow>
-        <TotalPrice>Total price: ${totalPrice}</TotalPrice>
+        <TotalPrice>Total price: ${calculateTotalPrice()}</TotalPrice>
         <TicketsAmount>Tickets amount: {seatsPicked.length}</TicketsAmount>
         <BonusContainer
           pickedBonuses={pickedBonuses}
