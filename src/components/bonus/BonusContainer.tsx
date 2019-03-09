@@ -2,17 +2,24 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import api from '../../ApiService';
+import BonusSelectItem from './BonusSelectItem';
 
 const Container = styled.div`
   width: 100%;
 `;
 
-const BonusContainer = ({ sessionId }: { sessionId: number }) => {
-  const [bonus, setBonusesData] = useState(null);
+const BonusContainer = ({
+  sessionId,
+  handleChangeOrderBonus
+}: {
+  sessionId: number;
+  handleChangeOrderBonus: any;
+}) => {
+  const [bonuses, setBonusesData]: [any, any] = useState(null);
 
   useEffect(() => {
     loadBonuses();
-  }, [bonus]);
+  }, [bonuses]);
 
   const loadBonuses = async () => {
     try {
@@ -23,8 +30,20 @@ const BonusContainer = ({ sessionId }: { sessionId: number }) => {
     }
   };
 
-  console.log(bonus);
-  return <Container>Bonus Services</Container>;
+  const renderBonuses = () => {
+    console.log(bonuses);
+    const bonusesKeys = Object.keys(bonuses);
+    return bonusesKeys.map((key: string) => (
+      <BonusSelectItem
+        key={key}
+        title={key}
+        bonus={bonuses[key]}
+        handleChange={handleChangeOrderBonus}
+      />
+    ));
+  };
+
+  return <Container>{bonuses && renderBonuses()}</Container>;
 };
 
 export default BonusContainer;

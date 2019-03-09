@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
@@ -46,22 +46,30 @@ const TicketsAmount = styled.div`
 
 const OrderConfirmationModal = ({ order }: any) => {
   /* REMOVE default order value */
-  const { sessionId, seatsPicked, totalPrice } = order || {
+  const defaultOrder = {
     sessionId: 1,
-    seatsPicked: [
-      {
-        row: 1,
-        seat: 1
-      }
-    ],
-    totalPrice: '10.00'
+    seatsPicked: [{ row: 1, seat: 1 }],
+    totalPrice: 10.0
   };
+
+  const { sessionId, seatsPicked } = order || defaultOrder;
+  const [totalPrice, setTotalPrice]: [any, any] = useState(
+    defaultOrder.totalPrice
+  );
+
+  const handleChangeOrderBonus = () => {
+    console.log('change bonus');
+  };
+
   return (
     <Container>
       <ModalWindow>
         <TotalPrice>Total price: ${totalPrice}</TotalPrice>
         <TicketsAmount>Tickets amount: {seatsPicked.length}</TicketsAmount>
-        <BonusContainer sessionId={sessionId} />
+        <BonusContainer
+          sessionId={sessionId}
+          handleChangeOrderBonus={handleChangeOrderBonus}
+        />
       </ModalWindow>
     </Container>
   );
