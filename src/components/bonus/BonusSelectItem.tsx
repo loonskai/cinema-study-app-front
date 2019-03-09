@@ -15,8 +15,16 @@ const Container = styled.div`
 
 const BonusController = styled.div``;
 
-const BonusSelectItem = ({ title, bonus, handleChange }: any) => {
-  const bonusTitle = title.charAt(0).toUpperCase() + title.slice(1);
+const BonusSelectItem = ({ bonus, handleBonusesUpdate }: any) => {
+  const bonusKey = Object.keys(bonus)[0];
+  const bonusTitle =
+    Object.keys(bonus)[0]
+      .charAt(0)
+      .toUpperCase() + bonusKey.slice(1);
+
+  const handleBonusClick = (type: string) => {
+    handleBonusesUpdate(type, bonus);
+  };
 
   return (
     <Container>
@@ -25,12 +33,14 @@ const BonusSelectItem = ({ title, bonus, handleChange }: any) => {
         <RoundButton
           bgColor={addButtonColor}
           icon={<AddIcon />}
-          handleClick={handleChange}
+          type="add"
+          handleClick={handleBonusClick}
         />
         <RoundButton
           bgColor={removeButtonColor}
           icon={<RemoveIcon />}
-          handleClick={handleChange}
+          type="remove"
+          handleClick={handleBonusClick}
         />
       </BonusController>
     </Container>

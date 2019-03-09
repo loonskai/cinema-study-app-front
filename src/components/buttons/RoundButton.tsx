@@ -4,7 +4,7 @@ import Fab from '@material-ui/core/Fab';
 
 import { whiteColor } from '../../constants';
 
-const RoundButton = ({ icon, bgColor, handleClick }: any) => {
+const RoundButton = ({ icon, bgColor, type, handleClick }: any) => {
   const Container = styled(Fab)<any>`
     && {
       width: 40px;
@@ -19,7 +19,7 @@ const RoundButton = ({ icon, bgColor, handleClick }: any) => {
     }
   `;
 
-  return <Container onClick={handleClick}>{icon}</Container>;
+  return <Container onClick={() => handleClick(type)}>{icon}</Container>;
 };
 
 export default RoundButton;

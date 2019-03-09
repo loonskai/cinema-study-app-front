@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
+import api from '../../ApiService';
 import BonusContainer from '../../components/bonus/BonusContainer';
 import { whiteColor, greyColor } from '../../constants';
 
@@ -56,9 +57,27 @@ const OrderConfirmationModal = ({ order }: any) => {
   const [totalPrice, setTotalPrice]: [any, any] = useState(
     defaultOrder.totalPrice
   );
+  const [loadedBonuses, setLoadedBonuses]: [any, any] = useState(null);
+  const [pickedBonuses, setPickedBonuses]: [any, any] = useState(null);
 
-  const handleChangeOrderBonus = () => {
-    console.log('change bonus');
+  useEffect(() => {
+    if (!loadedBonuses) {
+      loadBonuses();
+    }
+  }, [loadedBonuses, pickedBonuses]);
+
+  const loadBonuses = async () => {
+    try {
+      const data: any = await api.loadSessionBonuses(sessionId);
+      setLoadedBonuses(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleBonusesUpdate = (type: any, bonus: any) => {
+    console.log('type', type);
+    console.log('bonus', bonus);
   };
 
   return (
@@ -67,8 +86,8 @@ const OrderConfirmationModal = ({ order }: any) => {
         <TotalPrice>Total price: ${totalPrice}</TotalPrice>
         <TicketsAmount>Tickets amount: {seatsPicked.length}</TicketsAmount>
         <BonusContainer
-          sessionId={sessionId}
-          handleChangeOrderBonus={handleChangeOrderBonus}
+          loadedBonuses={loadedBonuses}
+          handleBonusesUpdate={handleBonusesUpdate}
         />
       </ModalWindow>
     </Container>
