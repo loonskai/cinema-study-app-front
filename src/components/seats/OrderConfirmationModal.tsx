@@ -4,8 +4,10 @@ import styled from 'styled-components';
 import LocalGroceryStoreIcon from '@material-ui/icons/LocalGroceryStore';
 
 import api from '../../ApiService';
+import actions from '../../redux/actions';
 import BonusContainer from '../../components/bonus/BonusContainer';
 import SubmitButton from '../buttons/SubmitButton';
+import CloseModalButton from '../buttons/CloseModalButton';
 import { whiteColor, greyColor } from '../../constants';
 
 const Container = styled.div`
@@ -23,6 +25,7 @@ const Container = styled.div`
 `;
 
 const ModalWindow = styled.div`
+  position: relative;
   width: 100%;
   max-width: 500px;
   padding: 1rem;
@@ -47,7 +50,10 @@ const TicketsAmount = styled.div`
   font-size: 0.875rem;
 `;
 
-const OrderConfirmationModal = ({ order }: any) => {
+const OrderConfirmationModal = ({
+  order,
+  toggleOrderConfirmationModal
+}: any) => {
   const { sessionId, seatsPicked } = order;
   const totalPrice = +order.totalPrice;
 
@@ -108,6 +114,12 @@ const OrderConfirmationModal = ({ order }: any) => {
     }
   };
 
+  const handleBackgroundClick = (e: any) => {
+    if (e.target === e.currentTarget) {
+      toggleOrderConfirmationModal(false);
+    }
+  };
+
   const handleSubmitOrder = (e: any) => {
     e.preventDefault();
     const orderComplete = Object.assign({}, order, pickedBonuses);
@@ -115,8 +127,11 @@ const OrderConfirmationModal = ({ order }: any) => {
   };
 
   return (
-    <Container>
+    <Container onClick={handleBackgroundClick}>
       <ModalWindow>
+        <CloseModalButton
+          handleClick={() => toggleOrderConfirmationModal(false)}
+        />
         <TotalPrice>Total price: ${calculateTotalPrice()}</TotalPrice>
         <TicketsAmount>Tickets amount: {seatsPicked.length}</TicketsAmount>
         <BonusContainer
@@ -136,6 +151,9 @@ const OrderConfirmationModal = ({ order }: any) => {
   );
 };
 
-export default connect(({ orders }: { orders: any }) => ({
-  order: orders.data
-}))(OrderConfirmationModal);
+export default connect(
+  ({ orders }: { orders: any }) => ({
+    order: orders.data
+  }),
+  actions
+)(OrderConfirmationModal);
