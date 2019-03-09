@@ -52,7 +52,8 @@ const TicketsAmount = styled.div`
 
 const OrderConfirmationModal = ({
   order,
-  toggleOrderConfirmationModal
+  toggleOrderConfirmationModal,
+  clearOrderInfo
 }: any) => {
   const { sessionId, seatsPicked } = order;
   const totalPrice = +order.totalPrice;
@@ -120,10 +121,18 @@ const OrderConfirmationModal = ({
     }
   };
 
-  const handleSubmitOrder = (e: any) => {
-    e.preventDefault();
-    const orderComplete = Object.assign({}, order, pickedBonuses);
-    console.log('submit order', orderComplete);
+  const handleSubmitOrder = async (e: any) => {
+    try {
+      e.preventDefault();
+      const orderComplete = Object.assign({}, order, pickedBonuses);
+      const result = await api.submitOrder(orderComplete);
+      if (result) {
+        toggleOrderConfirmationModal(false);
+        clearOrderInfo();
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

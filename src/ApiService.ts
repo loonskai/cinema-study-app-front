@@ -115,6 +115,17 @@ class ApiService {
       console.error(error);
     }
   }
+
+  async submitOrder(order: any) {
+    try {
+      return new Promise((res, rej) => {
+        console.log('submit order -->', order);
+        return res(true);
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }
 
 const api = new ApiService();

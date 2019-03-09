@@ -1,4 +1,4 @@
-import { SET_ORDER_INFO } from './../../constants';
+import { SET_ORDER_INFO, CLEAR_ORDER_INFO } from './../../constants';
 
 const setOrderInfo = (order: boolean) => {
   return (dispatch: any) => {
@@ -6,6 +6,13 @@ const setOrderInfo = (order: boolean) => {
   };
 };
 
+const clearOrderInfo = () => {
+  return (dispatch: any) => {
+    dispatch({ type: CLEAR_ORDER_INFO });
+  };
+};
+
 export default {
-  setOrderInfo
+  setOrderInfo,
+  clearOrderInfo
 };

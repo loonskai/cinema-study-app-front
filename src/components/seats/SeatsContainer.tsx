@@ -1,10 +1,12 @@
 import React, { Fragment, useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 
+import actions from '../../redux/actions';
+import api from '../../ApiService';
 import SeatsMenu from './SeatsMenu';
 import OrderController from './OrderController';
 import SeatsScheme from './SeatsScheme';
-import api from '../../ApiService';
 
 const Container = styled.div`
   width: 100%;
@@ -24,7 +26,19 @@ const StyledTitle = styled.span`
   text-align: center;
 `;
 
-const SeatsContainer = ({ sessionId }: { sessionId: number }) => {
+const SeatsContainer = ({
+  sessionId,
+  order,
+  setOrderInfo,
+  clearOrderInfo,
+  toggleOrderConfirmationModal
+}: {
+  sessionId: number;
+  order: any;
+  setOrderInfo: any;
+  clearOrderInfo: any;
+  toggleOrderConfirmationModal: any;
+}) => {
   const [hall, setHall]: [any, any] = useState('');
   const [options, setOptions]: [any, any] = useState({
     vip: {
@@ -36,21 +50,27 @@ const SeatsContainer = ({ sessionId }: { sessionId: number }) => {
       value: false
     }
   });
-  const [seatsPicked, setPickedSeats]: [any, any] = useState([]);
-  const [totalPrice, setTotalPrice]: [any, any] = useState(0);
 
   useEffect(() => {
+    setOrderInfo({
+      sessionId,
+      seatsPicked: order.seatsPicked,
+      totalPrice: order.totalPrice
+    });
     api.reserve({
       sessionId,
       hall,
-      seatsPicked
+      seatsPicked: order.seatsPicked
     });
-  }, [seatsPicked]);
+  }, []);
 
   const changeHall = (value: any) => {
     setHall(value);
-    setTotalPrice(0);
-    setPickedSeats([]);
+    setOrderInfo({
+      sessionId: order.sessionId,
+      seatsPicked: [],
+      totalPrice: 0
+    });
   };
 
   const changeOptions = (key: any) => {
@@ -64,6 +84,7 @@ const SeatsContainer = ({ sessionId }: { sessionId: number }) => {
   };
 
   const handleSeatPick = (e: any) => {
+    const { seatsPicked } = order;
     const pickedRow = +e.target.dataset.row;
     const pickedSeat = +e.target.dataset.seat;
     const free = e.target.dataset.free === 'true';
@@ -88,13 +109,11 @@ const SeatsContainer = ({ sessionId }: { sessionId: number }) => {
       (sum: number, seat: any) => seat.price + sum,
       0
     );
-    setTotalPrice(newTotalPrice);
-    setPickedSeats(newSeatsPicked);
-  };
-
-  const clearOrder = () => {
-    setPickedSeats([]);
-    setTotalPrice(0);
+    setOrderInfo({
+      sessionId: order.sessionId,
+      seatsPicked: newSeatsPicked,
+      totalPrice: newTotalPrice
+    });
   };
 
   return (
@@ -109,20 +128,18 @@ const SeatsContainer = ({ sessionId }: { sessionId: number }) => {
       {hall && (
         <Fragment>
           <OrderController
-            handleOrderClear={clearOrder}
-            order={{
-              sessionId,
-              seatsPicked,
-              totalPrice: totalPrice.toFixed(2)
-            }}
+            handleOrderClear={() => clearOrderInfo()}
+            order={order}
+            toggleModal={(value: boolean) =>
+              toggleOrderConfirmationModal(value)
+            }
           />
           <SeatsScheme
-            seatsPicked={seatsPicked}
+            seatsPicked={order.seatsPicked}
             options={options}
             hall={hall}
             handleSeatPick={handleSeatPick}
-            totalPrice={totalPrice}
-            clearOrder={clearOrder}
+            totalPrice={order.totalPrice}
           />
         </Fragment>
       )}
@@ -130,4 +147,9 @@ const SeatsContainer = ({ sessionId }: { sessionId: number }) => {
   );
 };
 
-export default SeatsContainer;
+export default connect(
+  ({ orders }: any) => ({
+    order: orders.data
+  }),
+  actions
+)(SeatsContainer);
