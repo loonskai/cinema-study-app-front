@@ -197,3 +197,15 @@ export const sessions = [
     movieId: 24428
   }
 ];
+
+export const bonus = {
+  popcorn: {
+    price: 1.2
+  },
+  chips: {
+    price: 0.5
+  },
+  soda: {
+    price: 1
+  }
+};

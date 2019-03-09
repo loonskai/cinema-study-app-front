@@ -1,7 +1,7 @@
 import { TOGGLE_ORDER_CONFIRMATION_MODAL } from './../../constants';
 
 const initialState = {
-  orderModalDisplayed: false
+  orderModalDisplayed: true
 };
 
 export default (state = initialState, action: any) => {

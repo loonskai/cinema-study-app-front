@@ -2,7 +2,7 @@ import axios from 'axios';
 import { apiKey } from './credentials';
 import randomstring from 'randomstring';
 
-import { sessions, seats } from './mocks';
+import { sessions, seats, bonus } from './mocks';
 
 class ApiService {
   client: any;
@@ -89,6 +89,16 @@ class ApiService {
       return new Promise((res, rej) => {
         const hallSeats = seats.find(hallSeats => hallSeats.hallId === hallId);
         return res(hallSeats);
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async loadSessionBonuses(sessionId: number) {
+    try {
+      return new Promise((res, rej) => {
+        return res(bonus);
       });
     } catch (error) {
       console.error(error);

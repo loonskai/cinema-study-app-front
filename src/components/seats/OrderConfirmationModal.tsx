@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
+import BonusContainer from '../../components/bonus/BonusContainer';
 import { whiteColor, greyColor } from '../../constants';
 
 const Container = styled.div`
@@ -31,14 +32,36 @@ const ModalWindow = styled.div`
   background: ${whiteColor};
 `;
 
+const TotalPrice = styled.div`
+  width: 100%;
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+`;
+
+const TicketsAmount = styled.div`
+  width: 100%;
+  font-size: 0.875rem;
+`;
+
 const OrderConfirmationModal = ({ order }: any) => {
-  const { sessionId, seatsPicked, totalPrice } = order;
+  /* REMOVE default order value */
+  const { sessionId, seatsPicked, totalPrice } = order || {
+    sessionId: 1,
+    seatsPicked: [
+      {
+        row: 1,
+        seat: 1
+      }
+    ],
+    totalPrice: '10.00'
+  };
   return (
     <Container>
       <ModalWindow>
-        <div>Session id: {sessionId}</div>
-        <div>Total price: ${totalPrice}</div>
-        <div>Tickets amount: {seatsPicked.length}</div>
+        <TotalPrice>Total price: ${totalPrice}</TotalPrice>
+        <TicketsAmount>Tickets amount: {seatsPicked.length}</TicketsAmount>
+        <BonusContainer sessionId={sessionId} />
       </ModalWindow>
     </Container>
   );
