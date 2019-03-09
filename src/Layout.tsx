@@ -34,14 +34,19 @@ const ContentContainer = styled.div`
 `;
 
 const Layout = ({ orderModalDisplayed }: any) => {
-  const [isSnackbarOpen, setSnackbarOpen] = useState(false);
-  const [snackbarVariant, setSnackbarVariant] = useState('success');
-  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const snackbarStateDefault = {
+    isOpen: false,
+    variant: '',
+    message: ''
+  };
+  const [snackbar, setSnackbarInfo] = useState(snackbarStateDefault);
 
   const handleSnackbar = (message: string, variant: string) => {
-    setSnackbarOpen(true);
-    setSnackbarVariant(variant);
-    setSnackbarMessage(message);
+    setSnackbarInfo({
+      isOpen: true,
+      variant,
+      message
+    });
   };
 
   return (
@@ -54,10 +59,10 @@ const Layout = ({ orderModalDisplayed }: any) => {
         <Root />
       </ContentContainer>
       <PopUpSnackbar
-        isOpen={isSnackbarOpen}
-        variant={snackbarVariant}
-        message={snackbarMessage}
-        handleClose={() => setSnackbarOpen(false)}
+        isOpen={snackbar.isOpen}
+        variant={snackbar.variant}
+        message={snackbar.message}
+        handleClose={() => setSnackbarInfo({ ...snackbar, isOpen: false })}
       />
     </Container>
   );
