@@ -56,7 +56,6 @@ const OrderConfirmationModal = ({
   clearOrderInfo
 }: any) => {
   const { sessionId, seatsPicked } = order;
-  const totalPrice = +order.totalPrice;
 
   const [loadedBonuses, setLoadedBonuses]: [any, any] = useState(null);
   const [pickedBonuses, setPickedBonuses]: [any, any] = useState(null);
@@ -84,11 +83,11 @@ const OrderConfirmationModal = ({
   };
 
   const calculateTotalPrice = () => {
-    if (!loadedBonuses || !pickedBonuses) return totalPrice;
+    if (!loadedBonuses || !pickedBonuses) return order.totalPrice;
     const bonusesTotalPrice = Object.keys(loadedBonuses)
       .map(key => loadedBonuses[key].price * pickedBonuses[key])
       .reduce((sum, num: any) => Math.round((sum + num) * 10) / 10);
-    return bonusesTotalPrice + totalPrice;
+    return bonusesTotalPrice + order.totalPrice;
   };
 
   const handleBonusesUpdate = (type: any, bonus: any) => {
@@ -124,7 +123,11 @@ const OrderConfirmationModal = ({
   const handleSubmitOrder = async (e: any) => {
     try {
       e.preventDefault();
-      const orderComplete = Object.assign({}, order, pickedBonuses);
+      const orderComplete = {
+        ...order,
+        ...pickedBonuses,
+        totalPrice: calculateTotalPrice()
+      };
       const result = await api.submitOrder(orderComplete);
       if (result) {
         toggleOrderConfirmationModal(false);
