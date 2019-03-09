@@ -53,7 +53,8 @@ const TicketsAmount = styled.div`
 const OrderConfirmationModal = ({
   order,
   toggleOrderConfirmationModal,
-  clearOrderInfo
+  clearOrderInfo,
+  handleSnackbar
 }: any) => {
   const { sessionId, seatsPicked } = order;
 
@@ -132,6 +133,7 @@ const OrderConfirmationModal = ({
       if (result) {
         toggleOrderConfirmationModal(false);
         clearOrderInfo();
+        handleSnackbar('Tickets ordered successfully!', 'success');
       }
     } catch (error) {
       console.log(error);

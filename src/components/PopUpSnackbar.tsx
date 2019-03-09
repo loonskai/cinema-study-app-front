@@ -5,13 +5,8 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 
 const PopUpSnackbar = (props: any) => {
-  const { classes, className, message, onClose, variant, ...other } = props;
+  const { isOpen, handleClose, message, variant, ...other } = props;
   // const Icon = variantIcon[variant];
-  const [isOpen, setSnackbarStatus] = useState(true);
-
-  const handleClose = () => {
-    setSnackbarStatus(false);
-  };
 
   return (
     <Snackbar

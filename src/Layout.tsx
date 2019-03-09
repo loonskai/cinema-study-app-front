@@ -34,11 +34,16 @@ const ContentContainer = styled.div`
 `;
 
 const Layout = ({ orderModalDisplayed }: any) => {
-  const [isSnackbarOpen, setSnackbarState] = useState(false);
+  const [isSnackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarVariant, setSnackbarVariant] = useState('success');
-  const [snackbarMessage, setSnackbarMessage] = useState('Default message');
+  const [snackbarMessage, setSnackbarMessage] = useState('');
 
-  const handleSnackbar = (text: string, variant: string) => {};
+  const handleSnackbar = (message: string, variant: string) => {
+    setSnackbarOpen(true);
+    setSnackbarVariant(variant);
+    setSnackbarMessage(message);
+  };
+
   return (
     <Container>
       {orderModalDisplayed && (
@@ -52,6 +57,7 @@ const Layout = ({ orderModalDisplayed }: any) => {
         isOpen={isSnackbarOpen}
         variant={snackbarVariant}
         message={snackbarMessage}
+        handleClose={() => setSnackbarOpen(false)}
       />
     </Container>
   );
