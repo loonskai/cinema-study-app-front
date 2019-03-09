@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import Root from './Root';
 import Header from './components/Header';
 import OrderConfirmationModal from './components/seats/OrderConfirmationModal';
+import PopUpSnackbar from './components/PopUpSnackbar';
 import { whiteColor, containerGreyColor } from './constants';
 
 const Container = styled.div`
@@ -32,15 +33,29 @@ const ContentContainer = styled.div`
   }
 `;
 
-const Layout = ({ orderModalDisplayed }: any) => (
-  <Container>
-    {orderModalDisplayed && <OrderConfirmationModal />}
-    <Header />
-    <ContentContainer>
-      <Root />
-    </ContentContainer>
-  </Container>
-);
+const Layout = ({ orderModalDisplayed }: any) => {
+  const [isSnackbarOpen, setSnackbarState] = useState(false);
+  const [snackbarVariant, setSnackbarVariant] = useState('success');
+  const [snackbarMessage, setSnackbarMessage] = useState('Default message');
+
+  const handleSnackbar = (text: string, variant: string) => {};
+  return (
+    <Container>
+      {orderModalDisplayed && (
+        <OrderConfirmationModal handleSnackbar={handleSnackbar} />
+      )}
+      <Header />
+      <ContentContainer>
+        <Root />
+      </ContentContainer>
+      <PopUpSnackbar
+        isOpen={isSnackbarOpen}
+        variant={snackbarVariant}
+        message={snackbarMessage}
+      />
+    </Container>
+  );
+};
 
 const mapStateToProps = ({ modals }: any) => ({
   orderModalDisplayed: modals.orderModalDisplayed
