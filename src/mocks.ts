@@ -7,7 +7,79 @@ export const users = [
 ];
 
 export const userData = {
-  username: 'Johny'
+  username: 'Johny',
+  orders: {
+    past: [
+      {
+        sessionId: 1,
+        city: 'Minsk',
+        cinema: 'Pobeda',
+        date: '18.01.2019',
+        time: '19:00',
+        totalPrice: 10,
+        movie: {
+          id: 284053,
+          title: 'Thor: Ragnarok'
+        },
+        order: [
+          {
+            row: 1,
+            seat: 5
+          },
+          {
+            row: 1,
+            seat: 6
+          }
+        ]
+      },
+      {
+        sessionId: 2,
+        city: 'Minsk',
+        cinema: 'Belarus',
+        date: '19.12.2018',
+        time: '13:00',
+        totalPrice: 5,
+        movie: {
+          id: 263115,
+          title: 'Logan'
+        },
+        order: [
+          {
+            row: 5,
+            seat: 12
+          }
+        ]
+      }
+    ],
+    upcoming: [
+      {
+        sessionId: 1,
+        city: 'Minsk',
+        cinema: 'Pobeda',
+        date: '03.05.2019',
+        time: '20:00',
+        totalPrice: 18.5,
+        movie: {
+          id: 293660,
+          title: 'Deadpool'
+        },
+        order: [
+          {
+            row: 5,
+            seat: 10
+          },
+          {
+            row: 5,
+            seat: 11
+          },
+          {
+            row: 5,
+            seat: 12
+          }
+        ]
+      }
+    ]
+  }
 };
 
 export const movies = [

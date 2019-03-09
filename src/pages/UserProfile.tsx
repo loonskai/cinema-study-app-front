@@ -6,8 +6,8 @@ import PageTitle from '../components/PageTitle';
 import HistorySection from '../components/history/HistorySection';
 
 const UserProfile = () => {
-  const [userData, setUserData] = useState(null);
-  const [isLoading, setLoading] = useState(true);
+  const [userData, setUserData]: [any, any] = useState(null);
+  const [isLoading, setLoading]: [any, any] = useState(true);
 
   const loadUserData = async () => {
     try {
@@ -22,6 +22,7 @@ const UserProfile = () => {
   useEffect(() => {
     loadUserData();
   }, []);
+
   return isLoading ? (
     <Loader />
   ) : (
@@ -29,7 +30,7 @@ const UserProfile = () => {
       <PageTitle
         text={`Welcome, ${userData ? userData.username : 'Anonymous'}`}
       />
-      <HistorySection />
+      <HistorySection orders={userData.orders} />
     </Fragment>
   );
 };

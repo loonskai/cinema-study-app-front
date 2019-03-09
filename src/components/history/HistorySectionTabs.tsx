@@ -12,7 +12,6 @@ const Container = styled.div`
   width: 100%;
   display: flex;
   background: ${containerGreyColor};
-  cursor: pointer;
 `;
 
 const StyledTab = styled.div`
@@ -25,24 +24,10 @@ const StyledTab = styled.div`
     isSelected ? whiteColor : containerGreyColor};
   color: ${({ isSelected }: { isSelected: boolean }) =>
     isSelected ? mainDarkColor : greyColor};
+  cursor: pointer;
 `;
 
-const HistorySectionTabs = () => {
-  const [tabSelected, setTebSelected] = useState('upcoming');
-
-  const handleTabSelect = (e: any) => {
-    const { name }: { name: string } = e.target.dataset;
-    if (tabSelected === name) return;
-    switch (name) {
-      case 'upcoming':
-      case 'past': {
-        setTebSelected(name);
-      }
-      default:
-        return null;
-    }
-  };
-
+const HistorySectionTabs = ({ handleTabSelect, tabSelected }: any) => {
   return (
     <Container onClick={handleTabSelect}>
       <StyledTab isSelected={tabSelected === 'upcoming'} data-name="upcoming">
