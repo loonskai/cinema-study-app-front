@@ -16,7 +16,10 @@ export const seatSelectedBg = '#1BB0CE';
 export const seatSelectedTxt = '#fff';
 export const addButtonColor = '#A8DBA8';
 export const removeButtonColor = '#EB7B59';
-
+export const snackbarSuccessColor = '#79BD9A';
+export const snackbarWarningColor = '#FACA66';
+export const snackbarErrorColor = '#D24858';
+export const snackbarInfoColor = '#4DBCE9';
 export const goldColor = '#FACA66';
 export const schemeVipSectionBg = '#FEFBAF';
 

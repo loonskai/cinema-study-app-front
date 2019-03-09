@@ -36,7 +36,7 @@ const ContentContainer = styled.div`
 const Layout = ({ orderModalDisplayed }: any) => {
   const snackbarStateDefault = {
     isOpen: false,
-    variant: '',
+    variant: 'info',
     message: ''
   };
   const [snackbar, setSnackbarInfo] = useState(snackbarStateDefault);
