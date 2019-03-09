@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import { whiteColor, greyColor } from '../../constants';
@@ -22,6 +23,7 @@ const ModalWindow = styled.div`
   max-width: 500px;
   padding: 1rem;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   border-radius: 0.3125rem;
@@ -29,12 +31,19 @@ const ModalWindow = styled.div`
   background: ${whiteColor};
 `;
 
-const OrderConfirmationModal = () => {
+const OrderConfirmationModal = ({ order }: any) => {
+  const { sessionId, seatsPicked, totalPrice } = order;
   return (
     <Container>
-      <ModalWindow>Modal order</ModalWindow>
+      <ModalWindow>
+        <div>Session id: {sessionId}</div>
+        <div>Total price: ${totalPrice}</div>
+        <div>Tickets amount: {seatsPicked.length}</div>
+      </ModalWindow>
     </Container>
   );
 };
 
-export default OrderConfirmationModal;
+export default connect(({ orders }: { orders: any }) => ({
+  order: orders.data
+}))(OrderConfirmationModal);

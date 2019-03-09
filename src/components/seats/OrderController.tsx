@@ -23,13 +23,13 @@ const TicketsAmount = styled.div`
 
 const OrderController = ({
   handleOrderClear,
-  totalPrice,
   order,
+  setOrderInfo,
   toggleOrderConfirmationModal
 }: any) => {
   const handleOrderSubmit = (e: any) => {
     e.preventDefault();
-    console.log('submit order', order);
+    setOrderInfo(order);
     toggleOrderConfirmationModal(true);
   };
 
@@ -37,7 +37,7 @@ const OrderController = ({
 
   return (
     <Container onSubmit={handleOrderSubmit}>
-      <TotalPrice>Total price: ${totalPrice}</TotalPrice>
+      <TotalPrice>Total price: ${order.totalPrice}</TotalPrice>
       <TicketsAmount>Tickets amount: {order.seatsPicked.length}</TicketsAmount>
       <SubmitButton
         text="Buy tickets"

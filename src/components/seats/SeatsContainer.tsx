@@ -110,8 +110,11 @@ const SeatsContainer = ({ sessionId }: { sessionId: number }) => {
         <Fragment>
           <OrderController
             handleOrderClear={clearOrder}
-            totalPrice={totalPrice.toFixed(2)}
-            order={{ sessionId, seatsPicked }}
+            order={{
+              sessionId,
+              seatsPicked,
+              totalPrice: totalPrice.toFixed(2)
+            }}
           />
           <SeatsScheme
             seatsPicked={seatsPicked}
