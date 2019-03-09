@@ -7,8 +7,8 @@ import { whiteColor } from '../../constants';
 const RoundButton = ({ icon, bgColor, type, handleClick, disabled }: any) => {
   const Container = styled(Fab)<any>`
     && {
-      width: 40px;
-      height: 40px;
+      width: 2.5rem;
+      height: 2.5rem;
       margin: 0 0.5rem;
       color: ${whiteColor};
       background-color: ${bgColor};

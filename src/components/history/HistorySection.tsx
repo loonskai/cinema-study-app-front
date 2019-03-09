@@ -9,7 +9,7 @@ const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
   margin-top: 1rem;
-  border-radius: 10px;
+  border-radius: 0.625rem;
   border: 1px solid ${greyColor};
   overflow: hidden;
 `;
@@ -25,7 +25,7 @@ const OrderContainer = styled.div<any>`
   padding: 1rem;
   background-color: ${({ isRelevant }: { isRelevant: boolean }) =>
     isRelevant ? whiteColor : containerGreyColor};
-  border-radius: 10px;
+  border-radius: 0.625rem;
   box-shadow: ${({ isRelevant }: { isRelevant: boolean }) =>
     isRelevant ? '0px 0px 20px -5px rgba(0, 0, 0, 0.3)' : 'none'};
 `;

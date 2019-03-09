@@ -5,7 +5,7 @@ import { screenBgColor, screenTxtColor } from '../../../constants';
 
 const Screen = styled.div`
   min-width: 300px;
-  height: 30px;
+  height: 1.875rem;
   display: flex;
   justify-content: center;
   align-items: center;

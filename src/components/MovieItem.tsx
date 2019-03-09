@@ -16,7 +16,7 @@ const Container = styled(Card)<any>`
 
 const StyledTitle = styled.span`
   width: 100%;
-  height: 52px;
+  height: 3.25rem;
   display: flex;
   justify-content: center;
   align-items: center;

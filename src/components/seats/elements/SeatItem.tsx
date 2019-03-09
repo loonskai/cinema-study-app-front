@@ -14,8 +14,8 @@ import {
 } from '../../../constants';
 
 const Container = styled.div<any>`
-  min-width: 30px;
-  height: 30px;
+  min-width: 1.875rem;
+  height: 1.875rem;
   margin-bottom: 0.5rem;
   display: flex;
   justify-content: center;
