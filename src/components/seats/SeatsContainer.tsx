@@ -80,21 +80,19 @@ const SeatsContainer = ({
     const free = e.target.dataset.free === 'true';
     const price = +e.target.dataset.price;
     if (!pickedRow || !pickedSeat || !free) return;
-    let newSeatsPicked;
+    // let newSeatsPicked;
     const pickedBefore = seatsPicked.some(
       (seat: any) => seat.row === pickedRow && seat.seat === pickedSeat
     );
-    if (!pickedBefore) {
-      newSeatsPicked = seatsPicked.concat({
-        row: pickedRow,
-        seat: pickedSeat,
-        price
-      });
-    } else {
-      newSeatsPicked = seatsPicked.filter(
-        (item: any) => !(item.row === pickedRow && item.seat === pickedSeat)
-      );
-    }
+    const newSeatsPicked = pickedBefore
+      ? seatsPicked.filter(
+          (item: any) => !(item.row === pickedRow && item.seat === pickedSeat)
+        )
+      : seatsPicked.concat({
+          row: pickedRow,
+          seat: pickedSeat,
+          price
+        });
     const newTotalPrice = newSeatsPicked.reduce(
       (sum: number, seat: any) => seat.price + sum,
       0

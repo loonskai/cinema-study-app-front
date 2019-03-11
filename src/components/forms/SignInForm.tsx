@@ -108,8 +108,8 @@ const SignInForm = ({ signIn }: any) => {
         icon={<PersonIcon />}
         disabled={
           !(
-            (values.email !== '' && values.password !== '') ||
-            (values.username !== '' && values.password !== '')
+            (values.email && values.password) ||
+            (values.username && values.password)
           )
         }
       />

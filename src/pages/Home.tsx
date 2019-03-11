@@ -21,7 +21,7 @@ const Home = () => {
   };
 
   useEffect(() => {
-    if (movie !== '' || city !== '' || cinema !== '') {
+    if (movie || city || cinema) {
       setButtonDisabled(false);
     } else {
       setButtonDisabled(true);

@@ -31,7 +31,7 @@ const SearchSessionForm = ({ loadSessionsList, sessions, isAuth }: any) => {
   const [displaySessionsTable, setDisplaySessionsTable] = useState(false);
 
   useEffect(() => {
-    if (city !== '' || cinema !== '') {
+    if (city || cinema) {
       setButtonDisabled(false);
     } else {
       setButtonDisabled(true);
