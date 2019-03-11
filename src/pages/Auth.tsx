@@ -42,7 +42,9 @@ const StyledTab = styled.div<any>`
   padding: 1rem;
 `;
 
-const Auth = ({ isAuth }: any) => {
+const Auth = (props: any) => {
+  const { isAuth, redirectToReferrer }: any = props;
+  console.log('props from auth', props);
   const [tabSelected, setTab] = useState('signup');
 
   const toggleTab = (value: string) => () => {
@@ -59,10 +61,10 @@ const Auth = ({ isAuth }: any) => {
         return null;
     }
   };
-
+  /* 
   if (isAuth) {
     return <Redirect to="/" />;
-  }
+  } */
 
   return (
     <React.Fragment>
@@ -88,4 +90,6 @@ const Auth = ({ isAuth }: any) => {
   );
 };
 
-export default connect(({ auth }: any) => ({ isAuth: auth.isAuth }))(Auth);
+export default connect(({ auth }: any) => ({
+  redirectToReferrer: auth.redirectToReferrer
+}))(Auth);

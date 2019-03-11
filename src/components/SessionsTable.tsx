@@ -1,7 +1,7 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
+import Loader from '../components/Loader';
 import DefaultButton from './../components/buttons/DefaultButton';
 import { greyColor, whiteColor, containerGreyColor } from './../constants';
 
@@ -55,6 +55,14 @@ const WideCell = styled(TableCell)`
 `;
 
 const SessionsTable = ({ sessions, isAuth }: any) => {
+  const [isLoading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (sessions) {
+      setLoading(false);
+    }
+  }, [sessions]);
+
   const getRows = () => {
     if (sessions.length === 0) {
       return (
@@ -97,11 +105,9 @@ const SessionsTable = ({ sessions, isAuth }: any) => {
         <TableCell>Date and time</TableCell>
         <TableCell />
       </TableRow>
-      {getRows()}
+      {isLoading ? <Loader /> : getRows()}
     </Container>
   );
 };
 
-export default connect(({ auth }: { auth: any }) => ({ isAuth: auth.isAuth }))(
-  SessionsTable
-);
+export default SessionsTable;

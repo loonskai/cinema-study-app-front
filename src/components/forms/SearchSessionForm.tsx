@@ -23,7 +23,7 @@ const StyledForm = styled.form`
   width: 100%;
 `;
 
-const SearchSessionForm = ({ loadSessionsList, sessions }: any) => {
+const SearchSessionForm = ({ loadSessionsList, sessions, isAuth }: any) => {
   const [city, setCity] = useState('Minsk');
   const [cinema, setCinema] = useState('');
   const [date, setDate] = useState(new Date());
@@ -79,12 +79,24 @@ const SearchSessionForm = ({ loadSessionsList, sessions }: any) => {
           disabled={buttonDisabled}
         />
       </StyledForm>
-      {displaySessionsTable && <SessionsTable sessions={sessions} />}
+      {displaySessionsTable && (
+        <SessionsTable sessions={sessions} isAuth={isAuth} />
+      )}
     </Container>
   );
 };
 
+const mapStateToProps = (state: any, initialProps: any) => {
+  const { auth, sessions } = state;
+  const { movieId } = initialProps;
+  return {
+    isAuth: auth.isAuth,
+    sessions:
+      sessions && sessions.filter((session: any) => session.movieId === movieId)
+  };
+};
+
 export default connect(
-  ({ sessions }: any) => ({ sessions: sessions.data }),
+  mapStateToProps,
   actions
 )(SearchSessionForm);

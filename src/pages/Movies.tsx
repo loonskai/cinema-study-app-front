@@ -87,6 +87,6 @@ class Movies extends React.Component<any, any> {
 }
 
 export default connect(
-  ({ movies }: { movies: any }) => ({ movies: movies.data }),
+  ({ movies }: { movies: any }) => ({ movies }),
   actions
 )(Movies as any);

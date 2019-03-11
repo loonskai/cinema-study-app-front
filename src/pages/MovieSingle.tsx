@@ -49,7 +49,7 @@ const MovieSingle = ({ match }: any) => {
         />
         <StyledDescription>
           <div>{movie.overview}</div>
-          <SearchSessionForm />
+          <SearchSessionForm movieId={+match.params.id} />
         </StyledDescription>
       </MovieInfoContainer>
     </Fragment>

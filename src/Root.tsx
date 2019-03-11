@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
+import ProtectedRoute from './components/ProtectedRoute';
 import Home from './pages/Home';
 import Movies from './pages/Movies';
 import Auth from './pages/Auth';
@@ -14,8 +15,8 @@ const Root = () => (
     <Route exact={true} path="/movies" component={Movies} />
     <Route path="/movies/:id" component={MovieSingle} />
     <Route path="/auth" component={Auth} />
-    <Route path="/profile" component={UserProfile} />
-    <Route path="/sessions/:id" component={SessionSingle} />
+    <ProtectedRoute path="/profile" component={UserProfile} />
+    <ProtectedRoute path="/sessions/:id" component={SessionSingle} />
   </Switch>
 );
 
