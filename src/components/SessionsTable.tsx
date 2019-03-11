@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import Loader from '../components/Loader';
@@ -71,43 +71,43 @@ const SessionsTable = ({ sessions, isAuth }: any) => {
         </TableRow>
       );
     }
-    return sessions.map((session: any) => (
-      <TableRow key={session.id.toString()}>
-        <TableCell>
-          <span>{session.city}</span>
-        </TableCell>
-        <TableCell>
-          <span>{session.cinema}</span>
-        </TableCell>
-        <TableCell>
-          <CellLine>{session.date}</CellLine>
-          <CellLine>{session.time}</CellLine>
-        </TableCell>
-        <TableCell>
-          {isAuth ? (
-            <DefaultButton
-              text="Buy Ticket"
-              to={`/sessions/${session.id.toString()}`}
-            />
-          ) : (
-            <DefaultButton text="Sign In" to="/auth" />
-          )}
-        </TableCell>
-      </TableRow>
-    ));
+    return (
+      <Fragment>
+        <TableRow>
+          <TableCell>City</TableCell>
+          <TableCell>Cinema</TableCell>
+          <TableCell>Date and time</TableCell>
+          <TableCell />
+        </TableRow>
+        {sessions.map((session: any) => (
+          <TableRow key={session.id.toString()}>
+            <TableCell>
+              <span>{session.city}</span>
+            </TableCell>
+            <TableCell>
+              <span>{session.cinema}</span>
+            </TableCell>
+            <TableCell>
+              <CellLine>{session.date}</CellLine>
+              <CellLine>{session.time}</CellLine>
+            </TableCell>
+            <TableCell>
+              {isAuth ? (
+                <DefaultButton
+                  text="Buy Ticket"
+                  to={`/sessions/${session.id.toString()}`}
+                />
+              ) : (
+                <DefaultButton text="Sign In" to="/auth" />
+              )}
+            </TableCell>
+          </TableRow>
+        ))}
+      </Fragment>
+    );
   };
 
-  return (
-    <Container>
-      <TableRow>
-        <TableCell>City</TableCell>
-        <TableCell>Cinema</TableCell>
-        <TableCell>Date and time</TableCell>
-        <TableCell />
-      </TableRow>
-      {isLoading ? <Loader /> : getRows()}
-    </Container>
-  );
+  return <Container>{isLoading ? <Loader /> : getRows()}</Container>;
 };
 
 export default SessionsTable;
