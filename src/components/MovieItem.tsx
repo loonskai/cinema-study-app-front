@@ -31,17 +31,15 @@ const StyledPoster = styled.img`
   align-self: center;
 `;
 
-const MovieItem = ({ data }: { data: any }) => {
-  return (
-    <Container>
-      <StyledTitle>{data.original_title}</StyledTitle>
-      <StyledPoster
-        src={`https://image.tmdb.org/t/p/w500${data.poster_path}`}
-        alt={data.original_title}
-      />
-      <DefaultButton text="Details" to={`/movies/${data.id.toString()}`} />
-    </Container>
-  );
-};
+const MovieItem = ({ data }: { data: any }) => (
+  <Container>
+    <StyledTitle>{data.original_title}</StyledTitle>
+    <StyledPoster
+      src={`https://image.tmdb.org/t/p/w500${data.poster_path}`}
+      alt={data.original_title}
+    />
+    <DefaultButton text="Details" to={`/movies/${data.id}`} />
+  </Container>
+);
 
 export default MovieItem;

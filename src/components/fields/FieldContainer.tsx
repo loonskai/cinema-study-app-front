@@ -57,12 +57,20 @@ const getField = (props: Props) => {
   }
 };
 
+const gridColumnsNumber = 8;
+const gridInputWidth = 7;
+
 const FieldContainer = (props: Props) => (
-  <Grid container={true} spacing={8} justify="center" alignItems="center">
+  <Grid
+    container={true}
+    spacing={gridColumnsNumber}
+    justify="center"
+    alignItems="center"
+  >
     <Grid item={true}>
       <IconStyled icon={props.icon || props.entity} />
     </Grid>
-    <Grid item={true} lg={7}>
+    <Grid item={true} lg={gridInputWidth}>
       {getField(props)}
     </Grid>
   </Grid>

@@ -13,9 +13,7 @@ interface Props {
   disabled?: boolean;
 }
 
-const Container = styled.div<any>``;
-
-const StyledButton = styled(Button)<any>`
+const Container = styled(Button)<any>`
   && {
     background-color: ${whiteColor};
     color: ${mainDarkColor};
@@ -36,17 +34,15 @@ const StyledText = styled.span`
 `;
 
 const HeaderButton = ({ text, to, icon, handleClick, disabled }: Props) => (
-  <Container>
-    <StyledButton
-      variant="contained"
-      component={to && Link}
-      to={to}
-      onClick={handleClick}
-      disabled={disabled}
-    >
-      {icon}
-      <StyledText>{text}</StyledText>
-    </StyledButton>
+  <Container
+    variant="contained"
+    component={to && Link}
+    to={to}
+    onClick={handleClick}
+    disabled={disabled}
+  >
+    {icon}
+    <StyledText>{text}</StyledText>
   </Container>
 );
 

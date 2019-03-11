@@ -52,7 +52,7 @@ const BonusSelectItem = ({ bonus, handleBonusesUpdate, value }: any) => {
           bgColor={removeButtonColor}
           icon={<RemoveIcon />}
           type="remove"
-          disabled={value === 0}
+          disabled={!value}
           handleClick={handleBonusClick}
         />
       </BonusController>

@@ -16,8 +16,8 @@ const BonusContainer = ({
   loadedBonuses: any;
   handleBonusesUpdate: any;
 }) => {
-  const renderBonuses = () => {
-    return Object.keys(loadedBonuses).map((key: string) => (
+  const renderBonuses = () =>
+    Object.keys(loadedBonuses).map((key: string) => (
       <BonusSelectItem
         value={pickedBonuses && pickedBonuses[key]}
         key={key}
@@ -25,7 +25,6 @@ const BonusContainer = ({
         handleBonusesUpdate={handleBonusesUpdate}
       />
     ));
-  };
   return <Container>{loadedBonuses && renderBonuses()}</Container>;
 };
 
