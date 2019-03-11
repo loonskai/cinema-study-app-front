@@ -24,36 +24,20 @@ const variantIcon = {
   info: InfoIcon
 } as any;
 
-const calculateTheme = (variant: string) => {
+const calculateColor = (variant: string) => {
   switch (variant) {
     case 'success':
-      return {
-        bgColor: snackbarSuccessColor
-      };
+      return snackbarSuccessColor;
     case 'warning':
-      return {
-        bgColor: snackbarWarningColor
-      };
+      return snackbarWarningColor;
     case 'error':
-      return {
-        bgColor: snackbarErrorColor
-      };
+      return snackbarErrorColor;
     case 'info':
-      return {
-        bgColor: snackbarInfoColor
-      };
+      return snackbarInfoColor;
     default:
-      return {
-        bgColor: snackbarInfoColor
-      };
+      return snackbarInfoColor;
   }
 };
-
-const StyledSnackbar = styled(SnackbarContent)<any>`
-  && {
-    background-color: ${({ bgColor }) => bgColor};
-  }
-`;
 
 const StyledText = styled.span`
   display: flex;
@@ -63,7 +47,12 @@ const StyledText = styled.span`
 const PopUpSnackbar = (props: any) => {
   const { isOpen, handleClose, message, variant, ...other } = props;
   const Icon = variantIcon[variant] || <InfoIcon />;
-  const theme = calculateTheme(variant);
+
+  const StyledSnackbar = styled(SnackbarContent)<any>`
+    && {
+      background-color: ${calculateColor(variant)};
+    }
+  `;
 
   const StyledIcon = styled(Icon)<any>`
     opacity: 0.9;
@@ -82,7 +71,6 @@ const PopUpSnackbar = (props: any) => {
     >
       <StyledSnackbar
         aria-describedby="client-snackbar"
-        bgColor={theme.bgColor}
         message={
           <StyledText id="client-snackbar">
             <StyledIcon />

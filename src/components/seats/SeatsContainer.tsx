@@ -123,7 +123,7 @@ const SeatsContainer = ({
         onHallChange={changeHall}
         onOptionsChange={changeOptions}
         options={options}
-        hallSelected={order.hallId}
+        hallSelected={order.hallId || ''}
       />
       {order.hallId && (
         <Fragment>
