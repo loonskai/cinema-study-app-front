@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
@@ -27,42 +27,59 @@ const MoviesContainer = styled.div`
   justify-content: center;
 `;
 
-class Movies extends React.Component<any, any> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      isLoading: true,
-      filterText: ''
-    };
-  }
+const Movies = ({ movies, loadMoviesList }: any) => {
+  const [isLoading, setLoading] = useState(false);
+  const [filterText, setFilterText] = useState('');
 
-  async componentDidMount() {
-    await this.props.loadMoviesList();
-    this.setState({ isLoading: false });
-  }
+  useEffect(() => {
+    if (!movies) {
+      loadMoviesList();
+    } else {
+      setLoading(false);
+    }
+  }, [movies]);
 
-  handleSearchBar = (e: any) => {
-    this.setState({
-      filterText: e.target.value.toLowerCase().trim()
-    });
+  const handleSearchBar = (e: any) => {
+    setFilterText(e.target.value.toLowerCase().trim());
   };
 
-  getMoviesList = () => {
-    const { movies } = this.props;
-    const { filterText } = this.state;
-    const filteredMovies =
-      filterText === ''
-        ? movies
-        : movies.filter((movie: any) =>
-            movie.original_title.toLowerCase().includes(filterText)
-          );
-    if (filteredMovies.length === 0) {
+  const getFilteredMovies = () => {
+    if (!movies) return null;
+    const filteredMovies = !filterText
+      ? movies
+      : movies.filter((movie: any) =>
+          movie.original_title.toLowerCase().includes(filterText)
+        );
+    if (!filteredMovies.length) {
       return 'Nothing found';
     }
     return filteredMovies.map((movie: any) => (
       <MovieItem key={movie.id} data={movie} />
     ));
   };
+
+  return (
+    <Container>
+      <FieldContainer
+        id="movie"
+        type="text"
+        icon="search"
+        entity="movie"
+        label="Movie Title"
+        handleChange={handleSearchBar}
+        withoutSuggestions={true}
+      />
+      <PageTitle text="Movies" />
+      <MoviesContainer>
+        {isLoading ? <Loader /> : getFilteredMovies()}
+      </MoviesContainer>
+    </Container>
+  );
+};
+
+/* class Movies extends React.Component<any, any> { 
+
+  
 
   render() {
     const { isLoading } = this.state;
@@ -84,7 +101,7 @@ class Movies extends React.Component<any, any> {
       </Container>
     );
   }
-}
+} */
 
 export default connect(
   ({ movies }: { movies: any }) => ({ movies }),

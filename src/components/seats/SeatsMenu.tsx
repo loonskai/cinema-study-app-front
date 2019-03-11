@@ -45,7 +45,7 @@ const SeatsMenu = ({
 
   const renderOptions = (options: any) => {
     const keys = Object.keys(options);
-    if (!options || keys.length === 0) return 'No options';
+    if (!options || !keys.length) return 'No options';
     return keys.map(key => (
       <FormControlLabel
         key={key}

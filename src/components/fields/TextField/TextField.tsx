@@ -66,7 +66,7 @@ function getSuggestions(
   const suggestionsFiltered = suggestions.filter(suggestion =>
     suggestion.label.toLowerCase().includes(value)
   );
-  return suggestionsFiltered.length === 0 ? [null] : suggestionsFiltered;
+  return suggestionsFiltered.length ? suggestionsFiltered : [null];
 }
 
 function renderSuggestion(

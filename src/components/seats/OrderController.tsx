@@ -44,7 +44,7 @@ const OrderController = ({ handleOrderClear, order }: any) => {
     });
   };
 
-  const isEmpty = order.seatsPicked.length === 0;
+  const isEmpty = !order.seatsPicked.length;
 
   return (
     <Container onSubmit={handleOrderSubmit}>

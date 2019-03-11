@@ -40,7 +40,7 @@ const SeatsScheme = ({ options, hallId, handleSeatPick, seatsPicked }: any) => {
   }, [hallId]);
 
   const renderSeats = () => {
-    if (!seats || seats.length === 0) return 'No seats found';
+    if (!seats || !seats.length) return 'No seats found';
     const { rows } = seats;
     const optionsKeys = Object.keys(options);
     return rows.map((row: any, rowIndex: number) => {
