@@ -1,10 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Container = styled.span`
+const Container = styled.div`
   height: 1.875rem;
-  width: 5rem;
-  margin-left: -5rem;
+  min-width: 5rem;
   display: flex;
   justify-content: center;
   align-items: center;

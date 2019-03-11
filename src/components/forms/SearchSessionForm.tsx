@@ -28,7 +28,7 @@ const SearchSessionForm = ({ loadSessionsList, sessions }: any) => {
   const [cinema, setCinema] = useState('');
   const [date, setDate] = useState(new Date());
   const [buttonDisabled, setButtonDisabled] = useState(true);
-  const [displaySessionsTable, setDisplaySessionsTable] = useState(true); // false default
+  const [displaySessionsTable, setDisplaySessionsTable] = useState(false);
 
   useEffect(() => {
     if (city !== '' || cinema !== '') {

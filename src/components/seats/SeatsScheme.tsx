@@ -14,7 +14,7 @@ const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  padding: 2rem;
+  padding: 2rem 0;
   background: ${containerGreyColor};
   overflow-x: scroll;
 `;
