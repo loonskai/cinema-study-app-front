@@ -23,12 +23,12 @@ const SchemeWrapper = styled.div`
   width: 100%;
 `;
 
-const SeatsScheme = ({ options, hall, handleSeatPick, seatsPicked }: any) => {
+const SeatsScheme = ({ options, hallId, handleSeatPick, seatsPicked }: any) => {
   const [seats, setSeats]: [any, any] = useState(null);
 
   const loadSeats = async () => {
     try {
-      const seatsLoaded: any = await api.loadHallSeats(hall, options);
+      const seatsLoaded: any = await api.loadHallSeats(hallId, options);
       setSeats(seatsLoaded);
     } catch (error) {
       console.log(error);
@@ -37,7 +37,7 @@ const SeatsScheme = ({ options, hall, handleSeatPick, seatsPicked }: any) => {
 
   useEffect(() => {
     loadSeats();
-  }, [hall]);
+  }, [hallId]);
 
   const renderSeats = () => {
     if (!seats || seats.length === 0) return 'No seats found';

@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import actions from '../../redux/actions';
-import api from '../../ApiService';
 import SeatsMenu from './SeatsMenu';
 import OrderController from './OrderController';
 import SeatsScheme from './SeatsScheme';
@@ -29,17 +28,12 @@ const StyledTitle = styled.span`
 const SeatsContainer = ({
   sessionId,
   order,
-  setOrderInfo,
-  clearOrderInfo,
-  toggleOrderConfirmationModal
+  setOrderInfo
 }: {
   sessionId: number;
   order: any;
   setOrderInfo: any;
-  clearOrderInfo: any;
-  toggleOrderConfirmationModal: any;
 }) => {
-  const [hall, setHall]: [any, any] = useState('');
   const [options, setOptions]: [any, any] = useState({
     vip: {
       label: 'VIP',
@@ -54,20 +48,16 @@ const SeatsContainer = ({
   useEffect(() => {
     setOrderInfo({
       sessionId,
+      hallId: order.hallId,
       seatsPicked: order.seatsPicked,
       totalPrice: order.totalPrice
-    });
-    api.reserve({
-      sessionId,
-      hall,
-      seatsPicked: order.seatsPicked
     });
   }, []);
 
   const changeHall = (value: any) => {
-    setHall(value);
     setOrderInfo({
       sessionId: order.sessionId,
+      hallId: value,
       seatsPicked: [],
       totalPrice: 0
     });
@@ -111,8 +101,18 @@ const SeatsContainer = ({
     );
     setOrderInfo({
       sessionId: order.sessionId,
+      hallId: order.hallId,
       seatsPicked: newSeatsPicked,
       totalPrice: newTotalPrice
+    });
+  };
+
+  const handleOrderClear = () => {
+    setOrderInfo({
+      sessionId,
+      hallId: order.hallId,
+      seatsPicked: [],
+      totalPrice: 0
     });
   };
 
@@ -123,21 +123,15 @@ const SeatsContainer = ({
         onHallChange={changeHall}
         onOptionsChange={changeOptions}
         options={options}
-        hallSelected={hall}
+        hallSelected={order.hallId}
       />
-      {hall && (
+      {order.hallId && (
         <Fragment>
-          <OrderController
-            handleOrderClear={() => clearOrderInfo()}
-            order={order}
-            toggleModal={(value: boolean) =>
-              toggleOrderConfirmationModal(value)
-            }
-          />
+          <OrderController handleOrderClear={handleOrderClear} order={order} />
           <SeatsScheme
             seatsPicked={order.seatsPicked}
             options={options}
-            hall={hall}
+            hallId={order.hallId}
             handleSeatPick={handleSeatPick}
             totalPrice={order.totalPrice}
           />
@@ -148,8 +142,8 @@ const SeatsContainer = ({
 };
 
 export default connect(
-  ({ orders }: any) => ({
-    order: orders.data
+  ({ order }: any) => ({
+    order
   }),
   actions
 )(SeatsContainer);

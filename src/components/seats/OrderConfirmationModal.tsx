@@ -56,7 +56,7 @@ const OrderConfirmationModal = ({
   order,
   handleClose,
   handleSnackbar,
-  clearOrderInfo // from redux
+  setOrderInfo // from redux
 }: any) => {
   const { sessionId, seatsPicked } = order;
 
@@ -128,14 +128,21 @@ const OrderConfirmationModal = ({
       e.preventDefault();
       const orderComplete = {
         ...order,
-        ...pickedBonuses,
-        totalPrice: calculateTotalPrice()
+        ...pickedBonuses
       };
       const result = await api.submitOrder(orderComplete);
       if (result) {
+        setOrderInfo({
+          sessionId: order.sessionId,
+          hallId: order.hallId,
+          seatsPicked: [],
+          totalPrice: 0
+        });
         handleClose(false);
-        clearOrderInfo();
         handleSnackbar('Tickets ordered successfully!', 'success');
+      } else {
+        handleClose(false);
+        handleSnackbar('Something went wrong', 'error');
       }
     } catch (error) {
       console.log(error);
@@ -168,8 +175,6 @@ const OrderConfirmationModal = ({
 };
 
 export default connect(
-  ({ orders }: { orders: any }) => ({
-    order: orders.data
-  }),
+  ({ order }: { order: any }) => ({ order }),
   actions
 )(OrderConfirmationModal);

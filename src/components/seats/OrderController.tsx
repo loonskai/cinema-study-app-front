@@ -27,7 +27,7 @@ const snackbarStateDefault = {
   message: ''
 };
 
-const OrderController = ({ handleOrderClear, order, toggleModal }: any) => {
+const OrderController = ({ handleOrderClear, order }: any) => {
   const [isModalDisplayed, setModalDisplay]: [boolean, any] = useState(false);
   const [snackbar, setSnackbarInfo] = useState(snackbarStateDefault);
 
