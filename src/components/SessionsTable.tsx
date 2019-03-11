@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import DefaultButton from './../components/buttons/DefaultButton';
@@ -53,7 +54,7 @@ const WideCell = styled(TableCell)`
   grid-column: 1 / 5;
 `;
 
-const SessionsTable = ({ sessions }: any) => {
+const SessionsTable = ({ sessions, isAuth }: any) => {
   const getRows = () => {
     if (sessions.length === 0) {
       return (
@@ -75,10 +76,14 @@ const SessionsTable = ({ sessions }: any) => {
           <CellLine>{session.time}</CellLine>
         </TableCell>
         <TableCell>
-          <DefaultButton
-            text="Buy Ticket"
-            to={`/sessions/${session.id.toString()}`}
-          />
+          {isAuth ? (
+            <DefaultButton
+              text="Buy Ticket"
+              to={`/sessions/${session.id.toString()}`}
+            />
+          ) : (
+            <DefaultButton text="Sign In" to="/auth" />
+          )}
         </TableCell>
       </TableRow>
     ));
@@ -97,4 +102,6 @@ const SessionsTable = ({ sessions }: any) => {
   );
 };
 
-export default SessionsTable;
+export default connect(({ auth }: { auth: any }) => ({ isAuth: auth.isAuth }))(
+  SessionsTable
+);
