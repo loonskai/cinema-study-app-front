@@ -6,8 +6,8 @@ import {
   seatFreeTxt,
   seatReservedBg,
   seatReservedTxt,
-  seatPurchasedBg,
-  seatPurchasedTxt,
+  seatOrderedBg,
+  seatOrderedTxt,
   seatSelectedBg,
   seatSelectedTxt,
   goldColor
@@ -44,36 +44,26 @@ const SeatItem = ({
   isOrdered,
   isMuted
 }: any) => {
-  const computeColors = () => {
-    if (isReserved) {
-      return {
-        bgColor: seatReservedBg,
-        txtColor: seatReservedTxt
-      };
-    }
-    if (isOrdered) {
-      return {
-        bgColor: seatPurchasedBg,
-        txtColor: seatPurchasedTxt
-      };
-    }
-    if (isSelected) {
-      return {
-        bgColor: seatSelectedBg,
-        txtColor: seatSelectedTxt
-      };
-    }
-    if (category === 'vip') {
-      return {
-        bgColor: goldColor,
-        txtColor: seatFreeTxt
-      };
-    }
-    return {
+  const computeColors = () =>
+    (isReserved && {
+      bgColor: seatReservedBg,
+      txtColor: seatReservedTxt
+    }) ||
+    (isOrdered && {
+      bgColor: seatOrderedBg,
+      txtColor: seatOrderedTxt
+    }) ||
+    (isSelected && {
+      bgColor: seatSelectedBg,
+      txtColor: seatSelectedTxt
+    }) ||
+    (category === 'vip' && {
+      bgColor: goldColor,
+      txtColor: seatFreeTxt
+    }) || {
       bgColor: seatFreeBg,
       txtColor: seatFreeTxt
     };
-  };
 
   const [theme, setTheme] = useState(computeColors());
 

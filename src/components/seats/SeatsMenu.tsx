@@ -39,10 +39,6 @@ const SeatsMenu = ({
   options,
   hallSelected
 }: any) => {
-  const handleCheckboxChange = (e: any) => {
-    onOptionsChange(e.target.value);
-  };
-
   const renderOptions = (options: any) => {
     const keys = Object.keys(options);
     if (!options || !keys.length) return 'No options';
@@ -54,7 +50,9 @@ const SeatsMenu = ({
             checked={options[key].value}
             value={key}
             classes={{ checked: 'checked' }}
-            onChange={handleCheckboxChange}
+            onChange={(e: any) => {
+              onOptionsChange(e.target.value);
+            }}
           />
         }
         label={options[key].label}
