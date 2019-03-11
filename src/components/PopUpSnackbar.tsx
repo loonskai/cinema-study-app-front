@@ -1,4 +1,5 @@
 import React from 'react';
+import { createPortal } from 'react-dom';
 import styled from 'styled-components';
 import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
@@ -69,7 +70,7 @@ const PopUpSnackbar = (props: any) => {
     margin-right: 0.5rem;
   `;
 
-  return (
+  const element = (
     <Snackbar
       anchorOrigin={{
         vertical: 'bottom',
@@ -102,6 +103,10 @@ const PopUpSnackbar = (props: any) => {
       />
     </Snackbar>
   );
+
+  const domNode: any = document.getElementById('snackbars');
+
+  return createPortal(element, domNode);
 };
 
 export default PopUpSnackbar;

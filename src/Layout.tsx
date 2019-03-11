@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import Root from './Root';
 import Header from './components/Header';
-import PopUpSnackbar from './components/PopUpSnackbar';
 import { whiteColor, containerGreyColor } from './constants';
 
 const Container = styled.div`
@@ -31,25 +30,12 @@ const ContentContainer = styled.div`
 `;
 
 const Layout = () => {
-  const snackbarStateDefault = {
-    isOpen: false,
-    variant: 'info',
-    message: ''
-  };
-  const [snackbar, setSnackbarInfo] = useState(snackbarStateDefault);
-
   return (
     <Container>
       <Header />
       <ContentContainer>
         <Root />
       </ContentContainer>
-      <PopUpSnackbar
-        isOpen={snackbar.isOpen}
-        variant={snackbar.variant}
-        message={snackbar.message}
-        handleClose={() => setSnackbarInfo({ ...snackbar, isOpen: false })}
-      />
     </Container>
   );
 };
