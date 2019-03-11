@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import LocalGroceryStoreIcon from '@material-ui/icons/LocalGroceryStore';
@@ -21,6 +22,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   background: rgba(255, 255, 255, 0.7);
+  font-family: 'Bitter', serif;
   z-index: 500;
 `;
 
@@ -52,9 +54,9 @@ const TicketsAmount = styled.div`
 
 const OrderConfirmationModal = ({
   order,
-  toggleOrderConfirmationModal,
-  clearOrderInfo,
-  handleSnackbar
+  handleClose,
+  handleSnackbar,
+  clearOrderInfo // from redux
 }: any) => {
   const { sessionId, seatsPicked } = order;
 
@@ -117,7 +119,7 @@ const OrderConfirmationModal = ({
 
   const handleBackgroundClick = (e: any) => {
     if (e.target === e.currentTarget) {
-      toggleOrderConfirmationModal(false);
+      handleClose(false);
     }
   };
 
@@ -131,7 +133,7 @@ const OrderConfirmationModal = ({
       };
       const result = await api.submitOrder(orderComplete);
       if (result) {
-        toggleOrderConfirmationModal(false);
+        handleClose(false);
         clearOrderInfo();
         handleSnackbar('Tickets ordered successfully!', 'success');
       }
@@ -140,12 +142,10 @@ const OrderConfirmationModal = ({
     }
   };
 
-  return (
+  const element = (
     <Container onClick={handleBackgroundClick}>
       <ModalWindow>
-        <CloseModalButton
-          handleClick={() => toggleOrderConfirmationModal(false)}
-        />
+        <CloseModalButton handleClick={() => handleClose(false)} />
         <TotalPrice>Total price: ${calculateTotalPrice()}</TotalPrice>
         <TicketsAmount>Tickets amount: {seatsPicked.length}</TicketsAmount>
         <BonusContainer
@@ -163,6 +163,8 @@ const OrderConfirmationModal = ({
       </ModalWindow>
     </Container>
   );
+  const domNode: any = document.getElementById('modal');
+  return createPortal(element, domNode);
 };
 
 export default connect(

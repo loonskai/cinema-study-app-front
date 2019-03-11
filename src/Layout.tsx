@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Root from './Root';
 import Header from './components/Header';
-import OrderConfirmationModal from './components/seats/OrderConfirmationModal';
 import PopUpSnackbar from './components/PopUpSnackbar';
 import { whiteColor, containerGreyColor } from './constants';
 
@@ -33,7 +30,7 @@ const ContentContainer = styled.div`
   }
 `;
 
-const Layout = ({ orderModalDisplayed }: any) => {
+const Layout = () => {
   const snackbarStateDefault = {
     isOpen: false,
     variant: 'info',
@@ -41,19 +38,8 @@ const Layout = ({ orderModalDisplayed }: any) => {
   };
   const [snackbar, setSnackbarInfo] = useState(snackbarStateDefault);
 
-  const handleSnackbar = (message: string, variant: string) => {
-    setSnackbarInfo({
-      isOpen: true,
-      variant,
-      message
-    });
-  };
-
   return (
     <Container>
-      {orderModalDisplayed && (
-        <OrderConfirmationModal handleSnackbar={handleSnackbar} />
-      )}
       <Header />
       <ContentContainer>
         <Root />
@@ -68,10 +54,4 @@ const Layout = ({ orderModalDisplayed }: any) => {
   );
 };
 
-const mapStateToProps = ({ modals }: any) => ({
-  orderModalDisplayed: modals.orderModalDisplayed
-});
-
-const connectedLayout: any = connect(mapStateToProps)(Layout);
-
-export default withRouter(connectedLayout);
+export default Layout;
