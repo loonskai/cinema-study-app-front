@@ -54,7 +54,7 @@ const WideCell = styled(TableCell)`
   grid-column: 1 / 5;
 `;
 
-const SessionsTable = ({ sessions, isAuth }: any) => {
+const SessionsTable = ({ sessions }: any) => {
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -92,14 +92,10 @@ const SessionsTable = ({ sessions, isAuth }: any) => {
               <CellLine>{session.time}</CellLine>
             </TableCell>
             <TableCell>
-              {isAuth ? (
-                <DefaultButton
-                  text="Buy Ticket"
-                  to={`/sessions/${session.id.toString()}`}
-                />
-              ) : (
-                <DefaultButton text="Sign In" to="/auth" />
-              )}
+              <DefaultButton
+                text="Buy Ticket"
+                to={`/sessions/${session.id.toString()}`}
+              />
             </TableCell>
           </TableRow>
         ))}

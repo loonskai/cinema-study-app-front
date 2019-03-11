@@ -8,7 +8,7 @@ import TextField from '../fields/TextField/TextField';
 import SubmitButton from '../buttons/SubmitButton';
 import { users } from '../../mocks';
 
-const SignInForm = ({ signIn }: any) => {
+const SignInForm = ({ signIn, onSuccess }: any) => {
   const [signInWith, setSignInWith] = useState('email');
   const [values, setValues] = useState({
     email: 'client@mail.com',
@@ -34,8 +34,11 @@ const SignInForm = ({ signIn }: any) => {
     } else if (user.password !== password) {
       console.error('wrong password');
     } else {
-      await signIn(values);
-      console.log('succesfully signed in');
+      const result = await signIn(values);
+      if (result) {
+        console.log('succesfully signed in');
+        onSuccess();
+      }
     }
   };
 

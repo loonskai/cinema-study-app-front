@@ -8,6 +8,7 @@ const signIn = (values: any) => {
       if (!token) throw new Error('cannot get token from api service');
       dispatch({ type: SIGN_IN, payload: true });
       sessionStorage.setItem('token', token.toString());
+      return true;
     };
   } catch (error) {
     console.log(error);

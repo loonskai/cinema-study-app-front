@@ -23,7 +23,7 @@ const StyledForm = styled.form`
   width: 100%;
 `;
 
-const SearchSessionForm = ({ loadSessionsList, sessions, isAuth }: any) => {
+const SearchSessionForm = ({ loadSessionsList, sessions }: any) => {
   const [city, setCity] = useState('Minsk');
   const [cinema, setCinema] = useState('');
   const [date, setDate] = useState(new Date());
@@ -42,7 +42,6 @@ const SearchSessionForm = ({ loadSessionsList, sessions, isAuth }: any) => {
     e.preventDefault();
     loadSessionsList();
     setDisplaySessionsTable(true);
-    console.log('submit find session');
   };
 
   return (
@@ -79,18 +78,15 @@ const SearchSessionForm = ({ loadSessionsList, sessions, isAuth }: any) => {
           disabled={buttonDisabled}
         />
       </StyledForm>
-      {displaySessionsTable && (
-        <SessionsTable sessions={sessions} isAuth={isAuth} />
-      )}
+      {displaySessionsTable && <SessionsTable sessions={sessions} />}
     </Container>
   );
 };
 
 const mapStateToProps = (state: any, initialProps: any) => {
-  const { auth, sessions } = state;
+  const { sessions } = state;
   const { movieId } = initialProps;
   return {
-    isAuth: auth.isAuth,
     sessions:
       sessions && sessions.filter((session: any) => session.movieId === movieId)
   };

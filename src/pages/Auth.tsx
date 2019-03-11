@@ -42,11 +42,18 @@ const StyledTab = styled.div<any>`
   padding: 1rem;
 `;
 
-const Auth = (props: any) => {
-  const { isAuth, redirectToReferrer }: any = props;
-  console.log('props from auth', props);
-  const [tabSelected, setTab] = useState('signup');
+const Auth = ({ isAuth, location, history }: any) => {
+  if (isAuth) {
+    return <Redirect to="/" />;
+  }
 
+  const [tabSelected, setTab] = useState('signup');
+  const redirectTo =
+    (location &&
+      location.state &&
+      location.state.from &&
+      location.state.from.pathname) ||
+    '/';
   const toggleTab = (value: string) => () => {
     setTab(value);
   };
@@ -54,17 +61,13 @@ const Auth = (props: any) => {
   const getForm = () => {
     switch (tabSelected) {
       case 'signup':
-        return <SignUpForm />;
+        return <SignUpForm onSuccess={toggleTab('signin')} />;
       case 'signin':
-        return <SignInForm />;
+        return <SignInForm onSuccess={() => history.push(redirectTo)} />;
       default:
         return null;
     }
   };
-  /* 
-  if (isAuth) {
-    return <Redirect to="/" />;
-  } */
 
   return (
     <React.Fragment>
@@ -91,5 +94,5 @@ const Auth = (props: any) => {
 };
 
 export default connect(({ auth }: any) => ({
-  redirectToReferrer: auth.redirectToReferrer
+  isAuth: auth.isAuth
 }))(Auth);

@@ -5,12 +5,12 @@ import TextField from '../fields/TextField/TextField';
 import SubmitButton from '../buttons/SubmitButton';
 import { users } from '../../mocks';
 
-const SignUpForm = () => {
+const SignUpForm = ({ onSuccess }: any) => {
   const [values, setValues] = useState({
-    email: '',
-    username: '',
-    password: '',
-    confirmPassword: ''
+    email: 'register@mail.com',
+    username: 'Johnnn',
+    password: '12345678',
+    confirmPassword: '12345678'
   });
 
   const handleChange = (e: any) => {
@@ -36,6 +36,7 @@ const SignUpForm = () => {
       console.error('passwords do not match');
     } else {
       console.log('succesfully signed up');
+      onSuccess();
     }
   };
 
