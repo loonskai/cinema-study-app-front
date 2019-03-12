@@ -7,6 +7,7 @@ import OrderConfirmationModal from './OrderConfirmationModal';
 import PopUpSnackbar from '../PopUpSnackbar';
 import HeaderButton from '../buttons/HeaderButton';
 import SubmitButton from '../buttons/SubmitButton';
+import calculateTotalPrice from '../../helpers/calculateTotalPrice';
 
 const Container = styled.form`
   padding: 1rem 0;
@@ -64,7 +65,7 @@ const OrderController = ({ handleOrderClear, order }: any) => {
           handleClose={() => setSnackbarInfo({ ...snackbar, isOpen: false })}
         />
       }
-      <TotalPrice>Total price: ${order.totalPrice}</TotalPrice>
+      <TotalPrice>Total price: ${calculateTotalPrice(order)}</TotalPrice>
       <TicketsAmount>Tickets amount: {order.seatsPicked.length}</TicketsAmount>
       <SubmitButton
         text="Buy tickets"

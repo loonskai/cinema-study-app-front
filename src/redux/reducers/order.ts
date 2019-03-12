@@ -4,7 +4,6 @@ const initialState = {
   sessionId: null,
   hallId: null,
   seatsPicked: [],
-  totalPrice: 0,
   bonuses: null
 };
 

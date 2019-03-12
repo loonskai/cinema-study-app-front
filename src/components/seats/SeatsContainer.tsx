@@ -50,7 +50,6 @@ const SeatsContainer = ({
       sessionId,
       hallId: order.hallId,
       seatsPicked: order.seatsPicked,
-      totalPrice: order.totalPrice,
       bonuses: order.bonuses
     });
   }, []);
@@ -60,7 +59,6 @@ const SeatsContainer = ({
       sessionId: order.sessionId,
       hallId: value,
       seatsPicked: [],
-      totalPrice: 0,
       bonuses: null
     });
   };
@@ -94,15 +92,10 @@ const SeatsContainer = ({
           seat: pickedSeat,
           price
         });
-    const newTotalPrice = newSeatsPicked.reduce(
-      (sum: number, seat: any) => seat.price + sum,
-      0
-    );
     setOrderInfo({
       sessionId: order.sessionId,
       hallId: order.hallId,
       seatsPicked: newSeatsPicked,
-      totalPrice: newTotalPrice,
       bonuses: order.bonuses
     });
   };
@@ -112,7 +105,6 @@ const SeatsContainer = ({
       sessionId,
       hallId: order.hallId,
       seatsPicked: [],
-      totalPrice: 0,
       bonuses: null
     });
   };

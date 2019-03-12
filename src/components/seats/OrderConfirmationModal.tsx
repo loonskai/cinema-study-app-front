@@ -10,6 +10,7 @@ import BonusContainer from '../../components/bonus/BonusContainer';
 import SubmitButton from '../buttons/SubmitButton';
 import CloseModalButton from '../buttons/CloseModalButton';
 import { whiteColor, greyColor } from '../../constants';
+import calculateTotalPrice from '../../helpers/calculateTotalPrice';
 
 const Container = styled.div`
   position: fixed;
@@ -61,7 +62,6 @@ const OrderConfirmationModal = ({
   const { sessionId, seatsPicked } = order;
 
   const [loadedBonuses, setLoadedBonuses]: [any, any] = useState(null);
-  // const [pickedBonuses, setPickedBonuses]: [any, any] = useState(null);
   const { bonuses } = order;
 
   useEffect(() => {
@@ -70,12 +70,15 @@ const OrderConfirmationModal = ({
     } else if (!bonuses) {
       const bonusesKeys = Object.keys(loadedBonuses);
       const initialPickedBonuses = bonusesKeys.reduce((acc: any, bonus) => {
-        acc[bonus] = 0;
+        acc[bonus] = {
+          quantity: 0,
+          price: loadedBonuses[bonus].price
+        };
         return acc;
       }, {});
       setOrderInfo({ ...order, bonuses: initialPickedBonuses });
     }
-  }, [/*pickedBonuses, */ loadedBonuses]);
+  }, [loadedBonuses]);
 
   const loadBonuses = async () => {
     try {
@@ -86,27 +89,25 @@ const OrderConfirmationModal = ({
     }
   };
 
-  const calculateTotalPrice = () => {
-    if (!loadedBonuses || !bonuses) return order.totalPrice;
-    const bonusesTotalPrice = Object.keys(loadedBonuses)
-      .map(key => loadedBonuses[key].price * bonuses[key])
-      .reduce((sum, num: any) => Math.round((sum + num) * 10) / 10);
-    return bonusesTotalPrice + order.totalPrice;
-  };
-
   const handleBonusesUpdate = (type: any, bonus: any) => {
     const bonusType = Object.keys(bonus)[0];
     let updatedPickedBonuses;
     switch (type) {
       case 'add': {
         updatedPickedBonuses = Object.assign({}, bonuses, {
-          [bonusType]: bonuses[bonusType] + 1
+          [bonusType]: {
+            ...bonuses[bonusType],
+            quantity: bonuses[bonusType].quantity + 1
+          }
         });
         break;
       }
       case 'remove': {
         updatedPickedBonuses = Object.assign({}, bonuses, {
-          [bonusType]: bonuses[bonusType] - 1
+          [bonusType]: {
+            ...bonuses[bonusType],
+            quantity: bonuses[bonusType].quantity - 1
+          }
         });
         break;
       }
@@ -127,16 +128,12 @@ const OrderConfirmationModal = ({
   const handleSubmitOrder = async (e: any) => {
     try {
       e.preventDefault();
-      /*       const orderComplete = {
-        ...order
-      }; */
       const result = await api.submitOrder(order);
       if (result) {
         setOrderInfo({
           sessionId: order.sessionId,
           hallId: order.hallId,
-          seatsPicked: [],
-          totalPrice: 0
+          seatsPicked: []
         });
         handleClose(false);
         handleSnackbar('Tickets ordered successfully!', 'success');
@@ -153,10 +150,10 @@ const OrderConfirmationModal = ({
     <Container onClick={handleBackgroundClick}>
       <ModalWindow>
         <CloseModalButton handleClick={() => handleClose(false)} />
-        <TotalPrice>Total price: ${calculateTotalPrice()}</TotalPrice>
+        <TotalPrice>Total price: ${calculateTotalPrice(order)}</TotalPrice>
         <TicketsAmount>Tickets amount: {seatsPicked.length}</TicketsAmount>
         <BonusContainer
-          pickedBonuses={bonuses}
+          bonuses={bonuses}
           loadedBonuses={loadedBonuses}
           handleBonusesUpdate={handleBonusesUpdate}
         />

@@ -8,18 +8,18 @@ const Container = styled.div`
 `;
 
 const BonusContainer = ({
-  pickedBonuses,
+  bonuses,
   loadedBonuses,
   handleBonusesUpdate
 }: {
-  pickedBonuses: any;
+  bonuses: any;
   loadedBonuses: any;
   handleBonusesUpdate: any;
 }) => {
   const renderBonuses = () =>
     Object.keys(loadedBonuses).map((key: string) => (
       <BonusSelectItem
-        value={pickedBonuses && pickedBonuses[key]}
+        value={bonuses && bonuses[key].quantity}
         key={key}
         bonus={{ [key]: loadedBonuses[key] }}
         handleBonusesUpdate={handleBonusesUpdate}
