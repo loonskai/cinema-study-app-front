@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import styled from 'styled-components';
@@ -6,7 +6,8 @@ import styled from 'styled-components';
 import PageTitle from '../components/PageTitle';
 import SignUpForm from '../components/forms/SignUpForm';
 import SignInForm from '../components/forms/SignInForm';
-import PopUpSnackbar from '../../src/components/PopUpSnackbar';
+import { SnackbarContext } from '../Layout';
+
 import {
   whiteColor,
   containerGreyColor,
@@ -62,21 +63,12 @@ const Auth = ({ isAuth, location, history }: any) => {
   }
 
   const [tabSelected, setTab] = useState('signup');
-  const [snackbar, setSnackbarInfo] = useState(snackbarStateDefault);
 
   const toggleTab = (value: string) => () => {
     setTab(value);
   };
 
-  const handleSnackbar = (message: string, variant: string) => {
-    setSnackbarInfo({
-      isOpen: true,
-      variant,
-      message
-    });
-  };
-
-  const getForm = () => {
+  const getForm = (handleSnackbar: any) => {
     switch (tabSelected) {
       case 'signup':
         return (
@@ -88,41 +80,44 @@ const Auth = ({ isAuth, location, history }: any) => {
           />
         );
       case 'signin':
-        return <SignInForm onSuccess={() => history.push(redirectTo)} />;
+        return (
+          <SignInForm
+            onSuccess={() => {
+              history.push(redirectTo);
+              handleSnackbar('Succesfull signed in', 'success');
+            }}
+          />
+        );
       default:
         return null;
     }
   };
 
   return (
-    <React.Fragment>
-      {
-        <PopUpSnackbar
-          isOpen={snackbar.isOpen}
-          variant={snackbar.variant}
-          message={snackbar.message}
-          handleClose={() => setSnackbarInfo({ ...snackbar, isOpen: false })}
-        />
-      }
-      <PageTitle text="Join us" />
-      <Container>
-        <FormTabs>
-          <StyledTab
-            isActive={tabSelected === 'signup'}
-            onClick={toggleTab('signup')}
-          >
-            Sign Up
-          </StyledTab>
-          <StyledTab
-            isActive={tabSelected === 'signin'}
-            onClick={toggleTab('signin')}
-          >
-            Sign In
-          </StyledTab>
-        </FormTabs>
-        <FormContainer>{getForm()}</FormContainer>
-      </Container>
-    </React.Fragment>
+    <SnackbarContext.Consumer>
+      {({ handleSnackbar }: any) => (
+        <Fragment>
+          <PageTitle text="Join us" />
+          <Container>
+            <FormTabs>
+              <StyledTab
+                isActive={tabSelected === 'signup'}
+                onClick={toggleTab('signup')}
+              >
+                Sign Up
+              </StyledTab>
+              <StyledTab
+                isActive={tabSelected === 'signin'}
+                onClick={toggleTab('signin')}
+              >
+                Sign In
+              </StyledTab>
+            </FormTabs>
+            <FormContainer>{getForm(handleSnackbar)}</FormContainer>
+          </Container>
+        </Fragment>
+      )}
+    </SnackbarContext.Consumer>
   );
 };
 

@@ -6,6 +6,7 @@ import actions from '../../redux/actions';
 import SeatsMenu from './SeatsMenu';
 import OrderController from './OrderController';
 import SeatsScheme from './SeatsScheme';
+import { SnackbarContext } from '../../Layout';
 
 const Container = styled.div`
   width: 100%;
@@ -120,7 +121,16 @@ const SeatsContainer = ({
       />
       {order.hallId && (
         <Fragment>
-          <OrderController handleOrderClear={handleOrderClear} order={order} />
+          <SnackbarContext.Consumer>
+            {({ handleSnackbar }: any) => (
+              <OrderController
+                handleOrderClear={handleOrderClear}
+                order={order}
+                handleSnackbar={handleSnackbar}
+              />
+            )}
+          </SnackbarContext.Consumer>
+
           <SeatsScheme
             order={order}
             options={options}

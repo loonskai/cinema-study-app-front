@@ -4,7 +4,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import LocalGroceryStoreIcon from '@material-ui/icons/LocalGroceryStore';
 
 import OrderConfirmationModal from './OrderConfirmationModal';
-import PopUpSnackbar from '../PopUpSnackbar';
 import HeaderButton from '../buttons/HeaderButton';
 import SubmitButton from '../buttons/SubmitButton';
 import calculateTotalPrice from '../../helpers/calculateTotalPrice';
@@ -22,27 +21,12 @@ const TicketsAmount = styled.div`
   margin-bottom: 1rem;
 `;
 
-const snackbarStateDefault = {
-  isOpen: false,
-  variant: 'info',
-  message: ''
-};
-
-const OrderController = ({ handleOrderClear, order }: any) => {
+const OrderController = ({ handleOrderClear, order, handleSnackbar }: any) => {
   const [isModalDisplayed, setModalDisplay]: [boolean, any] = useState(false);
-  const [snackbar, setSnackbarInfo] = useState(snackbarStateDefault);
 
   const handleOrderSubmit = (e: any) => {
     e.preventDefault();
     setModalDisplay(true);
-  };
-
-  const handleSnackbar = (message: string, variant: string) => {
-    setSnackbarInfo({
-      isOpen: true,
-      variant,
-      message
-    });
   };
 
   const isEmpty = !order.seatsPicked.length;
@@ -57,14 +41,6 @@ const OrderController = ({ handleOrderClear, order }: any) => {
           }}
         />
       )}
-      {
-        <PopUpSnackbar
-          isOpen={snackbar.isOpen}
-          variant={snackbar.variant}
-          message={snackbar.message}
-          handleClose={() => setSnackbarInfo({ ...snackbar, isOpen: false })}
-        />
-      }
       <TotalPrice>Total price: ${calculateTotalPrice(order)}</TotalPrice>
       <TicketsAmount>Tickets amount: {order.seatsPicked.length}</TicketsAmount>
       <SubmitButton
