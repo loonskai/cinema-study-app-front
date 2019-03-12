@@ -94,11 +94,22 @@ class ApiService {
     }
   }
 
-  async loadHallSeats(hallId: any, options: any) {
+  /*   async loadHallSeats(hallId: any, options: any) {
     try {
       return new Promise((res, rej) => {
         const hallSeats = seats.find(hallSeats => hallSeats.hallId === hallId);
         return res(hallSeats);
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  } */
+
+  async loadAllSeats() {
+    try {
+      return new Promise((res, rej) => {
+        // const hallSeats = seats.find(hallSeats => hallSeats.hallId === hallId);
+        return res(seats);
       });
     } catch (error) {
       console.error(error);
