@@ -28,12 +28,23 @@ const getOptions = (entity: string) => {
       options = halls.map(hall => ({ label: hall.name, value: hall.id }));
       break;
     }
+    case 'time': {
+      options = [] as any;
+      for (let i = 0; i <= 23; i++) {
+        const label = i.toString().length > 1 ? `${i}:00` : `0${i}:00`;
+        options.push({
+          label,
+          value: label
+        });
+      }
+      break;
+    }
     default: {
       options = [] as Array<{ label: string }>;
       break;
     }
   }
-  return options.map((option: any, index) => (
+  return options.map((option: any, index: any) => (
     <MenuItem key={index.toString()} value={option.value}>
       {option.label}
     </MenuItem>

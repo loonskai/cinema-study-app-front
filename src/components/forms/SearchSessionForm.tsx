@@ -27,6 +27,7 @@ const SearchSessionForm = ({ loadSessionsList, sessions }: any) => {
   const [city, setCity] = useState('Minsk');
   const [cinema, setCinema] = useState('');
   const [date, setDate] = useState(new Date());
+  const [time, setTime] = useState('');
   const [buttonDisabled, setButtonDisabled] = useState(true);
   const [displaySessionsTable, setDisplaySessionsTable] = useState(false);
 
@@ -71,6 +72,14 @@ const SearchSessionForm = ({ loadSessionsList, sessions }: any) => {
           label="Date"
           value={date}
           handleChange={setDate}
+        />
+        <FieldContainer
+          id="time"
+          type="select"
+          entity="time"
+          label="Time"
+          value={time}
+          handleChange={setTime}
         />
         <SubmitButton
           text="Search"

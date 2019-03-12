@@ -5,6 +5,7 @@ import LocalMovies from '@material-ui/icons/LocalMovies';
 import LocationCity from '@material-ui/icons/LocationCity';
 import Weekend from '@material-ui/icons/Weekend';
 import Search from '@material-ui/icons/Search';
+import AccessTime from '@material-ui/icons/AccessTime';
 import CalendarToday from '@material-ui/icons/CalendarToday';
 
 import TextField from './TextField/TextField';
@@ -33,6 +34,8 @@ const IconStyled = styled(({ icon, ...other }) => {
       return <Weekend fontSize="large" {...other} />;
     case 'date':
       return <CalendarToday fontSize="large" {...other} />;
+    case 'time':
+      return <AccessTime fontSize="large" {...other} />;
     case 'search':
       return <Search fontSize="large" {...other} />;
     default:
@@ -52,6 +55,8 @@ const getField = (props: Props) => {
       return <SelectField {...props} />;
     case 'date':
       return <DateField {...props} />;
+    case 'time':
+      return <SelectField {...props} />;
     default:
       return null;
   }
