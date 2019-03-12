@@ -20,8 +20,9 @@ const Container = styled.div`
   overflow-x: scroll;
 `;
 
-const SeatsScheme = ({ options, hallId, handleSeatPick, seatsPicked }: any) => {
+const SeatsScheme = ({ options, order, handleSeatPick }: any) => {
   const [seats, setSeats]: [any, any] = useState(null);
+  const { hallId, seatsPicked } = order;
 
   const loadSeats = async () => {
     try {

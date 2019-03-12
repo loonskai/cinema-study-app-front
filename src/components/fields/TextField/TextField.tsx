@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { findDOMNode } from 'react-dom';
 import Autosuggest from 'react-autosuggest';
 import parse from 'autosuggest-highlight/parse';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -116,6 +117,8 @@ const TextField = ({
 }: Props) => {
   /* Returns in case when we don't need suggestions list */
   if (withoutSuggestions) {
+    const [labelWidth, setLabelWidth] = useState(0);
+
     return (
       <StyledContainers.Input
         name={name}
@@ -125,11 +128,9 @@ const TextField = ({
         onChange={handleChange}
         disabled={disabled}
         error={error}
-        InputProps={{
-          inputRef: (node: HTMLElement) => {
-            console.dir(node);
-          }
-        }}
+        /*         InputProps={{
+          labelWidth: label.length * 6.5 + 25
+        }} */
       />
     );
   }

@@ -61,20 +61,21 @@ const OrderConfirmationModal = ({
   const { sessionId, seatsPicked } = order;
 
   const [loadedBonuses, setLoadedBonuses]: [any, any] = useState(null);
-  const [pickedBonuses, setPickedBonuses]: [any, any] = useState(null);
+  // const [pickedBonuses, setPickedBonuses]: [any, any] = useState(null);
+  const { bonuses } = order;
 
   useEffect(() => {
     if (!loadedBonuses) {
       loadBonuses();
-    } else if (!pickedBonuses) {
+    } else if (!bonuses) {
       const bonusesKeys = Object.keys(loadedBonuses);
       const initialPickedBonuses = bonusesKeys.reduce((acc: any, bonus) => {
         acc[bonus] = 0;
         return acc;
       }, {});
-      setPickedBonuses(initialPickedBonuses);
+      setOrderInfo({ ...order, bonuses: initialPickedBonuses });
     }
-  }, [pickedBonuses, loadedBonuses]);
+  }, [/*pickedBonuses, */ loadedBonuses]);
 
   const loadBonuses = async () => {
     try {
@@ -86,9 +87,9 @@ const OrderConfirmationModal = ({
   };
 
   const calculateTotalPrice = () => {
-    if (!loadedBonuses || !pickedBonuses) return order.totalPrice;
+    if (!loadedBonuses || !bonuses) return order.totalPrice;
     const bonusesTotalPrice = Object.keys(loadedBonuses)
-      .map(key => loadedBonuses[key].price * pickedBonuses[key])
+      .map(key => loadedBonuses[key].price * bonuses[key])
       .reduce((sum, num: any) => Math.round((sum + num) * 10) / 10);
     return bonusesTotalPrice + order.totalPrice;
   };
@@ -98,14 +99,14 @@ const OrderConfirmationModal = ({
     let updatedPickedBonuses;
     switch (type) {
       case 'add': {
-        updatedPickedBonuses = Object.assign({}, pickedBonuses, {
-          [bonusType]: pickedBonuses[bonusType] + 1
+        updatedPickedBonuses = Object.assign({}, bonuses, {
+          [bonusType]: bonuses[bonusType] + 1
         });
         break;
       }
       case 'remove': {
-        updatedPickedBonuses = Object.assign({}, pickedBonuses, {
-          [bonusType]: pickedBonuses[bonusType] - 1
+        updatedPickedBonuses = Object.assign({}, bonuses, {
+          [bonusType]: bonuses[bonusType] - 1
         });
         break;
       }
@@ -113,7 +114,7 @@ const OrderConfirmationModal = ({
         return null;
     }
     if (updatedPickedBonuses) {
-      setPickedBonuses(updatedPickedBonuses);
+      setOrderInfo({ ...order, bonuses: updatedPickedBonuses });
     }
   };
 
@@ -126,11 +127,10 @@ const OrderConfirmationModal = ({
   const handleSubmitOrder = async (e: any) => {
     try {
       e.preventDefault();
-      const orderComplete = {
-        ...order,
-        ...pickedBonuses
-      };
-      const result = await api.submitOrder(orderComplete);
+      /*       const orderComplete = {
+        ...order
+      }; */
+      const result = await api.submitOrder(order);
       if (result) {
         setOrderInfo({
           sessionId: order.sessionId,
@@ -156,7 +156,7 @@ const OrderConfirmationModal = ({
         <TotalPrice>Total price: ${calculateTotalPrice()}</TotalPrice>
         <TicketsAmount>Tickets amount: {seatsPicked.length}</TicketsAmount>
         <BonusContainer
-          pickedBonuses={pickedBonuses}
+          pickedBonuses={bonuses}
           loadedBonuses={loadedBonuses}
           handleBonusesUpdate={handleBonusesUpdate}
         />

@@ -50,7 +50,8 @@ const SeatsContainer = ({
       sessionId,
       hallId: order.hallId,
       seatsPicked: order.seatsPicked,
-      totalPrice: order.totalPrice
+      totalPrice: order.totalPrice,
+      bonuses: order.bonuses
     });
   }, []);
 
@@ -59,7 +60,8 @@ const SeatsContainer = ({
       sessionId: order.sessionId,
       hallId: value,
       seatsPicked: [],
-      totalPrice: 0
+      totalPrice: 0,
+      bonuses: null
     });
   };
 
@@ -100,7 +102,8 @@ const SeatsContainer = ({
       sessionId: order.sessionId,
       hallId: order.hallId,
       seatsPicked: newSeatsPicked,
-      totalPrice: newTotalPrice
+      totalPrice: newTotalPrice,
+      bonuses: order.bonuses
     });
   };
 
@@ -109,7 +112,8 @@ const SeatsContainer = ({
       sessionId,
       hallId: order.hallId,
       seatsPicked: [],
-      totalPrice: 0
+      totalPrice: 0,
+      bonuses: null
     });
   };
 
@@ -126,11 +130,9 @@ const SeatsContainer = ({
         <Fragment>
           <OrderController handleOrderClear={handleOrderClear} order={order} />
           <SeatsScheme
-            seatsPicked={order.seatsPicked}
+            order={order}
             options={options}
-            hallId={order.hallId}
             handleSeatPick={handleSeatPick}
-            totalPrice={order.totalPrice}
           />
         </Fragment>
       )}

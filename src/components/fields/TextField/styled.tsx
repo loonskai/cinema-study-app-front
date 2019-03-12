@@ -10,7 +10,7 @@ export const Input = styled(initialProps => {
   const InputProps = {
     classes: {
       root: 'cssOutlinedInput',
-      focused: 'cssFocused',
+      focused: !initialProps.error && 'cssFocused',
       notchedOutline: 'notchedOutline'
     },
     ...initialProps.InputProps
@@ -24,7 +24,7 @@ export const Input = styled(initialProps => {
       InputLabelProps={{
         classes: {
           root: 'cssLabel',
-          focused: 'cssFocused'
+          focused: !initialProps.error && 'cssFocused'
         }
       }}
       {...initialProps}

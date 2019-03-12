@@ -4,7 +4,8 @@ const initialState = {
   sessionId: null,
   hallId: null,
   seatsPicked: [],
-  totalPrice: 0
+  totalPrice: 0,
+  bonuses: null
 };
 
 export default (state = initialState, action: any) => {

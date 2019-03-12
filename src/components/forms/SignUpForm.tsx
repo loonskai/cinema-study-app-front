@@ -9,7 +9,7 @@ const SignUpForm = ({ onSuccess }: any) => {
   const [values, setValues] = useState({
     email: 'register@mail.com',
     username: 'Johnnn',
-    password: '12345678',
+    password: '',
     confirmPassword: '1234567'
   });
 
@@ -20,7 +20,9 @@ const SignUpForm = ({ onSuccess }: any) => {
     confirmPassword: null
   });
 
-  useEffect(() => {});
+  useEffect(() => {
+    console.log(inputErrors);
+  });
 
   const handleChange = (e: any) => {
     setValues({
