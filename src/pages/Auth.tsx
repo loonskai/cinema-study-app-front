@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import PageTitle from '../components/PageTitle';
 import SignUpForm from '../components/forms/SignUpForm';
 import SignInForm from '../components/forms/SignInForm';
+import PopUpSnackbar from '../../src/components/PopUpSnackbar';
 import {
   whiteColor,
   containerGreyColor,
@@ -42,6 +43,12 @@ const StyledTab = styled.div<any>`
   padding: 1rem;
 `;
 
+const snackbarStateDefault = {
+  isOpen: false,
+  variant: 'info',
+  message: ''
+};
+
 const Auth = ({ isAuth, location, history }: any) => {
   const redirectTo =
     (location &&
@@ -55,15 +62,31 @@ const Auth = ({ isAuth, location, history }: any) => {
   }
 
   const [tabSelected, setTab] = useState('signup');
+  const [snackbar, setSnackbarInfo] = useState(snackbarStateDefault);
 
   const toggleTab = (value: string) => () => {
     setTab(value);
   };
 
+  const handleSnackbar = (message: string, variant: string) => {
+    setSnackbarInfo({
+      isOpen: true,
+      variant,
+      message
+    });
+  };
+
   const getForm = () => {
     switch (tabSelected) {
       case 'signup':
-        return <SignUpForm onSuccess={toggleTab('signin')} />;
+        return (
+          <SignUpForm
+            onSuccess={() => {
+              toggleTab('signin')();
+              handleSnackbar('Succesfull signed up', 'success');
+            }}
+          />
+        );
       case 'signin':
         return <SignInForm onSuccess={() => history.push(redirectTo)} />;
       default:
@@ -73,6 +96,14 @@ const Auth = ({ isAuth, location, history }: any) => {
 
   return (
     <React.Fragment>
+      {
+        <PopUpSnackbar
+          isOpen={snackbar.isOpen}
+          variant={snackbar.variant}
+          message={snackbar.message}
+          handleClose={() => setSnackbarInfo({ ...snackbar, isOpen: false })}
+        />
+      }
       <PageTitle text="Join us" />
       <Container>
         <FormTabs>

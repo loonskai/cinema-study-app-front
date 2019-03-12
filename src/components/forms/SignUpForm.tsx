@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
 import TextField from '../fields/TextField/TextField';
@@ -9,19 +9,14 @@ const SignUpForm = ({ onSuccess }: any) => {
   const [values, setValues] = useState({
     email: 'register@mail.com',
     username: 'Johnnn',
-    password: '',
-    confirmPassword: '1234567'
+    password: '12345678',
+    confirmPassword: '12345678'
   });
-
   const [inputErrors, setInputErrors]: [any, any] = useState({
     email: null,
     username: null,
     password: null,
     confirmPassword: null
-  });
-
-  useEffect(() => {
-    console.log(inputErrors);
   });
 
   const handleChange = (e: any) => {
@@ -61,53 +56,55 @@ const SignUpForm = ({ onSuccess }: any) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <TextField
-        name="email"
-        label={inputErrors.email || 'Email'}
-        error={!!inputErrors.email}
-        type="email"
-        value={values.email}
-        handleChange={handleChange}
-        withoutSuggestions={true}
-      />
-      <TextField
-        name="username"
-        label={inputErrors.username || 'Username'}
-        error={!!inputErrors.username}
-        value={values.username}
-        handleChange={handleChange}
-        withoutSuggestions={true}
-      />
-      <TextField
-        name="password"
-        label={inputErrors.password || 'Password'}
-        error={!!inputErrors.password}
-        type="password"
-        value={values.password}
-        handleChange={handleChange}
-        withoutSuggestions={true}
-      />
-      <TextField
-        name="confirmPassword"
-        label={inputErrors.confirmPassword || 'Confirm Password'}
-        error={!!inputErrors.confirmPassword}
-        type="password"
-        value={values.confirmPassword}
-        handleChange={handleChange}
-        withoutSuggestions={true}
-      />
-      <SubmitButton
-        text="Sign up"
-        icon={<PersonAddIcon />}
-        disabled={
-          values.email === '' ||
-          values.username === '' ||
-          values.password === '' ||
-          values.confirmPassword === ''
-        }
-      />
-    </form>
+    <Fragment>
+      <form onSubmit={handleSubmit}>
+        <TextField
+          name="email"
+          label={inputErrors.email || 'Email'}
+          error={!!inputErrors.email}
+          type="email"
+          value={values.email}
+          handleChange={handleChange}
+          withoutSuggestions={true}
+        />
+        <TextField
+          name="username"
+          label={inputErrors.username || 'Username'}
+          error={!!inputErrors.username}
+          value={values.username}
+          handleChange={handleChange}
+          withoutSuggestions={true}
+        />
+        <TextField
+          name="password"
+          label={inputErrors.password || 'Password'}
+          error={!!inputErrors.password}
+          type="password"
+          value={values.password}
+          handleChange={handleChange}
+          withoutSuggestions={true}
+        />
+        <TextField
+          name="confirmPassword"
+          label={inputErrors.confirmPassword || 'Confirm Password'}
+          error={!!inputErrors.confirmPassword}
+          type="password"
+          value={values.confirmPassword}
+          handleChange={handleChange}
+          withoutSuggestions={true}
+        />
+        <SubmitButton
+          text="Sign up"
+          icon={<PersonAddIcon />}
+          disabled={
+            values.email === '' ||
+            values.username === '' ||
+            values.password === '' ||
+            values.confirmPassword === ''
+          }
+        />
+      </form>
+    </Fragment>
   );
 };
 
