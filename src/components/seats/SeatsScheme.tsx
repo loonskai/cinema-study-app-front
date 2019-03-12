@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import api from '../../ApiService';
@@ -20,22 +21,8 @@ const Container = styled.div`
   overflow-x: scroll;
 `;
 
-const SeatsScheme = ({ options, order, handleSeatPick }: any) => {
-  const [seats, setSeats]: [any, any] = useState(null);
+const SeatsScheme = ({ options, order, handleSeatPick, seats }: any) => {
   const { hallId, seatsPicked } = order;
-
-  const loadSeats = async () => {
-    try {
-      const seatsLoaded: any = await api.loadHallSeats(hallId, options);
-      setSeats(seatsLoaded);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    loadSeats();
-  }, [hallId]);
 
   const renderSeats = () => {
     if (!seats || !seats.rows || !seats.rows.length) {
@@ -83,4 +70,6 @@ const SeatsScheme = ({ options, order, handleSeatPick }: any) => {
   );
 };
 
-export default SeatsScheme;
+export default connect(({ seats, order }: any) => ({
+  seats: seats.find((hallSeats: any) => hallSeats.hallId === order.hallId)
+}))(SeatsScheme);
