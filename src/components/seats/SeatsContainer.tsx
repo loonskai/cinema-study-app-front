@@ -80,7 +80,6 @@ const SeatsContainer = ({
     const free = e.target.dataset.free === 'true';
     const price = +e.target.dataset.price;
     if (!pickedRow || !pickedSeat || !free) return;
-    // let newSeatsPicked;
     const pickedBefore = seatsPicked.some(
       (seat: any) => seat.row === pickedRow && seat.seat === pickedSeat
     );

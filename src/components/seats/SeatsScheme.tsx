@@ -12,15 +12,12 @@ const Container = styled.div`
   position: relative;
   width: 100%;
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
   justify-content: center;
   padding: 2rem 0;
   background: ${containerGreyColor};
   overflow-x: scroll;
-`;
-
-const SchemeWrapper = styled.div`
-  width: 100%;
 `;
 
 const SeatsScheme = ({ options, hallId, handleSeatPick, seatsPicked }: any) => {
@@ -80,7 +77,7 @@ const SeatsScheme = ({ options, hallId, handleSeatPick, seatsPicked }: any) => {
   return (
     <Container>
       <Screen>Screen</Screen>
-      <SchemeWrapper onClick={handleSeatPick}>{renderSeats()}</SchemeWrapper>
+      <div onClick={handleSeatPick}>{renderSeats()}</div>
     </Container>
   );
 };

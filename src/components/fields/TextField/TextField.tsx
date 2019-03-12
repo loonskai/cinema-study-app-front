@@ -15,6 +15,7 @@ interface Props {
   type?: string;
   value?: string | Date;
   disabled?: boolean;
+  error?: boolean;
   handleChange: (param: any) => any;
   withoutSuggestions?: boolean;
 }
@@ -109,6 +110,7 @@ const TextField = ({
   value,
   type,
   disabled,
+  error,
   name,
   withoutSuggestions = false
 }: Props) => {
@@ -122,6 +124,12 @@ const TextField = ({
         value={value}
         onChange={handleChange}
         disabled={disabled}
+        error={error}
+        InputProps={{
+          inputRef: (node: HTMLElement) => {
+            console.dir(node);
+          }
+        }}
       />
     );
   }

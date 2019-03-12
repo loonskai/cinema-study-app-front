@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
+import classnames from 'classnames';
 
 import {
   seatFreeBg,
@@ -32,6 +33,31 @@ const Container = styled.div<any>`
   &:not(:last-child) {
     margin-right: 0.5rem;
   }
+
+  &.seat {
+    background-color: ${seatFreeBg};
+    color: ${seatFreeTxt};
+  }
+
+  &.seat-vip {
+    background-color: ${goldColor};
+    color: ${seatFreeTxt};
+  }
+
+  &.seat-selected {
+    background-color: ${seatSelectedBg};
+    color: ${seatSelectedTxt};
+  }
+
+  &.seat-reserved {
+    background-color: ${seatReservedBg};
+    color: ${seatReservedTxt};
+  }
+
+  &.seat-ordered {
+    background-color: ${seatOrderedBg};
+    color: ${seatOrderedTxt};
+  }
 `;
 
 const SeatItem = ({
@@ -44,38 +70,19 @@ const SeatItem = ({
   isOrdered,
   isMuted
 }: any) => {
-  const computeColors = () =>
-    (isReserved && {
-      bgColor: seatReservedBg,
-      txtColor: seatReservedTxt
-    }) ||
-    (isOrdered && {
-      bgColor: seatOrderedBg,
-      txtColor: seatOrderedTxt
-    }) ||
-    (isSelected && {
-      bgColor: seatSelectedBg,
-      txtColor: seatSelectedTxt
-    }) ||
-    (category === 'vip' && {
-      bgColor: goldColor,
-      txtColor: seatFreeTxt
-    }) || {
-      bgColor: seatFreeBg,
-      txtColor: seatFreeTxt
-    };
-
-  const [theme, setTheme] = useState(computeColors());
-
-  useEffect(() => {
-    setTheme(computeColors());
-  }, [isSelected]);
+  const seatClass = classnames({
+    seat: true,
+    'seat-vip': category === 'vip',
+    'seat-selected': isSelected,
+    'seat-reserved': isReserved,
+    'seat-ordered': isOrdered
+  });
 
   return (
     <Container
       isFree={!isReserved && !isOrdered}
       isMuted={isMuted}
-      theme={theme}
+      className={seatClass}
       category={category}
       data-seat={seat}
       data-row={row}

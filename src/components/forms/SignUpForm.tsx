@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
 import TextField from '../fields/TextField/TextField';
@@ -10,8 +10,17 @@ const SignUpForm = ({ onSuccess }: any) => {
     email: 'register@mail.com',
     username: 'Johnnn',
     password: '12345678',
-    confirmPassword: '12345678'
+    confirmPassword: '1234567'
   });
+
+  const [inputErrors, setInputErrors]: [any, any] = useState({
+    email: null,
+    username: null,
+    password: null,
+    confirmPassword: null
+  });
+
+  useEffect(() => {});
 
   const handleChange = (e: any) => {
     setValues({
@@ -22,18 +31,27 @@ const SignUpForm = ({ onSuccess }: any) => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
+    /*     const formInputs = Array.from(e.target.elements).filter(
+      (el: any) => el.tagName === 'INPUT'
+    ); */
     const { email, username, password, confirmPassword } = values;
     const user = users.find(
       user => user.email === email || user.username === username
     );
     if (user && user.email === email) {
-      console.error('email already in use');
+      setInputErrors({ ...inputErrors, email: 'Email already in use' });
     } else if (user && user.username === username) {
-      console.error('username already in use');
+      setInputErrors({ ...inputErrors, username: 'Username already in use' });
     } else if (password.length < 8) {
-      console.error('password should have min 8 characters length');
+      setInputErrors({
+        ...inputErrors,
+        password: 'Password should have min 8 characters length'
+      });
     } else if (password !== confirmPassword) {
-      console.error('passwords do not match');
+      setInputErrors({
+        ...inputErrors,
+        confirmPassword: 'Passwords do not match'
+      });
     } else {
       console.log('succesfully signed up');
       onSuccess();
@@ -44,7 +62,8 @@ const SignUpForm = ({ onSuccess }: any) => {
     <form onSubmit={handleSubmit}>
       <TextField
         name="email"
-        label="Email"
+        label={inputErrors.email || 'Email'}
+        error={!!inputErrors.email}
         type="email"
         value={values.email}
         handleChange={handleChange}
@@ -52,14 +71,16 @@ const SignUpForm = ({ onSuccess }: any) => {
       />
       <TextField
         name="username"
-        label="Username"
+        label={inputErrors.username || 'Username'}
+        error={!!inputErrors.username}
         value={values.username}
         handleChange={handleChange}
         withoutSuggestions={true}
       />
       <TextField
         name="password"
-        label="Password"
+        label={inputErrors.password || 'Password'}
+        error={!!inputErrors.password}
         type="password"
         value={values.password}
         handleChange={handleChange}
@@ -67,7 +88,8 @@ const SignUpForm = ({ onSuccess }: any) => {
       />
       <TextField
         name="confirmPassword"
-        label="Confirm Password"
+        label={inputErrors.confirmPassword || 'Confirm Password'}
+        error={!!inputErrors.confirmPassword}
         type="password"
         value={values.confirmPassword}
         handleChange={handleChange}

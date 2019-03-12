@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import styled from 'styled-components';
@@ -43,17 +43,19 @@ const StyledTab = styled.div<any>`
 `;
 
 const Auth = ({ isAuth, location, history }: any) => {
-  if (isAuth) {
-    return <Redirect to="/" />;
-  }
-
-  const [tabSelected, setTab] = useState('signup');
   const redirectTo =
     (location &&
       location.state &&
       location.state.from &&
       location.state.from.pathname) ||
     '/';
+
+  if (isAuth) {
+    return <Redirect to={redirectTo} />;
+  }
+
+  const [tabSelected, setTab] = useState('signup');
+
   const toggleTab = (value: string) => () => {
     setTab(value);
   };
