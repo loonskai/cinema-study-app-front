@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -26,6 +26,7 @@ class OrderTimer extends React.Component {
     };
     seconds: number;
   };
+  props: any;
   timer: any;
 
   constructor(props: any) {
@@ -37,7 +38,9 @@ class OrderTimer extends React.Component {
 
   componentDidMount() {
     if (this.timer === 0 && this.state.seconds > 0) {
-      this.timer = setInterval(this.countDown, 1000);
+      this.props.startTimer(() => {
+        this.timer = setInterval(this.countDown, 1000);
+      });
     }
     const timeLeftVar = this.secondsToTime(this.state.seconds);
     this.setState({ time: timeLeftVar });
@@ -52,18 +55,12 @@ class OrderTimer extends React.Component {
     };
   }
 
-  startTimer() {
-    if (this.timer === 0 && this.state.seconds > 0) {
-      this.timer = setInterval(this.countDown, 1000);
-    }
-  }
-
   countDown() {
     this.setState((prevState: any) => {
       const seconds = prevState.seconds - 1;
       if (seconds === 0) {
         clearInterval(this.timer);
-        this.props.handleSnackbar('Reservation time expired', 'warning');
+        this.props.handleExpire();
       }
       return { time: this.secondsToTime(seconds), seconds };
     });

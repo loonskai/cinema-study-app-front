@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import actions from '../../redux/actions';
 import SeatsMenu from './SeatsMenu';
+import OrderConfirmationModal from './OrderConfirmationModal';
 import OrderController from './OrderController';
 import OrderTimer from './OrderTimer';
 import SeatsScheme from './SeatsScheme';
@@ -56,6 +57,7 @@ const SeatsContainer = ({
       value: false
     }
   });
+  const [isModalDisplayed, setModalDisplay]: [boolean, any] = useState(false);
 
   useEffect(() => {
     setOrderInfo({
@@ -137,14 +139,30 @@ const SeatsContainer = ({
               <OrderStateContainer>
                 <OrderController
                   handleOrderClear={handleOrderClear}
+                  handleOrderSubmit={() => setModalDisplay(true)}
                   order={order}
                   handleSnackbar={handleSnackbar}
                 />
-                <OrderTimer handleSnackbar={handleSnackbar} />
+                <OrderTimer
+                  startTimer={(func: any) => func()}
+                  handleExpire={() => {
+                    setModalDisplay(false);
+                    handleOrderClear();
+                    handleSnackbar('Reservation time expired', 'warning');
+                  }}
+                  handleSnackbar={handleSnackbar}
+                />
+                {isModalDisplayed && (
+                  <OrderConfirmationModal
+                    handleSnackbar={handleSnackbar}
+                    handleClose={() => {
+                      setModalDisplay(false);
+                    }}
+                  />
+                )}
               </OrderStateContainer>
             )}
           </SnackbarContext.Consumer>
-
           <SeatsScheme
             order={order}
             options={options}

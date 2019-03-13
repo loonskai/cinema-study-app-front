@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import DeleteIcon from '@material-ui/icons/Delete';
 import LocalGroceryStoreIcon from '@material-ui/icons/LocalGroceryStore';
 
-import OrderConfirmationModal from './OrderConfirmationModal';
 import HeaderButton from '../buttons/HeaderButton';
 import SubmitButton from '../buttons/SubmitButton';
 import calculateTotalPrice from '../../helpers/calculateTotalPrice';
@@ -21,26 +20,20 @@ const TicketsAmount = styled.div`
   margin-bottom: 1rem;
 `;
 
-const OrderController = ({ handleOrderClear, order, handleSnackbar }: any) => {
-  const [isModalDisplayed, setModalDisplay]: [boolean, any] = useState(false);
-
-  const handleOrderSubmit = (e: any) => {
+const OrderController = ({
+  handleOrderClear,
+  handleOrderSubmit,
+  order
+}: any) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
-    setModalDisplay(true);
+    handleOrderSubmit();
   };
 
   const isEmpty = !order.seatsPicked.length;
 
   return (
-    <Container onSubmit={handleOrderSubmit}>
-      {isModalDisplayed && (
-        <OrderConfirmationModal
-          handleSnackbar={handleSnackbar}
-          handleClose={() => {
-            setModalDisplay(false);
-          }}
-        />
-      )}
+    <Container onSubmit={handleSubmit}>
       <TotalPrice>Total price: ${calculateTotalPrice(order)}</TotalPrice>
       <TicketsAmount>Tickets amount: {order.seatsPicked.length}</TicketsAmount>
       <SubmitButton
