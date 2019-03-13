@@ -2,12 +2,14 @@ export const users = [
   {
     email: 'client@mail.com',
     username: 'client',
-    password: 'Password123'
+    password: 'Password123',
+    role: 'client'
   },
   {
     email: 'admin@mail.com',
     username: 'admin',
-    password: 'Password123'
+    password: 'Password123',
+    role: 'admin'
   }
 ];
 

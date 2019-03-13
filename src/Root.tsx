@@ -8,6 +8,7 @@ import Auth from './pages/Auth';
 import MovieSingle from './pages/MovieSingle';
 import UserProfile from './pages/UserProfile';
 import SessionSingle from './pages/SessionSingle';
+import Admin from './pages/Admin';
 
 const Root = () => (
   <Switch>
@@ -17,6 +18,7 @@ const Root = () => (
     <Route path="/auth" component={Auth} />
     <ProtectedRoute path="/profile" component={UserProfile} />
     <ProtectedRoute path="/sessions/:id" component={SessionSingle} />
+    <ProtectedRoute path="/admin" component={Admin} />
   </Switch>
 );
 

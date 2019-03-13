@@ -2,7 +2,7 @@ import axios from 'axios';
 import { apiKey } from './credentials';
 import randomstring from 'randomstring';
 
-import { sessions, seats, bonus, userData, cinemas } from './mocks';
+import { sessions, seats, users, bonus, userData, cinemas } from './mocks';
 
 class ApiService {
   client: any;
@@ -15,8 +15,12 @@ class ApiService {
     try {
       // Random string as access token. Should be changed to real token from server
       const token = randomstring.generate();
+      const { role }: any = users.find(
+        (user: any) =>
+          user.email === values.email || user.username === values.username
+      );
       return new Promise((res, rej) => {
-        res(token);
+        res({ token, role });
       });
     } catch (error) {
       console.error(error);
@@ -35,7 +39,10 @@ class ApiService {
     try {
       // Here we make request to validate token that has been received from sessionStorage while app initialization
       return new Promise((res, rej) => {
-        return res(true);
+        return res({
+          tokenIsValid: true,
+          role: 'admin'
+        });
       });
     } catch (error) {
       console.error(error);

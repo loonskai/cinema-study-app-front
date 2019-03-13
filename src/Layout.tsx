@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import Root from './Root';
