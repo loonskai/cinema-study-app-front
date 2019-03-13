@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState } from 'react';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
 import TextField from '../fields/TextField/TextField';

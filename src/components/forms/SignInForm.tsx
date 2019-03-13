@@ -15,11 +15,20 @@ const SignInForm = ({ signIn, onSuccess }: any) => {
     username: '',
     password: 'Password123'
   });
+  const [inputErrors, setInputErrors]: [any, any] = useState({
+    email: null,
+    username: null,
+    password: null
+  });
 
   const handleChange = (e: any) => {
     setValues({
       ...values,
       [e.target.name]: e.target.value
+    });
+    setInputErrors({
+      ...inputErrors,
+      [e.target.name]: null
     });
   };
 
@@ -30,9 +39,17 @@ const SignInForm = ({ signIn, onSuccess }: any) => {
       user => user.email === email || user.username === username
     );
     if (!user) {
-      console.error('user not found');
+      if (email) {
+        setInputErrors({ ...inputErrors, email: 'User not found' });
+      }
+      if (username) {
+        setInputErrors({ ...inputErrors, username: 'User not found' });
+      }
     } else if (user.password !== password) {
-      console.error('wrong password');
+      setInputErrors({
+        ...inputErrors,
+        password: 'Wrong password'
+      });
     } else {
       const result = await signIn(values);
       if (result) {
@@ -60,6 +77,11 @@ const SignInForm = ({ signIn, onSuccess }: any) => {
       ...values,
       [targetToClear as string]: ''
     });
+    setInputErrors({
+      email: null,
+      username: null,
+      password: null
+    });
   };
 
   return (
@@ -82,7 +104,8 @@ const SignInForm = ({ signIn, onSuccess }: any) => {
       {signInWith === 'email' && (
         <TextField
           name="email"
-          label="Email"
+          label={inputErrors.email || 'Email'}
+          error={!!inputErrors.email}
           type="email"
           value={values.email}
           handleChange={handleChange}
@@ -92,7 +115,8 @@ const SignInForm = ({ signIn, onSuccess }: any) => {
       {signInWith === 'username' && (
         <TextField
           name="username"
-          label="Username"
+          label={inputErrors.username || 'Username'}
+          error={!!inputErrors.username}
           value={values.username}
           handleChange={handleChange}
           withoutSuggestions={true}
@@ -100,7 +124,8 @@ const SignInForm = ({ signIn, onSuccess }: any) => {
       )}
       <TextField
         name="password"
-        label="Password"
+        label={inputErrors.password || 'Password'}
+        error={!!inputErrors.password}
         type="password"
         value={values.password}
         handleChange={handleChange}

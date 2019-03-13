@@ -3,6 +3,11 @@ export const users = [
     email: 'client@mail.com',
     username: 'client',
     password: 'Password123'
+  },
+  {
+    email: 'admin@mail.com',
+    username: 'admin',
+    password: 'Password123'
   }
 ];
 
