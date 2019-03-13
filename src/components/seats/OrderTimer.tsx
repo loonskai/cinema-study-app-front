@@ -35,23 +35,21 @@ class OrderTimer extends React.Component {
     this.countDown = this.countDown.bind(this);
   }
 
-  secondsToTime(secs: number) {
-    let minutes: string | number = parseInt(`${secs / 60}`, 10);
-    let seconds: string | number = parseInt(`${secs % 60}`, 10);
-
-    minutes = minutes < 10 ? `0${minutes}` : minutes;
-    seconds = seconds < 10 ? `0${seconds}` : seconds;
-
-    const obj = { minutes, seconds };
-    return obj;
-  }
-
   componentDidMount() {
     if (this.timer === 0 && this.state.seconds > 0) {
       this.timer = setInterval(this.countDown, 1000);
     }
     const timeLeftVar = this.secondsToTime(this.state.seconds);
     this.setState({ time: timeLeftVar });
+  }
+
+  secondsToTime(secs: number) {
+    const minutes: string | number = parseInt(`${secs / 60}`, 10);
+    const seconds: string | number = parseInt(`${secs % 60}`, 10);
+    return {
+      minutes: minutes < 10 ? `0${minutes}` : minutes,
+      seconds: seconds < 10 ? `0${seconds}` : seconds
+    };
   }
 
   startTimer() {
@@ -62,14 +60,12 @@ class OrderTimer extends React.Component {
 
   countDown() {
     this.setState((prevState: any) => {
-      const updatedSeconds = prevState.seconds - 1;
-      if (updatedSeconds === 0) {
+      const seconds = prevState.seconds - 1;
+      if (seconds === 0) {
         clearInterval(this.timer);
+        this.props.handleSnackbar('Reservation time expired', 'warning');
       }
-      return {
-        time: this.secondsToTime(updatedSeconds),
-        seconds: updatedSeconds
-      };
+      return { time: this.secondsToTime(seconds), seconds };
     });
   }
 

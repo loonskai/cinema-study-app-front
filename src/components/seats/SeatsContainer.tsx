@@ -140,7 +140,7 @@ const SeatsContainer = ({
                   order={order}
                   handleSnackbar={handleSnackbar}
                 />
-                <OrderTimer />
+                <OrderTimer handleSnackbar={handleSnackbar} />
               </OrderStateContainer>
             )}
           </SnackbarContext.Consumer>
