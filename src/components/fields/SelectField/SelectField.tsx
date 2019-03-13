@@ -25,7 +25,6 @@ const SelectField = ({
   cinemas,
   disabled
 }: Props) => {
-  // const [labelWidth, setLabelWidth] = useState(0);
   const getOptions = (entity: string) => {
     let options;
     switch (entity) {
