@@ -87,7 +87,7 @@ class ApiService {
   async loadSessionsList(options: any) {
     try {
       return new Promise((res, rej) => {
-        return res(sessions);
+        setTimeout(() => res(sessions), 1000);
       });
     } catch (error) {
       console.error(error);

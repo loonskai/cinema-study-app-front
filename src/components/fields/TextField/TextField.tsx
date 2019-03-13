@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { findDOMNode } from 'react-dom';
 import Autosuggest from 'react-autosuggest';
 import parse from 'autosuggest-highlight/parse';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import * as StyledContainers from './styled';
 import { match } from '../../../helpers/autosuggestHighlightMatch';
-import { cities } from '../../../mocks';
 
 interface Props {
   entity?: string;
@@ -97,8 +95,6 @@ const TextField = ({
 }: Props) => {
   /* Returns in case when we don't need suggestions list */
   if (withoutSuggestions) {
-    const [labelWidth, setLabelWidth] = useState(0);
-
     return (
       <StyledContainers.Input
         name={name}
@@ -108,9 +104,7 @@ const TextField = ({
         onChange={handleChange}
         disabled={disabled}
         error={error}
-        /*         InputProps={{
-          labelWidth: label.length * 6.5 + 25
-        }} */
+        InputProps={{ labelWidth: 0 }}
       />
     );
   }

@@ -7,10 +7,10 @@ import { users } from '../../mocks';
 
 const SignUpForm = ({ onSuccess }: any) => {
   const [values, setValues] = useState({
-    email: 'register@mail.com',
-    username: 'Johnnn',
-    password: '12345678',
-    confirmPassword: '12345678'
+    email: '',
+    username: '',
+    password: '',
+    confirmPassword: ''
   });
   const [inputErrors, setInputErrors]: [any, any] = useState({
     email: null,
@@ -24,13 +24,14 @@ const SignUpForm = ({ onSuccess }: any) => {
       ...values,
       [e.target.name]: e.target.value
     });
+    setInputErrors({
+      ...inputErrors,
+      [e.target.name]: null
+    });
   };
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    /*     const formInputs = Array.from(e.target.elements).filter(
-      (el: any) => el.tagName === 'INPUT'
-    ); */
     const { email, username, password, confirmPassword } = values;
     const user = users.find(
       user => user.email === email || user.username === username

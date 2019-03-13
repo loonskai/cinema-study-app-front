@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 
-import { mainColor } from '../../../constants';
+import { mainColor, whiteColor } from '../../../constants';
 
 export const Input = styled(initialProps => {
   /* We can expand InputProps with inputRef if necessary (i.e. for react-autosuggest renderInputComponent method) */
@@ -23,7 +23,8 @@ export const Input = styled(initialProps => {
       InputLabelProps={{
         classes: {
           root: 'cssLabel',
-          focused: !initialProps.error && 'cssFocused'
+          focused: !initialProps.error && 'cssFocused',
+          outlined: 'label-outlined'
         }
       }}
       {...initialProps}
@@ -31,11 +32,16 @@ export const Input = styled(initialProps => {
     />
   );
 })`
-  && .cssLabel.cssFocused {
+  && .cssLabel.cssFocused.label-outlined {
     color: ${mainColor};
   }
   && .cssOutlinedInput.cssFocused .notchedOutline {
     border-color: ${mainColor};
+  }
+
+  && .label-outlined {
+    padding: 0 0.5rem;
+    background-color: ${whiteColor};
   }
 `;
 
