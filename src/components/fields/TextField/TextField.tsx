@@ -179,6 +179,7 @@ const TextField = ({
         inputProps={{
           label,
           value: value as string,
+          disabled,
           onChange: (
             e: React.FormEvent<HTMLInputElement>,
             { newValue }: { newValue: string }

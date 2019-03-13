@@ -25,10 +25,12 @@ const StyledForm = styled.form`
 
 const SearchSessionForm = ({
   loadSessionsList,
+  loadCinemasByCity,
   sessions,
   initialValues
 }: any) => {
-  const [city, setCity] = useState(initialValues.city);
+  const [citySelected, setCitySelected] = useState(initialValues.city);
+  const [cityTyped, setCityTyped] = useState(initialValues.city);
   const [cinema, setCinema] = useState(initialValues.cinema);
   const [date, setDate] = useState(initialValues.date);
   const [time, setTime] = useState(initialValues.time);
@@ -36,12 +38,24 @@ const SearchSessionForm = ({
   const [displaySessionsTable, setDisplaySessionsTable] = useState(false);
 
   useEffect(() => {
-    setButtonDisabled(!(city || cinema));
+    // If we come from main page search
     if (initialValues.city) {
       loadSessionsList();
       setDisplaySessionsTable(true);
     }
-  });
+
+    if (citySelected) {
+      setButtonDisabled(false);
+      loadCinemasByCity(citySelected);
+    } else {
+      setCinema('');
+    }
+
+    if (citySelected !== cityTyped) {
+      setCitySelected('');
+      setCinema('');
+    }
+  }, [cityTyped]);
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
@@ -58,8 +72,9 @@ const SearchSessionForm = ({
           type="text"
           entity="city"
           label="City"
-          value={city}
-          handleChange={setCity}
+          value={citySelected === cityTyped ? citySelected : cityTyped}
+          handleChange={setCityTyped}
+          handleSelect={setCitySelected}
         />
         <FieldContainer
           id="cinema"
@@ -68,6 +83,7 @@ const SearchSessionForm = ({
           label="Cinema"
           value={cinema}
           handleChange={setCinema}
+          disabled={!citySelected}
         />
         <FieldContainer
           id="date"

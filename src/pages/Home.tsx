@@ -19,10 +19,6 @@ const Home = ({ loadCinemasByCity, history, movies }: any) => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    /*     console.log(movieSelected);
-    console.log(citySelected);
-    console.log(cinema);
-    console.log(date); */
     const { id: movieId } = movies.find(
       (movie: any) => movie.original_title === movieSelected
     );
