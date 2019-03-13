@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import { findDOMNode } from 'react-dom';
 import Autosuggest from 'react-autosuggest';
 import parse from 'autosuggest-highlight/parse';
@@ -19,6 +20,7 @@ interface Props {
   error?: boolean;
   handleChange: (param: any) => any;
   withoutSuggestions?: boolean;
+  movies: any;
 }
 
 function renderInputComponent(inputProps: any) {
@@ -42,33 +44,6 @@ function renderInputComponent(inputProps: any) {
 
 function getSuggestionValue(suggestion: { label: string } | null): string {
   return suggestion ? suggestion.label : '';
-}
-
-function getSuggestions(
-  entity: string,
-  value: string
-): Array<null | { label: string }> {
-  // Get suggestion options depending on props.entity
-  let suggestions;
-  switch (entity) {
-    case 'movie': {
-      suggestions = movies as Array<{ label: string }>;
-      break;
-    }
-    case 'city': {
-      suggestions = cities as Array<{ label: string }>;
-      break;
-    }
-    default: {
-      suggestions = [] as Array<{ label: string }>;
-      break;
-    }
-  }
-
-  const suggestionsFiltered = suggestions.filter(suggestion =>
-    suggestion.label.toLowerCase().includes(value)
-  );
-  return suggestionsFiltered.length ? suggestionsFiltered : [null];
 }
 
 function renderSuggestion(
@@ -113,7 +88,8 @@ const TextField = ({
   disabled,
   error,
   name,
-  withoutSuggestions = false
+  withoutSuggestions = false,
+  movies
 }: Props) => {
   /* Returns in case when we don't need suggestions list */
   if (withoutSuggestions) {
@@ -135,7 +111,34 @@ const TextField = ({
     );
   }
 
+  /* Returns in case when we have suggestions list */
   const [suggestions, setSuggestions]: [any, any] = useState([]);
+
+  const getSuggestions = (entity: string, value: string): any => {
+    // Get suggestion options depending on props.entity
+    let suggestions;
+    switch (entity) {
+      case 'movie': {
+        suggestions = movies.map((movie: any) => ({
+          label: movie.original_title
+        }));
+        break;
+      }
+      case 'city': {
+        suggestions = cities;
+        break;
+      }
+      default: {
+        suggestions = [];
+        break;
+      }
+    }
+
+    const suggestionsFiltered = suggestions.filter((suggestion: any) =>
+      suggestion.label.toLowerCase().includes(value)
+    );
+    return suggestionsFiltered.length ? suggestionsFiltered : [null];
+  };
 
   const handleSuggestionsFetchRequested = (entity: any) => (obj: {
     value: string;
@@ -193,4 +196,4 @@ const TextField = ({
   );
 };
 
-export default TextField;
+export default connect(({ movies }: any) => ({ movies }))(TextField);

@@ -15,7 +15,6 @@ export const Input = styled(initialProps => {
     },
     ...initialProps.InputProps
   };
-
   return (
     <TextField
       fullWidth={true}
