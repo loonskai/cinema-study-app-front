@@ -8,13 +8,19 @@ import store from './redux/store';
 import actions from './redux/actions';
 import Layout from './Layout';
 
-const App = ({ validateToken, loadAllSeats, loadMoviesList }: any) => {
+const App = ({
+  validateToken,
+  loadAllSeats,
+  loadMoviesList,
+  loadSessionsList
+}: any) => {
   useEffect(() => {
     const token = sessionStorage.getItem('token');
     if (token) {
       validateToken(token);
     }
     loadMoviesList();
+    loadSessionsList();
     loadAllSeats();
   }, []);
 

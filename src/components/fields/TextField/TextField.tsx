@@ -7,7 +7,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import * as StyledContainers from './styled';
 import { match } from '../../../helpers/autosuggestHighlightMatch';
-import { movies, cities } from '../../../mocks';
+import { cities } from '../../../mocks';
 
 interface Props {
   entity?: string;
@@ -21,6 +21,7 @@ interface Props {
   handleChange: (param: any) => any;
   withoutSuggestions?: boolean;
   movies: any;
+  sessions: any;
 }
 
 function renderInputComponent(inputProps: any) {
@@ -89,7 +90,8 @@ const TextField = ({
   error,
   name,
   withoutSuggestions = false,
-  movies
+  movies,
+  sessions
 }: Props) => {
   /* Returns in case when we don't need suggestions list */
   if (withoutSuggestions) {
@@ -125,7 +127,12 @@ const TextField = ({
         break;
       }
       case 'city': {
-        suggestions = cities;
+        suggestions = Object.keys(
+          sessions.reduce((obj: any, session: any) => {
+            obj[session.city] = true;
+            return obj;
+          }, {})
+        ).map(city => ({ label: city }));
         break;
       }
       default: {
@@ -196,4 +203,6 @@ const TextField = ({
   );
 };
 
-export default connect(({ movies }: any) => ({ movies }))(TextField);
+export default connect(({ movies, sessions }: any) => ({ movies, sessions }))(
+  TextField
+);
