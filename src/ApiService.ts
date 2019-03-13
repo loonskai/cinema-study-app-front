@@ -2,7 +2,7 @@ import axios from 'axios';
 import { apiKey } from './credentials';
 import randomstring from 'randomstring';
 
-import { sessions, seats, bonus, userData } from './mocks';
+import { sessions, seats, bonus, userData, cinemas } from './mocks';
 
 class ApiService {
   client: any;
@@ -108,6 +108,19 @@ class ApiService {
     try {
       return new Promise((res, rej) => {
         return res(bonus);
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async loadCinemasByCity(city: string) {
+    try {
+      const filteredCinemas = cinemas.filter(
+        (cinema: any) => cinema.city === city
+      );
+      return new Promise((res, rej) => {
+        return res(filteredCinemas);
       });
     } catch (error) {
       console.error(error);

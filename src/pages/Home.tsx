@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import SearchIcon from '@material-ui/icons/Search';
 
+import actions from '../redux/actions';
 import PageTitle from '../components/PageTitle';
 import FieldContainer from '../components/fields/FieldContainer';
 import SubmitButton from '../components/buttons/SubmitButton';
 
-const Home = () => {
+const Home = ({ loadCinemasByCity }: any) => {
   const [movie, setMovie] = useState('');
   const [citySelected, setCitySelected] = useState('');
   const [cityTyped, setCityTyped] = useState('');
@@ -27,6 +29,15 @@ const Home = () => {
     } else {
       setButtonDisabled(true);
     }
+    if (citySelected) {
+      loadCinemasByCity(citySelected);
+    } else {
+      setCinema('');
+    }
+    if (citySelected !== cityTyped) {
+      setCitySelected('');
+      setCinema('');
+    }
   });
 
   return (
@@ -45,7 +56,7 @@ const Home = () => {
         type="text"
         entity="city"
         label="Where do you live?"
-        value={citySelected || cityTyped}
+        value={citySelected === cityTyped ? citySelected : cityTyped}
         handleChange={setCityTyped}
         handleSelect={setCitySelected}
       />
@@ -75,4 +86,7 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default connect(
+  null,
+  actions
+)(Home);

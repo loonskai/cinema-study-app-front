@@ -94,22 +94,27 @@ export const cities = [
 export const cinemas = [
   {
     id: 1,
+    city: 'Minsk',
     name: 'Avrora'
   },
   {
     id: 2,
+    city: 'Minsk',
     name: 'Oktyabr'
   },
   {
     id: 3,
+    city: 'Brest',
     name: 'Moskva'
   },
   {
     id: 4,
+    city: 'Minsk',
     name: 'Silver Screen'
   },
   {
     id: 5,
+    city: 'Brest',
     name: 'Pobeda'
   }
 ];

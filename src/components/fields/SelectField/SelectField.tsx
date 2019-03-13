@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import * as StyledContainers from './styled';
-import { cinemas, halls } from '../../../mocks';
+import { halls } from '../../../mocks';
 
 interface Props {
   entity: string;
@@ -12,54 +13,57 @@ interface Props {
   type: string;
   value?: string | Date;
   disabled?: boolean;
+  cinemas?: any;
   handleChange: (param: string) => string;
 }
-
-const getOptions = (entity: string) => {
-  let options;
-  switch (entity) {
-    case 'cinema': {
-      options = cinemas.map(cinema => ({
-        label: cinema.name,
-        value: cinema.id
-      }));
-      break;
-    }
-    case 'hall': {
-      options = halls.map(hall => ({ label: hall.name, value: hall.id }));
-      break;
-    }
-    case 'time': {
-      options = [] as any;
-      for (let i = 0; i <= 23; i++) {
-        const label = i.toString().length > 1 ? `${i}:00` : `0${i}:00`;
-        options.push({
-          label,
-          value: label
-        });
-      }
-      break;
-    }
-    default: {
-      options = [] as Array<{ label: string }>;
-      break;
-    }
-  }
-  return options.map((option: any, index: any) => (
-    <MenuItem key={index.toString()} value={option.value}>
-      {option.label}
-    </MenuItem>
-  ));
-};
 
 const SelectField = ({
   label,
   value,
   handleChange,
   entity,
+  cinemas,
   disabled
 }: Props) => {
   // const [labelWidth, setLabelWidth] = useState(0);
+  const getOptions = (entity: string) => {
+    let options;
+    switch (entity) {
+      case 'cinema': {
+        options = cinemas
+          ? cinemas.map((cinema: any) => ({
+              label: cinema.name,
+              value: cinema.id
+            }))
+          : [];
+        break;
+      }
+      case 'hall': {
+        options = halls.map(hall => ({ label: hall.name, value: hall.id }));
+        break;
+      }
+      case 'time': {
+        options = [] as any;
+        for (let i = 0; i <= 23; i++) {
+          const label = i.toString().length > 1 ? `${i}:00` : `0${i}:00`;
+          options.push({
+            label,
+            value: label
+          });
+        }
+        break;
+      }
+      default: {
+        options = [] as Array<{ label: string }>;
+        break;
+      }
+    }
+    return options.map((option: any, index: any) => (
+      <MenuItem key={index.toString()} value={option.value}>
+        {option.label}
+      </MenuItem>
+    ));
+  };
 
   return (
     <StyledContainers.FormControlStyled
@@ -105,4 +109,4 @@ const SelectField = ({
   );
 };
 
-export default SelectField;
+export default connect(({ cinemas }: any) => ({ cinemas }))(SelectField);
