@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import SearchIcon from '@material-ui/icons/Search';
 
 import actions from '../redux/actions';
@@ -7,7 +8,7 @@ import PageTitle from '../components/PageTitle';
 import FieldContainer from '../components/fields/FieldContainer';
 import SubmitButton from '../components/buttons/SubmitButton';
 
-const Home = ({ loadCinemasByCity }: any) => {
+const Home = ({ loadCinemasByCity, history, movies }: any) => {
   const [movieTyped, setMovieTyped] = useState('');
   const [movieSelected, setMovieSelected] = useState('');
   const [citySelected, setCitySelected] = useState('');
@@ -18,10 +19,21 @@ const Home = ({ loadCinemasByCity }: any) => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    console.log(movieSelected);
+    /*     console.log(movieSelected);
     console.log(citySelected);
     console.log(cinema);
-    console.log(date);
+    console.log(date); */
+    const { id: movieId } = movies.find(
+      (movie: any) => movie.original_title === movieSelected
+    );
+    history.push({
+      pathname: `/movies/${movieId}`,
+      state: {
+        city: citySelected,
+        cinema,
+        date
+      }
+    });
   };
 
   useEffect(() => {
@@ -90,7 +102,9 @@ const Home = ({ loadCinemasByCity }: any) => {
   );
 };
 
-export default connect(
-  null,
+const connectedHome: any = connect(
+  ({ movies }: any) => ({ movies }),
   actions
 )(Home);
+
+export default withRouter(connectedHome);

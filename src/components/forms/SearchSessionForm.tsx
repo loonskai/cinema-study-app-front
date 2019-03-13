@@ -23,19 +23,23 @@ const StyledForm = styled.form`
   width: 100%;
 `;
 
-const SearchSessionForm = ({ loadSessionsList, sessions }: any) => {
-  const [city, setCity] = useState('Minsk');
-  const [cinema, setCinema] = useState('');
-  const [date, setDate] = useState(new Date());
-  const [time, setTime] = useState('');
+const SearchSessionForm = ({
+  loadSessionsList,
+  sessions,
+  initialValues
+}: any) => {
+  const [city, setCity] = useState(initialValues.city);
+  const [cinema, setCinema] = useState(initialValues.cinema);
+  const [date, setDate] = useState(initialValues.date);
+  const [time, setTime] = useState(initialValues.time);
   const [buttonDisabled, setButtonDisabled] = useState(true);
   const [displaySessionsTable, setDisplaySessionsTable] = useState(false);
 
   useEffect(() => {
-    if (city || cinema) {
-      setButtonDisabled(false);
-    } else {
-      setButtonDisabled(true);
+    setButtonDisabled(!(city || cinema));
+    if (initialValues.city) {
+      loadSessionsList();
+      setDisplaySessionsTable(true);
     }
   });
 

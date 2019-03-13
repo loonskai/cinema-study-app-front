@@ -1,4 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react';
+import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 
 import api from '../ApiService';
@@ -23,9 +24,15 @@ const StyledDescription = styled.div`
   }
 `;
 
-const MovieSingle = ({ match }: any) => {
+const MovieSingle = ({ match, location }: any) => {
   const [movie, setMovie]: [any, any] = useState({});
   const [isLoading, setLoading] = useState(true);
+  const [searchValues, setSearchValues] = useState({
+    city: '',
+    cinema: '',
+    date: new Date(),
+    time: ''
+  });
 
   const loadData = async (id: string) => {
     const movieLoaded = await api.loadMovieById(id);
@@ -35,6 +42,15 @@ const MovieSingle = ({ match }: any) => {
 
   useEffect(() => {
     loadData(match.params.id);
+    const { state: locationState } = location;
+    if (locationState) {
+      setSearchValues({
+        city: locationState.city || searchValues.city,
+        cinema: locationState.cinema || searchValues.cinema,
+        date: locationState.date || searchValues.date,
+        time: locationState.time || searchValues.time
+      });
+    }
   }, []);
 
   return isLoading ? (
@@ -49,11 +65,14 @@ const MovieSingle = ({ match }: any) => {
         />
         <StyledDescription>
           <div>{movie.overview}</div>
-          <SearchSessionForm movieId={+match.params.id} />
+          <SearchSessionForm
+            movieId={+match.params.id}
+            initialValues={searchValues}
+          />
         </StyledDescription>
       </MovieInfoContainer>
     </Fragment>
   );
 };
 
-export default MovieSingle;
+export default withRouter(MovieSingle);
