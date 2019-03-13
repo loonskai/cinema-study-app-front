@@ -58,6 +58,9 @@ const SeatsContainer = ({
     }
   });
   const [isModalDisplayed, setModalDisplay]: [boolean, any] = useState(false);
+  const [timerStarted, setTimerStarted]: [boolean, any] = useState(false);
+  // We assing it to the function from OrderTimer child component and run it on the first seat pick
+  let startTimerFunc = () => {};
 
   useEffect(() => {
     setOrderInfo({
@@ -88,6 +91,10 @@ const SeatsContainer = ({
   };
 
   const handleSeatPick = (e: any) => {
+    if (!timerStarted && startTimerFunc) {
+      setTimerStarted(true);
+      startTimerFunc();
+    }
     const { seatsPicked } = order;
     const pickedRow = +e.target.dataset.row;
     const pickedSeat = +e.target.dataset.seat;
@@ -144,7 +151,7 @@ const SeatsContainer = ({
                   handleSnackbar={handleSnackbar}
                 />
                 <OrderTimer
-                  startTimer={(func: any) => func()}
+                  startTimer={(func: any) => (startTimerFunc = func)}
                   handleExpire={() => {
                     setModalDisplay(false);
                     handleOrderClear();

@@ -31,7 +31,7 @@ class OrderTimer extends React.Component {
 
   constructor(props: any) {
     super(props);
-    this.state = { time: {}, seconds: 10 };
+    this.state = { time: {}, seconds: 60 * 15 };
     this.timer = 0;
     this.countDown = this.countDown.bind(this);
   }
@@ -44,6 +44,10 @@ class OrderTimer extends React.Component {
     }
     const timeLeftVar = this.secondsToTime(this.state.seconds);
     this.setState({ time: timeLeftVar });
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
   }
 
   secondsToTime(secs: number) {
