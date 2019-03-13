@@ -8,7 +8,8 @@ import FieldContainer from '../components/fields/FieldContainer';
 import SubmitButton from '../components/buttons/SubmitButton';
 
 const Home = ({ loadCinemasByCity }: any) => {
-  const [movie, setMovie] = useState('');
+  const [movieTyped, setMovieTyped] = useState('');
+  const [movieSelected, setMovieSelected] = useState('');
   const [citySelected, setCitySelected] = useState('');
   const [cityTyped, setCityTyped] = useState('');
   const [cinema, setCinema] = useState('');
@@ -17,22 +18,23 @@ const Home = ({ loadCinemasByCity }: any) => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    console.log(movie);
+    console.log(movieSelected);
     console.log(citySelected);
     console.log(cinema);
     console.log(date);
   };
 
   useEffect(() => {
-    if (movie || citySelected || cinema) {
-      setButtonDisabled(false);
-    } else {
-      setButtonDisabled(true);
-    }
+    setButtonDisabled(!movieSelected);
     if (citySelected) {
       loadCinemasByCity(citySelected);
     } else {
       setCinema('');
+    }
+    if (movieSelected !== movieTyped) {
+      setMovieSelected('');
+      setCityTyped('');
+      setCitySelected('');
     }
     if (citySelected !== cityTyped) {
       setCitySelected('');
@@ -48,8 +50,9 @@ const Home = ({ loadCinemasByCity }: any) => {
         type="text"
         entity="movie"
         label="Movie Title"
-        value={movie}
-        handleChange={setMovie}
+        value={movieSelected === movieTyped ? movieSelected : movieTyped}
+        handleChange={setMovieTyped}
+        handleSelect={setMovieSelected}
       />
       <FieldContainer
         id="city"
@@ -59,6 +62,7 @@ const Home = ({ loadCinemasByCity }: any) => {
         value={citySelected === cityTyped ? citySelected : cityTyped}
         handleChange={setCityTyped}
         handleSelect={setCitySelected}
+        disabled={!movieSelected}
       />
       <FieldContainer
         id="cinema"
