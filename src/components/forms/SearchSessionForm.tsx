@@ -55,7 +55,7 @@ const SearchSessionForm = ({
       setCitySelected('');
       setCinema('');
     }
-  }, [cityTyped]);
+  }, [cityTyped, citySelected]);
 
   const handleSubmit = (e: any) => {
     e.preventDefault();

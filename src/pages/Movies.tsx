@@ -28,7 +28,7 @@ const MoviesContainer = styled.div`
 `;
 
 const Movies = ({ movies, loadMoviesList }: any) => {
-  const [isLoading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState(true);
   const [filterText, setFilterText] = useState('');
 
   useEffect(() => {
@@ -76,32 +76,6 @@ const Movies = ({ movies, loadMoviesList }: any) => {
     </Container>
   );
 };
-
-/* class Movies extends React.Component<any, any> { 
-
-  
-
-  render() {
-    const { isLoading } = this.state;
-    return isLoading ? (
-      <Loader />
-    ) : (
-      <Container>
-        <FieldContainer
-          id="movie"
-          type="text"
-          icon="search"
-          entity="movie"
-          label="Movie Title"
-          handleChange={this.handleSearchBar}
-          withoutSuggestions={true}
-        />
-        <PageTitle text="Movies" />
-        <MoviesContainer>{this.getMoviesList()}</MoviesContainer>
-      </Container>
-    );
-  }
-} */
 
 export default connect(
   ({ movies }: { movies: any }) => ({ movies }),

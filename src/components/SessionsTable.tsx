@@ -6,12 +6,14 @@ import DefaultButton from './../components/buttons/DefaultButton';
 import { greyColor, whiteColor, containerGreyColor } from './../constants';
 
 const Container = styled.div`
+  position: relative;
   width: 100%;
   margin: 0.625rem 0;
   border-radius: 0.3125rem;
   box-shadow: 0px 0px 0px 1px ${greyColor};
   background: ${containerGreyColor};
   overflow: hidden;
+  min-height: 2rem;
 `;
 
 const TableRow = styled.div`
