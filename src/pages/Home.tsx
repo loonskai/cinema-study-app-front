@@ -7,7 +7,8 @@ import SubmitButton from '../components/buttons/SubmitButton';
 
 const Home = () => {
   const [movie, setMovie] = useState('');
-  const [city, setCity] = useState('');
+  const [citySelected, setCitySelected] = useState('');
+  const [cityTyped, setCityTyped] = useState('');
   const [cinema, setCinema] = useState('');
   const [date, setDate] = useState(new Date());
   const [buttonDisabled, setButtonDisabled] = useState(true);
@@ -15,13 +16,13 @@ const Home = () => {
   const handleSubmit = (e: any) => {
     e.preventDefault();
     console.log(movie);
-    console.log(city);
+    console.log(citySelected);
     console.log(cinema);
     console.log(date);
   };
 
   useEffect(() => {
-    if (movie || city || cinema) {
+    if (movie || citySelected || cinema) {
       setButtonDisabled(false);
     } else {
       setButtonDisabled(true);
@@ -44,8 +45,9 @@ const Home = () => {
         type="text"
         entity="city"
         label="Where do you live?"
-        value={city}
-        handleChange={setCity}
+        value={citySelected || cityTyped}
+        handleChange={setCityTyped}
+        handleSelect={setCitySelected}
       />
       <FieldContainer
         id="cinema"
@@ -54,6 +56,7 @@ const Home = () => {
         label="Choose Cinema"
         value={cinema}
         handleChange={setCinema}
+        disabled={!citySelected}
       />
       <FieldContainer
         id="date"

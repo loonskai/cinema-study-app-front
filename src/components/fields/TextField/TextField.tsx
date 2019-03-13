@@ -19,6 +19,7 @@ interface Props {
   disabled?: boolean;
   error?: boolean;
   handleChange: (param: any) => any;
+  handleSelect?: (param: any) => any;
   withoutSuggestions?: boolean;
   movies: any;
   sessions: any;
@@ -82,6 +83,7 @@ function renderSuggestion(
 
 const TextField = ({
   handleChange,
+  handleSelect,
   entity,
   label,
   value,
@@ -184,6 +186,9 @@ const TextField = ({
             handleChange(newValue);
           }
         }}
+        onSuggestionSelected={(e, { suggestionValue }) =>
+          handleSelect && handleSelect(suggestionValue)
+        }
         theme={{
           container: 'container',
           suggestionsContainerOpen: 'suggestions-container-open',

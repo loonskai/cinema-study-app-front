@@ -11,6 +11,7 @@ interface Props {
   label: string;
   type: string;
   value?: string | Date;
+  disabled?: boolean;
   handleChange: (param: string) => string;
 }
 
@@ -51,7 +52,13 @@ const getOptions = (entity: string) => {
   ));
 };
 
-const SelectField = ({ label, value, handleChange, entity }: Props) => {
+const SelectField = ({
+  label,
+  value,
+  handleChange,
+  entity,
+  disabled
+}: Props) => {
   // const [labelWidth, setLabelWidth] = useState(0);
 
   return (
@@ -59,6 +66,7 @@ const SelectField = ({ label, value, handleChange, entity }: Props) => {
       margin="normal"
       fullWidth={true}
       variant="outlined"
+      disabled={disabled}
     >
       <StyledContainers.InputLabelStyled
         ref={(ref: React.RefObject<HTMLInputElement>) => {
