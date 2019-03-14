@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import classnames from 'classnames';
 import AddIcon from '@material-ui/icons/Add';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 import api from '../../ApiService';
 import AdminFormContainer from './AdminFormContainer';
 import AddButton from '../buttons/AddButton';
-import { containerGreyColor, whiteColor } from '../../constants';
+import { containerGreyColor, whiteColor, mainDarkColor } from '../../constants';
 
 const LoadedMoviesList = styled.div`
   width: 100%;
@@ -26,6 +28,13 @@ const LoadedMovie = styled.div`
   background: ${whiteColor};
   border-radius: 5px;
   box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.3);
+  transition: all 600ms cubic-bezier(0.165, 0.84, 0.44, 1);
+
+  &&.movie-selected {
+    background: ${mainDarkColor};
+    color: ${whiteColor};
+    box-shadow: none;
+  }
 `;
 
 const LoadedMovieTitle = styled.div`
@@ -48,10 +57,20 @@ const ButtonsContainer = styled.div`
 
 const AddMovieForm = ({ handleSnackbar }: any) => {
   const [loadedMovies, setLoadedMovies] = useState([]);
-  const [selectedMovies, setSelectedMovies] = useState([]);
+  const [selectedMovies, setSelectedMovies]: [any, any] = useState({});
 
-  const handleSelectItem = id => {
-    console.dir(id);
+  const handleSelectItem = (id: string) => {
+    const movieSelected = loadedMovies.find((movie: any) => movie.id === +id);
+    if (selectedMovies[id]) {
+      const updatedMoviesSelected: any = Object.assign({}, selectedMovies);
+      delete updatedMoviesSelected[id];
+      setSelectedMovies(updatedMoviesSelected);
+    } else {
+      const updatedMoviesSelected: any = Object.assign({}, selectedMovies, {
+        [id]: movieSelected
+      });
+      setSelectedMovies(updatedMoviesSelected);
+    }
   };
 
   const loadExternalAPIMovies = async () => {
@@ -73,31 +92,40 @@ const AddMovieForm = ({ handleSnackbar }: any) => {
     if (!loadedMovies.length) {
       loadExternalAPIMovies();
     }
-  }, []);
+    console.log(selectedMovies);
+  }, [selectedMovies]);
 
   return (
     <AdminFormContainer title="Add Movie">
       {!!loadedMovies.length && (
         <LoadedMoviesList>
-          {loadedMovies.map((movie: any) => (
-            <LoadedMovie>
-              <div>
-                <LoadedMovieTitle>{movie.title}</LoadedMovieTitle>
-                <LoadedMovieDescription>
-                  {movie.overview}
-                </LoadedMovieDescription>
-              </div>
-              <ButtonsContainer>
-                <AddButton
-                  icon={<AddIcon />}
-                  handleClick={handleSelectItem}
-                  id={movie.id}
-                />
-              </ButtonsContainer>
-            </LoadedMovie>
-          ))}
+          {loadedMovies.map((movie: any) => {
+            const isSelected = !!selectedMovies[movie.id];
+            const movieClass = classnames({
+              'movie-selected': isSelected
+            });
+            return (
+              <LoadedMovie key={movie.id.toString()} className={movieClass}>
+                <div>
+                  <LoadedMovieTitle>{movie.title}</LoadedMovieTitle>
+                  <LoadedMovieDescription>
+                    {movie.overview}
+                  </LoadedMovieDescription>
+                </div>
+                <ButtonsContainer>
+                  <AddButton
+                    icon={isSelected ? <DeleteIcon /> : <AddIcon />}
+                    handleClick={handleSelectItem}
+                    id={movie.id}
+                    isSelected={isSelected}
+                  />
+                </ButtonsContainer>
+              </LoadedMovie>
+            );
+          })}
         </LoadedMoviesList>
       )}
+      <div>Movies selected: {Object.keys(selectedMovies).length}</div>
     </AdminFormContainer>
   );
 };
