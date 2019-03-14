@@ -5,7 +5,7 @@ import AdminFormContainer from './AdminFormContainer';
 import TextField from '../fields/TextField/TextField';
 import SubmitButton from '../buttons/SubmitButton';
 
-const AddCinemaForm = () => {
+const AddCinemaForm = ({ handleSnackbar }: any) => {
   const [values, setValues] = useState({
     city: '',
     cinema: ''
@@ -28,6 +28,12 @@ const AddCinemaForm = () => {
   const handleSubmit = (e: any) => {
     e.preventDefault();
     console.log('submit add cinema', values);
+    setValues({
+      city: '',
+      cinema: ''
+    });
+    setButtonDisabled(true);
+    handleSnackbar('New cinema added', 'success');
   };
 
   return (

@@ -7,6 +7,7 @@ import AddHallForm from '../components/admin/AddHallForm';
 import AddMovieForm from '../components/admin/AddMovieForm';
 import AddServicesForm from '../components/admin/AddServicesForm';
 import CreateSessionForm from '../components/admin/CreateSessionForm';
+import { SnackbarContext } from '../Layout';
 
 const Container = styled.div`
   display: flex;
@@ -14,20 +15,20 @@ const Container = styled.div`
 `;
 
 const Admin = () => {
-  const [selectedTab, setSelectedTab] = useState('add-cinema');
+  const [selectedTab, setSelectedTab] = useState('add-hall');
 
-  const getSelectedForm = () => {
+  const getSelectedForm = (handleSnackbar: any) => {
     switch (selectedTab) {
       case 'add-cinema':
-        return <AddCinemaForm />;
+        return <AddCinemaForm handleSnackbar={handleSnackbar} />;
       case 'add-hall':
-        return <AddHallForm />;
+        return <AddHallForm handleSnackbar={handleSnackbar} />;
       case 'add-movie':
-        return <AddMovieForm />;
+        return <AddMovieForm handleSnackbar={handleSnackbar} />;
       case 'add-services':
-        return <AddServicesForm />;
+        return <AddServicesForm handleSnackbar={handleSnackbar} />;
       case 'create-session':
-        return <CreateSessionForm />;
+        return <CreateSessionForm handleSnackbar={handleSnackbar} />;
       default:
         return null;
     }
@@ -39,7 +40,9 @@ const Admin = () => {
         selectedTab={selectedTab}
         handleChange={(event: any, value: string) => setSelectedTab(value)}
       />
-      {getSelectedForm()}
+      <SnackbarContext.Consumer>
+        {({ handleSnackbar }: any) => getSelectedForm(handleSnackbar)}
+      </SnackbarContext.Consumer>
     </Container>
   );
 };

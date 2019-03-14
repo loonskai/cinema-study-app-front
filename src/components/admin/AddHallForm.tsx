@@ -1,48 +1,56 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
 import AddIcon from '@material-ui/icons/Add';
 
+import actions from '../../redux/actions';
 import AdminFormContainer from './AdminFormContainer';
+import AddSeats from './sections/AddSeats';
 import TextField from '../fields/TextField/TextField';
 import SelectField from '../fields/SelectField/SelectField';
 import SubmitButton from '../buttons/SubmitButton';
-import actions from '../../redux/actions';
 
-const AddHallForm = ({ loadAllCinemas }: any) => {
-  const [values, setValues] = useState({
-    title: '',
-    cinema: '',
-    seats: []
-  });
+const StyledForm = styled.form`
+  max-width: 550px;
+`;
+
+const AddHallForm = ({ loadAllCinemas, handleSnackbar }: any) => {
+  const [cinemasLoaded, setCinemasLoaded] = useState(false);
+  const [title, setTitle] = useState('');
+  const [cinema, setCinema] = useState('');
+  const [rows, setRows]: [any, any] = useState([]);
   const [buttonDisabled, setButtonDisabled] = useState(true);
 
   useEffect(() => {
-    if (values.title && values.cinema && values.seats.length) {
+    if (title && cinema && !!rows.length) {
       setButtonDisabled(false);
     }
-    loadAllCinemas();
-  }, []);
-
-  const handleChange = (e: any) => {
-    setValues({
-      ...values,
-      [e.target.name]: e.target.value
-    });
-  };
+    if (!cinemasLoaded) {
+      loadAllCinemas();
+      setCinemasLoaded(true);
+    }
+  }, [title, cinema, rows]);
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    console.log('submit add hall', values);
+    console.log('submit add hall', { title, cinema, rows });
+    setTitle('');
+    setCinema('');
+    setRows([]);
+    setButtonDisabled(true);
+    handleSnackbar('New hall added', 'success');
   };
+
+  const handleRowsChange = (newRow: any) => setRows([...rows, newRow]);
 
   return (
     <AdminFormContainer title="Add Hall">
-      <form onSubmit={handleSubmit}>
+      <StyledForm onSubmit={handleSubmit}>
         <TextField
           name="title"
           label="Hall Title"
-          value={values.title}
-          handleChange={handleChange}
+          value={title}
+          handleChange={(e: any) => setTitle(e.target.value)}
           withoutSuggestions={true}
         />
         <SelectField
@@ -50,20 +58,16 @@ const AddHallForm = ({ loadAllCinemas }: any) => {
           type="select"
           entity="cinema"
           label="Choose Cinema"
-          value={values.cinema}
-          handleChange={(value: any) => {
-            setValues({
-              ...values,
-              cinema: value
-            });
-          }}
+          value={cinema}
+          handleChange={(value: any) => setCinema(value)}
         />
+        <AddSeats handleSubmit={handleRowsChange} prevRows={rows} />
         <SubmitButton
           text="Add Cinema"
           icon={<AddIcon />}
           disabled={buttonDisabled}
         />
-      </form>
+      </StyledForm>
     </AdminFormContainer>
   );
 };
