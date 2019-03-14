@@ -15,7 +15,7 @@ const Container = styled.div`
 `;
 
 const Admin = () => {
-  const [selectedTab, setSelectedTab] = useState('add-movie');
+  const [selectedTab, setSelectedTab] = useState('add-services');
 
   const getSelectedForm = (handleSnackbar: any) => {
     switch (selectedTab) {

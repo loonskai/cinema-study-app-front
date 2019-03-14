@@ -33,7 +33,7 @@ const RowElement = styled.div`
   padding-right: 0 0.3rem;
 `;
 
-const AddSeats = ({ handleSubmit, prevRows }: any) => {
+const AddRows = ({ handleSubmit, prevRows }: any) => {
   const [seatsValues, setSeatsValues] = useState({
     category: '',
     quantity: ''
@@ -48,7 +48,7 @@ const AddSeats = ({ handleSubmit, prevRows }: any) => {
 
   return (
     <Container>
-      <Title>Add seats</Title>
+      <Title>Add seat rows</Title>
       <Row>
         <RowElement>
           <TextField
@@ -106,4 +106,4 @@ const AddSeats = ({ handleSubmit, prevRows }: any) => {
   );
 };
 
-export default AddSeats;
+export default AddRows;

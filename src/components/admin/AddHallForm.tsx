@@ -6,7 +6,7 @@ import AddIcon from '@material-ui/icons/Add';
 import api from '../../ApiService';
 import actions from '../../redux/actions';
 import AdminFormContainer from './AdminFormContainer';
-import AddSeats from './sections/AddSeats';
+import AddRows from './sections/AddRows';
 import TextField from '../fields/TextField/TextField';
 import SelectField from '../fields/SelectField/SelectField';
 import SubmitButton from '../buttons/SubmitButton';
@@ -64,9 +64,9 @@ const AddHallForm = ({ loadAllCinemas, handleSnackbar }: any) => {
           value={cinema}
           handleChange={(value: any) => setCinema(value)}
         />
-        <AddSeats handleSubmit={handleRowsChange} prevRows={rows} />
+        <AddRows handleSubmit={handleRowsChange} prevRows={rows} />
         <SubmitButton
-          text="Add Cinema"
+          text="Add Hall"
           icon={<AddIcon />}
           disabled={buttonDisabled}
         />

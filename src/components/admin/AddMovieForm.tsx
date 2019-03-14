@@ -135,7 +135,7 @@ const AddMovieForm = ({ handleSnackbar }: any) => {
   }, [loadedMovies, selectedMovies]);
 
   return (
-    <AdminFormContainer title="Add Movie">
+    <AdminFormContainer title="Add Movies">
       {isLoading ? (
         <Loader />
       ) : (
