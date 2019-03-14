@@ -121,6 +121,16 @@ class ApiService {
     }
   }
 
+  async loadAllCinemas() {
+    try {
+      return new Promise((res, rej) => {
+        return res(cinemas);
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   async loadCinemasByCity(city: string) {
     try {
       const filteredCinemas = cinemas.filter(

@@ -14,7 +14,7 @@ interface Props {
   value?: string | Date;
   disabled?: boolean;
   cinemas?: any;
-  handleChange: (param: string) => string;
+  handleChange: any;
 }
 
 const SelectField = ({
