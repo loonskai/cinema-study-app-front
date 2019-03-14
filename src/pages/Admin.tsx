@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import NavPanel from '../components/admin/NavPanel';
 import AddCinemaForm from '../components/admin/AddCinemaForm';
 import AddHallForm from '../components/admin/AddHallForm';
+import AddMovieForm from '../components/admin/AddMovieForm';
 import AddServicesForm from '../components/admin/AddServicesForm';
 import CreateSessionForm from '../components/admin/CreateSessionForm';
 
@@ -21,6 +22,8 @@ const Admin = () => {
         return <AddCinemaForm />;
       case 'add-hall':
         return <AddHallForm />;
+      case 'add-movie':
+        return <AddMovieForm />;
       case 'add-services':
         return <AddServicesForm />;
       case 'create-session':

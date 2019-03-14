@@ -4,11 +4,12 @@ import styled from 'styled-components';
 import PageTitle from '../PageTitle';
 
 const Container = styled.div`
-  width: 100%;
+  flex: 1;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  padding: 1.5rem;
+  padding: 1.5rem 0;
+  box-sizing: border-box;
 `;
 
 const FormContainer = styled.div`

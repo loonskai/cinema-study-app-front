@@ -7,8 +7,9 @@ import MovieCreationIcon from '@material-ui/icons/MovieCreation';
 import VideoLabelIcon from '@material-ui/icons/VideoLabel';
 import RoomServiceIcon from '@material-ui/icons/RoomService';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
+import LocalMoviesIcon from '@material-ui/icons/LocalMovies';
 
-import { mainDarkColor, mainColor, greyColor } from '../../constants';
+import { mainDarkColor, mainColor } from '../../constants';
 
 const Container = styled.div`
   width: 100%;
@@ -24,10 +25,17 @@ const StyledTab = styled(Tab)<any>`
   &&.root {
     color: rgba(0, 0, 0, 0.7);
   }
+
   &&.selected {
     color: ${mainDarkColor};
   }
-  @media screen and (max-width: 425px) {
+
+  @media screen and (max-width: 756px) {
+    &&.root {
+      padding: 0;
+      min-width: 20px !important;
+    }
+
     .label-container {
       display: none;
     }
@@ -58,6 +66,16 @@ const NavPanel = ({ selectedTab, handleChange }: any) => {
             icon={<VideoLabelIcon />}
             label="Add hall"
             value="add-hall"
+            classes={{
+              root: 'root',
+              selected: 'selected',
+              labelContainer: 'label-container'
+            }}
+          />
+          <StyledTab
+            icon={<LocalMoviesIcon />}
+            label="Add movie"
+            value="add-movie"
             classes={{
               root: 'root',
               selected: 'selected',
