@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import classnames from 'classnames';
 import AddIcon from '@material-ui/icons/Add';
@@ -9,6 +9,7 @@ import AdminFormContainer from './AdminFormContainer';
 import AddButton from '../buttons/AddButton';
 import SubmitButton from '../buttons/SubmitButton';
 import HeaderButton from '../buttons/HeaderButton';
+import Loader from '../Loader';
 import {
   containerGreyColor,
   whiteColor,
@@ -69,13 +70,20 @@ const SelectButtonContainer = styled.div`
 `;
 
 const SelectedDataController = styled.form`
-  max-width: 200px;
+  max-width: 220px;
+  margin-bottom: 1rem;
   display: flex;
   justify-content: flex-start;
   flex-wrap: wrap;
+
+  && button,
+  && div {
+    width: 100%;
+  }
 `;
 
 const AddMovieForm = ({ handleSnackbar }: any) => {
+  const [isLoading, setLoading] = useState(true);
   const [loadedMovies, setLoadedMovies] = useState([]);
   const [selectedMovies, setSelectedMovies]: [any, any] = useState({});
 
@@ -119,59 +127,66 @@ const AddMovieForm = ({ handleSnackbar }: any) => {
 
   useEffect(() => {
     if (!loadedMovies.length) {
+      setLoading(true);
       loadExternalAPIMovies();
+    } else {
+      setLoading(false);
     }
-  }, [selectedMovies]);
+  }, [loadedMovies, selectedMovies]);
 
   return (
     <AdminFormContainer title="Add Movie">
-      {!!loadedMovies.length && (
-        <LoadedMoviesList>
-          {loadedMovies.map((movie: any) => {
-            const isSelected = !!selectedMovies[movie.id];
-            const movieClass = classnames({
-              'movie-selected': isSelected
-            });
-            return (
-              <LoadedMovie key={movie.id.toString()} className={movieClass}>
-                <div>
-                  <LoadedMovieTitle>{movie.title}</LoadedMovieTitle>
-                  <LoadedMovieDescription>
-                    {movie.overview}
-                  </LoadedMovieDescription>
-                </div>
-                <SelectButtonContainer>
-                  <AddButton
-                    icon={isSelected ? <DeleteIcon /> : <AddIcon />}
-                    handleClick={handleSelectItem}
-                    id={movie.id}
-                    isSelected={isSelected}
-                  />
-                </SelectButtonContainer>
-              </LoadedMovie>
-            );
-          })}
-        </LoadedMoviesList>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <Fragment>
+          <SelectedDataController onSubmit={handleSubmit}>
+            <div style={{ marginBottom: '1rem' }}>
+              Movies selected: {Object.keys(selectedMovies).length}
+            </div>
+            <HeaderButton
+              text="Clear"
+              icon={<DeleteIcon />}
+              disabled={!Object.keys(selectedMovies).length}
+              handleClick={() => {
+                setSelectedMovies({});
+              }}
+            />
+            <SubmitButton
+              text="Add Movies"
+              icon={<AddIcon />}
+              disabled={!Object.keys(selectedMovies).length}
+              withoutContainer={true}
+            />
+          </SelectedDataController>
+          <LoadedMoviesList>
+            {loadedMovies.map((movie: any) => {
+              const isSelected = !!selectedMovies[movie.id];
+              const movieClass = classnames({
+                'movie-selected': isSelected
+              });
+              return (
+                <LoadedMovie key={movie.id.toString()} className={movieClass}>
+                  <div>
+                    <LoadedMovieTitle>{movie.title}</LoadedMovieTitle>
+                    <LoadedMovieDescription>
+                      {movie.overview}
+                    </LoadedMovieDescription>
+                  </div>
+                  <SelectButtonContainer>
+                    <AddButton
+                      icon={isSelected ? <DeleteIcon /> : <AddIcon />}
+                      handleClick={handleSelectItem}
+                      id={movie.id}
+                      isSelected={isSelected}
+                    />
+                  </SelectButtonContainer>
+                </LoadedMovie>
+              );
+            })}
+          </LoadedMoviesList>
+        </Fragment>
       )}
-      <SelectedDataController onSubmit={handleSubmit}>
-        <div style={{ marginBottom: '1.5rem' }}>
-          Movies selected: {Object.keys(selectedMovies).length}
-        </div>
-        <HeaderButton
-          text="Clear"
-          icon={<DeleteIcon />}
-          disabled={!Object.keys(selectedMovies).length}
-          handleClick={() => {
-            setSelectedMovies({});
-          }}
-        />
-        <SubmitButton
-          text="Add Movies"
-          icon={<AddIcon />}
-          disabled={!Object.keys(selectedMovies).length}
-          withoutContainer={true}
-        />
-      </SelectedDataController>
     </AdminFormContainer>
   );
 };
