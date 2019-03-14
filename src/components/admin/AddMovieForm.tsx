@@ -7,6 +7,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import api from '../../ApiService';
 import AdminFormContainer from './AdminFormContainer';
 import AddButton from '../buttons/AddButton';
+import SubmitButton from '../buttons/SubmitButton';
+import HeaderButton from '../buttons/HeaderButton';
 import {
   containerGreyColor,
   whiteColor,
@@ -59,11 +61,18 @@ const LoadedMovieDescription = styled.div`
   line-height: 1.2rem;
 `;
 
-const ButtonsContainer = styled.div`
+const SelectButtonContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   padding-left: 0.5rem;
+`;
+
+const SelectedDataController = styled.form`
+  max-width: 200px;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
 `;
 
 const AddMovieForm = ({ handleSnackbar }: any) => {
@@ -99,11 +108,19 @@ const AddMovieForm = ({ handleSnackbar }: any) => {
     }
   };
 
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    const result = api.addMovies(selectedMovies);
+    if (result) {
+      setSelectedMovies({});
+      handleSnackbar('New movies added', 'success');
+    }
+  };
+
   useEffect(() => {
     if (!loadedMovies.length) {
       loadExternalAPIMovies();
     }
-    console.log(selectedMovies);
   }, [selectedMovies]);
 
   return (
@@ -123,20 +140,38 @@ const AddMovieForm = ({ handleSnackbar }: any) => {
                     {movie.overview}
                   </LoadedMovieDescription>
                 </div>
-                <ButtonsContainer>
+                <SelectButtonContainer>
                   <AddButton
                     icon={isSelected ? <DeleteIcon /> : <AddIcon />}
                     handleClick={handleSelectItem}
                     id={movie.id}
                     isSelected={isSelected}
                   />
-                </ButtonsContainer>
+                </SelectButtonContainer>
               </LoadedMovie>
             );
           })}
         </LoadedMoviesList>
       )}
-      <div>Movies selected: {Object.keys(selectedMovies).length}</div>
+      <SelectedDataController onSubmit={handleSubmit}>
+        <div style={{ marginBottom: '1.5rem' }}>
+          Movies selected: {Object.keys(selectedMovies).length}
+        </div>
+        <HeaderButton
+          text="Clear"
+          icon={<DeleteIcon />}
+          disabled={!Object.keys(selectedMovies).length}
+          handleClick={() => {
+            setSelectedMovies({});
+          }}
+        />
+        <SubmitButton
+          text="Add Movies"
+          icon={<AddIcon />}
+          disabled={!Object.keys(selectedMovies).length}
+          withoutContainer={true}
+        />
+      </SelectedDataController>
     </AdminFormContainer>
   );
 };
