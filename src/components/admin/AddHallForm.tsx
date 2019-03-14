@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import AddIcon from '@material-ui/icons/Add';
 
+import api from '../../ApiService';
 import actions from '../../redux/actions';
 import AdminFormContainer from './AdminFormContainer';
 import AddSeats from './sections/AddSeats';
@@ -31,14 +32,16 @@ const AddHallForm = ({ loadAllCinemas, handleSnackbar }: any) => {
     }
   }, [title, cinema, rows]);
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    console.log('submit add hall', { title, cinema, rows });
-    setTitle('');
-    setCinema('');
-    setRows([]);
-    setButtonDisabled(true);
-    handleSnackbar('New hall added', 'success');
+    const result = await api.createHall({ title, cinema, rows });
+    if (result) {
+      setTitle('');
+      setCinema('');
+      setRows([]);
+      setButtonDisabled(true);
+      handleSnackbar('New hall added', 'success');
+    }
   };
 
   const handleRowsChange = (newRow: any) => setRows([...rows, newRow]);

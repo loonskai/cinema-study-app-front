@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AddIcon from '@material-ui/icons/Add';
 
+import api from '../../ApiService';
 import AdminFormContainer from './AdminFormContainer';
 import TextField from '../fields/TextField/TextField';
 import SubmitButton from '../buttons/SubmitButton';
@@ -25,15 +26,17 @@ const AddCinemaForm = ({ handleSnackbar }: any) => {
     });
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    console.log('submit add cinema', values);
-    setValues({
-      city: '',
-      cinema: ''
-    });
-    setButtonDisabled(true);
-    handleSnackbar('New cinema added', 'success');
+    const result = await api.createCinema(values);
+    if (result) {
+      setValues({
+        city: '',
+        cinema: ''
+      });
+      setButtonDisabled(true);
+      handleSnackbar('New cinema added', 'success');
+    }
   };
 
   return (

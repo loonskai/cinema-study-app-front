@@ -165,6 +165,29 @@ class ApiService {
       console.error(error);
     }
   }
+
+  /** ADMIN OPERATIONS */
+  async createCinema(data: any) {
+    try {
+      return new Promise((res, rej) => {
+        console.log('create cinema -->', data);
+        return res(true);
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async createHall(data: any) {
+    try {
+      return new Promise((res, rej) => {
+        console.log('create hall -->', data);
+        return res(true);
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }
 
 const api = new ApiService();
