@@ -12,11 +12,6 @@ const Container = styled.div`
   flex-wrap: wrap;
 `;
 
-const AdminContent = styled.div`
-  display: flex;
-  padding: 1.5rem;
-`;
-
 const Admin = () => {
   const [selectedTab, setSelectedTab] = useState('add-cinema');
 
@@ -41,7 +36,7 @@ const Admin = () => {
         selectedTab={selectedTab}
         handleChange={(event: any, value: string) => setSelectedTab(value)}
       />
-      <AdminContent>{getSelectedForm()}</AdminContent>
+      {getSelectedForm()}
     </Container>
   );
 };

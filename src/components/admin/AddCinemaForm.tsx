@@ -1,7 +1,13 @@
 import React from 'react';
 
+import AdminFormContainer from './AdminFormContainer';
+
 const AddCinemaForm = () => {
-  return <div>Add Cinema</div>;
+  return (
+    <AdminFormContainer title="Add Cinema">
+      <div>form</div>
+    </AdminFormContainer>
+  );
 };
 
 export default AddCinemaForm;
