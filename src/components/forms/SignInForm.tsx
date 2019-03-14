@@ -11,7 +11,7 @@ import { users } from '../../mocks';
 const SignInForm = ({ signIn, onSuccess }: any) => {
   const [signInWith, setSignInWith] = useState('email');
   const [values, setValues] = useState({
-    email: 'client@mail.com',
+    email: 'admin@mail.com',
     username: '',
     password: 'Password123'
   });

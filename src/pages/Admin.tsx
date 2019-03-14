@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import NavPanel from '../components/admin/NavPanel';
@@ -14,9 +14,13 @@ const AdminContent = styled.div`
 `;
 
 const Admin = () => {
+  const [selectedTab, setSelectedTab] = useState('add-cinema');
   return (
     <Container>
-      <NavPanel />
+      <NavPanel
+        selectedTab={selectedTab}
+        handleChange={(event: any, value: string) => setSelectedTab(value)}
+      />
       <AdminContent>content</AdminContent>
     </Container>
   );
