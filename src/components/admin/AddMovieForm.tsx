@@ -7,14 +7,21 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import api from '../../ApiService';
 import AdminFormContainer from './AdminFormContainer';
 import AddButton from '../buttons/AddButton';
-import { containerGreyColor, whiteColor, mainDarkColor } from '../../constants';
+import {
+  containerGreyColor,
+  whiteColor,
+  mainDarkColor,
+  greyColor
+} from '../../constants';
 
 const LoadedMoviesList = styled.div`
   width: 100%;
   max-height: 400px;
+  margin-bottom: 2rem;
+  padding: 2rem;
   overflow: scroll;
   background: ${containerGreyColor};
-  padding: 2rem;
+  border: 1px solid ${greyColor};
   border-radius: 5px;
   box-shadow: inset 0px 0px 30px -10px rgba(0, 0, 0, 0.2);
 `;
@@ -34,6 +41,10 @@ const LoadedMovie = styled.div`
     background: ${mainDarkColor};
     color: ${whiteColor};
     box-shadow: none;
+  }
+
+  @media screen and (max-width: 556px) {
+    flex-wrap: wrap;
   }
 `;
 
