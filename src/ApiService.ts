@@ -9,6 +9,7 @@ import {
   bonus,
   userData,
   cinemas,
+  halls,
   rowCategories
 } from './mocks';
 
@@ -146,6 +147,19 @@ class ApiService {
       );
       return new Promise((res, rej) => {
         return res(filteredCinemas);
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async loadHallsByCinema(cinemaId: any) {
+    try {
+      const filteredHalls = halls.filter(
+        (hall: any) => hall.cinemaId === cinemaId
+      );
+      return new Promise((res, rej) => {
+        return res(filteredHalls);
       });
     } catch (error) {
       console.error(error);

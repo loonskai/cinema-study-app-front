@@ -10,8 +10,8 @@ import TextField from '../fields/TextField/TextField';
 import SelectField from '../fields/SelectField/SelectField';
 import SubmitButton from '../buttons/SubmitButton';
 
-const AddHallForm = ({ loadAllCinemas, handleSnackbar }: any) => {
-  const [cinemasLoaded, setCinemasLoaded] = useState(false);
+const AddHallForm = ({ /*loadAllCinemas,*/ handleSnackbar }: any) => {
+  const [cinemaOptions, setCinemaOptions] = useState(null);
   const [title, setTitle] = useState('');
   const [cinema, setCinema] = useState('');
   const [rows, setRows]: [any, any] = useState([]);
@@ -21,11 +21,25 @@ const AddHallForm = ({ loadAllCinemas, handleSnackbar }: any) => {
     if (title && cinema && !!rows.length) {
       setButtonDisabled(false);
     }
-    if (!cinemasLoaded) {
+    if (!cinemaOptions) {
       loadAllCinemas();
-      setCinemasLoaded(true);
     }
   }, [title, cinema, rows]);
+
+  const loadAllCinemas = async () => {
+    try {
+      const data: any = await api.loadAllCinemas();
+      if (data) {
+        const customizedOptions = data.map((cinema: any) => ({
+          label: cinema.name,
+          value: cinema.id
+        }));
+        setCinemaOptions(customizedOptions);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -54,7 +68,8 @@ const AddHallForm = ({ loadAllCinemas, handleSnackbar }: any) => {
         <SelectField
           id="cinema"
           type="select"
-          entity="cinema"
+          options={cinemaOptions}
+          // entity="cinema"
           label="Choose Cinema"
           value={cinema}
           handleChange={(value: any) => setCinema(value)}

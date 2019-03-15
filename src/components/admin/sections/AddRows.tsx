@@ -52,13 +52,6 @@ const AddRows = ({ handleSubmit, prevRows }: any) => {
       <Title>Add seat rows</Title>
       <Row>
         <RowElement>
-          {/*           <TextField
-            name="category"
-            label="Category"
-            value={seatsValues.category}
-            handleChange={handleChange}
-            withoutSuggestions={true}
-          /> */}
           <SelectField
             id="category"
             type="select"

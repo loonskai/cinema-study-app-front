@@ -4,16 +4,17 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import * as StyledContainers from './styled';
-import { halls, rowCategories } from '../../../mocks';
+// import { halls, rowCategories } from '../../../mocks';
 
 interface Props {
-  entity: string;
+  // entity: string;
   id: string;
   label: string;
   type: string;
   value?: string | Date;
+  options: any;
   disabled?: boolean;
-  cinemas?: any;
+  // cinemas?: any;
   handleChange: any;
 }
 
@@ -21,11 +22,12 @@ const SelectField = ({
   label,
   value,
   handleChange,
-  entity,
-  cinemas,
+  // entity,
+  // cinemas,
+  options,
   disabled
 }: Props) => {
-  const getOptions = (entity: string) => {
+  /* const getOptions = (entity: string) => {
     let options;
     switch (entity) {
       case 'cinema': {
@@ -69,7 +71,14 @@ const SelectField = ({
         {option.label}
       </MenuItem>
     ));
-  };
+  }; */
+
+  const renderOptions = () =>
+    options.map((option: any, index: any) => (
+      <MenuItem key={index.toString()} value={option.value}>
+        {option.label}
+      </MenuItem>
+    ));
 
   return (
     <StyledContainers.FormControlStyled
@@ -109,7 +118,7 @@ const SelectField = ({
         <MenuItem value="">
           <em>None</em>
         </MenuItem>
-        {getOptions(entity)}
+        {options && renderOptions()}
       </Select>
     </StyledContainers.FormControlStyled>
   );
