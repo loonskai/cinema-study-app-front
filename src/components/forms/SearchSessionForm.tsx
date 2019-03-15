@@ -6,6 +6,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import actions from '../../redux/actions';
 import {
   loadCinemaByCityOptions,
+  loadTimeOptions,
   loadCitySuggestions
 } from '../../helpers/loadSelectOptions';
 import FieldContainer from '../fields/FieldContainer';
@@ -42,12 +43,17 @@ const SearchSessionForm = ({
   const [displaySessionsTable, setDisplaySessionsTable] = useState(false);
 
   const [citySuggestions, setCitySuggestions] = useState(null);
+  const [timeOptions, setTimeOptions] = useState(null);
 
   useEffect(() => {
     // If we come from main page search
     if (initialValues.city) {
       loadSessionsList();
       setDisplaySessionsTable(true);
+    }
+
+    if (!timeOptions) {
+      loadTimeOptions(setTimeOptions);
     }
 
     if (!citySuggestions) {
@@ -65,7 +71,7 @@ const SearchSessionForm = ({
       setCitySelected('');
       setCinema('');
     }
-  }, [cityTyped, citySelected]);
+  }, [cityTyped, citySelected, timeOptions]);
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
@@ -108,7 +114,7 @@ const SearchSessionForm = ({
         <FieldContainer
           id="time"
           type="select"
-          options={null}
+          options={timeOptions}
           icon="time"
           label="Time"
           value={time}

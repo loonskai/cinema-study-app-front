@@ -50,6 +50,18 @@ export const loadAllCategoryOptions = async (optionsSetFunc: any) => {
   }
 };
 
+export const loadTimeOptions = (optionsSetFunc: any) => {
+  const options = [] as any;
+  for (let i = 0; i <= 23; i++) {
+    const label = i.toString().length > 1 ? `${i}:00` : `0${i}:00`;
+    options.push({
+      label,
+      value: label
+    });
+  }
+  optionsSetFunc(options);
+};
+
 // SUGGESTIONS
 export const loadCitySuggestions = async (optionsSetFunc: any) => {
   try {

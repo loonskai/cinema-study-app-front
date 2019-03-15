@@ -19,7 +19,6 @@ interface Props {
   handleChange: (param: any) => any;
   handleSelect?: (param: any) => any;
   withoutSuggestions?: boolean;
-  movies: any;
 }
 
 function renderInputComponent(inputProps: any) {
@@ -89,8 +88,7 @@ const TextField = ({
   name,
   initialSuggestions,
   withoutSuggestions = false
-}: // movies,
-Props) => {
+}: Props) => {
   /* Returns in case when we don't need suggestions list */
   if (withoutSuggestions) {
     return (
@@ -113,21 +111,6 @@ Props) => {
   );
 
   const getSuggestions = (initialSuggestions: any, value: string): any => {
-    // Get suggestion options depending on props.entity
-    /*     let suggestions;
-    switch (entity) {
-      case 'movie': {
-        suggestions = movies.map((movie: any) => ({
-          label: movie.original_title
-        }));
-        break;
-      }
-      default: {
-        suggestions = [];
-        break;
-      }
-    } */
-
     const suggestionsFiltered = initialSuggestions.filter((suggestion: any) =>
       suggestion.label.toLowerCase().includes(value)
     );
