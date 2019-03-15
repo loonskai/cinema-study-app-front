@@ -81,7 +81,6 @@ const AddRows = ({ handleSubmit, prevRows }: any) => {
             type="number"
             value={seatsValues.quantity.toString()}
             handleChange={handleChange}
-            withoutSuggestions={true}
           />
         </RowElement>
         <RowElement>

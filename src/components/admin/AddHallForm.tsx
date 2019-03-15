@@ -47,7 +47,6 @@ const AddHallForm = ({ handleSnackbar }: any) => {
           label="Hall Title"
           value={title}
           handleChange={(e: any) => setTitle(e.target.value)}
-          withoutSuggestions={true}
         />
         <SelectField
           id="cinema"

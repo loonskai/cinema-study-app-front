@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import SearchIcon from '@material-ui/icons/Search';
 
-import actions from '../redux/actions';
 import {
   loadCinemaByCityOptions,
   loadCitySuggestions,
@@ -13,7 +12,7 @@ import PageTitle from '../components/PageTitle';
 import FieldContainer from '../components/fields/FieldContainer';
 import SubmitButton from '../components/buttons/SubmitButton';
 
-const Home = ({ loadCinemasByCity, history, movies }: any) => {
+const Home = ({ history, movies }: any) => {
   const [movieTyped, setMovieTyped] = useState('');
   const [movieSelected, setMovieSelected] = useState('');
   const [citySelected, setCitySelected] = useState('');
@@ -119,9 +118,6 @@ const Home = ({ loadCinemasByCity, history, movies }: any) => {
   );
 };
 
-const connectedHome: any = connect(
-  ({ movies }: any) => ({ movies }),
-  actions
-)(Home);
+const connectedHome: any = connect(({ movies }: any) => ({ movies }))(Home);
 
 export default withRouter(connectedHome);

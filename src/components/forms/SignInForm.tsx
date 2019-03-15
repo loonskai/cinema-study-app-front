@@ -109,7 +109,6 @@ const SignInForm = ({ signIn, onSuccess }: any) => {
           type="email"
           value={values.email}
           handleChange={handleChange}
-          withoutSuggestions={true}
         />
       )}
       {signInWith === 'username' && (
@@ -119,7 +118,6 @@ const SignInForm = ({ signIn, onSuccess }: any) => {
           error={!!inputErrors.username}
           value={values.username}
           handleChange={handleChange}
-          withoutSuggestions={true}
         />
       )}
       <TextField
@@ -129,7 +127,6 @@ const SignInForm = ({ signIn, onSuccess }: any) => {
         type="password"
         value={values.password}
         handleChange={handleChange}
-        withoutSuggestions={true}
       />
       <SubmitButton
         text="Sign in"

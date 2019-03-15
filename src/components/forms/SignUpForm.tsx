@@ -66,7 +66,6 @@ const SignUpForm = ({ onSuccess }: any) => {
           type="email"
           value={values.email}
           handleChange={handleChange}
-          withoutSuggestions={true}
         />
         <TextField
           name="username"
@@ -74,7 +73,6 @@ const SignUpForm = ({ onSuccess }: any) => {
           error={!!inputErrors.username}
           value={values.username}
           handleChange={handleChange}
-          withoutSuggestions={true}
         />
         <TextField
           name="password"
@@ -83,7 +81,6 @@ const SignUpForm = ({ onSuccess }: any) => {
           type="password"
           value={values.password}
           handleChange={handleChange}
-          withoutSuggestions={true}
         />
         <TextField
           name="confirmPassword"
@@ -92,7 +89,6 @@ const SignUpForm = ({ onSuccess }: any) => {
           type="password"
           value={values.confirmPassword}
           handleChange={handleChange}
-          withoutSuggestions={true}
         />
         <SubmitButton
           text="Sign up"

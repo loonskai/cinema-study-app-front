@@ -48,7 +48,6 @@ const TextRow = styled.div`
 `;
 
 const HistorySection = ({ orders }: any) => {
-  console.log('orders', orders);
   const [tabSelected, setTebSelected] = useState('upcoming');
 
   const handleTabSelect = (e: any) => {

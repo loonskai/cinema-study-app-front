@@ -64,10 +64,8 @@ const Movies = ({ movies, loadMoviesList }: any) => {
         id="movie"
         type="text"
         icon="search"
-        entity="movie"
         label="Movie Title"
         handleChange={handleSearchBar}
-        withoutSuggestions={true}
       />
       <PageTitle text="Movies" />
       <MoviesContainer>

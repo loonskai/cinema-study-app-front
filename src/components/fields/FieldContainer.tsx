@@ -23,7 +23,6 @@ interface Props {
   disabled?: boolean;
   value?: string | Date;
   icon?: string;
-  withoutSuggestions?: boolean;
   initialSuggestions?: any;
 }
 

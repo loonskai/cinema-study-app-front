@@ -4,7 +4,6 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import * as StyledContainers from './styled';
-// import { halls, rowCategories } from '../../../mocks';
 
 interface Props {
   id: string;
@@ -23,52 +22,6 @@ const SelectField = ({
   options,
   disabled
 }: Props) => {
-  /* const getOptions = (entity: string) => {
-    let options;
-    switch (entity) {
-      case 'cinema': {
-        options = cinemas
-          ? cinemas.map((cinema: any) => ({
-              label: cinema.name,
-              value: cinema.id
-            }))
-          : [];
-        break;
-      }
-      case 'hall': {
-        options = halls.map(hall => ({ label: hall.name, value: hall.id }));
-        break;
-      }
-      case 'time': {
-        options = [] as any;
-        for (let i = 0; i <= 23; i++) {
-          const label = i.toString().length > 1 ? `${i}:00` : `0${i}:00`;
-          options.push({
-            label,
-            value: label
-          });
-        }
-        break;
-      }
-      case 'category': {
-        options = rowCategories.map(category => ({
-          label: category,
-          value: category
-        }));
-        break;
-      }
-      default: {
-        options = [] as Array<{ label: string }>;
-        break;
-      }
-    }
-    return options.map((option: any, index: any) => (
-      <MenuItem key={index.toString()} value={option.value}>
-        {option.label}
-      </MenuItem>
-    ));
-  }; */
-
   const renderOptions = () =>
     options.map((option: any, index: any) => (
       <MenuItem key={index.toString()} value={option.value}>

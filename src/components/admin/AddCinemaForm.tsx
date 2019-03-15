@@ -47,14 +47,12 @@ const AddCinemaForm = ({ handleSnackbar }: any) => {
           label="City"
           value={values.city}
           handleChange={handleChange}
-          withoutSuggestions={true}
         />
         <TextField
           name="cinema"
           label="Cinema Name"
           value={values.cinema}
           handleChange={handleChange}
-          withoutSuggestions={true}
         />
         <SubmitButton
           text="Add Cinema"

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import Autosuggest from 'react-autosuggest';
 import parse from 'autosuggest-highlight/parse';
@@ -18,7 +18,6 @@ interface Props {
   initialSuggestions?: any;
   handleChange: (param: any) => any;
   handleSelect?: (param: any) => any;
-  withoutSuggestions?: boolean;
 }
 
 function renderInputComponent(inputProps: any) {
@@ -86,11 +85,9 @@ const TextField = ({
   disabled,
   error,
   name,
-  initialSuggestions,
-  withoutSuggestions = false
+  initialSuggestions
 }: Props) => {
-  /* Returns in case when we don't need suggestions list */
-  if (withoutSuggestions) {
+  if (!initialSuggestions) {
     return (
       <StyledContainers.Input
         name={name}
@@ -105,7 +102,6 @@ const TextField = ({
     );
   }
 
-  /* Returns in case when we have suggestions list */
   const [relevantSuggestions, setRelevantSuggestions]: [any, any] = useState(
     []
   );

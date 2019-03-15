@@ -31,7 +31,6 @@ const CreateSessionForm = ({ loadAllCinemas, handleSnackbar }: any) => {
         <SelectField
           id="cinema"
           type="select"
-          // entity="cinema"
           label="Choose Cinema"
           value={cinema}
           handleChange={(value: any) => setCinema(value)}
@@ -39,7 +38,6 @@ const CreateSessionForm = ({ loadAllCinemas, handleSnackbar }: any) => {
         <SelectField
           id="hall"
           type="select"
-          // entity="hall"
           label="Choose Hall"
           value={hall}
           options={hallOptions}

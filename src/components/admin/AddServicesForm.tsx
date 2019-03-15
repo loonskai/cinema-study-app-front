@@ -52,7 +52,6 @@ const AddServicesForm = ({ handleSnackbar }: any) => {
           label="Service title"
           value={title}
           handleChange={(e: any) => setTitle(e.target.value)}
-          withoutSuggestions={true}
         />
         <TextField
           name="price"
@@ -60,7 +59,6 @@ const AddServicesForm = ({ handleSnackbar }: any) => {
           type="number"
           value={price}
           handleChange={(e: any) => setPrice(e.target.value)}
-          withoutSuggestions={true}
         />
         <SubmitButton
           text="Add Hall"
