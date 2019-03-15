@@ -53,7 +53,7 @@ const Home = ({ loadCinemasByCity, history, movies }: any) => {
     }
 
     if (citySelected) {
-      // loadCinemasByCity(citySelected);
+      loadCinemaByCityOptions(citySelected, setCinemaOptions);
     } else {
       setCinema('');
     }
@@ -66,7 +66,7 @@ const Home = ({ loadCinemasByCity, history, movies }: any) => {
       setCitySelected('');
       setCinema('');
     }
-  });
+  }, [movieSelected, movieTyped, citySelected, cityTyped]);
 
   return (
     <form onSubmit={handleSubmit}>
