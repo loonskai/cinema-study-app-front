@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
 import AddIcon from '@material-ui/icons/Add';
 
 import api from '../../ApiService';
-import actions from '../../redux/actions';
-import { loadAllCinemasOptions } from '../../helpers/loadSelectOptions';
+import { loadAllCinemaOptions } from '../../helpers/loadSelectOptions';
 import AdminFormContainer from './AdminFormContainer';
 import TextField from '../fields/TextField/TextField';
 import SelectField from '../fields/SelectField/SelectField';
 import SubmitButton from '../buttons/SubmitButton';
 
-const AddServicesForm = ({ loadAllCinemas, handleSnackbar }: any) => {
+const AddServicesForm = ({ handleSnackbar }: any) => {
   const [cinemaOptions, setCinemaOptions] = useState(false);
   const [cinema, setCinema] = useState('');
   const [title, setTitle] = useState('');
@@ -22,7 +20,7 @@ const AddServicesForm = ({ loadAllCinemas, handleSnackbar }: any) => {
       setButtonDisabled(false);
     }
     if (!cinemaOptions) {
-      loadAllCinemasOptions(setCinemaOptions);
+      loadAllCinemaOptions(setCinemaOptions);
     }
   }, [title, cinema, price]);
 
@@ -74,7 +72,4 @@ const AddServicesForm = ({ loadAllCinemas, handleSnackbar }: any) => {
   );
 };
 
-export default connect(
-  null,
-  actions
-)(AddServicesForm);
+export default AddServicesForm;

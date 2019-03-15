@@ -1,11 +1,12 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import AddIcon from '@material-ui/icons/Add';
 
-import { mainColor } from '../../../constants';
+import { loadAllCategoryOptions } from '../../../helpers/loadSelectOptions';
 import TextField from '../../fields/TextField/TextField';
 import SelectField from '../../fields/SelectField/SelectField';
 import RoundButton from '../../buttons/RoundButton';
+import { mainColor } from '../../../constants';
 
 const Container = styled.div`
   width: 100%;
@@ -39,6 +40,13 @@ const AddRows = ({ handleSubmit, prevRows }: any) => {
     category: '',
     quantity: ''
   });
+  const [categoryOptions, setCategoryOptions] = useState(null);
+
+  useEffect(() => {
+    if (!categoryOptions) {
+      loadAllCategoryOptions(setCategoryOptions);
+    }
+  });
 
   const handleChange = (e: any) => {
     setSeatsValues({
@@ -55,7 +63,7 @@ const AddRows = ({ handleSubmit, prevRows }: any) => {
           <SelectField
             id="category"
             type="select"
-            entity="category"
+            options={categoryOptions}
             label="Row Category"
             value={seatsValues.category}
             handleChange={(value: any) => {
