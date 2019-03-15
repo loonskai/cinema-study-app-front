@@ -4,6 +4,7 @@ import AddIcon from '@material-ui/icons/Add';
 
 import { mainColor } from '../../../constants';
 import TextField from '../../fields/TextField/TextField';
+import SelectField from '../../fields/SelectField/SelectField';
 import RoundButton from '../../buttons/RoundButton';
 
 const Container = styled.div`
@@ -51,12 +52,25 @@ const AddRows = ({ handleSubmit, prevRows }: any) => {
       <Title>Add seat rows</Title>
       <Row>
         <RowElement>
-          <TextField
+          {/*           <TextField
             name="category"
             label="Category"
             value={seatsValues.category}
             handleChange={handleChange}
             withoutSuggestions={true}
+          /> */}
+          <SelectField
+            id="category"
+            type="select"
+            entity="category"
+            label="Row Category"
+            value={seatsValues.category}
+            handleChange={(value: any) => {
+              setSeatsValues({
+                ...seatsValues,
+                category: value
+              });
+            }}
           />
         </RowElement>
         <RowElement>

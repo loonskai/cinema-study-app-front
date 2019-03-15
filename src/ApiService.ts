@@ -2,7 +2,15 @@ import axios from 'axios';
 import { apiKey } from './credentials';
 import randomstring from 'randomstring';
 
-import { sessions, seats, users, bonus, userData, cinemas } from './mocks';
+import {
+  sessions,
+  seats,
+  users,
+  bonus,
+  userData,
+  cinemas,
+  rowCategories
+} from './mocks';
 
 class ApiService {
   client: any;
@@ -172,6 +180,16 @@ class ApiService {
       return new Promise((res, rej) => {
         console.log('create cinema -->', data);
         return res(true);
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async loadRowCategories() {
+    try {
+      return new Promise((res, rej) => {
+        return res(rowCategories);
       });
     } catch (error) {
       console.error(error);

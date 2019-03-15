@@ -273,3 +273,5 @@ export const bonus = {
     price: 1
   }
 };
+
+export const rowCategories = ['VIP', 'Basic', 'For couples', 'Most popular'];

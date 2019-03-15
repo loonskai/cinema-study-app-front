@@ -4,7 +4,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import * as StyledContainers from './styled';
-import { halls } from '../../../mocks';
+import { halls, rowCategories } from '../../../mocks';
 
 interface Props {
   entity: string;
@@ -50,6 +50,13 @@ const SelectField = ({
             value: label
           });
         }
+        break;
+      }
+      case 'category': {
+        options = rowCategories.map(category => ({
+          label: category,
+          value: category
+        }));
         break;
       }
       default: {
