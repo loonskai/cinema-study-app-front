@@ -29,7 +29,6 @@ const StyledForm = styled.form`
 
 const SearchSessionForm = ({
   loadSessionsList,
-  // loadCinemasByCity,
   sessions,
   initialValues
 }: any) => {
@@ -58,7 +57,6 @@ const SearchSessionForm = ({
     if (citySelected) {
       loadCinemaByCityOptions(citySelected, setCinemaOptions);
       setButtonDisabled(false);
-      // loadCinemasByCity(citySelected);
     } else {
       setCinema('');
     }

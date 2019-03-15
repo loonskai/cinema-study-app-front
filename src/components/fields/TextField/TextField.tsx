@@ -122,7 +122,6 @@ Props) => {
         }));
         break;
       }
-      
       default: {
         suggestions = [];
         break;

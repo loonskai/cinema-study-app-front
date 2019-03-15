@@ -1,5 +1,6 @@
 import api from '../ApiService';
 
+// SELECT OPTIONS
 export const loadAllCinemaOptions = async (optionsSetFunc: any) => {
   try {
     const data: any = await api.loadAllCinemas();
@@ -20,15 +21,15 @@ export const loadCinemaByCityOptions = async (
   optionsSetFunc: any
 ) => {
   try {
-    const data: any = await api.loadAllCinemas();
-    console.log(data);
-    if (data) {
-      /* const customizedOptions = data.map((cinema: any) => ({
-        label: cinema.name,
-        value: cinema.id
-      }));
-      optionsSetFunc(customizedOptions); */
-    }
+    const cinemas: any = await api.loadAllCinemas();
+    const filteredCinemas = cinemas.filter(
+      (cinema: any) => cinema.city === city
+    );
+    const customizedOptions = filteredCinemas.map((cinema: any) => ({
+      label: cinema.name,
+      value: cinema.id
+    }));
+    optionsSetFunc(customizedOptions);
   } catch (error) {
     console.error(error);
   }
@@ -49,6 +50,30 @@ export const loadAllCategoryOptions = async (optionsSetFunc: any) => {
   }
 };
 
+// SUGGESTIONS
+export const loadCitySuggestions = async (optionsSetFunc: any) => {
+  try {
+    const cities: any = await api.loadCities();
+    const formatedCitites = cities.map((city: any) => ({ label: city }));
+    optionsSetFunc(formatedCitites);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const loadMovieSuggestions = async (optionsSetFunc: any) => {
+  try {
+    const movies: any = await api.loadMoviesList();
+    const formatedMovies = movies.map((movie: any) => ({
+      label: movie.original_title
+    }));
+    optionsSetFunc(formatedMovies);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// DYNAMIC CHECKBOX LISTS
 export const loadCategoryCheckboxesByHall = async (
   hallId: number,
   optionsSetFunc: any
@@ -63,17 +88,6 @@ export const loadCategoryCheckboxesByHall = async (
       return acc;
     }, {});
     optionsSetFunc(checkboxOptions);
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-// SUGGESTIONS
-export const loadCitySuggestions = async (optionsSetFunc: any) => {
-  try {
-    const cities: any = await api.loadCities();
-    const formatedCitites = cities.map((city: any) => ({ label: city }));
-    optionsSetFunc(formatedCitites);
   } catch (error) {
     console.error(error);
   }

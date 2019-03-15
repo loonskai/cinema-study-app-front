@@ -4,6 +4,11 @@ import { withRouter } from 'react-router-dom';
 import SearchIcon from '@material-ui/icons/Search';
 
 import actions from '../redux/actions';
+import {
+  loadCinemaByCityOptions,
+  loadCitySuggestions,
+  loadMovieSuggestions
+} from '../helpers/loadSelectOptions';
 import PageTitle from '../components/PageTitle';
 import FieldContainer from '../components/fields/FieldContainer';
 import SubmitButton from '../components/buttons/SubmitButton';
@@ -16,6 +21,10 @@ const Home = ({ loadCinemasByCity, history, movies }: any) => {
   const [cinema, setCinema] = useState('');
   const [date, setDate] = useState(new Date());
   const [buttonDisabled, setButtonDisabled] = useState(true);
+
+  const [movieSuggestions, setMovieSuggestions] = useState(null);
+  const [citySuggestions, setCitySuggestions] = useState(null);
+  const [cinemaOptions, setCinemaOptions] = useState(null);
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
@@ -34,8 +43,17 @@ const Home = ({ loadCinemasByCity, history, movies }: any) => {
 
   useEffect(() => {
     setButtonDisabled(!movieSelected);
+
+    if (!movieSuggestions) {
+      loadMovieSuggestions(setMovieSuggestions);
+    }
+
+    if (!citySuggestions) {
+      loadCitySuggestions(setCitySuggestions);
+    }
+
     if (citySelected) {
-      loadCinemasByCity(citySelected);
+      // loadCinemasByCity(citySelected);
     } else {
       setCinema('');
     }
@@ -61,6 +79,7 @@ const Home = ({ loadCinemasByCity, history, movies }: any) => {
         value={movieSelected === movieTyped ? movieSelected : movieTyped}
         handleChange={setMovieTyped}
         handleSelect={setMovieSelected}
+        initialSuggestions={movieSuggestions}
       />
       <FieldContainer
         id="city"
@@ -71,11 +90,12 @@ const Home = ({ loadCinemasByCity, history, movies }: any) => {
         handleChange={setCityTyped}
         handleSelect={setCitySelected}
         disabled={!movieSelected}
+        initialSuggestions={citySuggestions}
       />
       <FieldContainer
         id="cinema"
         type="select"
-        options={}
+        options={cinemaOptions}
         icon="cinema"
         label="Choose Cinema"
         value={cinema}
