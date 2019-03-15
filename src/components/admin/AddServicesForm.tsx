@@ -4,13 +4,14 @@ import AddIcon from '@material-ui/icons/Add';
 
 import api from '../../ApiService';
 import actions from '../../redux/actions';
+import { loadAllCinemasOptions } from '../../helpers/loadSelectOptions';
 import AdminFormContainer from './AdminFormContainer';
 import TextField from '../fields/TextField/TextField';
 import SelectField from '../fields/SelectField/SelectField';
 import SubmitButton from '../buttons/SubmitButton';
 
 const AddServicesForm = ({ loadAllCinemas, handleSnackbar }: any) => {
-  const [cinemasLoaded, setCinemasLoaded] = useState(false);
+  const [cinemaOptions, setCinemaOptions] = useState(false);
   const [cinema, setCinema] = useState('');
   const [title, setTitle] = useState('');
   const [price, setPrice] = useState('');
@@ -20,9 +21,8 @@ const AddServicesForm = ({ loadAllCinemas, handleSnackbar }: any) => {
     if (title && cinema && !!price) {
       setButtonDisabled(false);
     }
-    if (!cinemasLoaded) {
-      loadAllCinemas();
-      setCinemasLoaded(true);
+    if (!cinemaOptions) {
+      loadAllCinemasOptions(setCinemaOptions);
     }
   }, [title, cinema, price]);
 
@@ -44,7 +44,7 @@ const AddServicesForm = ({ loadAllCinemas, handleSnackbar }: any) => {
         <SelectField
           id="cinema"
           type="select"
-          entity="cinema"
+          options={cinemaOptions}
           label="Choose Cinema"
           value={cinema}
           handleChange={(value: any) => setCinema(value)}

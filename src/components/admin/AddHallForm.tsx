@@ -4,6 +4,7 @@ import AddIcon from '@material-ui/icons/Add';
 
 import api from '../../ApiService';
 import actions from '../../redux/actions';
+import { loadAllCinemasOptions } from '../../helpers/loadSelectOptions';
 import AdminFormContainer from './AdminFormContainer';
 import AddRows from './sections/AddRows';
 import TextField from '../fields/TextField/TextField';
@@ -22,24 +23,9 @@ const AddHallForm = ({ /*loadAllCinemas,*/ handleSnackbar }: any) => {
       setButtonDisabled(false);
     }
     if (!cinemaOptions) {
-      loadAllCinemas();
+      loadAllCinemasOptions(setCinemaOptions);
     }
   }, [title, cinema, rows]);
-
-  const loadAllCinemas = async () => {
-    try {
-      const data: any = await api.loadAllCinemas();
-      if (data) {
-        const customizedOptions = data.map((cinema: any) => ({
-          label: cinema.name,
-          value: cinema.id
-        }));
-        setCinemaOptions(customizedOptions);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -69,7 +55,6 @@ const AddHallForm = ({ /*loadAllCinemas,*/ handleSnackbar }: any) => {
           id="cinema"
           type="select"
           options={cinemaOptions}
-          // entity="cinema"
           label="Choose Cinema"
           value={cinema}
           handleChange={(value: any) => setCinema(value)}
