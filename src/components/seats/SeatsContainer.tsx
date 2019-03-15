@@ -49,12 +49,12 @@ const SeatsContainer = ({
   order: any;
   setOrderInfo: any;
 }) => {
-  const [categoryCheckboxes, setCategoryCheckboxes]: [any, any] = useState({
-    vip: {
+  const [rowCategories, setRowCategories]: [any, any] = useState({
+    1: {
       label: 'VIP',
       value: false
     },
-    basic: {
+    2: {
       label: 'Basic',
       value: false
     }
@@ -74,14 +74,14 @@ const SeatsContainer = ({
     });
   }, []);
 
-  const changeCategoryCheckboxes = (key: any) => {
-    const newOptions = Object.assign({}, categoryCheckboxes, {
+  const changeRowCategory = (key: any) => {
+    const newCategories = Object.assign({}, rowCategories, {
       [key]: {
-        label: categoryCheckboxes[key].label,
-        value: !categoryCheckboxes[key].value
+        label: rowCategories[key].label,
+        value: !rowCategories[key].value
       }
     });
-    setCategoryCheckboxes(newOptions);
+    setRowCategories(newCategories);
   };
 
   const handleSeatPick = (e: any) => {
@@ -128,8 +128,8 @@ const SeatsContainer = ({
     <Container>
       <StyledTitle>Seats</StyledTitle>
       <SeatsMenu
-        onOptionsChange={changeCategoryCheckboxes}
-        options={categoryCheckboxes}
+        obChangeRowCategory={changeRowCategory}
+        rowCategories={rowCategories}
       />
       <SnackbarContext.Consumer>
         {({ handleSnackbar }: any) => (
@@ -163,7 +163,7 @@ const SeatsContainer = ({
       <SeatsScheme
         hallId={hallId}
         order={order}
-        options={categoryCheckboxes}
+        rowCategories={rowCategories}
         handleSeatPick={handleSeatPick}
       />
     </Container>

@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
-// import SelectField from '../fields/SelectField/SelectField';
 import { greyColor, whiteColor, mainColor } from '../../constants';
 
 const Container = styled.div`
@@ -33,53 +32,36 @@ const StyledCheckbox = styled(Checkbox)<any>`
   }
 `;
 
-const SeatsMenu = ({
-  // onHallChange,
-  onOptionsChange,
-  options
-}: // hallId
-any) => {
-  const renderCategoriesCheckboxes = (options: any) => {
-    const keys = Object.keys(options);
-    if (!options || !keys.length) return 'No options';
+const SeatsMenu = ({ obChangeRowCategory, rowCategories }: any) => {
+  const renderCategoriesCheckboxes = (rowCategories: any) => {
+    const keys = Object.keys(rowCategories);
+    if (!rowCategories || !keys.length) return 'No options';
     return keys.map(key => (
       <FormControlLabel
         key={key}
         control={
           <StyledCheckbox
-            checked={options[key].value}
+            checked={rowCategories[key].value}
             value={key}
             classes={{ checked: 'checked' }}
             onChange={(e: any) => {
-              onOptionsChange(e.target.value);
+              obChangeRowCategory(e.target.value);
             }}
           />
         }
-        label={options[key].label}
+        label={rowCategories[key].label}
       />
     ));
   };
 
   return (
     <Container>
-      {/*       <Row>
-        <SelectField
-          id="hall"
-          type="select"
-          options={options}
-          label="Choose Hall"
-          value={hallSelected}
-          handleChange={onHallChange}
-        />
-      </Row> */}
-      {/* {hallSelected && ( */}
       <Row>
         Choose seat options:
         <CheckboxContainer>
-          {renderCategoriesCheckboxes(options)}
+          {renderCategoriesCheckboxes(rowCategories)}
         </CheckboxContainer>
       </Row>
-      {/* )} */}
     </Container>
   );
 };

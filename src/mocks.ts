@@ -149,7 +149,7 @@ export const seats = [
     hallId: 1,
     rows: [
       {
-        category: 'vip',
+        categoryId: 1,
         price: 10,
         seats: 10,
         reserved: [4, 10],
@@ -157,7 +157,7 @@ export const seats = [
         lastInSection: false
       },
       {
-        category: 'vip',
+        categoryId: 1,
         price: 10,
         seats: 10,
         reserved: [1, 3, 6, 10],
@@ -165,7 +165,7 @@ export const seats = [
         lastInSection: false
       },
       {
-        category: 'vip',
+        categoryId: 1,
         price: 10,
         seats: 10,
         reserved: [1, 3, 6, 10],
@@ -173,7 +173,7 @@ export const seats = [
         lastInSection: false
       },
       {
-        category: 'basic',
+        categoryId: 1,
         price: 10,
         seats: 10,
         reserved: [1, 3, 6, 10],
@@ -181,7 +181,7 @@ export const seats = [
         lastInSection: false
       },
       {
-        category: 'basic',
+        categoryId: 1,
         price: 10,
         seats: 10,
         reserved: [1, 3, 6, 10],
@@ -189,7 +189,7 @@ export const seats = [
         lastInSection: true
       },
       {
-        category: 'basic',
+        categoryId: 2,
         price: 5,
         seats: 12,
         reserved: [8],
@@ -197,7 +197,7 @@ export const seats = [
         lastInSection: false
       },
       {
-        category: 'basic',
+        categoryId: 2,
         price: 5,
         seats: 14,
         reserved: [8],
@@ -205,7 +205,7 @@ export const seats = [
         lastInSection: false
       },
       {
-        category: 'basic',
+        categoryId: 2,
         price: 5,
         seats: 16,
         reserved: [8],
@@ -213,7 +213,7 @@ export const seats = [
         lastInSection: false
       },
       {
-        category: 'basic',
+        categoryId: 2,
         price: 5,
         seats: 16,
         reserved: [],
@@ -221,7 +221,7 @@ export const seats = [
         lastInSection: false
       },
       {
-        category: 'basic',
+        categoryId: 2,
         price: 5,
         seats: 16,
         reserved: [],

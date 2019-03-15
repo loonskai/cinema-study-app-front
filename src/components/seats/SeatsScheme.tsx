@@ -20,7 +20,7 @@ const Container = styled.div`
   overflow-x: scroll;
 `;
 
-const SeatsScheme = ({ options, order, handleSeatPick, seats }: any) => {
+const SeatsScheme = ({ rowCategories, order, handleSeatPick, seats }: any) => {
   const { seatsPicked } = order;
 
   const renderSeats = () => {
@@ -28,7 +28,7 @@ const SeatsScheme = ({ options, order, handleSeatPick, seats }: any) => {
       return 'No seats found';
     }
     const { rows } = seats;
-    const optionsKeys = Object.keys(options);
+    const rowCategoriesKeys = Object.keys(rowCategories);
     return rows.map((row: any, rowIndex: number) => {
       const seatsArr = new Array(row.seats).fill(true);
       return (
@@ -40,12 +40,12 @@ const SeatsScheme = ({ options, order, handleSeatPick, seats }: any) => {
                 item && item.row === rowIndex + 1 && item.seat === seatIndex + 1
             );
             const isMuted =
-              !options[row.category].value &&
-              optionsKeys.some((key: any) => options[key].value);
+              !rowCategories[row.categoryId].value &&
+              rowCategoriesKeys.some((key: any) => rowCategories[key].value);
             return (
               <SeatItem
                 key={`seat-${seatIndex + 1}`}
-                category={row.category}
+                categoryId={row.categoryId}
                 row={rowIndex + 1}
                 seat={seatIndex + 1}
                 price={row.price}

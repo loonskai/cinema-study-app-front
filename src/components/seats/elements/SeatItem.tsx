@@ -64,7 +64,7 @@ const SeatItem = ({
   row,
   seat,
   price,
-  category,
+  categoryId,
   isSelected,
   isReserved,
   isOrdered,
@@ -72,7 +72,7 @@ const SeatItem = ({
 }: any) => {
   const seatClass = classnames({
     seat: true,
-    'seat-vip': category === 'vip',
+    'seat-vip': categoryId === 1,
     'seat-selected': isSelected,
     'seat-reserved': isReserved,
     'seat-ordered': isOrdered
@@ -83,7 +83,6 @@ const SeatItem = ({
       isFree={!isReserved && !isOrdered}
       isMuted={isMuted}
       className={seatClass}
-      category={category}
       data-seat={seat}
       data-row={row}
       data-price={price}
