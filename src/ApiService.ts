@@ -206,14 +206,20 @@ class ApiService {
         if (!hallId) {
           return res(rowCategories);
         }
-        const { rows }: any = seats.find(hall => hall.hallId === hallId);
-        const hallRowCategories = Object.keys(
-          rows.reduce((obj: any, row: any) => {
-            obj[rowCategories[row.categoryId - 1]] = true;
-            return obj;
+
+        const { rows: hallRows }: any = seats.find(
+          hall => hall.hallId === hallId
+        );
+        const hallCategoriesIDs: any = Object.keys(
+          hallRows.reduce((acc: any, row: any) => {
+            acc[row.categoryId] = true;
+            return acc;
           }, {})
         );
-        return res(hallRowCategories);
+        const filteredCategories = rowCategories.filter(category =>
+          hallCategoriesIDs.includes(category.id.toString())
+        );
+        return res(filteredCategories);
       });
     } catch (error) {
       console.error(error);

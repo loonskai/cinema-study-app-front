@@ -274,4 +274,17 @@ export const bonus = {
   }
 };
 
-export const rowCategories = ['VIP', 'Basic', 'For couples', 'Most popular'];
+export const rowCategories = [
+  {
+    id: 1,
+    title: 'VIP'
+  },
+  {
+    id: 2,
+    title: 'Basic'
+  },
+  {
+    id: 3,
+    title: 'Most popular'
+  }
+];

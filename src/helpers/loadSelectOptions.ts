@@ -20,8 +20,8 @@ export const loadAllCategoryOptions = async (optionsSetFunc: any) => {
     const data: any = await api.loadRowCategories();
     if (data) {
       const customizedOptions = data.map((category: any) => ({
-        label: category,
-        value: category
+        label: category.title,
+        value: category.title
       }));
       optionsSetFunc(customizedOptions);
     }
@@ -35,21 +35,15 @@ export const loadCategoryCheckboxesByHall = async (
   optionsSetFunc: any
 ) => {
   try {
-    const data: any = await api.loadRowCategories(hallId);
-    if (data) {
-      const customizedOptions = data.reduce(
-        (acc: any, category: string, index: number) => {
-          // Creates object { 1: { label: 'VIP', value: false }, ... } and attaches it to rowCategories in SeatsContainer
-          acc[index + 1] = {
-            label: category,
-            value: false
-          };
-          return acc;
-        },
-        {}
-      );
-      optionsSetFunc(customizedOptions);
-    }
+    const hallCategories: any = await api.loadRowCategories(hallId);
+    const checkboxOptions = hallCategories.reduce((acc: any, category: any) => {
+      acc[category.id] = {
+        label: category.title,
+        value: false
+      };
+      return acc;
+    }, {});
+    optionsSetFunc(checkboxOptions);
   } catch (error) {
     console.error(error);
   }
