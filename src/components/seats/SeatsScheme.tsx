@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import api from '../../ApiService';
 import Screen from './elements/Screen';
 import Row from './elements/Row';
 import RowTitle from './elements/RowTitle';
@@ -22,7 +21,7 @@ const Container = styled.div`
 `;
 
 const SeatsScheme = ({ options, order, handleSeatPick, seats }: any) => {
-  const { hallId, seatsPicked } = order;
+  const { seatsPicked } = order;
 
   const renderSeats = () => {
     if (!seats || !seats.rows || !seats.rows.length) {
@@ -70,6 +69,6 @@ const SeatsScheme = ({ options, order, handleSeatPick, seats }: any) => {
   );
 };
 
-export default connect(({ seats, order }: any) => ({
-  seats: seats.find((hallSeats: any) => hallSeats.hallId === order.hallId)
+export default connect(({ seats }: any, ownProps: any) => ({
+  seats: seats.find((hallSeats: any) => hallSeats.hallId === ownProps.hallId)
 }))(SeatsScheme);

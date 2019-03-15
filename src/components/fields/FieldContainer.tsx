@@ -15,6 +15,7 @@ import { mainDarkColor, greyColor } from '../../constants';
 
 interface Props {
   entity: string;
+  options: any;
   handleChange: (data: any) => any;
   handleSelect?: (data: any) => any;
   id: string;

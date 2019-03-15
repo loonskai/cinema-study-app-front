@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
-import SelectField from '../fields/SelectField/SelectField';
+// import SelectField from '../fields/SelectField/SelectField';
 import { greyColor, whiteColor, mainColor } from '../../constants';
 
 const Container = styled.div`
@@ -34,12 +34,12 @@ const StyledCheckbox = styled(Checkbox)<any>`
 `;
 
 const SeatsMenu = ({
-  onHallChange,
+  // onHallChange,
   onOptionsChange,
-  options,
-  hallSelected
-}: any) => {
-  const renderOptions = (options: any) => {
+  options
+}: // hallId
+any) => {
+  const renderCategoriesCheckboxes = (options: any) => {
     const keys = Object.keys(options);
     if (!options || !keys.length) return 'No options';
     return keys.map(key => (
@@ -62,22 +62,24 @@ const SeatsMenu = ({
 
   return (
     <Container>
-      <Row>
+      {/*       <Row>
         <SelectField
           id="hall"
           type="select"
-          entity="hall"
+          options={options}
           label="Choose Hall"
           value={hallSelected}
           handleChange={onHallChange}
         />
+      </Row> */}
+      {/* {hallSelected && ( */}
+      <Row>
+        Choose seat options:
+        <CheckboxContainer>
+          {renderCategoriesCheckboxes(options)}
+        </CheckboxContainer>
       </Row>
-      {hallSelected && (
-        <Row>
-          Choose seat options:
-          <CheckboxContainer>{renderOptions(options)}</CheckboxContainer>
-        </Row>
-      )}
+      {/* )} */}
     </Container>
   );
 };

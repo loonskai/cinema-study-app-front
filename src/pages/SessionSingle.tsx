@@ -110,7 +110,7 @@ const SessionSingle = ({ match }: any) => {
           </SessionInfo>
         </SessionOverview>
       </Container>
-      <SeatsContainer sessionId={session.id} />
+      <SeatsContainer sessionId={session.id} hallId={session.hallId} />
     </Fragment>
   );
 };

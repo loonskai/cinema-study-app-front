@@ -40,14 +40,16 @@ const OrderStateContainer = styled.div`
 
 const SeatsContainer = ({
   sessionId,
+  hallId,
   order,
   setOrderInfo
 }: {
   sessionId: number;
+  hallId: number;
   order: any;
   setOrderInfo: any;
 }) => {
-  const [options, setOptions]: [any, any] = useState({
+  const [categoryCheckboxes, setCategoryCheckboxes]: [any, any] = useState({
     vip: {
       label: 'VIP',
       value: false
@@ -59,6 +61,7 @@ const SeatsContainer = ({
   });
   const [isModalDisplayed, setModalDisplay]: [boolean, any] = useState(false);
   const [timerStarted, setTimerStarted]: [boolean, any] = useState(false);
+
   // We assing it to the function from OrderTimer child component and run it on the first seat pick
   let startTimerFunc = () => {};
 
@@ -71,23 +74,14 @@ const SeatsContainer = ({
     });
   }, []);
 
-  const changeHall = (value: any) => {
-    setOrderInfo({
-      sessionId: order.sessionId,
-      hallId: value,
-      seatsPicked: [],
-      bonuses: null
-    });
-  };
-
-  const changeOptions = (key: any) => {
-    const newOptions = Object.assign({}, options, {
+  const changeCategoryCheckboxes = (key: any) => {
+    const newOptions = Object.assign({}, categoryCheckboxes, {
       [key]: {
-        label: options[key].label,
-        value: !options[key].value
+        label: categoryCheckboxes[key].label,
+        value: !categoryCheckboxes[key].value
       }
     });
-    setOptions(newOptions);
+    setCategoryCheckboxes(newOptions);
   };
 
   const handleSeatPick = (e: any) => {
@@ -134,49 +128,44 @@ const SeatsContainer = ({
     <Container>
       <StyledTitle>Seats</StyledTitle>
       <SeatsMenu
-        onHallChange={changeHall}
-        onOptionsChange={changeOptions}
-        options={options}
-        hallSelected={order.hallId || ''}
+        onOptionsChange={changeCategoryCheckboxes}
+        options={categoryCheckboxes}
       />
-      {order.hallId && (
-        <Fragment>
-          <SnackbarContext.Consumer>
-            {({ handleSnackbar }: any) => (
-              <OrderStateContainer>
-                <OrderController
-                  handleOrderClear={handleOrderClear}
-                  handleOrderSubmit={() => setModalDisplay(true)}
-                  order={order}
-                  handleSnackbar={handleSnackbar}
-                />
-                <OrderTimer
-                  startTimer={(func: any) => (startTimerFunc = func)}
-                  handleExpire={() => {
-                    setModalDisplay(false);
-                    handleOrderClear();
-                    handleSnackbar('Reservation time expired', 'warning');
-                  }}
-                  handleSnackbar={handleSnackbar}
-                />
-                {isModalDisplayed && (
-                  <OrderConfirmationModal
-                    handleSnackbar={handleSnackbar}
-                    handleClose={() => {
-                      setModalDisplay(false);
-                    }}
-                  />
-                )}
-              </OrderStateContainer>
+      <SnackbarContext.Consumer>
+        {({ handleSnackbar }: any) => (
+          <OrderStateContainer>
+            <OrderController
+              handleOrderClear={handleOrderClear}
+              handleOrderSubmit={() => setModalDisplay(true)}
+              order={order}
+              handleSnackbar={handleSnackbar}
+            />
+            <OrderTimer
+              startTimer={(func: any) => (startTimerFunc = func)}
+              handleExpire={() => {
+                setModalDisplay(false);
+                handleOrderClear();
+                handleSnackbar('Reservation time expired', 'warning');
+              }}
+              handleSnackbar={handleSnackbar}
+            />
+            {isModalDisplayed && (
+              <OrderConfirmationModal
+                handleSnackbar={handleSnackbar}
+                handleClose={() => {
+                  setModalDisplay(false);
+                }}
+              />
             )}
-          </SnackbarContext.Consumer>
-          <SeatsScheme
-            order={order}
-            options={options}
-            handleSeatPick={handleSeatPick}
-          />
-        </Fragment>
-      )}
+          </OrderStateContainer>
+        )}
+      </SnackbarContext.Consumer>
+      <SeatsScheme
+        hallId={hallId}
+        order={order}
+        options={categoryCheckboxes}
+        handleSeatPick={handleSeatPick}
+      />
     </Container>
   );
 };
