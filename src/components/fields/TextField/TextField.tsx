@@ -8,7 +8,6 @@ import * as StyledContainers from './styled';
 import { match } from '../../../helpers/autosuggestHighlightMatch';
 
 interface Props {
-  entity?: string;
   id?: string;
   name?: string;
   label?: string;
@@ -16,11 +15,11 @@ interface Props {
   value?: string | Date;
   disabled?: boolean;
   error?: boolean;
+  initialSuggestions?: any;
   handleChange: (param: any) => any;
   handleSelect?: (param: any) => any;
   withoutSuggestions?: boolean;
   movies: any;
-  sessions: any;
 }
 
 function renderInputComponent(inputProps: any) {
@@ -82,17 +81,16 @@ function renderSuggestion(
 const TextField = ({
   handleChange,
   handleSelect,
-  entity,
   label,
   value,
   type,
   disabled,
   error,
   name,
-  withoutSuggestions = false,
-  movies,
-  sessions
-}: Props) => {
+  initialSuggestions,
+  withoutSuggestions = false
+}: // movies,
+Props) => {
   /* Returns in case when we don't need suggestions list */
   if (withoutSuggestions) {
     return (
@@ -110,11 +108,13 @@ const TextField = ({
   }
 
   /* Returns in case when we have suggestions list */
-  const [suggestions, setSuggestions]: [any, any] = useState([]);
+  const [relevantSuggestions, setRelevantSuggestions]: [any, any] = useState(
+    []
+  );
 
-  const getSuggestions = (entity: string, value: string): any => {
+  const getSuggestions = (initialSuggestions: any, value: string): any => {
     // Get suggestion options depending on props.entity
-    let suggestions;
+    /*     let suggestions;
     switch (entity) {
       case 'movie': {
         suggestions = movies.map((movie: any) => ({
@@ -122,28 +122,20 @@ const TextField = ({
         }));
         break;
       }
-      case 'city': {
-        suggestions = Object.keys(
-          sessions.reduce((obj: any, session: any) => {
-            obj[session.city] = true;
-            return obj;
-          }, {})
-        ).map(city => ({ label: city }));
-        break;
-      }
+      
       default: {
         suggestions = [];
         break;
       }
-    }
+    } */
 
-    const suggestionsFiltered = suggestions.filter((suggestion: any) =>
+    const suggestionsFiltered = initialSuggestions.filter((suggestion: any) =>
       suggestion.label.toLowerCase().includes(value)
     );
     return suggestionsFiltered.length ? suggestionsFiltered : [null];
   };
 
-  const handleSuggestionsFetchRequested = (entity: any) => (obj: {
+  const handleSuggestionsFetchRequested = (suggestions: any) => (obj: {
     value: string;
     reason: string;
   }) => {
@@ -152,15 +144,17 @@ const TextField = ({
     if (!inputValue) {
       return;
     }
-    setSuggestions(getSuggestions(entity, inputValue));
+    setRelevantSuggestions(getSuggestions(suggestions, inputValue));
   };
 
-  const handleSuggestionClearRequested = () => setSuggestions([]);
+  const handleSuggestionClearRequested = () => setRelevantSuggestions([]);
 
   const autosuggestProps = {
     renderInputComponent,
-    suggestions,
-    onSuggestionsFetchRequested: handleSuggestionsFetchRequested(entity),
+    suggestions: relevantSuggestions,
+    onSuggestionsFetchRequested: handleSuggestionsFetchRequested(
+      initialSuggestions
+    ),
     onSuggestionsClearRequested: handleSuggestionClearRequested,
     getSuggestionValue,
     renderSuggestion
@@ -203,6 +197,4 @@ const TextField = ({
   );
 };
 
-export default connect(({ movies, sessions }: any) => ({ movies, sessions }))(
-  TextField
-);
+export default connect(({ movies }: any) => ({ movies }))(TextField);

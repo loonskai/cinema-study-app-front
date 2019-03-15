@@ -4,6 +4,10 @@ import styled from 'styled-components';
 import SearchIcon from '@material-ui/icons/Search';
 
 import actions from '../../redux/actions';
+import {
+  loadCinemaByCityOptions,
+  loadCitySuggestions
+} from '../../helpers/loadSelectOptions';
 import FieldContainer from '../fields/FieldContainer';
 import SubmitButton from '../buttons/SubmitButton';
 import SessionsTable from '../SessionsTable';
@@ -25,17 +29,20 @@ const StyledForm = styled.form`
 
 const SearchSessionForm = ({
   loadSessionsList,
-  loadCinemasByCity,
+  // loadCinemasByCity,
   sessions,
   initialValues
 }: any) => {
   const [citySelected, setCitySelected] = useState(initialValues.city);
   const [cityTyped, setCityTyped] = useState(initialValues.city);
+  const [cinemaOptions, setCinemaOptions] = useState(null);
   const [cinema, setCinema] = useState(initialValues.cinema);
   const [date, setDate] = useState(initialValues.date);
   const [time, setTime] = useState(initialValues.time);
   const [buttonDisabled, setButtonDisabled] = useState(true);
   const [displaySessionsTable, setDisplaySessionsTable] = useState(false);
+
+  const [citySuggestions, setCitySuggestions] = useState(null);
 
   useEffect(() => {
     // If we come from main page search
@@ -44,9 +51,14 @@ const SearchSessionForm = ({
       setDisplaySessionsTable(true);
     }
 
+    if (!citySuggestions) {
+      loadCitySuggestions(setCitySuggestions);
+    }
+
     if (citySelected) {
+      loadCinemaByCityOptions(citySelected, setCinemaOptions);
       setButtonDisabled(false);
-      loadCinemasByCity(citySelected);
+      // loadCinemasByCity(citySelected);
     } else {
       setCinema('');
     }
@@ -70,25 +82,27 @@ const SearchSessionForm = ({
         <FieldContainer
           id="city"
           type="text"
-          entity="city"
+          icon="city"
           label="City"
           value={citySelected === cityTyped ? citySelected : cityTyped}
           handleChange={setCityTyped}
           handleSelect={setCitySelected}
+          initialSuggestions={citySuggestions}
         />
         <FieldContainer
           id="cinema"
           type="select"
-          entity="cinema"
+          options={cinemaOptions}
+          icon="cinema"
           label="Cinema"
           value={cinema}
-          handleChange={setCinema}
+          handleChange={(value: any) => setCinema(value)}
           disabled={!citySelected}
         />
         <FieldContainer
           id="date"
           type="date"
-          entity="date"
+          icon="date"
           label="Date"
           value={date}
           handleChange={setDate}
@@ -96,7 +110,8 @@ const SearchSessionForm = ({
         <FieldContainer
           id="time"
           type="select"
-          entity="time"
+          options={null}
+          icon="time"
           label="Time"
           value={time}
           handleChange={setTime}

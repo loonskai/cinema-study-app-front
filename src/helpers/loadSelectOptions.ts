@@ -15,6 +15,25 @@ export const loadAllCinemaOptions = async (optionsSetFunc: any) => {
   }
 };
 
+export const loadCinemaByCityOptions = async (
+  city: any,
+  optionsSetFunc: any
+) => {
+  try {
+    const data: any = await api.loadAllCinemas();
+    console.log(data);
+    if (data) {
+      /* const customizedOptions = data.map((cinema: any) => ({
+        label: cinema.name,
+        value: cinema.id
+      }));
+      optionsSetFunc(customizedOptions); */
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const loadAllCategoryOptions = async (optionsSetFunc: any) => {
   try {
     const data: any = await api.loadRowCategories();
@@ -44,6 +63,17 @@ export const loadCategoryCheckboxesByHall = async (
       return acc;
     }, {});
     optionsSetFunc(checkboxOptions);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// SUGGESTIONS
+export const loadCitySuggestions = async (optionsSetFunc: any) => {
+  try {
+    const cities: any = await api.loadCities();
+    const formatedCitites = cities.map((city: any) => ({ label: city }));
+    optionsSetFunc(formatedCitites);
   } catch (error) {
     console.error(error);
   }

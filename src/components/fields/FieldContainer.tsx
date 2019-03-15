@@ -14,8 +14,7 @@ import DateField from './DateField';
 import { mainDarkColor, greyColor } from '../../constants';
 
 interface Props {
-  entity: string;
-  options: any;
+  options?: any;
   handleChange: (data: any) => any;
   handleSelect?: (data: any) => any;
   id: string;
@@ -25,6 +24,7 @@ interface Props {
   value?: string | Date;
   icon?: string;
   withoutSuggestions?: boolean;
+  initialSuggestions?: any;
 }
 
 const getField = (props: Props) => {
@@ -77,7 +77,7 @@ const FieldContainer = (props: Props) => {
       alignItems="center"
     >
       <Grid item={true}>
-        <IconStyled icon={props.icon || props.entity} />
+        <IconStyled icon={props.icon} />
       </Grid>
       <Grid item={true} lg={gridInputWidth}>
         {getField(props)}

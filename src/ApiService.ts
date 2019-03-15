@@ -188,6 +188,22 @@ class ApiService {
     }
   }
 
+  async loadCities() {
+    try {
+      const cities = Object.keys(
+        sessions.reduce((obj: any, session: any) => {
+          obj[session.city] = true;
+          return obj;
+        }, {})
+      );
+      return new Promise((res, rej) => {
+        return res(cities);
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   /** ADMIN OPERATIONS */
   async createCinema(data: any) {
     try {

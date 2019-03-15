@@ -8,7 +8,6 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { mainColor } from '../../constants';
 
 interface Props {
-  entity: string;
   id: string;
   label: string;
   type: string;

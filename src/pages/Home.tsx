@@ -56,7 +56,7 @@ const Home = ({ loadCinemasByCity, history, movies }: any) => {
       <FieldContainer
         id="movie"
         type="text"
-        entity="movie"
+        icon="movie"
         label="Movie Title"
         value={movieSelected === movieTyped ? movieSelected : movieTyped}
         handleChange={setMovieTyped}
@@ -65,7 +65,7 @@ const Home = ({ loadCinemasByCity, history, movies }: any) => {
       <FieldContainer
         id="city"
         type="text"
-        entity="city"
+        icon="city"
         label="Where do you live?"
         value={citySelected === cityTyped ? citySelected : cityTyped}
         handleChange={setCityTyped}
@@ -75,7 +75,8 @@ const Home = ({ loadCinemasByCity, history, movies }: any) => {
       <FieldContainer
         id="cinema"
         type="select"
-        entity="cinema"
+        options={}
+        icon="cinema"
         label="Choose Cinema"
         value={cinema}
         handleChange={setCinema}
@@ -84,7 +85,7 @@ const Home = ({ loadCinemasByCity, history, movies }: any) => {
       <FieldContainer
         id="date"
         type="date"
-        entity="date"
+        icon="date"
         label="Choose Date"
         value={date}
         handleChange={setDate}

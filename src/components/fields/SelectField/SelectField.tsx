@@ -7,14 +7,12 @@ import * as StyledContainers from './styled';
 // import { halls, rowCategories } from '../../../mocks';
 
 interface Props {
-  // entity: string;
   id: string;
   label: string;
   type: string;
   value?: string | Date;
-  options: any;
+  options?: any;
   disabled?: boolean;
-  // cinemas?: any;
   handleChange: any;
 }
 
@@ -22,8 +20,6 @@ const SelectField = ({
   label,
   value,
   handleChange,
-  // entity,
-  // cinemas,
   options,
   disabled
 }: Props) => {
