@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import actions from '../../redux/actions';
+import { loadCategoryCheckboxesByHall } from '../../helpers/loadSelectOptions';
 import SeatsMenu from './SeatsMenu';
 import OrderConfirmationModal from './OrderConfirmationModal';
 import OrderController from './OrderController';
@@ -49,16 +50,7 @@ const SeatsContainer = ({
   order: any;
   setOrderInfo: any;
 }) => {
-  const [rowCategories, setRowCategories]: [any, any] = useState({
-    1: {
-      label: 'VIP',
-      value: false
-    },
-    2: {
-      label: 'Basic',
-      value: false
-    }
-  });
+  const [rowCategories, setRowCategories]: [any, any] = useState(null);
   const [isModalDisplayed, setModalDisplay]: [boolean, any] = useState(false);
   const [timerStarted, setTimerStarted]: [boolean, any] = useState(false);
 
@@ -72,6 +64,9 @@ const SeatsContainer = ({
       seatsPicked: order.seatsPicked,
       bonuses: order.bonuses
     });
+    if (!rowCategories) {
+      loadCategoryCheckboxesByHall(hallId, setRowCategories);
+    }
   }, []);
 
   const changeRowCategory = (key: any) => {
@@ -127,10 +122,12 @@ const SeatsContainer = ({
   return (
     <Container>
       <StyledTitle>Seats</StyledTitle>
-      <SeatsMenu
-        obChangeRowCategory={changeRowCategory}
-        rowCategories={rowCategories}
-      />
+      {rowCategories && (
+        <SeatsMenu
+          obChangeRowCategory={changeRowCategory}
+          rowCategories={rowCategories}
+        />
+      )}
       <SnackbarContext.Consumer>
         {({ handleSnackbar }: any) => (
           <OrderStateContainer>
@@ -160,12 +157,14 @@ const SeatsContainer = ({
           </OrderStateContainer>
         )}
       </SnackbarContext.Consumer>
-      <SeatsScheme
-        hallId={hallId}
-        order={order}
-        rowCategories={rowCategories}
-        handleSeatPick={handleSeatPick}
-      />
+      {rowCategories && (
+        <SeatsScheme
+          hallId={hallId}
+          order={order}
+          rowCategories={rowCategories}
+          handleSeatPick={handleSeatPick}
+        />
+      )}
     </Container>
   );
 };

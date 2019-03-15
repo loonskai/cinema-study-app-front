@@ -200,10 +200,20 @@ class ApiService {
     }
   }
 
-  async loadRowCategories() {
+  async loadRowCategories(hallId?: number) {
     try {
       return new Promise((res, rej) => {
-        return res(rowCategories);
+        if (!hallId) {
+          return res(rowCategories);
+        }
+        const { rows }: any = seats.find(hall => hall.hallId === hallId);
+        const hallRowCategories = Object.keys(
+          rows.reduce((obj: any, row: any) => {
+            obj[rowCategories[row.categoryId - 1]] = true;
+            return obj;
+          }, {})
+        );
+        return res(hallRowCategories);
       });
     } catch (error) {
       console.error(error);

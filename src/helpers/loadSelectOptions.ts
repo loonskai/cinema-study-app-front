@@ -29,3 +29,28 @@ export const loadAllCategoryOptions = async (optionsSetFunc: any) => {
     console.error(error);
   }
 };
+
+export const loadCategoryCheckboxesByHall = async (
+  hallId: number,
+  optionsSetFunc: any
+) => {
+  try {
+    const data: any = await api.loadRowCategories(hallId);
+    if (data) {
+      const customizedOptions = data.reduce(
+        (acc: any, category: string, index: number) => {
+          // Creates object { 1: { label: 'VIP', value: false }, ... } and attaches it to rowCategories in SeatsContainer
+          acc[index + 1] = {
+            label: category,
+            value: false
+          };
+          return acc;
+        },
+        {}
+      );
+      optionsSetFunc(customizedOptions);
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
