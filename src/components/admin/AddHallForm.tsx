@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
 import AddIcon from '@material-ui/icons/Add';
 
 import api from '../../ApiService';
@@ -10,10 +9,6 @@ import AddRows from './sections/AddRows';
 import TextField from '../fields/TextField/TextField';
 import SelectField from '../fields/SelectField/SelectField';
 import SubmitButton from '../buttons/SubmitButton';
-
-const StyledForm = styled.form`
-  max-width: 550px;
-`;
 
 const AddHallForm = ({ loadAllCinemas, handleSnackbar }: any) => {
   const [cinemasLoaded, setCinemasLoaded] = useState(false);
@@ -48,7 +43,7 @@ const AddHallForm = ({ loadAllCinemas, handleSnackbar }: any) => {
 
   return (
     <AdminFormContainer title="Add Hall">
-      <StyledForm onSubmit={handleSubmit}>
+      <form style={{ maxWidth: '550px' }} onSubmit={handleSubmit}>
         <TextField
           name="title"
           label="Hall Title"
@@ -70,7 +65,7 @@ const AddHallForm = ({ loadAllCinemas, handleSnackbar }: any) => {
           icon={<AddIcon />}
           disabled={buttonDisabled}
         />
-      </StyledForm>
+      </form>
     </AdminFormContainer>
   );
 };

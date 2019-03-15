@@ -189,6 +189,17 @@ class ApiService {
     }
   }
 
+  async createService(data: any) {
+    try {
+      return new Promise((res, rej) => {
+        console.log('create service -->', data);
+        return res(true);
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   async loadExternalAPIMovies() {
     try {
       const { data } = await this.client.get(
