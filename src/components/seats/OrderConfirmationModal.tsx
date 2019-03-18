@@ -57,6 +57,7 @@ const OrderConfirmationModal = ({
   order,
   handleClose,
   handleSnackbar,
+  setTimerOff,
   setOrderInfo // from redux
 }: any) => {
   const { sessionId, seatsPicked } = order;
@@ -136,6 +137,7 @@ const OrderConfirmationModal = ({
           seatsPicked: []
         });
         handleClose(false);
+        setTimerOff();
         handleSnackbar('Tickets ordered successfully!', 'success');
       } else {
         handleClose(false);

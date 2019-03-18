@@ -53,9 +53,7 @@ const SeatsContainer = ({
   const [rowCategories, setRowCategories]: [any, any] = useState(null);
   const [isModalDisplayed, setModalDisplay]: [boolean, any] = useState(false);
   const [timerStarted, setTimerStarted]: [boolean, any] = useState(false);
-
-  // We assing it to the function from OrderTimer child component and run it on the first seat pick
-  let startTimerFunc = () => {};
+  const [orderTimeExpired, setOrderTimeExpired] = useState(false);
 
   useEffect(() => {
     setOrderInfo({
@@ -80,9 +78,8 @@ const SeatsContainer = ({
   };
 
   const handleSeatPick = (e: any) => {
-    if (!timerStarted && startTimerFunc) {
+    if (!timerStarted) {
       setTimerStarted(true);
-      startTimerFunc();
     }
     const { seatsPicked } = order;
     const pickedRow = +e.target.dataset.row;
@@ -138,11 +135,15 @@ const SeatsContainer = ({
               handleSnackbar={handleSnackbar}
             />
             <OrderTimer
-              startTimer={(func: any) => (startTimerFunc = func)}
-              handleExpire={() => {
+              timerStarted={timerStarted}
+              setTimerOff={() => setTimerStarted(false)}
+              handleExpire={(showSnackbar: boolean) => {
                 setModalDisplay(false);
+                setOrderTimeExpired(true);
                 handleOrderClear();
-                handleSnackbar('Reservation time expired', 'warning');
+                if (showSnackbar) {
+                  handleSnackbar('Reservation time expired', 'warning');
+                }
               }}
               handleSnackbar={handleSnackbar}
             />
@@ -152,6 +153,7 @@ const SeatsContainer = ({
                 handleClose={() => {
                   setModalDisplay(false);
                 }}
+                setTimerOff={() => setTimerStarted(false)}
               />
             )}
           </OrderStateContainer>
@@ -163,6 +165,7 @@ const SeatsContainer = ({
           order={order}
           rowCategories={rowCategories}
           handleSeatPick={handleSeatPick}
+          orderTimeExpired={orderTimeExpired}
         />
       )}
     </Container>

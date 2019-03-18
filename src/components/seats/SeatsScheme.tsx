@@ -20,7 +20,13 @@ const Container = styled.div`
   overflow-x: scroll;
 `;
 
-const SeatsScheme = ({ rowCategories, order, handleSeatPick, seats }: any) => {
+const SeatsScheme = ({
+  rowCategories,
+  order,
+  handleSeatPick,
+  seats,
+  orderTimeExpired
+}: any) => {
   const { seatsPicked } = order;
 
   const renderSeats = () => {
@@ -42,6 +48,7 @@ const SeatsScheme = ({ rowCategories, order, handleSeatPick, seats }: any) => {
             const isMuted =
               !rowCategories[row.categoryId].value &&
               rowCategoriesKeys.some((key: any) => rowCategories[key].value);
+
             return (
               <SeatItem
                 key={`seat-${seatIndex + 1}`}
@@ -50,7 +57,9 @@ const SeatsScheme = ({ rowCategories, order, handleSeatPick, seats }: any) => {
                 seat={seatIndex + 1}
                 price={row.price}
                 isSelected={isSelected}
-                isReserved={row.reserved.includes(seatIndex + 1)}
+                isReserved={
+                  orderTimeExpired || row.reserved.includes(seatIndex + 1)
+                }
                 isOrdered={row.ordered.includes(seatIndex + 1)}
                 isMuted={isMuted && !isSelected}
               />

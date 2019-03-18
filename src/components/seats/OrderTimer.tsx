@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { SECONDS_FOR_ORDER } from '../../constants';
+
 const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -31,19 +33,22 @@ class OrderTimer extends React.Component {
 
   constructor(props: any) {
     super(props);
-    this.state = { time: {}, seconds: 60 * 15 };
+    this.state = { time: {}, seconds: SECONDS_FOR_ORDER };
     this.timer = 0;
-    this.countDown = this.countDown.bind(this);
   }
 
   componentDidMount() {
-    if (this.timer === 0 && this.state.seconds > 0) {
-      this.props.startTimer(() => {
-        this.timer = setInterval(this.countDown, 1000);
-      });
-    }
     const timeLeftVar = this.secondsToTime(this.state.seconds);
     this.setState({ time: timeLeftVar });
+  }
+
+  componentDidUpdate() {
+    if (this.props.timerStarted && this.timer === 0 && this.state.seconds > 0) {
+      this.timer = setInterval(this.countDown, 1000);
+    }
+    if (!this.state.seconds) {
+      this.props.setTimerOff();
+    }
   }
 
   componentWillUnmount() {
@@ -59,16 +64,26 @@ class OrderTimer extends React.Component {
     };
   }
 
-  countDown() {
-    this.setState((prevState: any) => {
-      const seconds = prevState.seconds - 1;
-      if (seconds === 0) {
-        clearInterval(this.timer);
-        this.props.handleExpire();
-      }
-      return { time: this.secondsToTime(seconds), seconds };
-    });
-  }
+  countDown = () => {
+    if (!this.props.timerStarted) {
+      this.setState({
+        time: this.secondsToTime(SECONDS_FOR_ORDER),
+        seconds: SECONDS_FOR_ORDER
+      });
+      clearInterval(this.timer);
+      this.props.handleExpire(false);
+    } else {
+      this.setState((prevState: any) => {
+        const seconds = prevState.seconds - 1;
+        if (seconds === 0) {
+          clearInterval(this.timer);
+          this.props.setTimerOff();
+          this.props.handleExpire(true);
+        }
+        return { time: this.secondsToTime(seconds), seconds };
+      });
+    }
+  };
 
   render() {
     const { time } = this.state;
