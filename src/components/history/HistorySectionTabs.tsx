@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import classnames from 'classnames';
 
 import {
   containerGreyColor,
@@ -20,20 +21,31 @@ const StyledTab = styled.div`
   align-items: center;
   padding: 1rem;
   text-align: center;
-  background: ${({ isSelected }: { isSelected: boolean }) =>
-    isSelected ? whiteColor : containerGreyColor};
-  color: ${({ isSelected }: { isSelected: boolean }) =>
-    isSelected ? mainDarkColor : greyColor};
+  background: ${containerGreyColor};
+  color: ${greyColor};
   cursor: pointer;
+
+  &&.tab-selected {
+    background: ${whiteColor};
+    color: ${mainDarkColor};
+  }
 `;
 
 const HistorySectionTabs = ({ handleTabSelect, tabSelected }: any) => {
+  const upcomingClass = classnames({
+    'tab-selected': tabSelected === 'upcoming'
+  });
+
+  const pastClass = classnames({
+    'tab-selected': tabSelected === 'past'
+  });
+
   return (
     <Container onClick={handleTabSelect}>
-      <StyledTab isSelected={tabSelected === 'upcoming'} data-name="upcoming">
+      <StyledTab className={upcomingClass} data-name="upcoming">
         Upcoming Events
       </StyledTab>
-      <StyledTab isSelected={tabSelected === 'past'} data-name="past">
+      <StyledTab className={pastClass} data-name="past">
         Past Events
       </StyledTab>
     </Container>
