@@ -35,6 +35,22 @@ export const loadCinemaByCityOptions = async (
   }
 };
 
+export const loadHallsByCinemaOptions = async (
+  cinemaId: any,
+  optionsSetFunc: any
+) => {
+  try {
+    const halls: any = await api.loadHallsByCinema(cinemaId);
+    const customizedOptions = halls.map((hall: any) => ({
+      label: hall.name,
+      value: hall.id
+    }));
+    optionsSetFunc(customizedOptions);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const loadAllCategoryOptions = async (optionsSetFunc: any) => {
   try {
     const data: any = await api.loadRowCategories();

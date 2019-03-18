@@ -15,7 +15,7 @@ const Container = styled.div`
 `;
 
 const Admin = () => {
-  const [selectedTab, setSelectedTab] = useState('create-session');
+  const [selectedTab, setSelectedTab] = useState('add-cinema');
 
   const getSelectedForm = (handleSnackbar: any) => {
     switch (selectedTab) {

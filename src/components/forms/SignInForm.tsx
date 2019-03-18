@@ -53,7 +53,6 @@ const SignInForm = ({ signIn, onSuccess }: any) => {
     } else {
       const result = await signIn(values);
       if (result) {
-        console.log('succesfully signed in');
         onSuccess();
       }
     }

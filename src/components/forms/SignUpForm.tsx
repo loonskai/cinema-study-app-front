@@ -51,7 +51,6 @@ const SignUpForm = ({ onSuccess }: any) => {
         confirmPassword: 'Passwords do not match'
       });
     } else {
-      console.log('succesfully signed up');
       onSuccess();
     }
   };
