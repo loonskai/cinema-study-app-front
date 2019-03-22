@@ -23,7 +23,7 @@ const SelectField = ({
   disabled
 }: Props) => {
   const renderOptions = () =>
-    options.map((option: any, index: any) => (
+    options.map((option: any, index: number) => (
       <MenuItem key={index.toString()} value={option.value}>
         {option.label}
       </MenuItem>
@@ -37,7 +37,7 @@ const SelectField = ({
       disabled={disabled}
     >
       <StyledContainers.InputLabelStyled
-        ref={(ref: React.RefObject<HTMLInputElement>) => {
+        ref={(ref: React.RefObject<HTMLInputElement>): void => {
           this.InputLabelRef = ref;
         }}
         htmlFor="outlined-age-simple"
@@ -49,7 +49,7 @@ const SelectField = ({
       </StyledContainers.InputLabelStyled>
       <Select
         value={value}
-        onChange={(e: any) => {
+        onChange={(e: React.ChangeEvent<HTMLSelectElement>): void => {
           handleChange(e.target.value);
         }}
         input={

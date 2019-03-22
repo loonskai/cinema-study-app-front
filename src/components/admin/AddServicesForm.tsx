@@ -24,7 +24,9 @@ const AddServicesForm = ({ handleSnackbar }: any) => {
     }
   }, [title, cinema, price]);
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (
+    e: React.ChangeEvent<HTMLFormElement>
+  ): Promise<void> => {
     e.preventDefault();
     const result = await api.createService({ title, cinema, price });
     if (result) {
@@ -45,20 +47,24 @@ const AddServicesForm = ({ handleSnackbar }: any) => {
           options={cinemaOptions}
           label="Choose Cinema"
           value={cinema}
-          handleChange={(value: any) => setCinema(value)}
+          handleChange={(value: string) => setCinema(value)}
         />
         <TextField
           name="title"
           label="Service title"
           value={title}
-          handleChange={(e: any) => setTitle(e.target.value)}
+          handleChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
+            setTitle(e.target.value)
+          }
         />
         <TextField
           name="price"
           label="Service price"
           type="number"
           value={price}
-          handleChange={(e: any) => setPrice(e.target.value)}
+          handleChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
+            setPrice(e.target.value)
+          }
         />
         <SubmitButton
           text="Add Hall"

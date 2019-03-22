@@ -36,7 +36,9 @@ const RowElement = styled.div`
   padding-right: 0 0.3rem;
 `;
 
-const AddRows = ({ handleSubmit, prevRows }: any) => {
+const AddRows = (props: any) => {
+  console.log(props);
+  const { handleSubmit, prevRows } = props;
   const [seatsValues, setSeatsValues] = useState({
     category: '',
     quantity: ''
@@ -49,7 +51,7 @@ const AddRows = ({ handleSubmit, prevRows }: any) => {
     }
   });
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setSeatsValues({
       ...seatsValues,
       [e.target.name]: e.target.value
@@ -67,7 +69,7 @@ const AddRows = ({ handleSubmit, prevRows }: any) => {
             options={categoryOptions}
             label="Row Category"
             value={seatsValues.category}
-            handleChange={(value: any) => {
+            handleChange={(value: string) => {
               setSeatsValues({
                 ...seatsValues,
                 category: value

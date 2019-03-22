@@ -17,8 +17,8 @@ interface Props {
   disabled?: boolean;
   error?: boolean;
   initialSuggestions?: any;
-  handleChange: (param: any) => any;
-  handleSelect?: (param: any) => any;
+  handleChange: (param: any) => void;
+  handleSelect?: (param: any) => void;
 }
 
 function renderInputComponent(inputProps: any) {
@@ -155,9 +155,9 @@ const TextField = ({
           value: value as string,
           disabled,
           onChange: (
-            e: React.FormEvent<HTMLInputElement>,
+            e: React.ChangeEvent<HTMLInputElement>,
             { newValue }: { newValue: string }
-          ) => {
+          ): void => {
             handleChange(newValue);
           }
         }}

@@ -35,7 +35,9 @@ const StyledCheckbox = styled(Checkbox)<any>`
 const SeatsMenu = ({ obChangeRowCategory, rowCategories }: any) => {
   const renderCategoriesCheckboxes = (rowCategories: any) => {
     const keys = Object.keys(rowCategories);
-    if (!rowCategories || !keys.length) return 'No options';
+    if (!rowCategories || !keys.length) {
+      return 'No options';
+    }
     return keys.map(key => (
       <FormControlLabel
         key={key}
@@ -44,7 +46,7 @@ const SeatsMenu = ({ obChangeRowCategory, rowCategories }: any) => {
             checked={rowCategories[key].value}
             value={key}
             classes={{ checked: 'checked' }}
-            onChange={(e: any) => {
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>): void => {
               obChangeRowCategory(e.target.value);
             }}
           />

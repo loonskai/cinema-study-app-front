@@ -25,7 +25,9 @@ const AddHallForm = ({ handleSnackbar }: any) => {
     }
   }, [title, cinema, rows]);
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ): Promise<void> => {
     e.preventDefault();
     const result = await api.createHall({ title, cinema, rows });
     if (result) {
@@ -37,7 +39,7 @@ const AddHallForm = ({ handleSnackbar }: any) => {
     }
   };
 
-  const handleRowsChange = (newRow: any) => setRows([...rows, newRow]);
+  const handleRowsChange = (newRow: any): void => setRows([...rows, newRow]);
 
   return (
     <AdminFormContainer title="Add Hall">
@@ -46,7 +48,9 @@ const AddHallForm = ({ handleSnackbar }: any) => {
           name="title"
           label="Hall Title"
           value={title}
-          handleChange={(e: any) => setTitle(e.target.value)}
+          handleChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
+            setTitle(e.target.value)
+          }
         />
         <SelectField
           id="cinema"
@@ -54,7 +58,7 @@ const AddHallForm = ({ handleSnackbar }: any) => {
           options={cinemaOptions}
           label="Choose Cinema"
           value={cinema}
-          handleChange={(value: any) => setCinema(value)}
+          handleChange={(value: string) => setCinema(value)}
         />
         <AddRows handleSubmit={handleRowsChange} prevRows={rows} />
         <SubmitButton

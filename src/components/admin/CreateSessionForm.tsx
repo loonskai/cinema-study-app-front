@@ -67,7 +67,9 @@ const CreateSessionForm = ({ handleSnackbar }: any) => {
     timeOptions
   ]);
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (
+    e: React.ChangeEvent<HTMLFormElement>
+  ): Promise<void> => {
     e.preventDefault();
     const body = {
       date,
@@ -135,7 +137,7 @@ const CreateSessionForm = ({ handleSnackbar }: any) => {
           label="Choose Hall"
           value={hall}
           options={hallOptions}
-          handleChange={(value: any) => setHall(value)}
+          handleChange={(value: string) => setHall(value)}
           disabled={!cinema}
         />
         <SubmitButton

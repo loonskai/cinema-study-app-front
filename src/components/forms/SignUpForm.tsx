@@ -19,7 +19,7 @@ const SignUpForm = ({ onSuccess }: any) => {
     confirmPassword: null
   });
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setValues({
       ...values,
       [e.target.name]: e.target.value
@@ -30,7 +30,7 @@ const SignUpForm = ({ onSuccess }: any) => {
     });
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     const { email, username, password, confirmPassword } = values;
     const user = users.find(

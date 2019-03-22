@@ -120,7 +120,9 @@ const AddMovieForm = ({ handleSnackbar }: any) => {
     }
   };
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ): Promise<void> => {
     e.preventDefault();
     const result = api.addMovies(selectedMovies);
     if (result) {

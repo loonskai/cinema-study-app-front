@@ -73,7 +73,7 @@ const SearchSessionForm = ({
     }
   }, [cityTyped, citySelected, timeOptions]);
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>): void => {
     e.preventDefault();
     loadSessionsList();
     setDisplaySessionsTable(true);
@@ -100,7 +100,7 @@ const SearchSessionForm = ({
           icon="cinema"
           label="Cinema"
           value={cinema}
-          handleChange={(value: any) => setCinema(value)}
+          handleChange={(value: string) => setCinema(value)}
           disabled={!citySelected}
         />
         <FieldContainer

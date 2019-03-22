@@ -39,7 +39,10 @@ const Admin = () => {
     <Container>
       <NavPanel
         selectedTab={selectedTab}
-        handleChange={(event: any, value: TabType) => setSelectedTab(value)}
+        handleChange={(
+          event: React.FormEvent<HTMLInputElement>,
+          value: TabType
+        ) => setSelectedTab(value)}
       />
       <SnackbarContext.Consumer>
         {({ handleSnackbar }: any) => getSelectedForm(handleSnackbar)}

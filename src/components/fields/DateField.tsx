@@ -12,7 +12,7 @@ interface Props {
   label: string;
   type: string;
   value?: Date | string;
-  handleChange: (param: any) => any;
+  handleChange: (param: Date) => void;
 }
 
 const StyledPicker = styled(DatePicker)<any>`

@@ -19,14 +19,16 @@ const AddCinemaForm = ({ handleSnackbar }: any) => {
     }
   }, [values]);
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setValues({
       ...values,
       [e.target.name]: e.target.value
     });
   };
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ): Promise<void> => {
     e.preventDefault();
     const result = await api.createCinema(values);
     if (result) {

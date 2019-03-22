@@ -1,7 +1,9 @@
 import api from '../ApiService';
 
 // SELECT OPTIONS
-export const loadAllCinemaOptions = async (optionsSetFunc: any) => {
+export const loadAllCinemaOptions = async (
+  optionsSetFunc: any
+): Promise<void> => {
   try {
     const data: any = await api.loadAllCinemas();
     if (data) {

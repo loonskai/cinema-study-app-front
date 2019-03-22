@@ -1,4 +1,22 @@
-export default (order: any) => {
+interface BonusType {
+  quantity: number;
+  price: number;
+}
+
+interface SeatPickedType {
+  row: number;
+  seat: number;
+  price: number;
+}
+
+interface OrderType {
+  bonuses: { [key: string]: BonusType };
+  hallId: number;
+  seatsPicked: SeatPickedType[];
+  sessionId: number;
+}
+
+export default (order: OrderType): number => {
   const { seatsPicked, bonuses } = order;
 
   const bonusesPrice = bonuses

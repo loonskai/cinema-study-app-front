@@ -50,22 +50,26 @@ const TextRow = styled.div`
 const HistorySection = ({ orders }: any) => {
   const [tabSelected, setTebSelected] = useState('upcoming');
 
-  const handleTabSelect = (e: any) => {
-    const { name }: { name: string } = e.target.dataset;
-    if (tabSelected === name) return;
+  const handleTabSelect = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const { name } = e.target.dataset;
+    if (tabSelected === name) {
+      return;
+    }
     switch (name) {
       case 'upcoming':
       case 'past': {
         setTebSelected(name);
       }
       default:
-        return null;
+        return;
     }
   };
 
   const renderOrders = () => {
     const ordersToRender = orders[tabSelected];
-    if (!ordersToRender) return 'Nothing found';
+    if (!ordersToRender) {
+      return 'Nothing found';
+    }
     return ordersToRender.map((order: any, index: number) => {
       return (
         <OrderContainer

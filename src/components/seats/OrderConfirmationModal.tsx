@@ -120,13 +120,17 @@ const OrderConfirmationModal = ({
     }
   };
 
-  const handleBackgroundClick = (e: any) => {
+  const handleBackgroundClick = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ): void => {
     if (e.target === e.currentTarget) {
       handleClose(false);
     }
   };
 
-  const handleSubmitOrder = async (e: any) => {
+  const handleSubmitOrder = async (
+    e: React.FormEvent<HTMLFormElement>
+  ): Promise<void> => {
     try {
       e.preventDefault();
       const result = await api.submitOrder(order);

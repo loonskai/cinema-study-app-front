@@ -77,7 +77,9 @@ const SeatsContainer = ({
     setRowCategories(newCategories);
   };
 
-  const handleSeatPick = (e: any) => {
+  const handleSeatPick = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ): void => {
     if (!timerStarted) {
       setTimerStarted(true);
     }

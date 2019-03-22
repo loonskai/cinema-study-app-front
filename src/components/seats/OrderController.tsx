@@ -25,7 +25,7 @@ const OrderController = ({
   handleOrderSubmit,
   order
 }: any) => {
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     handleOrderSubmit();
   };

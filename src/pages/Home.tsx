@@ -25,7 +25,7 @@ const Home = ({ history, movies }: any) => {
   const [citySuggestions, setCitySuggestions] = useState(null);
   const [cinemaOptions, setCinemaOptions] = useState(null);
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     const { id: movieId } = movies.find(
       (movie: any) => movie.original_title === movieSelected

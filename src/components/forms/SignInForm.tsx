@@ -21,7 +21,7 @@ const SignInForm = ({ signIn, onSuccess }: any) => {
     password: null
   });
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setValues({
       ...values,
       [e.target.name]: e.target.value
@@ -32,12 +32,12 @@ const SignInForm = ({ signIn, onSuccess }: any) => {
     });
   };
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (
+    e: React.ChangeEvent<HTMLFormElement>
+  ): Promise<void> => {
     e.preventDefault();
     const { email, username, password } = values;
-    const user = users.find(
-      user => user.email === email || user.username === username
-    );
+    const user = users.find(u => u.email === email || u.username === username);
     if (!user) {
       if (email) {
         setInputErrors({ ...inputErrors, email: 'User not found' });
@@ -58,7 +58,9 @@ const SignInForm = ({ signIn, onSuccess }: any) => {
     }
   };
 
-  const handleToggleSignInWith = (e: any) => {
+  const handleToggleSignInWith = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ): void => {
     const { value } = e.target;
     let targetToClear;
     switch (value) {

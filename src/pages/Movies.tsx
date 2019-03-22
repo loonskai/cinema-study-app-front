@@ -39,7 +39,7 @@ const Movies = ({ movies, loadMoviesList }: any) => {
     }
   }, [movies]);
 
-  const handleSearchBar = (e: any) => {
+  const handleSearchBar = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setFilterText(e.target.value.toLowerCase().trim());
   };
 
