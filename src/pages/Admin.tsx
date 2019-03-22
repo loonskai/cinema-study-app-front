@@ -8,6 +8,7 @@ import AddMovieForm from '../components/admin/AddMovieForm';
 import AddServicesForm from '../components/admin/AddServicesForm';
 import CreateSessionForm from '../components/admin/CreateSessionForm';
 import { SnackbarContext } from '../Layout';
+import { TabType } from '../enums';
 
 const Container = styled.div`
   display: flex;
@@ -15,19 +16,19 @@ const Container = styled.div`
 `;
 
 const Admin = () => {
-  const [selectedTab, setSelectedTab] = useState('add-cinema');
+  const [selectedTab, setSelectedTab] = useState(TabType.cinema);
 
   const getSelectedForm = (handleSnackbar: any) => {
     switch (selectedTab) {
-      case 'add-cinema':
+      case TabType.cinema:
         return <AddCinemaForm handleSnackbar={handleSnackbar} />;
-      case 'add-hall':
+      case TabType.hall:
         return <AddHallForm handleSnackbar={handleSnackbar} />;
-      case 'add-movie':
+      case TabType.movie:
         return <AddMovieForm handleSnackbar={handleSnackbar} />;
-      case 'add-services':
+      case TabType.services:
         return <AddServicesForm handleSnackbar={handleSnackbar} />;
-      case 'create-session':
+      case TabType.session:
         return <CreateSessionForm handleSnackbar={handleSnackbar} />;
       default:
         return null;
@@ -38,7 +39,7 @@ const Admin = () => {
     <Container>
       <NavPanel
         selectedTab={selectedTab}
-        handleChange={(event: any, value: string) => setSelectedTab(value)}
+        handleChange={(event: any, value: TabType) => setSelectedTab(value)}
       />
       <SnackbarContext.Consumer>
         {({ handleSnackbar }: any) => getSelectedForm(handleSnackbar)}

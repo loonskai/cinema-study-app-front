@@ -9,6 +9,7 @@ import RoomServiceIcon from '@material-ui/icons/RoomService';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import LocalMoviesIcon from '@material-ui/icons/LocalMovies';
 
+import { TabType } from '../../enums';
 import { mainDarkColor, mainColor } from '../../constants';
 
 const Container = styled.div`
@@ -55,7 +56,7 @@ const NavPanel = ({ selectedTab, handleChange }: any) => {
           <StyledTab
             icon={<MovieCreationIcon />}
             label="Add cinema"
-            value="add-cinema"
+            value={TabType.cinema}
             classes={{
               root: 'root',
               selected: 'selected',
@@ -65,7 +66,7 @@ const NavPanel = ({ selectedTab, handleChange }: any) => {
           <StyledTab
             icon={<VideoLabelIcon />}
             label="Add hall"
-            value="add-hall"
+            value={TabType.hall}
             classes={{
               root: 'root',
               selected: 'selected',
@@ -75,7 +76,7 @@ const NavPanel = ({ selectedTab, handleChange }: any) => {
           <StyledTab
             icon={<LocalMoviesIcon />}
             label="Add movie"
-            value="add-movie"
+            value={TabType.movie}
             classes={{
               root: 'root',
               selected: 'selected',
@@ -85,7 +86,7 @@ const NavPanel = ({ selectedTab, handleChange }: any) => {
           <StyledTab
             icon={<RoomServiceIcon />}
             label="Add services"
-            value="add-services"
+            value={TabType.services}
             classes={{
               root: 'root',
               selected: 'selected',
@@ -95,7 +96,7 @@ const NavPanel = ({ selectedTab, handleChange }: any) => {
           <StyledTab
             icon={<AccessTimeIcon />}
             label="Create session"
-            value="create-session"
+            value={TabType.session}
             classes={{
               root: 'root',
               selected: 'selected',
