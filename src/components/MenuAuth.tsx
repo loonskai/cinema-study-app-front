@@ -37,13 +37,9 @@ const MenuAuth = (props: any) => {
     props.history.push('/auth');
   };
 
-  const handleProfileRedirect = () => {
-    props.history.push('/profile');
-  };
+  const handleProfileRedirect = () => props.history.push('/profile');
 
-  const handleAdminRedirect = () => {
-    props.history.push('/admin');
-  };
+  const handleAdminRedirect = () => props.history.push('/admin');
 
   return (
     <StyledAuthMenu>

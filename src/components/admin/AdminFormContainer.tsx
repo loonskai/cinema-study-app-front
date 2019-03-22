@@ -12,13 +12,11 @@ const Container = styled.div`
   box-sizing: border-box;
 `;
 
-const AdminFormContainer = ({ children, title }: any) => {
-  return (
-    <Container>
-      <PageTitle text={title} />
-      <div style={{ padding: '1rem' }}>{children}</div>
-    </Container>
-  );
-};
+const AdminFormContainer = ({ children, title }: any) => (
+  <Container>
+    <PageTitle text={title} />
+    <div style={{ padding: '1rem' }}>{children}</div>
+  </Container>
+);
 
 export default AdminFormContainer;
