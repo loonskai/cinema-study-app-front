@@ -76,8 +76,12 @@ const SelectedDataController = styled.form`
   justify-content: flex-start;
   flex-wrap: wrap;
 
-  && button,
-  && div {
+  & .summary-line {
+    margin-bottom: 1rem;
+  }
+
+  & button,
+  & div {
     width: 100%;
   }
 `;
@@ -141,7 +145,7 @@ const AddMovieForm = ({ handleSnackbar }: any) => {
       ) : (
         <Fragment>
           <SelectedDataController onSubmit={handleSubmit}>
-            <div style={{ marginBottom: '1rem' }}>
+            <div className="summary-line">
               Movies selected: {Object.keys(selectedMovies).length}
             </div>
             <HeaderButton

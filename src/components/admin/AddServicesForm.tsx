@@ -38,7 +38,7 @@ const AddServicesForm = ({ handleSnackbar }: any) => {
 
   return (
     <AdminFormContainer title="Add Services">
-      <form style={{ maxWidth: '550px' }} onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <SelectField
           id="cinema"
           type="select"

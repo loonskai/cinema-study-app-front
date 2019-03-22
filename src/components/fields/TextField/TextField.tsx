@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Autosuggest from 'react-autosuggest';
 import parse from 'autosuggest-highlight/parse';
 import MenuItem from '@material-ui/core/MenuItem';
+import styled from 'styled-components';
 
 import * as StyledContainers from './styled';
 import { match } from '../../../helpers/autosuggestHighlightMatch';
@@ -57,18 +58,25 @@ function renderSuggestion(
   const matches = match(suggestion.label, query);
   const parts: Array<{ text: string; highlight: boolean }> =
     matches && parse(suggestion.label, matches);
+
+  const SuggestionItemChar = styled.span`
+    &.highlighted {
+      font-weight: 700;
+    }
+  `;
+
   return (
     <MenuItem selected={isHighlighted} component="div">
       <div>
         {parts.map((part, index: number) =>
           part.highlight ? (
-            <span key={index.toString()} style={{ fontWeight: 'bold' }}>
+            <SuggestionItemChar key={index.toString()} className="highlighted">
               {part.text}
-            </span>
+            </SuggestionItemChar>
           ) : (
-            <strong key={index.toString()} style={{ fontWeight: 'normal' }}>
+            <SuggestionItemChar key={index.toString()}>
               {part.text}
-            </strong>
+            </SuggestionItemChar>
           )
         )}
       </div>

@@ -41,7 +41,7 @@ const AddHallForm = ({ handleSnackbar }: any) => {
 
   return (
     <AdminFormContainer title="Add Hall">
-      <form style={{ maxWidth: '550px' }} onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <TextField
           name="title"
           label="Hall Title"

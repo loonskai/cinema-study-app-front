@@ -26,6 +26,7 @@ const Row = styled.div`
   margin-bottom: 0.5rem;
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
 `;
 
 const RowElement = styled.div`
@@ -108,7 +109,7 @@ const AddRows = ({ handleSubmit, prevRows }: any) => {
           {prevRows.map(
             (row: { category: string; quantity: string }, index: number) => (
               <Row key={index.toString()}>
-                <RowElement style={{ fontWeight: 700 }}>{index + 1}</RowElement>
+                <RowElement>{index + 1}</RowElement>
                 <RowElement>{row.category}</RowElement>
                 <RowElement>{row.quantity}</RowElement>
               </Row>

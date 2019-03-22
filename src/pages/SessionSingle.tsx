@@ -74,10 +74,6 @@ const SessionSingle = ({ match }: any) => {
     loadData(match.params.id);
   }, []);
 
-  const fontBold = {
-    fontWeight: 700
-  };
-
   return isLoading ? (
     <Loader />
   ) : (
@@ -96,16 +92,16 @@ const SessionSingle = ({ match }: any) => {
           </div>
           <SessionInfo>
             <div>
-              City: <span style={fontBold}>{session.city}</span>
+              City: <strong>{session.city}</strong>
             </div>
             <div>
-              Cinema: <span style={fontBold}>{session.cinema}</span>
+              Cinema: <strong>{session.cinema}</strong>
             </div>
             <div>
-              Date: <span style={fontBold}>{session.date}</span>
+              Date: <strong>{session.date}</strong>
             </div>
             <div>
-              Time: <span style={fontBold}>{session.time}</span>
+              Time: <strong>{session.time}</strong>
             </div>
           </SessionInfo>
         </SessionOverview>

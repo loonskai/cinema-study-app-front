@@ -10,12 +10,17 @@ const Container = styled.div`
   justify-content: center;
   padding: 1.5rem 0;
   box-sizing: border-box;
+
+  & form {
+    max-width: 550px;
+    margin: 1rem;
+  }
 `;
 
 const AdminFormContainer = ({ children, title }: any) => (
   <Container>
     <PageTitle text={title} />
-    <div style={{ padding: '1rem' }}>{children}</div>
+    <div>{children}</div>
   </Container>
 );
 
