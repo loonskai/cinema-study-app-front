@@ -3,13 +3,18 @@ import parseResponse from '../helpers/parseResponse';
 import { SignInBodyType, SignUpBodyType } from '../interfaces/Auth';
 
 export default {
-  async signIn(body: SignInBodyType): Promise<any> {
-    try {
-      const res = await apiService.signIn(body);
-    } catch (error) {}
+  async signIn(body: SignInBodyType, errorsSetter: any): Promise<any> {
+    const res = await apiService.signIn(body);
+    if (res.error) {
+      return errorsSetter({
+        email: res.message,
+        username: res.message
+      });
+    }
+    return res.data;
   },
 
-  async signUp(body: SignUpBodyType, errorsSetter: any) {
+  async signUp(body: SignUpBodyType, errorsSetter: any): Promise<any> {
     const { password, confirmPassword } = body;
     if (password.length < 8) {
       return errorsSetter({
@@ -29,8 +34,6 @@ export default {
         username: res.message
       });
     }
-
-    console.log(res.data);
     return res.data;
   },
 

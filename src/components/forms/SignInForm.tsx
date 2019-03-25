@@ -2,18 +2,18 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PersonIcon from '@material-ui/icons/Person';
 
+import authService from '../../services/Auth';
 import actions from '../../redux/actions/index';
 import RadioFieldGroup from '../fields/RadioFieldGroup';
 import TextField from '../fields/TextField/TextField';
 import SubmitButton from '../buttons/SubmitButton';
-import { users } from '../../mocks';
 
 const SignInForm = ({ signIn, onSuccess }: any) => {
   const [signInWith, setSignInWith] = useState('email');
   const [values, setValues] = useState({
-    email: 'admin@mail.com',
+    email: 'client@mail.com',
     username: '',
-    password: 'Password123'
+    password: 'Testing123'
   });
   const [inputErrors, setInputErrors]: [any, any] = useState({
     email: null,
@@ -36,7 +36,8 @@ const SignInForm = ({ signIn, onSuccess }: any) => {
     e: React.ChangeEvent<HTMLFormElement>
   ): Promise<void> => {
     e.preventDefault();
-    const { email, username, password } = values;
+    const successMessage = await authService.signIn(values, setInputErrors);
+    /* const { email, username, password } = values;
     const user = users.find(u => u.email === email || u.username === username);
     if (!user) {
       if (email) {
@@ -55,7 +56,7 @@ const SignInForm = ({ signIn, onSuccess }: any) => {
       if (result) {
         onSuccess();
       }
-    }
+    } */
   };
 
   const handleToggleSignInWith = (

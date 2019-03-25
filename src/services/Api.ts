@@ -6,7 +6,7 @@ import { ResType, UserAPIType, MovieAPIType } from '../interfaces/Api';
 import { SignInBodyType, SignUpBodyType } from '../interfaces/Auth';
 import Movie from '../classes/Movie';
 
-import parseResponse, { parseError } from '../helpers/parseResponse';
+import parseResponse from '../helpers/parseResponse';
 
 /* getAll(): Movie[] {
   return apiService.getAllMovies()
@@ -31,7 +31,7 @@ class ApiService {
     this.client = axios.create();
   }
 
-  async signUp(body: SignUpBodyType): Promise<ResType<any>> {
+  async signUp(body: SignUpBodyType): Promise<ResType<string | Error>> {
     try {
       const res = await this.client.post(
         'http://localhost:5000/auth/signup',
@@ -39,17 +39,18 @@ class ApiService {
       );
       return parseResponse.success(res.data);
     } catch (error) {
+      console.error(error);
       return parseResponse.error(error);
     }
   }
 
-  async signIn(body: SignInBodyType): Promise<ResType<UserAPIType>> {
+  async signIn(body: SignInBodyType): Promise<ResType<UserAPIType | Error>> {
     try {
-      const { data } = await this.client.post('http://localhost:5000', body);
-      if (!data) {
-        throw Error('Cannot sign in');
-      }
-      return parseResponse.success(data.results);
+      const res = await this.client.post(
+        'http://localhost:5000/auth/signin',
+        body
+      );
+      return parseResponse.success(res.data);
     } catch (error) {
       console.error(error);
       return parseResponse.error(error);
@@ -88,7 +89,7 @@ class ApiService {
     }
   } */
 
-  async getMovies(): Promise<ResType<MovieAPIType[]>> {
+  async getMovies(): Promise<ResType<MovieAPIType[] | Error>> {
     try {
       const { data } = await this.client.get(
         `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&language=en-US&page=1`
@@ -103,7 +104,7 @@ class ApiService {
     }
   }
 
-  async getMovieById(id: string): Promise<ResType<MovieAPIType>> {
+  async getMovieById(id: string): Promise<ResType<MovieAPIType | Error>> {
     try {
       const { data } = await this.client.get(
         `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}`
@@ -118,7 +119,7 @@ class ApiService {
     }
   }
 
-  async addMovies(data: Movie[]): Promise<ResType<MovieAPIType[]>> {
+  async addMovies(data: Movie[]): Promise<ResType<MovieAPIType[] | Error>> {
     try {
       return new Promise((res, rej) => {
         console.log('create movie -->', data);
