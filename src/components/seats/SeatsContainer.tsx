@@ -50,10 +50,10 @@ const SeatsContainer = ({
   order: any;
   setOrderInfo: any;
 }) => {
-  const [rowCategories, setRowCategories]: [any, any] = useState(null);
-  const [isModalDisplayed, setModalDisplay]: [boolean, any] = useState(false);
-  const [timerStarted, setTimerStarted]: [boolean, any] = useState(false);
-  const [orderTimeExpired, setOrderTimeExpired] = useState(false);
+  const [rowCategories, setRowCategories] = useState<any>(null);
+  const [isModalDisplayed, setModalDisplay] = useState<boolean>(false);
+  const [timerStarted, setTimerStarted] = useState<boolean>(false);
+  const [orderTimeExpired, setOrderTimeExpired] = useState<boolean>(false);
 
   useEffect(() => {
     setOrderInfo({
@@ -78,7 +78,7 @@ const SeatsContainer = ({
   };
 
   const handleSeatPick = (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>
+    e: React.BaseSyntheticEvent<HTMLDivElement, MouseEvent>
   ): void => {
     if (!timerStarted) {
       setTimerStarted(true);
@@ -88,7 +88,10 @@ const SeatsContainer = ({
     const pickedSeat = +e.target.dataset.seat;
     const free = e.target.dataset.free === 'true';
     const price = +e.target.dataset.price;
-    if (!pickedRow || !pickedSeat || !free) return;
+    if (!pickedRow || !pickedSeat || !free) {
+      return;
+    }
+
     const pickedBefore = seatsPicked.some(
       (seat: any) => seat.row === pickedRow && seat.seat === pickedSeat
     );

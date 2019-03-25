@@ -39,7 +39,10 @@ const AddHallForm = ({ handleSnackbar }: any) => {
     }
   };
 
-  const handleRowsChange = (newRow: any): void => setRows([...rows, newRow]);
+  const handleRowsChange = (newRow: {
+    category: string;
+    quantity: string;
+  }): void => setRows([...rows, newRow]);
 
   return (
     <AdminFormContainer title="Add Hall">

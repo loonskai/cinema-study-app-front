@@ -1,6 +1,15 @@
-import axios from 'axios';
-import { apiKey } from './credentials';
+import axios, { AxiosInstance } from 'axios';
+import { apiKey } from '../credentials';
 import randomstring from 'randomstring';
+
+import { MovieAPIType, ResType } from '../interfaces/Api';
+
+import parseResponse from '../helpers/parseResponse';
+
+/* getAll(): Movie[] {
+  return apiService.getAllMovies()
+    .then(movies => movies.map(movie => new Movie(movie)))
+} */
 
 import {
   sessions,
@@ -11,16 +20,16 @@ import {
   cinemas,
   halls,
   rowCategories
-} from './mocks';
+} from '../mocks';
 
 class ApiService {
-  client: any;
+  client: AxiosInstance;
 
   constructor() {
     this.client = axios.create();
   }
 
-  async signIn(values: any) {
+  /*   async signIn(values: any) {
     try {
       // Random string as access token. Should be changed to real token from server
       const token = randomstring.generate();
@@ -34,17 +43,17 @@ class ApiService {
     } catch (error) {
       console.error(error);
     }
-  }
+  } */
 
-  async signOut() {
+  /*   async signOut() {
     try {
       return true;
     } catch (error) {
       console.error(error);
     }
-  }
+  } */
 
-  async validateToken(token: string) {
+  /*   async validateToken(token: string) {
     try {
       // Here we make request to validate token that has been received from sessionStorage while app initialization
       return new Promise((res, rej) => {
@@ -56,9 +65,9 @@ class ApiService {
     } catch (error) {
       console.error(error);
     }
-  }
+  } */
 
-  async loadUserInfo() {
+  /*   async loadUserInfo() {
     try {
       return new Promise((res, rej) => {
         return res(userData);
@@ -66,20 +75,24 @@ class ApiService {
     } catch (error) {
       console.error(error);
     }
-  }
+  } */
 
-  async loadMoviesList() {
+  async getMovies(): Promise<ResType<MovieAPIType[]>> {
     try {
       const { data } = await this.client.get(
-        `https://api.themoviedb.org/4/list/1?page=1&api_key=${apiKey}`
+        `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&language=en-US&page=1`
       );
-      return data.results;
+      if (!data || !data.results) {
+        throw Error('Cannot load data from API');
+      }
+      return parseResponse.success(data.results);
     } catch (error) {
       console.error(error);
+      return parseResponse.error(error);
     }
   }
 
-  async loadMovieById(id: string) {
+  /*   async loadMovieById(id: string) {
     try {
       const { data } = await this.client.get(
         `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}`
@@ -88,9 +101,9 @@ class ApiService {
     } catch (error) {
       console.error(error);
     }
-  }
+  } */
 
-  async loadSessionById(id: number) {
+  /*   async loadSessionById(id: number) {
     try {
       return new Promise((res, rej) => {
         return res(sessions.find(session => session.id === id));
@@ -98,9 +111,9 @@ class ApiService {
     } catch (error) {
       console.error(error);
     }
-  }
+  } */
 
-  async loadSessionsList(options: any) {
+  /*   async loadSessionsList(options: any) {
     try {
       return new Promise((res, rej) => {
         setTimeout(() => res(sessions), 1000);
@@ -108,9 +121,9 @@ class ApiService {
     } catch (error) {
       console.error(error);
     }
-  }
+  } */
 
-  async loadAllSeats() {
+  /*   async loadAllSeats() {
     try {
       return new Promise((res, rej) => {
         return res(seats);
@@ -118,9 +131,9 @@ class ApiService {
     } catch (error) {
       console.error(error);
     }
-  }
+  } */
 
-  async loadSessionBonuses(sessionId: number) {
+  /*   async loadSessionBonuses(sessionId: number) {
     try {
       return new Promise((res, rej) => {
         return res(bonus);
@@ -128,9 +141,9 @@ class ApiService {
     } catch (error) {
       console.error(error);
     }
-  }
+  } */
 
-  async loadAllCinemas() {
+  /*   async loadAllCinemas() {
     try {
       return new Promise((res, rej) => {
         return res(cinemas);
@@ -138,9 +151,9 @@ class ApiService {
     } catch (error) {
       console.error(error);
     }
-  }
+  } */
 
-  async loadCinemasByCity(city: string) {
+  /*   async loadCinemasByCity(city: string) {
     try {
       const filteredCinemas = cinemas.filter(
         (cinema: any) => cinema.city === city
@@ -151,9 +164,9 @@ class ApiService {
     } catch (error) {
       console.error(error);
     }
-  }
+  } */
 
-  async loadHallsByCinema(cinemaId: any) {
+  /*   async loadHallsByCinema(cinemaId: any) {
     try {
       const filteredHalls = halls.filter(
         (hall: any) => hall.cinemaId === cinemaId
@@ -164,9 +177,9 @@ class ApiService {
     } catch (error) {
       console.error(error);
     }
-  }
+  } */
 
-  async reserve(options: any) {
+  /*   async reserve(options: any) {
     try {
       return new Promise((res, rej) => {
         console.log('reserve seats -->', options);
@@ -175,9 +188,9 @@ class ApiService {
     } catch (error) {
       console.error(error);
     }
-  }
+  } */
 
-  async submitOrder(order: any) {
+  /*   async submitOrder(order: any) {
     try {
       return new Promise((res, rej) => {
         console.log('submit order -->', order);
@@ -186,9 +199,9 @@ class ApiService {
     } catch (error) {
       console.error(error);
     }
-  }
+  } */
 
-  async loadCities() {
+  /*   async loadCities() {
     try {
       const cities = Object.keys(
         sessions.reduce((obj: any, session: any) => {
@@ -202,10 +215,10 @@ class ApiService {
     } catch (error) {
       console.error(error);
     }
-  }
+  } */
 
   /** ADMIN OPERATIONS */
-  async createCinema(data: any) {
+  /*   async createCinema(data: any) {
     try {
       return new Promise((res, rej) => {
         console.log('create cinema -->', data);
@@ -214,9 +227,9 @@ class ApiService {
     } catch (error) {
       console.error(error);
     }
-  }
+  } */
 
-  async loadRowCategories(hallId?: number) {
+  /*   async loadRowCategories(hallId?: number) {
     try {
       return new Promise((res, rej) => {
         if (!hallId) {
@@ -240,9 +253,9 @@ class ApiService {
     } catch (error) {
       console.error(error);
     }
-  }
+  } */
 
-  async createHall(data: any) {
+  /*   async createHall(data: any) {
     try {
       return new Promise((res, rej) => {
         console.log('create hall -->', data);
@@ -251,9 +264,9 @@ class ApiService {
     } catch (error) {
       console.error(error);
     }
-  }
+  } */
 
-  async createService(data: any) {
+  /*   async createService(data: any) {
     try {
       return new Promise((res, rej) => {
         console.log('create service -->', data);
@@ -262,9 +275,9 @@ class ApiService {
     } catch (error) {
       console.error(error);
     }
-  }
+  } */
 
-  async createSession(data: any) {
+  /*   async createSession(data: any) {
     try {
       return new Promise((res, rej) => {
         console.log('create session -->', data);
@@ -273,9 +286,9 @@ class ApiService {
     } catch (error) {
       console.error(error);
     }
-  }
+  } */
 
-  async loadExternalAPIMovies() {
+  /*   async loadExternalAPIMovies() {
     try {
       const { data } = await this.client.get(
         `https://api.themoviedb.org/4/list/1?page=1&api_key=${apiKey}`
@@ -284,9 +297,9 @@ class ApiService {
     } catch (error) {
       console.error(error);
     }
-  }
+  } */
 
-  async addMovies(data: any) {
+  /*   async addMovies(data: any) {
     try {
       return new Promise((res, rej) => {
         console.log('create movie -->', data);
@@ -295,7 +308,7 @@ class ApiService {
     } catch (error) {
       console.error(error);
     }
-  }
+  } */
 }
 
 const api = new ApiService();

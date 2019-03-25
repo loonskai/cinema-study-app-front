@@ -8,6 +8,11 @@ import SelectField from '../../fields/SelectField/SelectField';
 import RoundButton from '../../buttons/RoundButton';
 import { mainColor } from '../../../constants';
 
+interface Props {
+  handleSubmit: (newRow: { category: string; quantity: string }) => void;
+  prevRows: Array<{ category: string; quantity: string }>;
+}
+
 const Container = styled.div`
   width: 100%;
   display: flex;
@@ -36,8 +41,7 @@ const RowElement = styled.div`
   padding-right: 0 0.3rem;
 `;
 
-const AddRows = (props: any) => {
-  console.log(props);
+const AddRows = (props: Props) => {
   const { handleSubmit, prevRows } = props;
   const [seatsValues, setSeatsValues] = useState({
     category: '',
