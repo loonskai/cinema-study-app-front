@@ -1,17 +1,18 @@
-import { ResErrorType, ResSuccessType } from '../interfaces/Api';
-
-export const parseError = (message: string): ResErrorType => ({
-  message,
-  error: true
-});
+import { ResType } from '../interfaces/Api';
+import { AxiosError } from 'axios';
 
 export default {
-  error: (message: string): ResErrorType => ({
-    message,
-    error: true
-  }),
+  error: (error: AxiosError): ResType<AxiosError> => {
+    return {
+      message:
+        error.response && error.response.data
+          ? error.response.data.message
+          : error.message,
+      error: true
+    };
+  },
 
-  success: <T>(data: T): ResSuccessType<T> => ({
+  success: <T>(data: T): ResType<T> => ({
     data,
     success: true
   })

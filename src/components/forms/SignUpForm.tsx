@@ -1,16 +1,16 @@
 import React, { Fragment, useState } from 'react';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
+import authService from '../../services/Auth';
 import TextField from '../fields/TextField/TextField';
 import SubmitButton from '../buttons/SubmitButton';
-import { users } from '../../mocks';
 
 const SignUpForm = ({ onSuccess }: any) => {
   const [values, setValues] = useState({
-    email: '',
-    username: '',
-    password: '',
-    confirmPassword: ''
+    email: 'client@mail.com',
+    username: 'client',
+    password: 'Testing123',
+    confirmPassword: 'Testing123'
   });
   const [inputErrors, setInputErrors]: [any, any] = useState({
     email: null,
@@ -30,27 +30,12 @@ const SignUpForm = ({ onSuccess }: any) => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+  const handleSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ): Promise<void> => {
     e.preventDefault();
-    const { email, username, password, confirmPassword } = values;
-    const user = users.find(
-      user => user.email === email || user.username === username
-    );
-    if (user && user.email === email) {
-      setInputErrors({ ...inputErrors, email: 'Email already in use' });
-    } else if (user && user.username === username) {
-      setInputErrors({ ...inputErrors, username: 'Username already in use' });
-    } else if (password.length < 8) {
-      setInputErrors({
-        ...inputErrors,
-        password: 'Password should have min 8 characters length'
-      });
-    } else if (password !== confirmPassword) {
-      setInputErrors({
-        ...inputErrors,
-        confirmPassword: 'Passwords do not match'
-      });
-    } else {
+    const successMessage = await authService.signUp(values, setInputErrors);
+    if (successMessage) {
       onSuccess();
     }
   };

@@ -3,10 +3,10 @@ import { apiKey } from '../credentials';
 import randomstring from 'randomstring';
 
 import { ResType, UserAPIType, MovieAPIType } from '../interfaces/Api';
-import { SignInBodyType } from '../interfaces/Auth';
+import { SignInBodyType, SignUpBodyType } from '../interfaces/Auth';
 import Movie from '../classes/Movie';
 
-import parseResponse from '../helpers/parseResponse';
+import parseResponse, { parseError } from '../helpers/parseResponse';
 
 /* getAll(): Movie[] {
   return apiService.getAllMovies()
@@ -29,6 +29,18 @@ class ApiService {
 
   constructor() {
     this.client = axios.create();
+  }
+
+  async signUp(body: SignUpBodyType): Promise<ResType<any>> {
+    try {
+      const res = await this.client.post(
+        'http://localhost:5000/auth/signup',
+        body
+      );
+      return parseResponse.success(res.data);
+    } catch (error) {
+      return parseResponse.error(error);
+    }
   }
 
   async signIn(body: SignInBodyType): Promise<ResType<UserAPIType>> {
