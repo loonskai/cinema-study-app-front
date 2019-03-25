@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AddIcon from '@material-ui/icons/Add';
 
-import api from '../../ApiService';
+// import api from '../../ApiService';
 import { loadAllCinemaOptions } from '../../helpers/loadSelectOptions';
 import AdminFormContainer from './AdminFormContainer';
 import TextField from '../fields/TextField/TextField';

@@ -15,5 +15,31 @@ export default {
       console.error(error);
       return null;
     }
+  },
+
+  async getOneById(id: string): Promise<Movie | null> {
+    try {
+      const res = await apiService.getMovieById(id);
+      if (res.error || !res.data) {
+        throw Error(res.message);
+      }
+      return new Movie(res.data);
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  },
+
+  async create(data: Movie[]): Promise<any> {
+    try {
+      // console.log('create movie -->', data);
+      const res = await apiService.addMovies(data);
+      if (res.error || !res.data) {
+        throw Error(res.message);
+      }
+      return true;
+    } catch (error) {
+      console.error(error);
+    }
   }
 };

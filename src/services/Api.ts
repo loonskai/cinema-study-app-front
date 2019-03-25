@@ -2,7 +2,9 @@ import axios, { AxiosInstance } from 'axios';
 import { apiKey } from '../credentials';
 import randomstring from 'randomstring';
 
-import { MovieAPIType, ResType } from '../interfaces/Api';
+import { ResType, UserAPIType, MovieAPIType } from '../interfaces/Api';
+import { SignInBodyType } from '../interfaces/Auth';
+import Movie from '../classes/Movie';
 
 import parseResponse from '../helpers/parseResponse';
 
@@ -29,21 +31,18 @@ class ApiService {
     this.client = axios.create();
   }
 
-  /*   async signIn(values: any) {
+  async signIn(body: SignInBodyType): Promise<ResType<UserAPIType>> {
     try {
-      // Random string as access token. Should be changed to real token from server
-      const token = randomstring.generate();
-      const { role }: any = users.find(
-        (user: any) =>
-          user.email === values.email || user.username === values.username
-      );
-      return new Promise((res, rej) => {
-        res({ token, role });
-      });
+      const { data } = await this.client.post('http://localhost:5000', body);
+      if (!data) {
+        throw Error('Cannot sign in');
+      }
+      return parseResponse.success(data.results);
     } catch (error) {
       console.error(error);
+      return parseResponse.error(error);
     }
-  } */
+  }
 
   /*   async signOut() {
     try {
@@ -83,7 +82,7 @@ class ApiService {
         `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&language=en-US&page=1`
       );
       if (!data || !data.results) {
-        throw Error('Cannot load data from API');
+        throw Error('Cannot load movies list from API');
       }
       return parseResponse.success(data.results);
     } catch (error) {
@@ -92,16 +91,39 @@ class ApiService {
     }
   }
 
-  /*   async loadMovieById(id: string) {
+  async getMovieById(id: string): Promise<ResType<MovieAPIType>> {
     try {
       const { data } = await this.client.get(
         `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}`
       );
-      return data;
+      if (!data) {
+        throw Error('Cannot load movie from API');
+      }
+      return parseResponse.success(data);
     } catch (error) {
       console.error(error);
+      return parseResponse.error(error);
     }
-  } */
+  }
+
+  async addMovies(data: Movie[]): Promise<ResType<MovieAPIType[]>> {
+    try {
+      return new Promise((res, rej) => {
+        console.log('create movie -->', data);
+        return res([]);
+      });
+      /*
+        const { data } = await this.client.post(`https://localhost:5000/movies`, data);
+        if (!data) {
+          throw Error('Unable to add movies');
+        }
+        return parseResponse.success(data);
+      */
+    } catch (error) {
+      console.error(error);
+      return parseResponse.error(error);
+    }
+  }
 
   /*   async loadSessionById(id: number) {
     try {
@@ -294,17 +316,6 @@ class ApiService {
         `https://api.themoviedb.org/4/list/1?page=1&api_key=${apiKey}`
       );
       return data.results;
-    } catch (error) {
-      console.error(error);
-    }
-  } */
-
-  /*   async addMovies(data: any) {
-    try {
-      return new Promise((res, rej) => {
-        console.log('create movie -->', data);
-        return res(true);
-      });
     } catch (error) {
       console.error(error);
     }

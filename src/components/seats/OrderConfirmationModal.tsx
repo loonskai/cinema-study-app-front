@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import LocalGroceryStoreIcon from '@material-ui/icons/LocalGroceryStore';
 
-import api from '../../ApiService';
+// import api from '../../ApiService';
 import actions from '../../redux/actions';
 import BonusContainer from '../../components/bonus/BonusContainer';
 import SubmitButton from '../buttons/SubmitButton';

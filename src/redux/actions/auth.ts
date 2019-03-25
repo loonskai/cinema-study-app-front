@@ -1,5 +1,5 @@
 import { SIGN_IN, SIGN_UP, SIGN_OUT } from './../../constants';
-import api from './../../ApiService';
+// import api from './../../ApiService';
 
 const signIn = (values: any) => {
   try {

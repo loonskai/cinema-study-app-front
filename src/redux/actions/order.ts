@@ -1,6 +1,6 @@
 import { SET_ORDER_INFO } from './../../constants';
 
-import api from '../../ApiService';
+// import api from '../../ApiService';
 
 const setOrderInfo = (order: boolean) => {
   return (dispatch: any) => {

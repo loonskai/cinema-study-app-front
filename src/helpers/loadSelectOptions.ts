@@ -1,4 +1,4 @@
-import api from '../ApiService';
+// import api from '../ApiService';
 
 // SELECT OPTIONS
 export const loadAllCinemaOptions = async (

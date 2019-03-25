@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 
-import api from '../ApiService';
+// import api from '../ApiService';
 import Loader from '../components/Loader';
 import PageTitle from '../components/PageTitle';
 import SearchSessionForm from '../components/forms/SearchSessionForm';

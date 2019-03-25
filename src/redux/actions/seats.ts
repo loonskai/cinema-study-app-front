@@ -1,6 +1,6 @@
 import { LOAD_ALL_SEATS } from './../../constants';
 
-import api from '../../ApiService';
+// import api from '../../ApiService';
 
 const loadAllSeats = () => {
   return async (dispatch: any) => {

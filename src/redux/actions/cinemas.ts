@@ -1,5 +1,5 @@
 import { LOAD_CINEMAS } from './../../constants';
-import api from './../../ApiService';
+// import api from './../../ApiService';
 
 const loadAllCinemas = () => {
   try {

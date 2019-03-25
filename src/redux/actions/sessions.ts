@@ -1,5 +1,5 @@
 import { LOAD_SESSIONS_LIST } from './../../constants';
-import api from './../../ApiService';
+// import api from './../../ApiService';
 
 const loadSessionsList = (options: any) => {
   try {
