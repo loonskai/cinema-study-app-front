@@ -1,4 +1,4 @@
-import axios, { AxiosInstance } from 'axios';
+import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { apiKey } from '../credentials';
 import randomstring from 'randomstring';
 
@@ -8,27 +8,30 @@ import Movie from '../classes/Movie';
 
 import parseResponse from '../helpers/parseResponse';
 
-/* getAll(): Movie[] {
-  return apiService.getAllMovies()
-    .then(movies => movies.map(movie => new Movie(movie)))
-} */
-
-import {
-  sessions,
-  seats,
-  users,
-  bonus,
-  userData,
-  cinemas,
-  halls,
-  rowCategories
-} from '../mocks';
-
+// ADD verify token endpoint
 class ApiService {
   client: AxiosInstance;
+  accessToken: string | null;
 
   constructor() {
     this.client = axios.create();
+    this.accessToken = sessionStorage.getItem('accessToken');
+
+    this.client.interceptors.request.use(
+      (config: AxiosRequestConfig): AxiosRequestConfig => {
+        if (!this.accessToken) {
+          return config;
+        }
+        const newConfig = {
+          headers: {},
+          ...config
+        };
+
+        newConfig.headers.Authorization = `Bearer ${this.accessToken}`;
+        return newConfig;
+      }
+    ),
+      (e: Error) => Promise.reject(e);
   }
 
   async signUp(body: SignUpBodyType): Promise<ResType<string | Error>> {
@@ -50,6 +53,8 @@ class ApiService {
         'http://localhost:5000/auth/signin',
         body
       );
+      sessionStorage.setItem('accessToken', res.data.token);
+      this.accessToken = res.data.token;
       return parseResponse.success(res.data);
     } catch (error) {
       console.error(error);
