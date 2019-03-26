@@ -1,5 +1,4 @@
-import { SIGN_IN, SIGN_UP, SIGN_OUT } from './../../constants';
-// import api from './../../ApiService';
+import { SIGN_IN, SIGN_OUT } from './../../constants';
 import authService from '../../services/Auth';
 import { UserAPIType } from '../../interfaces/Api';
 
@@ -20,17 +19,17 @@ const signIn = (data: UserAPIType): any => {
   }
 };
 
-/* const signOut = () => {
+const signOut = () => {
   try {
     return async (dispatch: any) => {
-      await api.signOut();
+      await authService.signOut();
       dispatch({ type: SIGN_OUT });
-      sessionStorage.removeItem('token');
+      return true;
     };
   } catch (error) {
     console.log(error);
   }
-}; */
+};
 
 const validateToken = (token: string) => {
   try {
@@ -53,7 +52,6 @@ const validateToken = (token: string) => {
 
 export default {
   signIn,
-  // signUp,
-  // signOut,
+  signOut,
   validateToken
 };

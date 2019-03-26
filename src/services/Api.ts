@@ -74,14 +74,6 @@ class ApiService {
     }
   }
 
-  /*   async signOut() {
-    try {
-      return true;
-    } catch (error) {
-      console.error(error);
-    }
-  } */
-
   /*   async loadUserInfo() {
     try {
       return new Promise((res, rej) => {

@@ -1,5 +1,4 @@
 import apiService from './Api';
-import parseResponse from '../helpers/parseResponse';
 import { SignInBodyType, SignUpBodyType } from '../interfaces/Auth';
 
 export default {
@@ -37,7 +36,9 @@ export default {
     return res.data;
   },
 
-  async signOut() {},
+  async signOut() {
+    sessionStorage.removeItem('accessToken');
+  },
 
   async validateToken(token: string): Promise<any> {
     const res = await apiService.validateToken(token);
