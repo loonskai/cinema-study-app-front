@@ -18,7 +18,7 @@ const Root = () => (
     <Route path="/auth" component={Auth} />
     <ProtectedRoute path="/profile" component={UserProfile} />
     <ProtectedRoute path="/sessions/:id" component={SessionSingle} />
-    <ProtectedRoute path="/admin" component={Admin} />
+    <ProtectedRoute path="/admin" admin={true} component={Admin} />
   </Switch>
 );
 

@@ -2,11 +2,24 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect, withRouter } from 'react-router-dom';
 
-const ProtectedRoute = ({ component: Component, isAuth, ...rest }: any) => (
+const ProtectedRoute = ({
+  component: Component,
+  admin,
+  isAuth,
+  isAdmin,
+  ...rest
+}: any) => (
   <Route
     {...rest}
-    render={props =>
-      isAuth ? (
+    render={props => {
+      if (admin) {
+        return isAuth && isAdmin ? (
+          <Component {...props} />
+        ) : (
+          <Redirect to={{ pathname: '/' }} />
+        );
+      }
+      return isAuth ? (
         <Component {...props} />
       ) : (
         <Redirect
@@ -15,8 +28,8 @@ const ProtectedRoute = ({ component: Component, isAuth, ...rest }: any) => (
             state: { from: props.location }
           }}
         />
-      )
-    }
+      );
+    }}
   />
 );
 

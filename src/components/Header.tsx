@@ -45,12 +45,9 @@ const Header = () => {
         >
           <MenuTab value="/" label="Main Page" to="/" />
           <MenuTab value="/movies" label="Movies" to="/movies" />
-          <div />
-          <MenuTab value="/profile" label="Profile" to="/profile" />
-          <MenuTab value="/admin" label="Admin" to="/admin" />
         </StyledTabs>
       </StyledToolBar>
-      {/* <MenuAuth /> */}
+      <MenuAuth />
     </StyledAppBar>
   );
 };
