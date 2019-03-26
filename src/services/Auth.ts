@@ -37,5 +37,14 @@ export default {
     return res.data;
   },
 
-  async signOut() {}
+  async signOut() {},
+
+  async validateToken(token: string): Promise<any> {
+    const res = await apiService.validateToken(token);
+    if (res.error) {
+      sessionStorage.removeItem('accessToken');
+      return;
+    }
+    return res.data;
+  }
 };

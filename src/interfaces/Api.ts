@@ -13,5 +13,6 @@ export interface MovieAPIType {
 
 export interface UserAPIType {
   token: string;
-  user: any;
+  user: string;
+  role: 'admin' | 'client';
 }

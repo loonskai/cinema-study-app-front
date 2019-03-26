@@ -5,14 +5,32 @@ import authService from '../../services/Auth';
 import TextField from '../fields/TextField/TextField';
 import SubmitButton from '../buttons/SubmitButton';
 
-const SignUpForm = ({ onSuccess }: any) => {
-  const [values, setValues] = useState({
+interface Props {
+  onSuccess: () => void;
+}
+
+interface InputValues {
+  email: string;
+  username: string;
+  password: string;
+  confirmPassword: string;
+}
+
+interface InputErrors {
+  email: string | null;
+  username: string | null;
+  password: string | null;
+  confirmPassword: string | null;
+}
+
+const SignUpForm: React.FC<Props> = ({ onSuccess }) => {
+  const [values, setValues] = useState<InputValues>({
     email: 'client@mail.com',
     username: 'client',
     password: 'Testing123',
     confirmPassword: 'Testing123'
   });
-  const [inputErrors, setInputErrors]: [any, any] = useState({
+  const [inputErrors, setInputErrors] = useState<InputErrors>({
     email: null,
     username: null,
     password: null,

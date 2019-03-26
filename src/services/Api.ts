@@ -1,6 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { apiKey } from '../credentials';
-import randomstring from 'randomstring';
 
 import { ResType, UserAPIType, MovieAPIType } from '../interfaces/Api';
 import { SignInBodyType, SignUpBodyType } from '../interfaces/Auth';
@@ -62,23 +61,22 @@ class ApiService {
     }
   }
 
+  async validateToken(token: string): Promise<ResType<UserAPIType | Error>> {
+    try {
+      const res = await this.client.post(
+        'http://localhost:5000/auth/validate',
+        { token }
+      );
+      return res.data;
+    } catch (error) {
+      console.error(error);
+      return parseResponse.error(error);
+    }
+  }
+
   /*   async signOut() {
     try {
       return true;
-    } catch (error) {
-      console.error(error);
-    }
-  } */
-
-  /*   async validateToken(token: string) {
-    try {
-      // Here we make request to validate token that has been received from sessionStorage while app initialization
-      return new Promise((res, rej) => {
-        return res({
-          tokenIsValid: true,
-          role: 'admin'
-        });
-      });
     } catch (error) {
       console.error(error);
     }

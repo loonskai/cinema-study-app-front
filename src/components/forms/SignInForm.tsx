@@ -9,6 +9,7 @@ import TextField from '../fields/TextField/TextField';
 import SubmitButton from '../buttons/SubmitButton';
 
 interface Props {
+  signIn: any;
   onSuccess: () => void;
 }
 
@@ -24,7 +25,7 @@ interface InputValues {
   password: string;
 }
 
-const SignInForm: React.FC<Props> = ({ onSuccess }) => {
+const SignInForm: React.FC<Props> = ({ signIn, onSuccess }) => {
   const [signInWith, setSignInWith] = useState<string>('email');
   const [values, setValues] = useState<InputValues>({
     email: 'client@mail.com',
@@ -52,9 +53,12 @@ const SignInForm: React.FC<Props> = ({ onSuccess }) => {
     e: React.ChangeEvent<HTMLFormElement>
   ): Promise<void> => {
     e.preventDefault();
-    const successMessage = await authService.signIn(values, setInputErrors);
-    if (successMessage) {
-      onSuccess();
+    const data = await authService.signIn(values, setInputErrors);
+    if (data) {
+      const result = await signIn(data);
+      if (result) {
+        onSuccess();
+      }
     }
   };
 
