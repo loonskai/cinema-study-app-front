@@ -2,13 +2,20 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect, withRouter } from 'react-router-dom';
 
-const ProtectedRoute = ({
+interface Props {
+  component: React.ReactType;
+  admin: boolean;
+  isAuth: boolean;
+  isAdmin: boolean;
+}
+
+const ProtectedRoute: React.FC<Props> = ({
   component: Component,
   admin,
   isAuth,
   isAdmin,
   ...rest
-}: any) => (
+}) => (
   <Route
     {...rest}
     render={props => {
@@ -34,7 +41,8 @@ const ProtectedRoute = ({
 );
 
 const connectedProtectedRoute: any = connect(({ auth }: { auth: any }) => ({
-  isAuth: auth.isAuth
+  isAuth: auth.isAuth,
+  isAdmin: auth.isAdmin
 }))(ProtectedRoute);
 
 export default withRouter(connectedProtectedRoute) as any;

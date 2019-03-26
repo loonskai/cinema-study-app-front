@@ -16,3 +16,8 @@ export interface UserAPIType {
   user: string;
   role: 'admin' | 'client';
 }
+
+export interface CinemaAPIType {
+  title: string;
+  city: string;
+}

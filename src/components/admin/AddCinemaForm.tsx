@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import AddIcon from '@material-ui/icons/Add';
 
-// import api from '../../ApiService';
+import cinemaService from '../../services/Cinema';
 import AdminFormContainer from './AdminFormContainer';
 import TextField from '../fields/TextField/TextField';
 import SubmitButton from '../buttons/SubmitButton';
 
 const AddCinemaForm = ({ handleSnackbar }: any) => {
   const [values, setValues] = useState({
-    city: '',
-    cinema: ''
+    title: '',
+    city: ''
   });
-  const [buttonDisabled, setButtonDisabled] = useState(true);
+  const [buttonDisabled, setButtonDisabled] = useState<boolean>(true);
 
   useEffect(() => {
-    if (values.city && values.cinema) {
+    if (values.city && values.title) {
       setButtonDisabled(false);
     }
   }, [values]);
@@ -30,11 +30,11 @@ const AddCinemaForm = ({ handleSnackbar }: any) => {
     e: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
     e.preventDefault();
-    const result = await api.createCinema(values);
+    const result = await cinemaService.create(values);
     if (result) {
       setValues({
         city: '',
-        cinema: ''
+        title: ''
       });
       setButtonDisabled(true);
       handleSnackbar('New cinema added', 'success');
@@ -51,9 +51,9 @@ const AddCinemaForm = ({ handleSnackbar }: any) => {
           handleChange={handleChange}
         />
         <TextField
-          name="cinema"
-          label="Cinema Name"
-          value={values.cinema}
+          name="title"
+          label="Cinema Title"
+          value={values.title}
           handleChange={handleChange}
         />
         <SubmitButton

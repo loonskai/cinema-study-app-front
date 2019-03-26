@@ -1,7 +1,12 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { apiKey } from '../credentials';
 
-import { ResType, UserAPIType, MovieAPIType } from '../interfaces/Api';
+import {
+  ResType,
+  UserAPIType,
+  MovieAPIType,
+  CinemaAPIType
+} from '../interfaces/Api';
 import { SignInBodyType, SignUpBodyType } from '../interfaces/Auth';
 import Movie from '../classes/Movie';
 
@@ -83,6 +88,16 @@ class ApiService {
       console.error(error);
     }
   } */
+
+  async createCinema(body: CinemaAPIType): Promise<any> {
+    try {
+      const res = await this.client.post('http://localhost:5000/cinema', body);
+      return parseResponse.success(res.data);
+    } catch (error) {
+      console.error(error);
+      return parseResponse.error(error);
+    }
+  }
 
   async getMovies(): Promise<ResType<MovieAPIType[] | Error>> {
     try {
