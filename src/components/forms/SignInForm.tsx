@@ -8,14 +8,30 @@ import RadioFieldGroup from '../fields/RadioFieldGroup';
 import TextField from '../fields/TextField/TextField';
 import SubmitButton from '../buttons/SubmitButton';
 
-const SignInForm = ({ signIn, onSuccess }: any) => {
-  const [signInWith, setSignInWith] = useState('email');
-  const [values, setValues] = useState({
+interface Props {
+  onSuccess: () => void;
+}
+
+interface InputErrors {
+  email: string | null;
+  username: string | null;
+  password: string | null;
+}
+
+interface InputValues {
+  email: string;
+  username: string;
+  password: string;
+}
+
+const SignInForm: React.FC<Props> = ({ onSuccess }) => {
+  const [signInWith, setSignInWith] = useState<string>('email');
+  const [values, setValues] = useState<InputValues>({
     email: 'client@mail.com',
     username: '',
     password: 'Testing123'
   });
-  const [inputErrors, setInputErrors]: [any, any] = useState({
+  const [inputErrors, setInputErrors] = useState<InputErrors>({
     email: null,
     username: null,
     password: null
@@ -37,26 +53,9 @@ const SignInForm = ({ signIn, onSuccess }: any) => {
   ): Promise<void> => {
     e.preventDefault();
     const successMessage = await authService.signIn(values, setInputErrors);
-    /* const { email, username, password } = values;
-    const user = users.find(u => u.email === email || u.username === username);
-    if (!user) {
-      if (email) {
-        setInputErrors({ ...inputErrors, email: 'User not found' });
-      }
-      if (username) {
-        setInputErrors({ ...inputErrors, username: 'User not found' });
-      }
-    } else if (user.password !== password) {
-      setInputErrors({
-        ...inputErrors,
-        password: 'Wrong password'
-      });
-    } else {
-      const result = await signIn(values);
-      if (result) {
-        onSuccess();
-      }
-    } */
+    if (successMessage) {
+      onSuccess();
+    }
   };
 
   const handleToggleSignInWith = (

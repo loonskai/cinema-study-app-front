@@ -17,7 +17,10 @@ const Container = styled.div`
   }
 `;
 
-const AdminFormContainer = ({ children, title }: any) => (
+const AdminFormContainer: React.FC<{ title: string }> = ({
+  children,
+  title
+}) => (
   <Container>
     <PageTitle text={title} />
     <div>{children}</div>

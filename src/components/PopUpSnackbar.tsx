@@ -92,7 +92,7 @@ const PopUpSnackbar = (props: any) => {
     </Snackbar>
   );
 
-  const domNode: any = document.getElementById('snackbars');
+  const domNode = document.getElementById('snackbars') as HTMLElement;
 
   return createPortal(element, domNode);
 };
