@@ -10,9 +10,9 @@ export default (message: string): string | { [key: string]: string } => {
     case 'Wrong password':
       return 'password';
     case '"city" length must be at least 2 characters long':
-      return 'city';
+      return { city: 'City name is too short' };
     case '"title" length must be at least 2 characters long':
-      return 'title';
+      return { title: 'Title is too short' };
     default:
       return '';
   }
