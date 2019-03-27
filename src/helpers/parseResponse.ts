@@ -1,13 +1,15 @@
 import { ResType } from '../interfaces/Api';
 import { AxiosError } from 'axios';
 
+export const parseErrorMessage = (error: AxiosError): string =>
+  error.response && error.response.data && error.response.data.message
+    ? error.response.data.message
+    : error.message;
+
 export default {
   error: (error: AxiosError): ResType<Error> => {
     return {
-      message:
-        error.response && error.response.data
-          ? error.response.data.message
-          : error.message,
+      message: parseErrorMessage(error),
       error: true
     };
   },

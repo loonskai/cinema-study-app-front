@@ -1,39 +1,46 @@
 import apiService from './Api';
 import { SignInBodyType, SignUpBodyType } from '../interfaces/Auth';
+import { parseErrorMessage } from '../helpers/parseResponse';
+import defineErrorField from '../helpers/defineErrorField';
 
 export default {
-  async signIn(body: SignInBodyType, errorsSetter: any): Promise<any> {
-    const res = await apiService.signIn(body);
-    if (res.error) {
-      return errorsSetter({
-        email: res.message,
-        username: res.message
-      });
+  async signUp(body: SignUpBodyType, errorsSetter: any): Promise<any> {
+    try {
+      const { password, confirmPassword } = body;
+      if (password.length < 8) {
+        return errorsSetter({
+          password: 'Password should have min 8 characters length'
+        });
+      }
+      if (password !== confirmPassword) {
+        return errorsSetter({
+          confirmPassword: 'Passwords do not match'
+        });
+      }
+      const res = await apiService.signUp(body);
+      return res.data;
+    } catch (error) {
+      console.error(error);
+      const message = parseErrorMessage(error);
+      const fields = defineErrorField(message);
+      return typeof fields === 'object'
+        ? errorsSetter(fields)
+        : errorsSetter({ [fields]: message });
     }
-    return res.data;
   },
 
-  async signUp(body: SignUpBodyType, errorsSetter: any): Promise<any> {
-    const { password, confirmPassword } = body;
-    if (password.length < 8) {
-      return errorsSetter({
-        password: 'Password should have min 8 characters length'
-      });
+  async signIn(body: SignInBodyType, errorsSetter: any): Promise<any> {
+    try {
+      const res = await apiService.signIn(body);
+      return res.data;
+    } catch (error) {
+      console.dir(error);
+      const message = parseErrorMessage(error);
+      const fields = defineErrorField(message);
+      return typeof fields === 'object'
+        ? errorsSetter(fields)
+        : errorsSetter({ [fields]: message });
     }
-    if (password !== confirmPassword) {
-      return errorsSetter({
-        confirmPassword: 'Passwords do not match'
-      });
-    }
-
-    const res = await apiService.signUp(body);
-    if (res.error) {
-      return errorsSetter({
-        email: res.message,
-        username: res.message
-      });
-    }
-    return res.data;
   },
 
   async signOut() {

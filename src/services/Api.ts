@@ -39,31 +39,22 @@ class ApiService {
   }
 
   async signUp(body: SignUpBodyType): Promise<ResType<string | Error>> {
-    try {
-      const res = await this.client.post(
-        'http://localhost:5000/auth/signup',
-        body
-      );
-      return parseResponse.success(res.data);
-    } catch (error) {
-      console.error(error);
-      return parseResponse.error(error);
-    }
+    const res = await this.client.post(
+      'http://localhost:5000/auth/signup',
+      body
+    );
+    return res;
   }
 
   async signIn(body: SignInBodyType): Promise<ResType<UserAPIType | Error>> {
-    try {
-      const res = await this.client.post(
-        'http://localhost:5000/auth/signin',
-        body
-      );
-      sessionStorage.setItem('accessToken', res.data.token);
+    const res = await this.client.post(
+      'http://localhost:5000/auth/signin',
+      body
+    );
+    /* sessionStorage.setItem('accessToken', res.data.token);
       this.accessToken = res.data.token;
-      return parseResponse.success(res.data);
-    } catch (error) {
-      console.error(error);
-      return parseResponse.error(error);
-    }
+      return parseResponse.success(res.data); */
+    return res;
   }
 
   async validateToken(token: string): Promise<ResType<UserAPIType | Error>> {
@@ -129,24 +120,24 @@ class ApiService {
     }
   }
 
-  async addMovies(data: Movie[]): Promise<ResType<MovieAPIType[] | Error>> {
+  /*   async addMovies(data: Movie[]): Promise<ResType<MovieAPIType[] | Error>> {
     try {
       return new Promise((res, rej) => {
         console.log('create movie -->', data);
         return res([]);
       });
-      /*
+      
         const { data } = await this.client.post(`https://localhost:5000/movies`, data);
         if (!data) {
           throw Error('Unable to add movies');
         }
         return parseResponse.success(data);
-      */
+      
     } catch (error) {
       console.error(error);
       return parseResponse.error(error);
     }
-  }
+  } */
 
   /*   async loadSessionById(id: number) {
     try {
