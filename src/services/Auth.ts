@@ -31,8 +31,12 @@ export default {
 
   async signIn(body: SignInBodyType, errorsSetter: any): Promise<any> {
     try {
-      const res = await apiService.signIn(body);
-      return res.data;
+      const { data } = await apiService.signIn(body);
+      if (!data || !data.token) {
+        throw Error('Unable to parse token data');
+      }
+      sessionStorage.setItem('accessToken', data.token);
+      return data;
     } catch (error) {
       console.error(error);
       const message = parseErrorMessage(error);

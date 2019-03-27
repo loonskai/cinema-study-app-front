@@ -38,7 +38,7 @@ class ApiService {
       (e: Error) => Promise.reject(e);
   }
 
-  async signUp(body: SignUpBodyType): Promise<ResType<string | Error>> {
+  async signUp(body: SignUpBodyType): Promise<ResType<string>> {
     const res = await this.client.post(
       'http://localhost:5000/auth/signup',
       body
@@ -46,28 +46,23 @@ class ApiService {
     return res;
   }
 
-  async signIn(body: SignInBodyType): Promise<ResType<UserAPIType | Error>> {
-    const res = await this.client.post(
+  async signIn(body: SignInBodyType): Promise<ResType<UserAPIType>> {
+    const { data } = await this.client.post(
       'http://localhost:5000/auth/signin',
       body
     );
-    /* sessionStorage.setItem('accessToken', res.data.token);
-      this.accessToken = res.data.token;
-      return parseResponse.success(res.data); */
-    return res;
+    if (!data || !data.success) {
+      throw Error('Unable to parse token data');
+    }
+    this.accessToken = data.data.token;
+    return data;
   }
 
-  async validateToken(token: string): Promise<ResType<UserAPIType | Error>> {
-    try {
-      const res = await this.client.post(
-        'http://localhost:5000/auth/validate',
-        { token }
-      );
-      return res.data;
-    } catch (error) {
-      console.error(error);
-      return parseResponse.error(error);
-    }
+  async validateToken(token: string): Promise<ResType<UserAPIType>> {
+    const res = await this.client.post('http://localhost:5000/auth/validate', {
+      token
+    });
+    return res.data;
   }
 
   /*   async loadUserInfo() {
