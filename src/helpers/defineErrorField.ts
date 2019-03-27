@@ -9,6 +9,10 @@ export default (message: string): string | { [key: string]: string } => {
       return 'email';
     case 'Wrong password':
       return 'password';
+    case '"city" length must be at least 2 characters long':
+      return 'city';
+    case '"title" length must be at least 2 characters long':
+      return 'title';
     default:
       return '';
   }

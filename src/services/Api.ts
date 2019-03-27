@@ -76,13 +76,8 @@ class ApiService {
   } */
 
   async createCinema(body: CinemaAPIType): Promise<any> {
-    try {
-      const res = await this.client.post('http://localhost:5000/cinema', body);
-      return parseResponse.success(res.data);
-    } catch (error) {
-      console.error(error);
-      return parseResponse.error(error);
-    }
+    const res = await this.client.post('http://localhost:5000/cinema', body);
+    return res;
   }
 
   async getMovies(): Promise<ResType<MovieAPIType[] | Error>> {

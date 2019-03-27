@@ -6,10 +6,24 @@ import AdminFormContainer from './AdminFormContainer';
 import TextField from '../fields/TextField/TextField';
 import SubmitButton from '../buttons/SubmitButton';
 
+interface InputErrors {
+  title: string | null;
+  city: string | null;
+}
+
+interface InputValues {
+  title: string;
+  city: string;
+}
+
 const AddCinemaForm = ({ handleSnackbar }: any) => {
   const [values, setValues] = useState({
     title: '',
     city: ''
+  });
+  const [inputErrors, setInputErrors] = useState<InputErrors>({
+    title: null,
+    city: null
   });
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(true);
 
@@ -30,14 +44,14 @@ const AddCinemaForm = ({ handleSnackbar }: any) => {
     e: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
     e.preventDefault();
-    const result = await cinemaService.create(values);
+    const result = await cinemaService.create(values, setInputErrors);
     if (result) {
       setValues({
         city: '',
         title: ''
       });
       setButtonDisabled(true);
-      handleSnackbar('New cinema added', 'success');
+      handleSnackbar('result', 'success');
     }
   };
 
@@ -46,13 +60,15 @@ const AddCinemaForm = ({ handleSnackbar }: any) => {
       <form onSubmit={handleSubmit}>
         <TextField
           name="city"
-          label="City"
+          label={inputErrors.city || 'City'}
+          error={!!inputErrors.city}
           value={values.city}
           handleChange={handleChange}
         />
         <TextField
           name="title"
-          label="Cinema Title"
+          label={inputErrors.title || 'Cinema Title'}
+          error={!!inputErrors.title}
           value={values.title}
           handleChange={handleChange}
         />
