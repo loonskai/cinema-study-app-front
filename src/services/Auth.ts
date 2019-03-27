@@ -34,7 +34,7 @@ export default {
       const res = await apiService.signIn(body);
       return res.data;
     } catch (error) {
-      console.dir(error);
+      console.error(error);
       const message = parseErrorMessage(error);
       const fields = defineErrorField(message);
       return typeof fields === 'object'
