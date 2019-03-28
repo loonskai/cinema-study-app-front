@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import styled from 'styled-components';
 
 import UpdateItemButton from '../buttons/UpdateItemButton';
@@ -38,7 +38,12 @@ const EntityItemAdmin = ({ item }: Props) => {
     const keys = Object.keys(item);
     return keys.map((key: string) => (
       <ItemColumn>
-        <strong>{key}</strong>: {item[key]}
+        <strong>{key}</strong>:{' '}
+        {editMode ? (
+          <input type="text" value={item[key]} />
+        ) : (
+          <span>{item[key]}</span>
+        )}
       </ItemColumn>
     ));
   };
@@ -46,6 +51,11 @@ const EntityItemAdmin = ({ item }: Props) => {
   const editItem = () => {
     console.log('edit item');
     setEditMode(true);
+  };
+
+  const cancelEdit = () => {
+    console.log('cancel item');
+    setEditMode(false);
   };
 
   const saveItem = () => {
@@ -62,11 +72,16 @@ const EntityItemAdmin = ({ item }: Props) => {
       <ItemsContainer>{renderItems(item)}</ItemsContainer>
       <ButtonsContainer>
         {editMode ? (
-          <UpdateItemButton handleClick={saveItem} type="save" />
+          <Fragment>
+            <UpdateItemButton handleClick={saveItem} type="save" />
+            <UpdateItemButton handleClick={saveItem} type="cancel" />
+          </Fragment>
         ) : (
-          <UpdateItemButton handleClick={editItem} type="edit" />
+          <Fragment>
+            <UpdateItemButton handleClick={editItem} type="edit" />
+            <UpdateItemButton handleClick={removeItem} type="remove" />
+          </Fragment>
         )}
-        <UpdateItemButton handleClick={removeItem} type="remove" />
       </ButtonsContainer>
     </StyledItem>
   );

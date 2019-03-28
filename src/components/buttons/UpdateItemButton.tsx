@@ -1,18 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
-import SaveIcon from '@material-ui/icons/Save';
 import EditIcon from '@material-ui/icons/Edit';
+import SaveIcon from '@material-ui/icons/Save';
+import CancelIcon from '@material-ui/icons/Cancel';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 import {
   whiteColor,
   addButtonColor,
   editButtonColor,
-  removeButtonColor
+  removeButtonColor,
+  cancelButtonColor
 } from '../../constants';
 
 interface Props {
-  type: 'edit' | 'save' | 'remove';
+  type: 'edit' | 'cancel' | 'save' | 'remove';
   handleClick: () => void;
 }
 
@@ -34,6 +36,10 @@ const Button = styled.div`
     background: ${editButtonColor};
   }
 
+  &.cancel {
+    background: ${cancelButtonColor};
+  }
+
   &.save {
     background: ${addButtonColor};
   }
@@ -44,25 +50,25 @@ const Button = styled.div`
 `;
 
 const UpdateItemButton = ({ type, handleClick }: Props) => {
-  let icon, buttonClass;
+  let icon;
   switch (type) {
     case 'edit':
       icon = <EditIcon />;
-      buttonClass = 'edit';
+      break;
+    case 'cancel':
+      icon = <CancelIcon />;
       break;
     case 'save':
       icon = <SaveIcon />;
-      buttonClass = 'save';
       break;
     case 'remove':
       icon = <DeleteIcon />;
-      buttonClass = 'remove';
       break;
     default:
       return null;
   }
   return (
-    <Button onClick={handleClick} className={buttonClass}>
+    <Button onClick={handleClick} className={type}>
       {icon}
     </Button>
   );
