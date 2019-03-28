@@ -22,6 +22,7 @@ export default {
         : errorsSetter({ [fields]: message });
     }
   },
+
   async getAll(
     stateSetter?: (data: Cinema[]) => void
   ): Promise<Cinema[] | null> {
@@ -30,11 +31,31 @@ export default {
       if (res.error || !res.data) {
         throw Error(res.message);
       }
-      const result = res.data.map((movie: CinemaAPIType) => new Cinema(movie));
+      const result = res.data.map(
+        (cinema: CinemaAPIType) => new Cinema(cinema)
+      );
       if (stateSetter) {
         stateSetter(result);
       }
       return result;
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  },
+
+  async update(values: CinemaAPIType): Promise<Cinema | null> {
+    try {
+      const { id, title, city } = values;
+      if (!id) {
+        throw Error('Cinema ID not defined');
+      }
+      if (!title || !city) {
+        throw Error('Invalid values');
+      }
+      const { data } = await apiService.updateCinema(id, { title, city });
+      const updatedCinema = new Cinema(data);
+      return updatedCinema;
     } catch (error) {
       console.error(error);
       return null;

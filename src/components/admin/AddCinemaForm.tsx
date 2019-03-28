@@ -69,9 +69,9 @@ const AddCinemaForm = ({ handleSnackbar }: any) => {
   };
 
   const renderItems = (list: any) => {
-    return list.map((item: any, index: number) => (
-      <EntityItemAdmin key={index.toString()} item={item} />
-    ));
+    return list.map((item: any, index: number) => {
+      return <EntityItemAdmin key={index.toString()} item={item} />;
+    });
   };
 
   return (

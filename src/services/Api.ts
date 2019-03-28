@@ -86,6 +86,14 @@ class ApiService {
     return res.data;
   }
 
+  async updateCinema(id: number, body: CinemaAPIType): Promise<any> {
+    const res = await this.client.patch(
+      `http://localhost:5000/cinema/${id}`,
+      body
+    );
+    return res.data;
+  }
+
   /* MOVIES */
   async getMovies(): Promise<ResType<MovieAPIType[] | Error>> {
     try {

@@ -44,24 +44,26 @@ const EntityItemAdmin = ({ item }: Props) => {
     });
   };
 
-  const renderItems = (item: any) => {
-    console.log(values);
+  const renderProperties = (item: any) => {
     const keys = Object.keys(item);
-    return keys.map((key: string) => (
-      <ItemColumn>
-        <strong>{key}</strong>:{' '}
-        {editMode ? (
-          <input
-            type="text"
-            name={key}
-            value={values[key]}
-            onChange={handleChange}
-          />
-        ) : (
-          <span>{item[key]}</span>
-        )}
-      </ItemColumn>
-    ));
+    return keys.map(
+      (key: string, index: number) =>
+        key !== 'id' && (
+          <ItemColumn key={index.toString()}>
+            <strong>{key}</strong>:{' '}
+            {editMode ? (
+              <input
+                type="text"
+                name={key}
+                value={values[key]}
+                onChange={handleChange}
+              />
+            ) : (
+              <span>{values[key]}</span>
+            )}
+          </ItemColumn>
+        )
+    );
   };
 
   const editItem = () => {
@@ -70,12 +72,14 @@ const EntityItemAdmin = ({ item }: Props) => {
   };
 
   const cancelEdit = () => {
-    console.log('cancel item');
+    setValues(item);
     setEditMode(false);
   };
 
-  const saveItem = () => {
-    console.log('save item');
+  const saveItem = async () => {
+    const updatedItem = await item.update(values);
+    console.log(updatedItem);
+    setValues(updatedItem);
     setEditMode(false);
   };
 
@@ -85,12 +89,12 @@ const EntityItemAdmin = ({ item }: Props) => {
 
   return (
     <StyledItem>
-      <ItemsContainer>{renderItems(item)}</ItemsContainer>
+      <ItemsContainer>{renderProperties(item)}</ItemsContainer>
       <ButtonsContainer>
         {editMode ? (
           <Fragment>
             <UpdateItemButton handleClick={saveItem} type="save" />
-            <UpdateItemButton handleClick={saveItem} type="cancel" />
+            <UpdateItemButton handleClick={cancelEdit} type="cancel" />
           </Fragment>
         ) : (
           <Fragment>
