@@ -7,7 +7,7 @@ import cinemaService from '../../services/Cinema';
 import AdminFormContainer from './AdminFormContainer';
 import TextField from '../fields/TextField/TextField';
 import SubmitButton from '../buttons/SubmitButton';
-import EntitiesList from './EntitiesList';
+import EntityItemAdmin from './EntityItemAdmin';
 
 interface InputErrors {
   title: string | null;
@@ -68,6 +68,16 @@ const AddCinemaForm = ({ handleSnackbar }: any) => {
     }
   };
 
+  const renderItems = (list: any) => {
+    /*     const keys = cinemaList && Object.keys(list);
+    return keys.map((key: string) => (
+      <ItemColumn>
+        <strong>{key}</strong>: {list[key]}
+      </ItemColumn>
+    )); */
+    return list.map(item => <EntityItemAdmin item={item} />);
+  };
+
   return (
     <AdminFormContainer title="Add Cinema">
       <form onSubmit={handleSubmit}>
@@ -91,7 +101,8 @@ const AddCinemaForm = ({ handleSnackbar }: any) => {
           disabled={buttonDisabled}
         />
       </form>
-      <EntitiesList list={cinemaList} />
+      {/* <EntitiesList list={cinemaList} /> */}
+      {cinemaList && cinemaList.length && renderItems(cinemaList)}
     </AdminFormContainer>
   );
 };

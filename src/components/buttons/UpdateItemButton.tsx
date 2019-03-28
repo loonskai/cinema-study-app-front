@@ -13,6 +13,7 @@ import {
 
 interface Props {
   type: 'edit' | 'save' | 'remove';
+  handleClick: () => void;
 }
 
 const Button = styled.div`
@@ -42,29 +43,29 @@ const Button = styled.div`
   }
 `;
 
-const UpdateItemButton = ({ type }: Props) => {
+const UpdateItemButton = ({ type, handleClick }: Props) => {
+  let icon, buttonClass;
   switch (type) {
     case 'edit':
-      return (
-        <Button className="edit">
-          <EditIcon />
-        </Button>
-      );
+      icon = <EditIcon />;
+      buttonClass = 'edit';
+      break;
     case 'save':
-      return (
-        <Button className="save">
-          <SaveIcon />
-        </Button>
-      );
+      icon = <SaveIcon />;
+      buttonClass = 'save';
+      break;
     case 'remove':
-      return (
-        <Button className="remove">
-          <DeleteIcon />
-        </Button>
-      );
+      icon = <DeleteIcon />;
+      buttonClass = 'remove';
+      break;
     default:
       return null;
   }
+  return (
+    <Button onClick={handleClick} className={buttonClass}>
+      {icon}
+    </Button>
+  );
 };
 
 export default UpdateItemButton;
