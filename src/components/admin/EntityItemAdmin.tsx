@@ -33,14 +33,30 @@ const ButtonsContainer = styled.div`
 
 const EntityItemAdmin = ({ item }: Props) => {
   const [editMode, setEditMode] = useState<boolean>(false);
+  const [values, setValues] = useState(item);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    e.preventDefault();
+    const { name, value } = e.target;
+    setValues({
+      ...values,
+      [name]: value
+    });
+  };
 
   const renderItems = (item: any) => {
+    console.log(values);
     const keys = Object.keys(item);
     return keys.map((key: string) => (
       <ItemColumn>
         <strong>{key}</strong>:{' '}
         {editMode ? (
-          <input type="text" value={item[key]} />
+          <input
+            type="text"
+            name={key}
+            value={values[key]}
+            onChange={handleChange}
+          />
         ) : (
           <span>{item[key]}</span>
         )}
