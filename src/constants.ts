@@ -15,6 +15,7 @@ export const seatOrderedTxt = '#A8A39D';
 export const seatSelectedBg = '#1BB0CE';
 export const seatSelectedTxt = '#fff';
 export const addButtonColor = '#A8DBA8';
+export const editButtonColor = '#6493CE';
 export const removeButtonColor = '#EB7B59';
 export const snackbarSuccessColor = '#79BD9A';
 export const snackbarWarningColor = '#FACA66';
