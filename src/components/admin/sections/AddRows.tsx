@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import AddIcon from '@material-ui/icons/Add';
 
-import { loadAllCategoryOptions } from '../../../helpers/loadSelectOptions';
+// import { loadAllCategoryOptions } from '../../../helpers/loadSelectOptions';
 import TextField from '../../fields/TextField/TextField';
 import SelectField from '../../fields/SelectField/SelectField';
 import RoundButton from '../../buttons/RoundButton';
@@ -49,11 +49,11 @@ const AddRows = (props: Props) => {
   });
   const [categoryOptions, setCategoryOptions] = useState(null);
 
-  useEffect(() => {
+  /*   useEffect(() => {
     if (!categoryOptions) {
       loadAllCategoryOptions(setCategoryOptions);
     }
-  });
+  }); */
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setSeatsValues({

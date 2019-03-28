@@ -7,13 +7,13 @@ import TextField from '../fields/TextField/TextField';
 import SelectField from '../fields/SelectField/SelectField';
 import DateField from '../fields/DateField';
 import SubmitButton from '../buttons/SubmitButton';
-import {
+/* import {
   loadCinemaByCityOptions,
   loadHallsByCinemaOptions,
   loadTimeOptions,
   loadCitySuggestions,
   loadMovieSuggestions
-} from '../../helpers/loadSelectOptions';
+} from '../../helpers/loadSelectOptions'; */
 
 const CreateSessionForm = ({ handleSnackbar }: any) => {
   const [date, setDate] = useState(new Date());

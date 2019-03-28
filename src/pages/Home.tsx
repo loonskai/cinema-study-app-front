@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import SearchIcon from '@material-ui/icons/Search';
-
+/* 
 import {
   loadCinemaByCityOptions,
   loadCitySuggestions,
   loadMovieSuggestions
-} from '../helpers/loadSelectOptions';
+} from '../helpers/loadSelectOptions'; */
 import PageTitle from '../components/PageTitle';
 import FieldContainer from '../components/fields/FieldContainer';
 import SubmitButton from '../components/buttons/SubmitButton';
@@ -43,19 +43,19 @@ const Home = ({ history, movies }: any) => {
   useEffect(() => {
     setButtonDisabled(!movieSelected);
 
-    if (!movieSuggestions) {
+    /*     if (!movieSuggestions) {
       loadMovieSuggestions(setMovieSuggestions);
-    }
-
+    } */
+    /* 
     if (!citySuggestions) {
       loadCitySuggestions(setCitySuggestions);
-    }
+    } */
 
-    if (citySelected) {
+    /*     if (citySelected) {
       loadCinemaByCityOptions(citySelected, setCinemaOptions);
     } else {
       setCinema('');
-    }
+    } */
     if (movieSelected !== movieTyped) {
       setMovieSelected('');
       setCityTyped('');

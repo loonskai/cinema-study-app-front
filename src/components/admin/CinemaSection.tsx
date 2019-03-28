@@ -19,9 +19,9 @@ interface InputValues {
   city: string;
 }
 
-const AddCinemaForm = ({ handleSnackbar }: any) => {
+const CinemaSection = ({ handleSnackbar }: any) => {
   const [cinemaList, setCinemaList] = useState<Cinema[] | null>(null);
-  const [values, setValues] = useState({
+  const [values, setValues] = useState<InputValues>({
     title: '',
     city: ''
   });
@@ -78,17 +78,6 @@ const AddCinemaForm = ({ handleSnackbar }: any) => {
     }
   };
 
-  const renderItems = (list: any) => {
-    return list.map((item: any) => (
-      <EntityItemAdmin
-        key={item.id.toString()}
-        item={item}
-        handleRemove={handleRemove}
-        handleSnackbar={handleSnackbar}
-      />
-    ));
-  };
-
   return (
     <AdminFormContainer title="Add Cinema">
       <form onSubmit={handleSubmit}>
@@ -112,9 +101,18 @@ const AddCinemaForm = ({ handleSnackbar }: any) => {
           disabled={buttonDisabled}
         />
       </form>
-      {cinemaList && cinemaList.length && renderItems(cinemaList)}
+      {cinemaList &&
+        !!cinemaList.length &&
+        cinemaList.map((item: Cinema) => (
+          <EntityItemAdmin
+            key={item.id.toString()}
+            item={item}
+            handleRemove={handleRemove}
+            handleSnackbar={handleSnackbar}
+          />
+        ))}
     </AdminFormContainer>
   );
 };
 
-export default AddCinemaForm;
+export default CinemaSection;

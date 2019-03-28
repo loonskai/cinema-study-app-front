@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import actions from '../../redux/actions';
-import { loadCategoryCheckboxesByHall } from '../../helpers/loadSelectOptions';
+// import { loadCategoryCheckboxesByHall } from '../../helpers/loadSelectOptions';
 import SeatsMenu from './SeatsMenu';
 import OrderConfirmationModal from './OrderConfirmationModal';
 import OrderController from './OrderController';

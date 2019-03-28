@@ -5,7 +5,8 @@ import {
   ResType,
   UserAPIType,
   MovieAPIType,
-  CinemaAPIType
+  CinemaAPIType,
+  HallAPIType
 } from '../interfaces/Api';
 import { SignInBodyType, SignUpBodyType } from '../interfaces/Auth';
 import Movie from '../classes/Movie';
@@ -97,6 +98,12 @@ class ApiService {
   async deleteCinema(id: number): Promise<any> {
     await this.client.delete(`http://localhost:5000/cinema/${id}`);
     return true;
+  }
+
+  /* HALLS */
+  async createHall(body: HallAPIType): Promise<any> {
+    const res = await this.client.post('http://localhost:5000/hall', body);
+    return res;
   }
 
   /* MOVIES */
@@ -254,17 +261,6 @@ class ApiService {
   } */
 
   /** ADMIN OPERATIONS */
-  /*   async createCinema(data: any) {
-    try {
-      return new Promise((res, rej) => {
-        console.log('create cinema -->', data);
-        return res(true);
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  } */
-
   /*   async loadRowCategories(hallId?: number) {
     try {
       return new Promise((res, rej) => {
@@ -285,17 +281,6 @@ class ApiService {
           hallCategoriesIDs.includes(category.id.toString())
         );
         return res(filteredCategories);
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  } */
-
-  /*   async createHall(data: any) {
-    try {
-      return new Promise((res, rej) => {
-        console.log('create hall -->', data);
-        return res(true);
       });
     } catch (error) {
       console.error(error);

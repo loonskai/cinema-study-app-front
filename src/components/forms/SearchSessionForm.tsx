@@ -4,11 +4,11 @@ import styled from 'styled-components';
 import SearchIcon from '@material-ui/icons/Search';
 
 import actions from '../../redux/actions';
-import {
+/* import {
   loadCinemaByCityOptions,
   loadTimeOptions,
   loadCitySuggestions
-} from '../../helpers/loadSelectOptions';
+} from '../../helpers/loadSelectOptions'; */
 import FieldContainer from '../fields/FieldContainer';
 import SubmitButton from '../buttons/SubmitButton';
 import SessionsTable from '../SessionsTable';

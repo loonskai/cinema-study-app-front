@@ -24,3 +24,11 @@ export interface CinemaAPIType {
   createdAt?: Date;
   updatedAt?: Date;
 }
+
+export interface HallAPIType {
+  id?: number;
+  cinemaID: number;
+  title: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+}

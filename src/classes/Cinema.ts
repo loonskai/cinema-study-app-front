@@ -3,10 +3,9 @@ import { CinemaAPIType } from '../interfaces/Api';
 import cinemaService from '../services/Cinema';
 
 export default class Cinema {
+  public id: number;
   public title: string;
   public city: string;
-
-  private id: number;
 
   constructor(json: CinemaAPIType) {
     this.id = json.id as number;

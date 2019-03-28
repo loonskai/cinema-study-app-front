@@ -1,24 +1,35 @@
 // import api from '../ApiService';
+import cinemaService from '../services/Cinema';
+import Cinema from '../classes/Cinema';
+
+import { Dispatch, SetStateAction } from 'react';
+
+export interface Option {
+  value: string | number;
+  label: string;
+}
 
 // SELECT OPTIONS
 export const loadAllCinemaOptions = async (
-  optionsSetFunc: any
+  optionsSetFunc: Dispatch<SetStateAction<Option[] | null>>
 ): Promise<void> => {
   try {
-    const data: any = await api.loadAllCinemas();
-    if (data) {
-      const customizedOptions = data.map((cinema: any) => ({
-        label: cinema.name,
-        value: cinema.id
-      }));
-      optionsSetFunc(customizedOptions);
+    const data = await cinemaService.getAll();
+    if (!data) {
+      throw Error('Unable to load cinema');
     }
+    const customizedOptions = data.map((cinema: Cinema) => ({
+      value: cinema.id,
+      label: cinema.title
+    }));
+    optionsSetFunc(customizedOptions);
   } catch (error) {
     console.error(error);
+    optionsSetFunc([]);
   }
 };
 
-export const loadCinemaByCityOptions = async (
+/* export const loadCinemaByCityOptions = async (
   city: any,
   optionsSetFunc: any
 ) => {
@@ -35,9 +46,9 @@ export const loadCinemaByCityOptions = async (
   } catch (error) {
     console.error(error);
   }
-};
+}; */
 
-export const loadHallsByCinemaOptions = async (
+/* export const loadHallsByCinemaOptions = async (
   cinemaId: any,
   optionsSetFunc: any
 ) => {
@@ -51,9 +62,9 @@ export const loadHallsByCinemaOptions = async (
   } catch (error) {
     console.error(error);
   }
-};
+}; */
 
-export const loadAllCategoryOptions = async (optionsSetFunc: any) => {
+/* export const loadAllCategoryOptions = async (optionsSetFunc: any) => {
   try {
     const data: any = await api.loadRowCategories();
     if (data) {
@@ -66,9 +77,9 @@ export const loadAllCategoryOptions = async (optionsSetFunc: any) => {
   } catch (error) {
     console.error(error);
   }
-};
+}; */
 
-export const loadTimeOptions = (optionsSetFunc: any) => {
+/* export const loadTimeOptions = (optionsSetFunc: any) => {
   const options = [] as any;
   for (let i = 0; i <= 23; i++) {
     const label = i.toString().length > 1 ? `${i}:00` : `0${i}:00`;
@@ -78,10 +89,10 @@ export const loadTimeOptions = (optionsSetFunc: any) => {
     });
   }
   optionsSetFunc(options);
-};
+}; */
 
 // SUGGESTIONS
-export const loadCitySuggestions = async (optionsSetFunc: any) => {
+/* export const loadCitySuggestions = async (optionsSetFunc: any) => {
   try {
     const cities: any = await api.loadCities();
     const formatedCitites = cities.map((city: any) => ({ label: city }));
@@ -89,8 +100,8 @@ export const loadCitySuggestions = async (optionsSetFunc: any) => {
   } catch (error) {
     console.error(error);
   }
-};
-
+}; */
+/* 
 export const loadMovieSuggestions = async (optionsSetFunc: any) => {
   try {
     const movies: any = await api.loadMoviesList();
@@ -101,10 +112,10 @@ export const loadMovieSuggestions = async (optionsSetFunc: any) => {
   } catch (error) {
     console.error(error);
   }
-};
+}; */
 
 // DYNAMIC CHECKBOX LISTS
-export const loadCategoryCheckboxesByHall = async (
+/* export const loadCategoryCheckboxesByHall = async (
   hallId: number,
   optionsSetFunc: any
 ) => {
@@ -121,4 +132,4 @@ export const loadCategoryCheckboxesByHall = async (
   } catch (error) {
     console.error(error);
   }
-};
+}; */

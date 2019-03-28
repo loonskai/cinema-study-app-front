@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import NavPanel from '../components/admin/NavPanel';
-import AddCinemaForm from '../components/admin/AddCinemaForm';
-import AddHallForm from '../components/admin/AddHallForm';
+import CinemaSection from '../components/admin/CinemaSection';
+import HallSection from '../components/admin/HallSection';
 import AddMovieForm from '../components/admin/AddMovieForm';
 import AddServicesForm from '../components/admin/AddServicesForm';
 import CreateSessionForm from '../components/admin/CreateSessionForm';
@@ -16,14 +16,14 @@ const Container = styled.div`
 `;
 
 const Admin = () => {
-  const [selectedTab, setSelectedTab] = useState(TabType.cinema);
+  const [selectedTab, setSelectedTab] = useState(TabType.hall);
 
   const getSelectedForm = (handleSnackbar: any) => {
     switch (selectedTab) {
       case TabType.cinema:
-        return <AddCinemaForm handleSnackbar={handleSnackbar} />;
+        return <CinemaSection handleSnackbar={handleSnackbar} />;
       case TabType.hall:
-        return <AddHallForm handleSnackbar={handleSnackbar} />;
+        return <HallSection handleSnackbar={handleSnackbar} />;
       case TabType.movie:
         return <AddMovieForm handleSnackbar={handleSnackbar} />;
       case TabType.services:

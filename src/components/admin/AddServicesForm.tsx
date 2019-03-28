@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import AddIcon from '@material-ui/icons/Add';
 
 // import api from '../../ApiService';
-import { loadAllCinemaOptions } from '../../helpers/loadSelectOptions';
+// import { loadAllCinemaOptions } from '../../helpers/loadSelectOptions';
 import AdminFormContainer from './AdminFormContainer';
 import TextField from '../fields/TextField/TextField';
 import SelectField from '../fields/SelectField/SelectField';
@@ -19,9 +19,9 @@ const AddServicesForm = ({ handleSnackbar }: any) => {
     if (title && cinema && !!price) {
       setButtonDisabled(false);
     }
-    if (!cinemaOptions) {
+    /*     if (!cinemaOptions) {
       loadAllCinemaOptions(setCinemaOptions);
-    }
+    } */
   }, [title, cinema, price]);
 
   const handleSubmit = async (
