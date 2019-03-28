@@ -4,6 +4,19 @@ import Movie from '../classes/Movie';
 import { MovieAPIType } from '../interfaces/Api';
 
 export default {
+  async create(data: Movie[]): Promise<any> {
+    try {
+      // console.log('create movie -->', data);
+      const res = await apiService.addMovies(data);
+      if (res.error || !res.data) {
+        throw Error(res.message);
+      }
+      return true;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
   async getAll(): Promise<Movie[] | null> {
     try {
       const res = await apiService.getMovies();
@@ -27,19 +40,6 @@ export default {
     } catch (error) {
       console.error(error);
       return null;
-    }
-  },
-
-  async create(data: Movie[]): Promise<any> {
-    try {
-      // console.log('create movie -->', data);
-      const res = await apiService.addMovies(data);
-      if (res.error || !res.data) {
-        throw Error(res.message);
-      }
-      return true;
-    } catch (error) {
-      console.error(error);
     }
   }
 };

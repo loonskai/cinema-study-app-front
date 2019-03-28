@@ -75,11 +75,18 @@ class ApiService {
     }
   } */
 
+  /* CINEMAS */
   async createCinema(body: CinemaAPIType): Promise<any> {
     const res = await this.client.post('http://localhost:5000/cinema', body);
     return res;
   }
 
+  async getCinemas(): Promise<any> {
+    const res = await this.client.get('http://localhost:5000/cinema');
+    return res.data;
+  }
+
+  /* MOVIES */
   async getMovies(): Promise<ResType<MovieAPIType[] | Error>> {
     try {
       const { data } = await this.client.get(
@@ -163,16 +170,6 @@ class ApiService {
     try {
       return new Promise((res, rej) => {
         return res(bonus);
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  } */
-
-  /*   async loadAllCinemas() {
-    try {
-      return new Promise((res, rej) => {
-        return res(cinemas);
       });
     } catch (error) {
       console.error(error);

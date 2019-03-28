@@ -1,6 +1,6 @@
 import { CinemaAPIType } from '../interfaces/Api';
 
-export default class Movie {
+export default class Cinema {
   public title: string;
   public city: string;
 

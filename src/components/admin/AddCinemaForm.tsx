@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import AddIcon from '@material-ui/icons/Add';
 
+import Cinema from '../../classes/Cinema';
+
 import cinemaService from '../../services/Cinema';
 import AdminFormContainer from './AdminFormContainer';
 import TextField from '../fields/TextField/TextField';
 import SubmitButton from '../buttons/SubmitButton';
+import EntitiesList from './EntitiesList';
 
 interface InputErrors {
   title: string | null;
@@ -17,6 +20,7 @@ interface InputValues {
 }
 
 const AddCinemaForm = ({ handleSnackbar }: any) => {
+  const [cinemaList, setCinemaList] = useState<Cinema[] | null>(null);
   const [values, setValues] = useState({
     title: '',
     city: ''
@@ -31,7 +35,11 @@ const AddCinemaForm = ({ handleSnackbar }: any) => {
     if (values.city && values.title) {
       setButtonDisabled(false);
     }
-  }, [values]);
+
+    if (!cinemaList) {
+      cinemaService.getAll(setCinemaList);
+    }
+  }, [values, cinemaList]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setValues({
@@ -45,13 +53,18 @@ const AddCinemaForm = ({ handleSnackbar }: any) => {
   ): Promise<void> => {
     e.preventDefault();
     const result = await cinemaService.create(values, setInputErrors);
-    if (result) {
+    if (result.success) {
       setValues({
         city: '',
         title: ''
       });
+      setInputErrors({
+        city: '',
+        title: ''
+      });
       setButtonDisabled(true);
-      handleSnackbar('result', 'success');
+      handleSnackbar(result.data, 'success');
+      await cinemaService.getAll(setCinemaList);
     }
   };
 
@@ -78,6 +91,7 @@ const AddCinemaForm = ({ handleSnackbar }: any) => {
           disabled={buttonDisabled}
         />
       </form>
+      <EntitiesList list={cinemaList} />
     </AdminFormContainer>
   );
 };
