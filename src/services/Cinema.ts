@@ -63,5 +63,18 @@ export default {
         message: error.message
       };
     }
+  },
+
+  async delete(id: number): Promise<boolean | null> {
+    try {
+      if (!id) {
+        throw Error('Cinema ID not defined');
+      }
+      await apiService.deleteCinema(id);
+      return true;
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
   }
 };

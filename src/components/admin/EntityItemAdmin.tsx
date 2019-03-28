@@ -7,6 +7,7 @@ import { greyColor } from '../../constants';
 interface Props {
   item: any;
   handleSnackbar: (message: string, status: string) => void;
+  handleRemove: (id: number) => void;
 }
 
 const StyledItem = styled.div`
@@ -32,7 +33,7 @@ const ButtonsContainer = styled.div`
   align-items: center;
 `;
 
-const EntityItemAdmin = ({ item, handleSnackbar }: Props) => {
+const EntityItemAdmin = ({ item, handleSnackbar, handleRemove }: Props) => {
   const [editMode, setEditMode] = useState<boolean>(false);
   const [itemValues, setItemValues] = useState(item);
   const [inputValues, setInputValues] = useState(item);
@@ -88,9 +89,7 @@ const EntityItemAdmin = ({ item, handleSnackbar }: Props) => {
     }
   };
 
-  const removeItem = () => {
-    console.log('remove item');
-  };
+  const removeItem = () => handleRemove(item.id);
 
   return (
     <StyledItem>

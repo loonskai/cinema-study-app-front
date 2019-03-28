@@ -94,6 +94,11 @@ class ApiService {
     return res.data;
   }
 
+  async deleteCinema(id: number): Promise<any> {
+    await this.client.delete(`http://localhost:5000/cinema/${id}`);
+    return true;
+  }
+
   /* MOVIES */
   async getMovies(): Promise<ResType<MovieAPIType[] | Error>> {
     try {

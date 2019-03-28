@@ -48,6 +48,16 @@ const AddCinemaForm = ({ handleSnackbar }: any) => {
     });
   };
 
+  const handleRemove = async (id: number) => {
+    const result = await cinemaService.delete(id);
+    if (!result) {
+      handleSnackbar('Unable to delete cinema', 'error');
+    } else {
+      handleSnackbar('Cinema deleted', 'warning');
+      await cinemaService.getAll(setCinemaList);
+    }
+  };
+
   const handleSubmit = async (
     e: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
@@ -73,6 +83,7 @@ const AddCinemaForm = ({ handleSnackbar }: any) => {
       <EntityItemAdmin
         key={item.id.toString()}
         item={item}
+        handleRemove={handleRemove}
         handleSnackbar={handleSnackbar}
       />
     ));
