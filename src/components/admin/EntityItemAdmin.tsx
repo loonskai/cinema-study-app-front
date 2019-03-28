@@ -34,13 +34,14 @@ const ButtonsContainer = styled.div`
 
 const EntityItemAdmin = ({ item, handleSnackbar }: Props) => {
   const [editMode, setEditMode] = useState<boolean>(false);
-  const [values, setValues] = useState(item);
+  const [itemValues, setItemValues] = useState(item);
+  const [inputValues, setInputValues] = useState(item);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     e.preventDefault();
     const { name, value } = e.target;
-    setValues({
-      ...values,
+    setInputValues({
+      ...inputValues,
       [name]: value
     });
   };
@@ -56,11 +57,11 @@ const EntityItemAdmin = ({ item, handleSnackbar }: Props) => {
               <input
                 type="text"
                 name={key}
-                value={values[key]}
+                value={inputValues[key]}
                 onChange={handleChange}
               />
             ) : (
-              <span>{values[key]}</span>
+              <span>{itemValues[key]}</span>
             )}
           </ItemColumn>
         )
@@ -72,16 +73,16 @@ const EntityItemAdmin = ({ item, handleSnackbar }: Props) => {
   };
 
   const cancelEdit = () => {
-    setValues(item);
+    setInputValues(itemValues);
     setEditMode(false);
   };
 
   const saveItem = async () => {
-    const result = await item.update(values);
+    const result = await item.update(inputValues);
     if (result.error) {
       handleSnackbar(result.message, 'error');
     } else {
-      setValues(result);
+      setItemValues(result);
       setEditMode(false);
       handleSnackbar('Succesfully updated', 'success');
     }
