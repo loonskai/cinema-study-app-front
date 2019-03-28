@@ -6,6 +6,7 @@ import { greyColor } from '../../constants';
 
 interface Props {
   item: any;
+  handleSnackbar: (message: string, status: string) => void;
 }
 
 const StyledItem = styled.div`
@@ -31,7 +32,7 @@ const ButtonsContainer = styled.div`
   align-items: center;
 `;
 
-const EntityItemAdmin = ({ item }: Props) => {
+const EntityItemAdmin = ({ item, handleSnackbar }: Props) => {
   const [editMode, setEditMode] = useState<boolean>(false);
   const [values, setValues] = useState(item);
 
@@ -67,7 +68,6 @@ const EntityItemAdmin = ({ item }: Props) => {
   };
 
   const editItem = () => {
-    console.log('edit item');
     setEditMode(true);
   };
 
@@ -77,10 +77,14 @@ const EntityItemAdmin = ({ item }: Props) => {
   };
 
   const saveItem = async () => {
-    const updatedItem = await item.update(values);
-    console.log(updatedItem);
-    setValues(updatedItem);
-    setEditMode(false);
+    const result = await item.update(values);
+    if (result.error) {
+      handleSnackbar(result.message, 'error');
+    } else {
+      setValues(result);
+      setEditMode(false);
+      handleSnackbar('Succesfully updated', 'success');
+    }
   };
 
   const removeItem = () => {

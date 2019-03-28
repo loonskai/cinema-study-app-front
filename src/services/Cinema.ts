@@ -44,7 +44,7 @@ export default {
     }
   },
 
-  async update(values: CinemaAPIType): Promise<Cinema | null> {
+  async update(values: CinemaAPIType): Promise<Cinema | ResType<string>> {
     try {
       const { id, title, city } = values;
       if (!id) {
@@ -58,7 +58,10 @@ export default {
       return updatedCinema;
     } catch (error) {
       console.error(error);
-      return null;
+      return {
+        error: true,
+        message: error.message
+      };
     }
   }
 };
