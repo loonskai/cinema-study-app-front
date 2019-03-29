@@ -79,6 +79,7 @@ const EntityItemAdmin = ({ item, handleSnackbar, handleRemove }: Props) => {
   };
 
   const saveItem = async () => {
+    // Move logic to parent component
     const result = await item.update(inputValues);
     if (result.error) {
       handleSnackbar(result.message, 'error');

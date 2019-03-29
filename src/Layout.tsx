@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import Root from './Root';
+import Router from './Router';
 import Header from './components/Header';
 import PopUpSnackbar from './components/PopUpSnackbar';
 import { whiteColor, containerGreyColor } from './constants';
@@ -74,7 +74,7 @@ const Layout: React.FC = () => {
       <Header />
       <ContentContainer>
         <SnackbarContext.Provider value={{ handleSnackbar }}>
-          <Root />
+          <Router />
         </SnackbarContext.Provider>
       </ContentContainer>
     </Container>

@@ -10,7 +10,7 @@ import UserProfile from './pages/UserProfile';
 import SessionSingle from './pages/SessionSingle';
 import Admin from './pages/Admin';
 
-const Root = () => (
+const Router = () => (
   <Switch>
     <Route exact={true} path="/" component={Home} />
     <Route exact={true} path="/movies" component={Movies} />
@@ -22,4 +22,4 @@ const Root = () => (
   </Switch>
 );
 
-export default Root;
+export default Router;
