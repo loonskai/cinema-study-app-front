@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, ReactText } from 'react';
 import TextField from '@material-ui/core/TextField';
 import styled from 'styled-components';
 
@@ -8,11 +8,12 @@ import { mainColor } from '../../../constants';
 interface Props {
   item: any;
   handleSnackbar: (message: string, status: string) => void;
-  handleUpdate: (id: number, values: any) => any;
-  handleRemove: (id: number) => void;
+  handleUpdate: (id: number | string, values: any) => any;
+  handleRemove: (id: number | string) => void;
 }
 
-const StyledItem = styled.div`
+const Container = styled.div`
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
@@ -129,7 +130,7 @@ const AdminListItem = ({ item, handleUpdate, handleRemove }: Props) => {
   const removeItem = () => handleRemove(item.id);
 
   return (
-    <StyledItem>
+    <Container>
       <ItemsContainer>{renderProperties(item)}</ItemsContainer>
       <ButtonsContainer>
         {editMode ? (
@@ -144,7 +145,7 @@ const AdminListItem = ({ item, handleUpdate, handleRemove }: Props) => {
           </Fragment>
         )}
       </ButtonsContainer>
-    </StyledItem>
+    </Container>
   );
 };
 

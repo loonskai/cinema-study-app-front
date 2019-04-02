@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import AddIcon from '@material-ui/icons/Add';
 
 import Hall from '../../../classes/Hall';
+import { RowItem } from '../elements/NewRowController';
 
 import { Option } from '../../../helpers/loadSelectOptions';
 import { loadAllCinemaOptions } from '../../../helpers/loadSelectOptions';
@@ -17,7 +18,7 @@ const HallSection = ({ handleSnackbar }: any) => {
   const [cinemaOptions, setCinemaOptions] = useState<Option[] | null>(null);
   const [title, setTitle] = useState('Main Hall'); // EMPTY on default
   const [cinema, setCinema] = useState('8'); // EMPTY on default
-  const [rows, setRows]: [any, any] = useState([]);
+  const [rows, setRows] = useState<RowItem[]>([]);
   const [buttonDisabled, setButtonDisabled] = useState(true);
 
   useEffect(() => {
@@ -47,11 +48,6 @@ const HallSection = ({ handleSnackbar }: any) => {
 
   const handleRemove = () => {};
 
-  const handleRowsChange = (newRow: {
-    category: string;
-    quantity: string;
-  }): void => setRows([...rows, newRow]);
-
   return (
     <AdminFormContainer title="Add Hall">
       <form onSubmit={handleSubmit}>
@@ -71,14 +67,18 @@ const HallSection = ({ handleSnackbar }: any) => {
           value={cinema}
           handleChange={(value: string) => setCinema(value)}
         />
-        <NewRowController handleSubmit={handleRowsChange} prevRows={rows} />
+        <NewRowController
+          prevRows={rows}
+          handleSnackbar={handleSnackbar}
+          rowsSetter={setRows}
+        />
         <SubmitButton
           text="Add Hall"
           icon={<AddIcon />}
           disabled={buttonDisabled}
         />
       </form>
-      {hallList &&
+      {/*       {hallList &&
         !!hallList.length &&
         hallList.map((item: Hall) => (
           <AdminListItem
@@ -88,7 +88,7 @@ const HallSection = ({ handleSnackbar }: any) => {
             handleRemove={handleRemove}
             handleSnackbar={handleSnackbar}
           />
-        ))}
+        ))} */}
     </AdminFormContainer>
   );
 };

@@ -1,4 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react';
+import uuid from 'uuid';
 import styled from 'styled-components';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -8,11 +9,27 @@ import { loadRowCategoryOptions } from '../../../helpers/loadSelectOptions';
 import TextField from '../../fields/TextField/TextField';
 import SelectField from '../../fields/SelectField/SelectField';
 import RoundButton from '../../buttons/RoundButton';
-import { mainColor } from '../../../constants';
+import AdminListItem from '../elements/AdminListItem';
+import { mainColor, mainDarkColor } from '../../../constants';
+
+export interface RowItem {
+  id: string;
+  quantity: string;
+  category: string;
+  lastInSection: boolean;
+}
+
+export interface RowViewItem {
+  id: string;
+  quantity: string;
+  category: string;
+  lastInSection: string;
+}
 
 interface Props {
-  handleSubmit: (newRow: { category: string; quantity: string }) => void;
-  prevRows: Array<{ category: string; quantity: string }>;
+  handleSnackbar: (message: string, status: string) => void;
+  rowsSetter: (rows: RowItem[]) => void;
+  prevRows: RowItem[];
 }
 
 const Container = styled.div`
@@ -41,13 +58,17 @@ const RowElement = styled.div`
   align-items: center;
   justify-content: center;
   padding-right: 0 0.3rem;
+  text-align: center;
+  & .checkbox-checked {
+    color: ${mainDarkColor} !important;
+  }
 `;
 
-const NewRowController = (props: Props) => {
-  const { handleSubmit, prevRows } = props;
-  const [seatsValues, setSeatsValues] = useState({
-    category: '',
-    quantity: '',
+const NewRowController = ({ prevRows, rowsSetter, handleSnackbar }: Props) => {
+  const [newRow, setNewRowValue] = useState<RowItem>({
+    id: uuid(),
+    quantity: '20',
+    category: '3',
     lastInSection: false
   });
   const [categoryOptions, setCategoryOptions] = useState(null);
@@ -56,13 +77,47 @@ const NewRowController = (props: Props) => {
     if (!categoryOptions) {
       loadRowCategoryOptions(setCategoryOptions);
     }
-  });
+  }, [prevRows, categoryOptions]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setSeatsValues({
-      ...seatsValues,
+    setNewRowValue({
+      ...newRow,
       [e.target.name]: e.target.value
     });
+  };
+
+  const handleAdd = () => {
+    rowsSetter([...prevRows, newRow]);
+    setNewRowValue({
+      id: uuid(),
+      quantity: '',
+      category: '',
+      lastInSection: false
+    });
+  };
+
+  const handleUpdate = async (
+    id: string,
+    inputValues: RowViewItem
+  ): Promise<RowViewItem> => {
+    const rowUpdated: RowItem = {
+      ...inputValues,
+      lastInSection: inputValues.lastInSection === 'Yes'
+    };
+    const updatedRows: RowItem[] = prevRows.map(row =>
+      row.id === id ? rowUpdated : row
+    );
+    rowsSetter(updatedRows);
+    return {
+      ...rowUpdated,
+      lastInSection: rowUpdated.lastInSection ? 'Yes' : 'No'
+    };
+  };
+
+  const handleRemove = (id: string) => {
+    const updatedRows: RowItem[] = prevRows.filter(row => row.id !== id);
+    rowsSetter(updatedRows);
+    return true;
   };
 
   return (
@@ -75,10 +130,10 @@ const NewRowController = (props: Props) => {
             type="select"
             options={categoryOptions}
             label="Row Category"
-            value={seatsValues.category}
+            value={newRow.category}
             handleChange={(value: string) => {
-              setSeatsValues({
-                ...seatsValues,
+              setNewRowValue({
+                ...newRow,
                 category: value
               });
             }}
@@ -89,7 +144,7 @@ const NewRowController = (props: Props) => {
             name="quantity"
             label="Quantity"
             type="number"
-            value={seatsValues.quantity.toString()}
+            value={newRow.quantity.toString()}
             handleChange={handleChange}
           />
         </RowElement>
@@ -97,15 +152,16 @@ const NewRowController = (props: Props) => {
           <FormControlLabel
             control={
               <Checkbox
-                checked={seatsValues.lastInSection}
+                checked={newRow.lastInSection}
                 onChange={() =>
-                  setSeatsValues(prevSeatsValues => ({
-                    ...seatsValues,
-                    lastInSection: !prevSeatsValues.lastInSection
+                  setNewRowValue((prevNewRowValues: RowItem) => ({
+                    ...newRow,
+                    lastInSection: !prevNewRowValues.lastInSection
                   }))
                 }
-                value="checkedB"
-                color="primary"
+                classes={{
+                  checked: 'checkbox-checked'
+                }}
               />
             }
             label="Last in section"
@@ -115,34 +171,28 @@ const NewRowController = (props: Props) => {
           <RoundButton
             icon={<AddIcon />}
             bgColor={mainColor}
-            handleClick={() => {
-              handleSubmit(seatsValues);
-              setSeatsValues({
-                category: '',
-                quantity: '',
-                lastInSection: false
-              });
-            }}
-            disabled={!seatsValues.category || !seatsValues.quantity}
+            handleClick={handleAdd}
+            disabled={!newRow.category || !newRow.quantity}
           />
         </RowElement>
       </Row>
       {!!prevRows.length && (
         <Fragment>
-          <Row>
-            <RowElement>Row Number</RowElement>
-            <RowElement>Category</RowElement>
-            <RowElement>Quantity</RowElement>
-          </Row>
-          {prevRows.map(
-            (row: { category: string; quantity: string }, index: number) => (
-              <Row key={index.toString()}>
-                <RowElement>{index + 1}</RowElement>
-                <RowElement>{row.category}</RowElement>
-                <RowElement>{row.quantity}</RowElement>
-              </Row>
-            )
-          )}
+          {prevRows.map((row: RowItem) => {
+            const item: RowViewItem = {
+              ...row,
+              lastInSection: row.lastInSection ? 'Yes' : 'No'
+            };
+            return (
+              <AdminListItem
+                key={row.id}
+                item={item}
+                handleUpdate={handleUpdate}
+                handleRemove={handleRemove}
+                handleSnackbar={handleSnackbar}
+              />
+            );
+          })}
         </Fragment>
       )}
     </Container>
