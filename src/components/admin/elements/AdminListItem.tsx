@@ -3,11 +3,12 @@ import TextField from '@material-ui/core/TextField';
 import styled from 'styled-components';
 
 import UpdateItemButton from '../../buttons/UpdateItemButton';
-import { mainColor, greyColor } from '../../../constants';
+import { mainColor } from '../../../constants';
 
 interface Props {
   item: any;
   handleSnackbar: (message: string, status: string) => void;
+  handleUpdate: (id: number, values: any) => any;
   handleRemove: (id: number) => void;
 }
 
@@ -59,7 +60,7 @@ const ButtonsContainer = styled.div`
   align-items: center;
 `;
 
-const AdminListItem = ({ item, handleSnackbar, handleRemove }: Props) => {
+const AdminListItem = ({ item, handleUpdate, handleRemove }: Props) => {
   const [editMode, setEditMode] = useState<boolean>(false);
   const [itemValues, setItemValues] = useState(item);
   const [inputValues, setInputValues] = useState(item);
@@ -118,14 +119,10 @@ const AdminListItem = ({ item, handleSnackbar, handleRemove }: Props) => {
   };
 
   const saveItem = async () => {
-    // Move logic to parent component
-    const result = await item.update(inputValues);
-    if (result.error) {
-      handleSnackbar(result.message, 'error');
-    } else {
+    const result = await handleUpdate(item.id, inputValues);
+    if (result) {
       setItemValues(result);
       setEditMode(false);
-      handleSnackbar('Succesfully updated', 'success');
     }
   };
 

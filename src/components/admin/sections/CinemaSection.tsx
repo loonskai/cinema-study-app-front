@@ -58,6 +58,17 @@ const CinemaSection = ({ handleSnackbar }: any) => {
     }
   };
 
+  const handleUpdate = async (id: number, inputValues: any): Promise<any> => {
+    const result = await cinemaService.update(id, inputValues);
+    if (result.error) {
+      handleSnackbar('Unable to update cinema', 'error');
+    } else {
+      handleSnackbar('Succesfully updated', 'success');
+      await cinemaService.getAll(setCinemaList);
+      return result.data;
+    }
+  };
+
   const handleSubmit = async (
     e: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
@@ -107,6 +118,7 @@ const CinemaSection = ({ handleSnackbar }: any) => {
           <AdminListItem
             key={item.id.toString()}
             item={item}
+            handleUpdate={handleUpdate}
             handleRemove={handleRemove}
             handleSnackbar={handleSnackbar}
           />

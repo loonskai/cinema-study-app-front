@@ -44,9 +44,9 @@ export default {
     }
   },
 
-  async update(values: CinemaAPIType): Promise<Cinema | ResType<string>> {
+  async update(id: number, values: CinemaAPIType): Promise<ResType<Cinema>> {
     try {
-      const { id, title, city } = values;
+      const { title, city } = values;
       if (!id) {
         throw Error('Cinema ID not defined');
       }
@@ -55,7 +55,10 @@ export default {
       }
       const { data } = await apiService.updateCinema(id, { title, city });
       const updatedCinema = new Cinema(data);
-      return updatedCinema;
+      return {
+        success: true,
+        data: updatedCinema
+      };
     } catch (error) {
       console.error(error);
       return {

@@ -12,9 +12,4 @@ export default class Cinema {
     this.title = json.title;
     this.city = json.city;
   }
-
-  public async update(values: CinemaAPIType) {
-    const updatedCinema = await cinemaService.update(values);
-    return updatedCinema;
-  }
 }
