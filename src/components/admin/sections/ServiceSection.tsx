@@ -3,12 +3,12 @@ import AddIcon from '@material-ui/icons/Add';
 
 // import api from '../../ApiService';
 // import { loadAllCinemaOptions } from '../../helpers/loadSelectOptions';
-import AdminFormContainer from './AdminFormContainer';
-import TextField from '../fields/TextField/TextField';
-import SelectField from '../fields/SelectField/SelectField';
-import SubmitButton from '../buttons/SubmitButton';
+import AdminFormContainer from '../AdminFormContainer';
+import TextField from '../../fields/TextField/TextField';
+import SelectField from '../../fields/SelectField/SelectField';
+import SubmitButton from '../../buttons/SubmitButton';
 
-const AddServicesForm = ({ handleSnackbar }: any) => {
+const ServiceSection = ({ handleSnackbar }: any) => {
   const [cinemaOptions, setCinemaOptions] = useState(false);
   const [cinema, setCinema] = useState('');
   const [title, setTitle] = useState('');
@@ -28,14 +28,14 @@ const AddServicesForm = ({ handleSnackbar }: any) => {
     e: React.ChangeEvent<HTMLFormElement>
   ): Promise<void> => {
     e.preventDefault();
-    const result = await api.createService({ title, cinema, price });
+    /*     const result = await api.createService({ title, cinema, price });
     if (result) {
       setTitle('');
       setCinema('');
       setPrice('');
       setButtonDisabled(true);
       handleSnackbar('New service added', 'success');
-    }
+    } */
   };
 
   return (
@@ -76,4 +76,4 @@ const AddServicesForm = ({ handleSnackbar }: any) => {
   );
 };
 
-export default AddServicesForm;
+export default ServiceSection;

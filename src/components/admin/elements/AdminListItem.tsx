@@ -1,8 +1,8 @@
 import React, { Fragment, useState } from 'react';
 import styled from 'styled-components';
 
-import UpdateItemButton from '../buttons/UpdateItemButton';
-import { greyColor } from '../../constants';
+import UpdateItemButton from '../../buttons/UpdateItemButton';
+import { greyColor } from '../../../constants';
 
 interface Props {
   item: any;
@@ -33,7 +33,7 @@ const ButtonsContainer = styled.div`
   align-items: center;
 `;
 
-const EntityItemAdmin = ({ item, handleSnackbar, handleRemove }: Props) => {
+const AdminListItem = ({ item, handleSnackbar, handleRemove }: Props) => {
   const [editMode, setEditMode] = useState<boolean>(false);
   const [itemValues, setItemValues] = useState(item);
   const [inputValues, setInputValues] = useState(item);
@@ -112,4 +112,4 @@ const EntityItemAdmin = ({ item, handleSnackbar, handleRemove }: Props) => {
   );
 };
 
-export default EntityItemAdmin;
+export default AdminListItem;

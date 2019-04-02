@@ -41,7 +41,7 @@ const RowElement = styled.div`
   padding-right: 0 0.3rem;
 `;
 
-const AddRows = (props: Props) => {
+const NewRowController = (props: Props) => {
   const { handleSubmit, prevRows } = props;
   const [seatsValues, setSeatsValues] = useState({
     category: '',
@@ -127,4 +127,4 @@ const AddRows = (props: Props) => {
   );
 };
 
-export default AddRows;
+export default NewRowController;

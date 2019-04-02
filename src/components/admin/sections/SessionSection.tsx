@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import AddIcon from '@material-ui/icons/Add';
 
 // import api from '../../ApiService';
-import AdminFormContainer from './AdminFormContainer';
-import TextField from '../fields/TextField/TextField';
-import SelectField from '../fields/SelectField/SelectField';
-import DateField from '../fields/DateField';
-import SubmitButton from '../buttons/SubmitButton';
+import AdminFormContainer from '../AdminFormContainer';
+import TextField from '../../fields/TextField/TextField';
+import SelectField from '../../fields/SelectField/SelectField';
+import DateField from '../../fields/DateField';
+import SubmitButton from '../../buttons/SubmitButton';
 /* import {
   loadCinemaByCityOptions,
   loadHallsByCinemaOptions,
@@ -15,7 +15,7 @@ import SubmitButton from '../buttons/SubmitButton';
   loadMovieSuggestions
 } from '../../helpers/loadSelectOptions'; */
 
-const CreateSessionForm = ({ handleSnackbar }: any) => {
+const SessionSection = ({ handleSnackbar }: any) => {
   const [date, setDate] = useState(new Date());
   const [time, setTime] = useState('');
   const [movieTyped, setMovieTyped] = useState('');
@@ -150,4 +150,4 @@ const CreateSessionForm = ({ handleSnackbar }: any) => {
   );
 };
 
-export default CreateSessionForm;
+export default SessionSection;

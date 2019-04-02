@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import NavPanel from '../components/admin/NavPanel';
-import CinemaSection from '../components/admin/CinemaSection';
-import HallSection from '../components/admin/HallSection';
-import AddMovieForm from '../components/admin/AddMovieForm';
-import AddServicesForm from '../components/admin/AddServicesForm';
-import CreateSessionForm from '../components/admin/CreateSessionForm';
+import NavPanel from '../components/admin/elements/NavPanel';
+import CinemaSection from '../components/admin/sections/CinemaSection';
+import HallSection from '../components/admin/sections/HallSection';
+import MovieSection from '../components/admin/sections/MovieSection';
+import ServiceSection from '../components/admin/sections/ServiceSection';
+import SessionSection from '../components/admin/sections/SessionSection';
 import { SnackbarContext } from '../Layout';
 import { TabType } from '../enums';
 
@@ -25,11 +25,11 @@ const Admin = () => {
       case TabType.hall:
         return <HallSection handleSnackbar={handleSnackbar} />;
       case TabType.movie:
-        return <AddMovieForm handleSnackbar={handleSnackbar} />;
+        return <MovieSection handleSnackbar={handleSnackbar} />;
       case TabType.services:
-        return <AddServicesForm handleSnackbar={handleSnackbar} />;
+        return <ServiceSection handleSnackbar={handleSnackbar} />;
       case TabType.session:
-        return <CreateSessionForm handleSnackbar={handleSnackbar} />;
+        return <SessionSection handleSnackbar={handleSnackbar} />;
       default:
         return null;
     }

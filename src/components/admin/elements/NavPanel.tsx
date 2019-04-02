@@ -9,8 +9,8 @@ import RoomServiceIcon from '@material-ui/icons/RoomService';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import LocalMoviesIcon from '@material-ui/icons/LocalMovies';
 
-import { TabType } from '../../enums';
-import { mainDarkColor, mainColor } from '../../constants';
+import { TabType } from '../../../enums';
+import { mainDarkColor, mainColor } from '../../../constants';
 
 const Container = styled.div`
   width: 100%;

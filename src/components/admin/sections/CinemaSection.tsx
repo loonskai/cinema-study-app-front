@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import AddIcon from '@material-ui/icons/Add';
 
-import Cinema from '../../classes/Cinema';
+import Cinema from '../../../classes/Cinema';
 
-import cinemaService from '../../services/Cinema';
-import AdminFormContainer from './AdminFormContainer';
-import TextField from '../fields/TextField/TextField';
-import SubmitButton from '../buttons/SubmitButton';
-import EntityItemAdmin from './EntityItemAdmin';
+import cinemaService from '../../../services/Cinema';
+import AdminFormContainer from '../AdminFormContainer';
+import TextField from '../../fields/TextField/TextField';
+import SubmitButton from '../../buttons/SubmitButton';
+import AdminListItem from '../elements/AdminListItem';
 
 interface InputErrors {
   title: string | null;
@@ -104,7 +104,7 @@ const CinemaSection = ({ handleSnackbar }: any) => {
       {cinemaList &&
         !!cinemaList.length &&
         cinemaList.map((item: Cinema) => (
-          <EntityItemAdmin
+          <AdminListItem
             key={item.id.toString()}
             item={item}
             handleRemove={handleRemove}

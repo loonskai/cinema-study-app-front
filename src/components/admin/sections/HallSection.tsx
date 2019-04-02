@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import AddIcon from '@material-ui/icons/Add';
 
-import { Option } from '../../helpers/loadSelectOptions';
+import { Option } from '../../../helpers/loadSelectOptions';
 
 // import api from '../../ApiService';
-import { loadAllCinemaOptions } from '../../helpers/loadSelectOptions';
-import AdminFormContainer from './AdminFormContainer';
-import AddRows from './sections/AddRows';
-import TextField from '../fields/TextField/TextField';
-import SelectField from '../fields/SelectField/SelectField';
-import SubmitButton from '../buttons/SubmitButton';
+import { loadAllCinemaOptions } from '../../../helpers/loadSelectOptions';
+import AdminFormContainer from '../AdminFormContainer';
+import NewRowController from '../elements/NewRowController';
+import TextField from '../../fields/TextField/TextField';
+import SelectField from '../../fields/SelectField/SelectField';
+import SubmitButton from '../../buttons/SubmitButton';
 
 const HallSection = ({ handleSnackbar }: any) => {
   const [cinemaOptions, setCinemaOptions] = useState<Option[] | null>(null);
@@ -65,7 +65,7 @@ const HallSection = ({ handleSnackbar }: any) => {
           value={cinema}
           handleChange={(value: string) => setCinema(value)}
         />
-        <AddRows handleSubmit={handleRowsChange} prevRows={rows} />
+        <NewRowController handleSubmit={handleRowsChange} prevRows={rows} />
         <SubmitButton
           text="Add Hall"
           icon={<AddIcon />}

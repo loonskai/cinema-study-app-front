@@ -5,17 +5,17 @@ import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 // import api from '../../ApiService';
-import AdminFormContainer from './AdminFormContainer';
-import AddButton from '../buttons/AddButton';
-import SubmitButton from '../buttons/SubmitButton';
-import HeaderButton from '../buttons/HeaderButton';
-import Loader from '../Loader';
+import AdminFormContainer from '../AdminFormContainer';
+import AddButton from '../../buttons/AddButton';
+import SubmitButton from '../../buttons/SubmitButton';
+import HeaderButton from '../../buttons/HeaderButton';
+import Loader from '../../Loader';
 import {
   containerGreyColor,
   whiteColor,
   mainDarkColor,
   greyColor
-} from '../../constants';
+} from '../../../constants';
 
 const LoadedMoviesList = styled.div`
   width: 100%;
@@ -86,7 +86,7 @@ const SelectedDataController = styled.form`
   }
 `;
 
-const AddMovieForm = ({ handleSnackbar }: any) => {
+const MovieSection = ({ handleSnackbar }: any) => {
   const [isLoading, setLoading] = useState(true);
   const [loadedMovies, setLoadedMovies] = useState([]);
   const [selectedMovies, setSelectedMovies]: [any, any] = useState({});
@@ -107,14 +107,14 @@ const AddMovieForm = ({ handleSnackbar }: any) => {
 
   const loadExternalAPIMovies = async () => {
     try {
-      const data: any = await api.loadExternalAPIMovies();
+      /* const data: any = await api.loadExternalAPIMovies();
       const filteredData = data.map((movie: any) => ({
         id: movie.id,
         title: movie.original_title,
         overview: movie.overview,
         picture: `https://image.tmdb.org/t/p/w500${movie.poster_path}`
       }));
-      setLoadedMovies(filteredData);
+      setLoadedMovies(filteredData); */
     } catch (error) {
       console.error(error);
     }
@@ -124,11 +124,11 @@ const AddMovieForm = ({ handleSnackbar }: any) => {
     e: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
     e.preventDefault();
-    const result = api.addMovies(selectedMovies);
+    /*     const result = api.addMovies(selectedMovies);
     if (result) {
       setSelectedMovies({});
       handleSnackbar('New movies added', 'success');
-    }
+    } */
   };
 
   useEffect(() => {
@@ -197,4 +197,4 @@ const AddMovieForm = ({ handleSnackbar }: any) => {
   );
 };
 
-export default AddMovieForm;
+export default MovieSection;
