@@ -1,5 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import styled from 'styled-components';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 import AddIcon from '@material-ui/icons/Add';
 
 import { loadRowCategoryOptions } from '../../../helpers/loadSelectOptions';
@@ -45,7 +47,8 @@ const NewRowController = (props: Props) => {
   const { handleSubmit, prevRows } = props;
   const [seatsValues, setSeatsValues] = useState({
     category: '',
-    quantity: ''
+    quantity: '',
+    lastInSection: false
   });
   const [categoryOptions, setCategoryOptions] = useState(null);
 
@@ -91,6 +94,24 @@ const NewRowController = (props: Props) => {
           />
         </RowElement>
         <RowElement>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={seatsValues.lastInSection}
+                onChange={() =>
+                  setSeatsValues(prevSeatsValues => ({
+                    ...seatsValues,
+                    lastInSection: !prevSeatsValues.lastInSection
+                  }))
+                }
+                value="checkedB"
+                color="primary"
+              />
+            }
+            label="Last in section"
+          />
+        </RowElement>
+        <RowElement>
           <RoundButton
             icon={<AddIcon />}
             bgColor={mainColor}
@@ -98,7 +119,8 @@ const NewRowController = (props: Props) => {
               handleSubmit(seatsValues);
               setSeatsValues({
                 category: '',
-                quantity: ''
+                quantity: '',
+                lastInSection: false
               });
             }}
             disabled={!seatsValues.category || !seatsValues.quantity}
