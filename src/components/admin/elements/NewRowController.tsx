@@ -5,7 +5,12 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import AddIcon from '@material-ui/icons/Add';
 
-import { loadRowCategoryOptions } from '../../../helpers/loadSelectOptions';
+import parseFieldsFromEntity from '../../../helpers/parseFieldsFromEntity';
+import {
+  loadRowCategoryOptions,
+  Option
+} from '../../../helpers/loadSelectOptions';
+import { AdminListItemType } from '../../../helpers/parseFieldsFromEntity';
 import TextField from '../../fields/TextField/TextField';
 import SelectField from '../../fields/SelectField/SelectField';
 import RoundButton from '../../buttons/RoundButton';
@@ -71,7 +76,7 @@ const NewRowController = ({ prevRows, rowsSetter, handleSnackbar }: Props) => {
     category: '3',
     lastInSection: false
   });
-  const [categoryOptions, setCategoryOptions] = useState(null);
+  const [categoryOptions, setCategoryOptions] = useState<Option[] | null>(null);
 
   useEffect(() => {
     if (!categoryOptions) {
@@ -187,6 +192,20 @@ const NewRowController = ({ prevRows, rowsSetter, handleSnackbar }: Props) => {
               <AdminListItem
                 key={row.id}
                 item={item}
+                properties={parseFieldsFromEntity(item as any).map(
+                  (field: AdminListItemType) =>
+                    field.type === 'select'
+                      ? {
+                          ...field,
+                          label:
+                            categoryOptions &&
+                            categoryOptions.find(
+                              (opt: Option) => opt.value === field.value
+                            ).label,
+                          options: categoryOptions
+                        }
+                      : field
+                )}
                 handleUpdate={handleUpdate}
                 handleRemove={handleRemove}
                 handleSnackbar={handleSnackbar}

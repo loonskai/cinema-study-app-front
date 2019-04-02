@@ -31,7 +31,7 @@ export const loadAllCinemaOptions = async (
   }
 };
 
-export const loadRowCategoryOptions = async (optionsSetFunc: any) => {
+export const loadRowCategoryOptions = async (optionsSetFunc?: any) => {
   try {
     const res = await api.getRowCategories();
     if (!res) {
@@ -43,6 +43,9 @@ export const loadRowCategoryOptions = async (optionsSetFunc: any) => {
         label: category.title
       })
     );
+    if (!optionsSetFunc) {
+      return customizedOptions;
+    }
     optionsSetFunc(customizedOptions);
   } catch (error) {
     console.error(error);

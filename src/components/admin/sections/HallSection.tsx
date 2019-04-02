@@ -34,6 +34,9 @@ const HallSection = ({ handleSnackbar }: any) => {
     e: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
     e.preventDefault();
+    console.log(title);
+    console.log(cinema);
+    console.log(rows);
     /*     const result = await api.createHall({ title, cinema, rows });
     if (result) {
       setTitle('');

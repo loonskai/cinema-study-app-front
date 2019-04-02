@@ -3,6 +3,7 @@ import AddIcon from '@material-ui/icons/Add';
 
 import Cinema from '../../../classes/Cinema';
 
+import parseFieldsFromEntity from '../../../helpers/parseFieldsFromEntity';
 import cinemaService from '../../../services/Cinema';
 import AdminFormContainer from '../AdminFormContainer';
 import TextField from '../../fields/TextField/TextField';
@@ -21,10 +22,7 @@ interface InputValues {
 
 const CinemaSection = ({ handleSnackbar }: any) => {
   const [cinemaList, setCinemaList] = useState<Cinema[] | null>(null);
-  const [values, setValues] = useState<InputValues>({
-    title: '',
-    city: ''
-  });
+  const [values, setValues] = useState<InputValues>({ title: '', city: '' });
   const [inputErrors, setInputErrors] = useState<InputErrors>({
     title: null,
     city: null
@@ -75,14 +73,8 @@ const CinemaSection = ({ handleSnackbar }: any) => {
     e.preventDefault();
     const result = await cinemaService.create(values, setInputErrors);
     if (result.success) {
-      setValues({
-        city: '',
-        title: ''
-      });
-      setInputErrors({
-        city: '',
-        title: ''
-      });
+      setValues({ city: '', title: '' });
+      setInputErrors({ city: '', title: '' });
       setButtonDisabled(true);
       handleSnackbar(result.data, 'success');
       await cinemaService.getAll(setCinemaList);
@@ -118,6 +110,7 @@ const CinemaSection = ({ handleSnackbar }: any) => {
           <AdminListItem
             key={item.id.toString()}
             item={item}
+            properties={parseFieldsFromEntity(item)}
             handleUpdate={handleUpdate}
             handleRemove={handleRemove}
             handleSnackbar={handleSnackbar}

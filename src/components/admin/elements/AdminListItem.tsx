@@ -2,6 +2,7 @@ import React, { Fragment, useState, ReactText } from 'react';
 import TextField from '@material-ui/core/TextField';
 import styled from 'styled-components';
 
+import { AdminListItemType } from '../../../helpers/parseFieldsFromEntity';
 import UpdateItemButton from '../../buttons/UpdateItemButton';
 import { mainColor } from '../../../constants';
 
@@ -10,6 +11,7 @@ interface Props {
   handleSnackbar: (message: string, status: string) => void;
   handleUpdate: (id: number | string, values: any) => any;
   handleRemove: (id: number | string) => void;
+  properties: AdminListItemType[];
 }
 
 const Container = styled.div`
@@ -61,7 +63,12 @@ const ButtonsContainer = styled.div`
   align-items: center;
 `;
 
-const AdminListItem = ({ item, handleUpdate, handleRemove }: Props) => {
+const AdminListItem = ({
+  item,
+  handleUpdate,
+  handleRemove,
+  properties
+}: Props) => {
   const [editMode, setEditMode] = useState<boolean>(false);
   const [itemValues, setItemValues] = useState(item);
   const [inputValues, setInputValues] = useState(item);
@@ -128,7 +135,7 @@ const AdminListItem = ({ item, handleUpdate, handleRemove }: Props) => {
   };
 
   const removeItem = () => handleRemove(item.id);
-
+  console.log(properties);
   return (
     <Container>
       <ItemsContainer>{renderProperties(item)}</ItemsContainer>
