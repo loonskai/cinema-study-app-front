@@ -1,4 +1,4 @@
-import React, { Fragment, useState, ReactText } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import TextField from '@material-ui/core/TextField';
 import styled from 'styled-components';
 
@@ -12,6 +12,7 @@ interface Props {
   handleUpdate: (id: number | string, values: any) => any;
   handleRemove: (id: number | string) => void;
   properties: AdminListItemType[];
+  id: string | number;
 }
 
 const Container = styled.div`
@@ -64,14 +65,31 @@ const ButtonsContainer = styled.div`
 `;
 
 const AdminListItem = ({
-  item,
+  // item,
+  id,
   handleUpdate,
   handleRemove,
   properties
 }: Props) => {
   const [editMode, setEditMode] = useState<boolean>(false);
-  const [itemValues, setItemValues] = useState(item);
-  const [inputValues, setInputValues] = useState(item);
+  const [itemValues, setItemValues] = useState<{ [key: string]: any } | null>(
+    null
+  );
+  const [inputValues, setInputValues] = useState<{ [key: string]: any } | null>(
+    null
+  );
+
+  useEffect(() => {
+    const initValues = properties.reduce(
+      (obj, property) => {
+        obj[property.name as string] = property.value;
+        return obj;
+      },
+      {} as any
+    );
+    setItemValues(initValues);
+    setInputValues(initValues);
+  }, [properties]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     e.preventDefault();
@@ -82,38 +100,38 @@ const AdminListItem = ({
     });
   };
 
-  const renderProperties = (item: any) => {
-    const keys = Object.keys(item);
-    return keys.map(
-      (key: string, index: number) =>
-        key !== 'id' && (
-          <ItemColumn key={index.toString()}>
-            {editMode ? (
-              <TextField
-                label={key}
-                name={key}
-                value={inputValues[key]}
-                onChange={handleChange}
-                margin="none"
-                InputLabelProps={{
-                  classes: {
-                    focused: 'input-focused'
-                  }
-                }}
-                InputProps={{
-                  classes: {
-                    underline: 'input-underline'
-                  }
-                }}
-              />
-            ) : (
-              <Fragment>
-                <strong>{key}</strong>
-                <span>{itemValues[key]}</span>
-              </Fragment>
-            )}
-          </ItemColumn>
-        )
+  const renderProperties = (property: AdminListItemType) => {
+    if (editMode) {
+      switch (property.type) {
+        case 'checkbox':
+        case 'text':
+          return (
+            <TextField
+              label={property.label}
+              name={property.name}
+              value={inputValues && inputValues[property.name]}
+              onChange={handleChange}
+              margin="none"
+              InputLabelProps={{
+                classes: { focused: 'input-focused' }
+              }}
+              InputProps={{
+                classes: { underline: 'input-underline' }
+              }}
+            />
+          );
+
+        case 'number':
+        case 'select':
+        default:
+          return null;
+      }
+    }
+    return (
+      <Fragment>
+        <strong>{property.label}</strong>
+        <span>{property.value}</span>
+      </Fragment>
     );
   };
 
@@ -127,17 +145,24 @@ const AdminListItem = ({
   };
 
   const saveItem = async () => {
-    const result = await handleUpdate(item.id, inputValues);
+    const result = await handleUpdate(id, inputValues);
     if (result) {
       setItemValues(result);
       setEditMode(false);
     }
   };
-  console.log(properties);
-  const removeItem = () => handleRemove(item.id);
+
+  const removeItem = () => handleRemove(id);
+
   return (
     <Container>
-      <ItemsContainer>{renderProperties(item)}</ItemsContainer>
+      <ItemsContainer>
+        {properties.map((property, index) => (
+          <ItemColumn key={index.toString()}>
+            {renderProperties(property)}
+          </ItemColumn>
+        ))}
+      </ItemsContainer>
       <ButtonsContainer>
         {editMode ? (
           <Fragment>

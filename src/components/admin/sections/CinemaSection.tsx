@@ -109,7 +109,8 @@ const CinemaSection = ({ handleSnackbar }: any) => {
         cinemaList.map((item: Cinema) => (
           <AdminListItem
             key={item.id.toString()}
-            item={item}
+            // item={item}
+            id={item.id}
             properties={parseFieldsFromEntity(item)}
             handleUpdate={handleUpdate}
             handleRemove={handleRemove}

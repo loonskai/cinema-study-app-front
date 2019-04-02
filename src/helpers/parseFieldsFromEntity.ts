@@ -1,10 +1,10 @@
 import { loadRowCategoryOptions, Option } from './loadSelectOptions';
 
 export interface AdminListItemType {
-  title: string;
+  name: string;
   type: 'text' | 'number' | 'select' | 'checkbox';
   value: string | number | boolean;
-  label?: string;
+  label: string;
   options?: Option[];
 }
 
@@ -22,26 +22,30 @@ export default (item: {
           case 'quantity':
             return {
               type: 'number',
-              title: upperCaseFirstLetter(key),
+              name: key,
+              label: upperCaseFirstLetter(key),
               value: +item[key]
             };
           case 'category':
             return {
               type: 'select',
-              title: upperCaseFirstLetter(key),
+              name: key,
+              label: upperCaseFirstLetter(key),
               value: +item[key]
             };
           case 'lastInSection': {
             return {
               type: 'checkbox',
-              title: 'Last in section',
+              name: key,
+              label: 'Last in section',
               value: item[key] === 'Yes'
             };
           }
           default:
             return {
               type: 'text',
-              title: upperCaseFirstLetter(key),
+              name: key,
+              label: upperCaseFirstLetter(key),
               value: item[key]
             };
         }
