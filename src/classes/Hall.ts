@@ -10,9 +10,4 @@ export default class Hall {
     this.title = json.title;
     this.cinemaID = json.cinemaID;
   }
-
-  /*   public async update(values: CinemaAPIType) {
-    const updatedCinema = await cinemaService.update(values);
-    return updatedCinema;
-  } */
 }

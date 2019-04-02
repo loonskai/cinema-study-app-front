@@ -1,8 +1,10 @@
 // import api from '../ApiService';
 import cinemaService from '../services/Cinema';
+import hallService from '../services/Hall';
 import Cinema from '../classes/Cinema';
 
 import { Dispatch, SetStateAction } from 'react';
+import api from '../services/Api';
 
 export interface Option {
   value: string | number;
@@ -22,6 +24,25 @@ export const loadAllCinemaOptions = async (
       value: cinema.id,
       label: cinema.title
     }));
+    optionsSetFunc(customizedOptions);
+  } catch (error) {
+    console.error(error);
+    optionsSetFunc([]);
+  }
+};
+
+export const loadRowCategoryOptions = async (optionsSetFunc: any) => {
+  try {
+    const res = await api.getRowCategories();
+    if (!res) {
+      throw Error('Unable to load row categories');
+    }
+    const customizedOptions = res.data.map(
+      (category: { id: number; title: string }) => ({
+        value: category.id,
+        label: category.title
+      })
+    );
     optionsSetFunc(customizedOptions);
   } catch (error) {
     console.error(error);
@@ -59,21 +80,6 @@ export const loadAllCinemaOptions = async (
       value: hall.id
     }));
     optionsSetFunc(customizedOptions);
-  } catch (error) {
-    console.error(error);
-  }
-}; */
-
-/* export const loadAllCategoryOptions = async (optionsSetFunc: any) => {
-  try {
-    const data: any = await api.loadRowCategories();
-    if (data) {
-      const customizedOptions = data.map((category: any) => ({
-        label: category.title,
-        value: category.title
-      }));
-      optionsSetFunc(customizedOptions);
-    }
   } catch (error) {
     console.error(error);
   }

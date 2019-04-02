@@ -16,7 +16,7 @@ const Container = styled.div`
 `;
 
 const Admin = () => {
-  const [selectedTab, setSelectedTab] = useState(TabType.cinema);
+  const [selectedTab, setSelectedTab] = useState(TabType.hall);
 
   const getSelectedForm = (handleSnackbar: any) => {
     switch (selectedTab) {
