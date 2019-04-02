@@ -1,8 +1,9 @@
 import React, { Fragment, useState } from 'react';
+import TextField from '@material-ui/core/TextField';
 import styled from 'styled-components';
 
 import UpdateItemButton from '../../buttons/UpdateItemButton';
-import { greyColor } from '../../../constants';
+import { mainColor, greyColor } from '../../../constants';
 
 interface Props {
   item: any;
@@ -14,8 +15,10 @@ const StyledItem = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
-  padding: 0.5rem 0;
-  border-bottom: 1px solid ${greyColor};
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
 `;
 
 const ItemsContainer = styled.div`
@@ -23,7 +26,30 @@ const ItemsContainer = styled.div`
 `;
 
 const ItemColumn = styled.div`
+  display: flex;
+  flex-wrap: wrap;
   margin-left: 0.2rem;
+  padding-top: 0.5rem;
+
+  & .input-focused {
+    color: ${mainColor} !important;
+  }
+
+  & .input-underline::after {
+    border-bottom-color: ${mainColor};
+  }
+
+  & strong {
+    width: 100%;
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.54);
+  }
+  & span {
+    width: 100%;
+    padding: 0.5rem 0;
+    font-size: 1rem;
+  }
 `;
 
 const ButtonsContainer = styled.div`
@@ -53,16 +79,29 @@ const AdminListItem = ({ item, handleSnackbar, handleRemove }: Props) => {
       (key: string, index: number) =>
         key !== 'id' && (
           <ItemColumn key={index.toString()}>
-            <strong>{key}</strong>:{' '}
             {editMode ? (
-              <input
-                type="text"
+              <TextField
+                label={key}
                 name={key}
                 value={inputValues[key]}
                 onChange={handleChange}
+                margin="none"
+                InputLabelProps={{
+                  classes: {
+                    focused: 'input-focused'
+                  }
+                }}
+                InputProps={{
+                  classes: {
+                    underline: 'input-underline'
+                  }
+                }}
               />
             ) : (
-              <span>{itemValues[key]}</span>
+              <Fragment>
+                <strong>{key}</strong>
+                <span>{itemValues[key]}</span>
+              </Fragment>
             )}
           </ItemColumn>
         )
