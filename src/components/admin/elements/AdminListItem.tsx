@@ -133,9 +133,8 @@ const AdminListItem = ({
       setEditMode(false);
     }
   };
-
-  const removeItem = () => handleRemove(item.id);
   console.log(properties);
+  const removeItem = () => handleRemove(item.id);
   return (
     <Container>
       <ItemsContainer>{renderProperties(item)}</ItemsContainer>

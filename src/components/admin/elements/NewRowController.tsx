@@ -125,6 +125,21 @@ const NewRowController = ({ prevRows, rowsSetter, handleSnackbar }: Props) => {
     return true;
   };
 
+  const getProperties = (item: any): AdminListItemType[] => {
+    return parseFieldsFromEntity(item).map((field: AdminListItemType) => {
+      const option =
+        categoryOptions &&
+        categoryOptions.find((opt: Option) => opt.value === field.value);
+      return field.type === 'select'
+        ? {
+            ...field,
+            label: option && option.label,
+            options: categoryOptions
+          }
+        : field;
+    }) as AdminListItemType[];
+  };
+
   return (
     <Container>
       <Title>Add seat rows</Title>
@@ -192,20 +207,7 @@ const NewRowController = ({ prevRows, rowsSetter, handleSnackbar }: Props) => {
               <AdminListItem
                 key={row.id}
                 item={item}
-                properties={parseFieldsFromEntity(item as any).map(
-                  (field: AdminListItemType) =>
-                    field.type === 'select'
-                      ? {
-                          ...field,
-                          label:
-                            categoryOptions &&
-                            categoryOptions.find(
-                              (opt: Option) => opt.value === field.value
-                            ).label,
-                          options: categoryOptions
-                        }
-                      : field
-                )}
+                properties={getProperties(item)}
                 handleUpdate={handleUpdate}
                 handleRemove={handleRemove}
                 handleSnackbar={handleSnackbar}

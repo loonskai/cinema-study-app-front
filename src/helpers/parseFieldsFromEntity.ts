@@ -25,14 +25,17 @@ export default (item: {
               title: upperCaseFirstLetter(key),
               value: +item[key]
             };
-          case 'category': {
-            // const options = await loadRowCategoryOptions();
+          case 'category':
             return {
               type: 'select',
               title: upperCaseFirstLetter(key),
               value: +item[key]
-              /*               label: options.find((opt: Option) => opt.value === +item[key]),
-              options */
+            };
+          case 'lastInSection': {
+            return {
+              type: 'checkbox',
+              title: 'Last in section',
+              value: item[key] === 'Yes'
             };
           }
           default:
