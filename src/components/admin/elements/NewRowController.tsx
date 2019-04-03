@@ -105,18 +105,14 @@ const NewRowController = ({ prevRows, rowsSetter, handleSnackbar }: Props) => {
     id: string,
     inputValues: RowViewItem
   ): Promise<RowViewItem> => {
-    console.log('update inputValues', inputValues);
     const rowUpdated: RowItem = {
+      id,
       ...inputValues,
       lastInSection: inputValues.lastInSection === 'Yes'
     };
-    console.log('rowUpdated', rowUpdated);
-    const updatedRows: RowItem[] = prevRows.map(row => {
-      console.log('row', row);
-      console.log('id', id);
-      return row.id === id ? rowUpdated : row;
-    });
-    console.log('update updatedRows', updatedRows);
+    const updatedRows: RowItem[] = prevRows.map(row =>
+      row.id === id ? rowUpdated : row
+    );
     rowsSetter(updatedRows);
     return {
       ...rowUpdated,

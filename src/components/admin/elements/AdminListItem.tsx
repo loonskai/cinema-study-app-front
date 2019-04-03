@@ -1,10 +1,12 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
 import MenuItem from '@material-ui/core/MenuItem';
+import Checkbox from '@material-ui/core/Checkbox';
 import styled from 'styled-components';
 
 import { AdminListItemType } from '../../../helpers/parseFieldsFromEntity';
@@ -69,6 +71,16 @@ const ButtonsContainer = styled.div`
   align-items: center;
 `;
 
+const StyledFormControlLabel = styled(FormControlLabel)<any>`
+  && .label {
+    font-size: 0.8rem;
+  }
+  && .checkbox-root {
+    width: auto;
+    margin: 0 0.5rem;
+  }
+`;
+
 const AdminListItem = ({
   // item,
   id,
@@ -85,17 +97,19 @@ const AdminListItem = ({
   );
 
   useEffect(() => {
-    const initValues = properties.reduce(
-      (obj, property) => {
-        const { name, value } = property;
-        obj[name as string] = value;
-        return obj;
-      },
-      {} as any
-    );
-    setItemValues(initValues);
-    setInputValues(initValues);
-  }, [properties]);
+    if (!inputValues || !itemValues) {
+      const initValues = properties.reduce(
+        (obj, property) => {
+          const { name, value } = property;
+          obj[name as string] = value;
+          return obj;
+        },
+        {} as any
+      );
+      setItemValues(initValues);
+      setInputValues(initValues);
+    }
+  }, [properties, inputValues]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -108,13 +122,43 @@ const AdminListItem = ({
     });
   };
 
+  const handleCheckboxChange = (name: string) => (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setInputValues(prevInputValues => ({
+      ...inputValues,
+      [name]: prevInputValues && !prevInputValues[name]
+    }));
+  };
+
   const renderProperties = (property: AdminListItemType) => {
-    return (
-      <Fragment>
-        <strong>{property.label}</strong>
-        <span>{property.value}</span>
-      </Fragment>
-    );
+    switch (property.type) {
+      case 'checkbox': {
+        return (
+          inputValues && (
+            <StyledFormControlLabel
+              control={
+                <Checkbox
+                  disabled={true}
+                  checked={inputValues[property.name]}
+                  value={property.name}
+                  classes={{ root: 'checkbox-root' }}
+                />
+              }
+              label={property.label}
+              classes={{ label: 'label' }}
+            />
+          )
+        );
+      }
+      default:
+        return (
+          <Fragment>
+            <strong>{property.label}</strong>
+            <span>{property.value}</span>
+          </Fragment>
+        );
+    }
   };
 
   const renderPropertiesEditMode = (property: AdminListItemType) => {
@@ -152,7 +196,24 @@ const AdminListItem = ({
           </FormControl>
         );
       }
-      case 'checkbox':
+      case 'checkbox': {
+        return (
+          inputValues && (
+            <StyledFormControlLabel
+              control={
+                <Checkbox
+                  checked={inputValues[property.name]}
+                  classes={{ root: 'checkbox-root' }}
+                  name={property.name}
+                  onChange={handleCheckboxChange(property.name)}
+                />
+              }
+              label={property.label}
+              classes={{ label: 'label' }}
+            />
+          )
+        );
+      }
       default:
         return null;
     }
@@ -169,6 +230,7 @@ const AdminListItem = ({
 
   const saveItem = async () => {
     const result = await handleUpdate(id, inputValues);
+    console.log('id', id);
     if (result) {
       setItemValues(result);
       setEditMode(false);
