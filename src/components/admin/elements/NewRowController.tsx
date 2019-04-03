@@ -18,14 +18,14 @@ import AdminListItem from '../elements/AdminListItem';
 import { mainColor, mainDarkColor } from '../../../constants';
 
 export interface RowItem {
-  id: string;
+  id?: string;
   quantity: string;
   category: string;
   lastInSection: boolean;
 }
 
 export interface RowViewItem {
-  id: string;
+  id?: string;
   quantity: string;
   category: string;
   lastInSection: string;
@@ -72,8 +72,8 @@ const RowElement = styled.div`
 const NewRowController = ({ prevRows, rowsSetter, handleSnackbar }: Props) => {
   const [newRow, setNewRowValue] = useState<RowItem>({
     id: uuid(),
-    quantity: '20',
-    category: '3',
+    quantity: '',
+    category: '',
     lastInSection: false
   });
   const [categoryOptions, setCategoryOptions] = useState<Option[] | null>(null);
@@ -201,7 +201,6 @@ const NewRowController = ({ prevRows, rowsSetter, handleSnackbar }: Props) => {
             };
             return (
               <AdminListItem
-                // item={item}
                 key={row.id}
                 id={row.id}
                 properties={getProperties(item)}

@@ -1,3 +1,5 @@
+import { RowItem } from '../components/admin/elements/NewRowController';
+
 export interface ResType<Data> {
   error?: boolean;
   message?: string;
@@ -27,8 +29,9 @@ export interface CinemaAPIType {
 
 export interface HallAPIType {
   id?: number;
-  cinemaID: number;
+  cinemaID: number | string;
   title: string;
+  rows?: RowItem[];
   createdAt?: Date;
   updatedAt?: Date;
 }

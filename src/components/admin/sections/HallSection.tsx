@@ -4,6 +4,8 @@ import AddIcon from '@material-ui/icons/Add';
 import Hall from '../../../classes/Hall';
 import { RowItem } from '../elements/NewRowController';
 
+import hallService from '../../../services/Hall';
+
 import { Option } from '../../../helpers/loadSelectOptions';
 import { loadAllCinemaOptions } from '../../../helpers/loadSelectOptions';
 import AdminFormContainer from '../AdminFormContainer';
@@ -17,27 +19,27 @@ const HallSection = ({ handleSnackbar }: any) => {
   const [hallList, setHallList] = useState<Hall[] | null>(null);
   const [cinemaOptions, setCinemaOptions] = useState<Option[] | null>(null);
   const [title, setTitle] = useState('Main Hall'); // EMPTY on default
-  const [cinema, setCinema] = useState('11'); // EMPTY on default
+  const [cinemaID, setCinemaID] = useState('11'); // EMPTY on default
   const [rows, setRows] = useState<RowItem[]>([]);
   const [buttonDisabled, setButtonDisabled] = useState(true);
 
   useEffect(() => {
-    if (title && cinema && !!rows.length) {
+    if (title && cinemaID && !!rows.length) {
       setButtonDisabled(false);
+    } else {
+      setButtonDisabled(true);
     }
     if (!cinemaOptions) {
       loadAllCinemaOptions(setCinemaOptions);
     }
-  }, [title, cinema, rows]);
+  }, [title, cinemaID, rows]);
 
   const handleSubmit = async (
     e: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
     e.preventDefault();
-    console.log(title);
-    console.log(cinema);
-    console.log(rows);
-    /*     const result = await api.createHall({ title, cinema, rows });
+    const result = await hallService.create({ title, cinemaID, rows });
+    /*
     if (result) {
       setTitle('');
       setCinema('');
@@ -67,8 +69,8 @@ const HallSection = ({ handleSnackbar }: any) => {
           type="select"
           options={cinemaOptions}
           label="Choose Cinema"
-          value={cinema}
-          handleChange={(value: string) => setCinema(value)}
+          value={cinemaID}
+          handleChange={(value: string) => setCinemaID(value)}
         />
         <NewRowController
           prevRows={rows}

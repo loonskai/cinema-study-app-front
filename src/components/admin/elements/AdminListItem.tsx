@@ -19,7 +19,7 @@ interface Props {
   handleUpdate: (id: number | string, values: any) => any;
   handleRemove: (id: number | string) => void;
   properties: AdminListItemType[];
-  id: string | number;
+  id?: string | number;
 }
 
 const Container = styled.div`
@@ -82,7 +82,6 @@ const StyledFormControlLabel = styled(FormControlLabel)<any>`
 `;
 
 const AdminListItem = ({
-  // item,
   id,
   handleUpdate,
   handleRemove,
@@ -229,15 +228,14 @@ const AdminListItem = ({
   };
 
   const saveItem = async () => {
-    const result = await handleUpdate(id, inputValues);
-    console.log('id', id);
+    const result = id && (await handleUpdate(id, inputValues));
     if (result) {
       setItemValues(result);
       setEditMode(false);
     }
   };
 
-  const removeItem = () => handleRemove(id);
+  const removeItem = () => id && handleRemove(id);
 
   return (
     <Container>
