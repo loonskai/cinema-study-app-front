@@ -29,7 +29,7 @@ export interface CinemaAPIType {
 
 export interface HallAPIType {
   id?: number;
-  cinemaID: number | string;
+  'cinema-id': number | string;
   title: string;
   rows?: RowItem[];
   createdAt?: Date;

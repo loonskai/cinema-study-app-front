@@ -1,6 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { apiKey } from '../credentials';
 
+import { HallCreateType } from '../services/Hall';
 import {
   ResType,
   UserAPIType,
@@ -9,7 +10,6 @@ import {
   HallAPIType
 } from '../interfaces/Api';
 import { SignInBodyType, SignUpBodyType } from '../interfaces/Auth';
-import Movie from '../classes/Movie';
 
 import parseResponse from '../helpers/parseResponse';
 
@@ -101,9 +101,14 @@ class ApiService {
   }
 
   /* HALLS */
-  async createHall(body: HallAPIType): Promise<any> {
+  async createHall(body: HallCreateType): Promise<any> {
     const res = await this.client.post('http://localhost:5000/hall', body);
     return res;
+  }
+
+  async getHalls(): Promise<any> {
+    const res = await this.client.get('http://localhost:5000/hall');
+    return res.data;
   }
 
   async getRowCategories() {

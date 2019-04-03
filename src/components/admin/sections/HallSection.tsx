@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import AddIcon from '@material-ui/icons/Add';
 
 import Hall from '../../../classes/Hall';
@@ -8,6 +8,7 @@ import hallService from '../../../services/Hall';
 
 import { Option } from '../../../helpers/loadSelectOptions';
 import { loadAllCinemaOptions } from '../../../helpers/loadSelectOptions';
+import parseFieldsFromEntity from '../../../helpers/parseFieldsFromEntity';
 import AdminFormContainer from '../AdminFormContainer';
 import NewRowController from '../elements/NewRowController';
 import TextField from '../../fields/TextField/TextField';
@@ -32,6 +33,9 @@ const HallSection = ({ handleSnackbar }: any) => {
     if (!cinemaOptions) {
       loadAllCinemaOptions(setCinemaOptions);
     }
+    if (!hallList) {
+      hallService.getAll(setHallList);
+    }
   }, [title, cinemaID, rows]);
 
   const handleSubmit = async (
@@ -39,19 +43,23 @@ const HallSection = ({ handleSnackbar }: any) => {
   ): Promise<void> => {
     e.preventDefault();
     const result = await hallService.create({ title, cinemaID, rows });
-    /*
     if (result) {
       setTitle('');
-      setCinema('');
+      setCinemaID('');
       setRows([]);
       setButtonDisabled(true);
       handleSnackbar('New hall added', 'success');
-    } */
+      hallService.getAll(setHallList);
+    }
   };
 
-  const handleUpdate = () => {};
+  const handleUpdate = () => {
+    console.log('update hall');
+  };
 
-  const handleRemove = () => {};
+  const handleRemove = () => {
+    console.log('remove hall');
+  };
 
   return (
     <AdminFormContainer title="Add Hall">
@@ -83,17 +91,20 @@ const HallSection = ({ handleSnackbar }: any) => {
           disabled={buttonDisabled}
         />
       </form>
-      {/*       {hallList &&
-        !!hallList.length &&
-        hallList.map((item: Hall) => (
-          <AdminListItem
-            key={item.id.toString()}
-            item={item}
-            handleUpdate={handleUpdate}
-            handleRemove={handleRemove}
-            handleSnackbar={handleSnackbar}
-          />
-        ))} */}
+      {hallList && !!hallList.length && (
+        <Fragment>
+          <h3>Hall List</h3>
+          {hallList.map((item: Hall) => (
+            <AdminListItem
+              properties={parseFieldsFromEntity(item as any)}
+              key={item.id.toString()}
+              handleUpdate={handleUpdate}
+              handleRemove={handleRemove}
+              handleSnackbar={handleSnackbar}
+            />
+          ))}
+        </Fragment>
+      )}
     </AdminFormContainer>
   );
 };

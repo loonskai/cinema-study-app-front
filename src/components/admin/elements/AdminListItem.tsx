@@ -14,7 +14,6 @@ import UpdateItemButton from '../../buttons/UpdateItemButton';
 import { mainColor } from '../../../constants';
 
 interface Props {
-  item: any;
   handleSnackbar: (message: string, status: string) => void;
   handleUpdate: (id: number | string, values: any) => any;
   handleRemove: (id: number | string) => void;
