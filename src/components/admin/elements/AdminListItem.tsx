@@ -1,5 +1,10 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import TextField from '@material-ui/core/TextField';
+import Select from '@material-ui/core/Select';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import Input from '@material-ui/core/Input';
+import MenuItem from '@material-ui/core/MenuItem';
 import styled from 'styled-components';
 
 import { AdminListItemType } from '../../../helpers/parseFieldsFromEntity';
@@ -82,7 +87,8 @@ const AdminListItem = ({
   useEffect(() => {
     const initValues = properties.reduce(
       (obj, property) => {
-        obj[property.name as string] = property.value;
+        const { name, value } = property;
+        obj[name as string] = value;
         return obj;
       },
       {} as any
@@ -91,7 +97,9 @@ const AdminListItem = ({
     setInputValues(initValues);
   }, [properties]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ): void => {
     e.preventDefault();
     const { name, value } = e.target;
     setInputValues({
@@ -101,38 +109,53 @@ const AdminListItem = ({
   };
 
   const renderProperties = (property: AdminListItemType) => {
-    if (editMode) {
-      switch (property.type) {
-        case 'checkbox':
-        case 'text':
-          return (
-            <TextField
-              label={property.label}
-              name={property.name}
-              value={inputValues && inputValues[property.name]}
-              onChange={handleChange}
-              margin="none"
-              InputLabelProps={{
-                classes: { focused: 'input-focused' }
-              }}
-              InputProps={{
-                classes: { underline: 'input-underline' }
-              }}
-            />
-          );
-
-        case 'number':
-        case 'select':
-        default:
-          return null;
-      }
-    }
     return (
       <Fragment>
         <strong>{property.label}</strong>
         <span>{property.value}</span>
       </Fragment>
     );
+  };
+
+  const renderPropertiesEditMode = (property: AdminListItemType) => {
+    switch (property.type) {
+      case 'text':
+      case 'number':
+        return (
+          <TextField
+            type={property.type}
+            label={property.label}
+            name={property.name}
+            value={inputValues && inputValues[property.name]}
+            onChange={handleChange}
+            margin="none"
+            InputLabelProps={{ classes: { focused: 'input-focused' } }}
+            InputProps={{ classes: { underline: 'input-underline' } }}
+          />
+        );
+      case 'select': {
+        return (
+          <FormControl>
+            <InputLabel htmlFor={property.name}>{property.label}</InputLabel>
+            <Select
+              value={inputValues && inputValues[property.name]}
+              onChange={handleChange}
+              input={<Input name={property.name} id={property.name} />}
+            >
+              {property.options &&
+                property.options.map((option: any, index: number) => (
+                  <MenuItem key={index.toString()} value={option.value}>
+                    {option.value}
+                  </MenuItem>
+                ))}
+            </Select>
+          </FormControl>
+        );
+      }
+      case 'checkbox':
+      default:
+        return null;
+    }
   };
 
   const editItem = () => {
@@ -159,7 +182,9 @@ const AdminListItem = ({
       <ItemsContainer>
         {properties.map((property, index) => (
           <ItemColumn key={index.toString()}>
-            {renderProperties(property)}
+            {editMode
+              ? renderPropertiesEditMode(property)
+              : renderProperties(property)}
           </ItemColumn>
         ))}
       </ItemsContainer>

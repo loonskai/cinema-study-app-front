@@ -17,7 +17,7 @@ const HallSection = ({ handleSnackbar }: any) => {
   const [hallList, setHallList] = useState<Hall[] | null>(null);
   const [cinemaOptions, setCinemaOptions] = useState<Option[] | null>(null);
   const [title, setTitle] = useState('Main Hall'); // EMPTY on default
-  const [cinema, setCinema] = useState('8'); // EMPTY on default
+  const [cinema, setCinema] = useState('11'); // EMPTY on default
   const [rows, setRows] = useState<RowItem[]>([]);
   const [buttonDisabled, setButtonDisabled] = useState(true);
 

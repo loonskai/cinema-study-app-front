@@ -105,13 +105,18 @@ const NewRowController = ({ prevRows, rowsSetter, handleSnackbar }: Props) => {
     id: string,
     inputValues: RowViewItem
   ): Promise<RowViewItem> => {
+    console.log('update inputValues', inputValues);
     const rowUpdated: RowItem = {
       ...inputValues,
       lastInSection: inputValues.lastInSection === 'Yes'
     };
-    const updatedRows: RowItem[] = prevRows.map(row =>
-      row.id === id ? rowUpdated : row
-    );
+    console.log('rowUpdated', rowUpdated);
+    const updatedRows: RowItem[] = prevRows.map(row => {
+      console.log('row', row);
+      console.log('id', id);
+      return row.id === id ? rowUpdated : row;
+    });
+    console.log('update updatedRows', updatedRows);
     rowsSetter(updatedRows);
     return {
       ...rowUpdated,
@@ -133,7 +138,7 @@ const NewRowController = ({ prevRows, rowsSetter, handleSnackbar }: Props) => {
       return field.type === 'select'
         ? {
             ...field,
-            label: option && option.label,
+            value: option && option.value,
             options: categoryOptions
           }
         : field;
@@ -151,12 +156,9 @@ const NewRowController = ({ prevRows, rowsSetter, handleSnackbar }: Props) => {
             options={categoryOptions}
             label="Row Category"
             value={newRow.category}
-            handleChange={(value: string) => {
-              setNewRowValue({
-                ...newRow,
-                category: value
-              });
-            }}
+            handleChange={(value: string) =>
+              setNewRowValue({ ...newRow, category: value })
+            }
           />
         </RowElement>
         <RowElement>
@@ -179,9 +181,7 @@ const NewRowController = ({ prevRows, rowsSetter, handleSnackbar }: Props) => {
                     lastInSection: !prevNewRowValues.lastInSection
                   }))
                 }
-                classes={{
-                  checked: 'checkbox-checked'
-                }}
+                classes={{ checked: 'checkbox-checked' }}
               />
             }
             label="Last in section"
@@ -205,8 +205,9 @@ const NewRowController = ({ prevRows, rowsSetter, handleSnackbar }: Props) => {
             };
             return (
               <AdminListItem
+                // item={item}
                 key={row.id}
-                item={item}
+                id={row.id}
                 properties={getProperties(item)}
                 handleUpdate={handleUpdate}
                 handleRemove={handleRemove}
