@@ -1,5 +1,6 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 
+import Movie from '../classes/Movie';
 import { HallCreateType } from '../services/Hall';
 import {
   ResType,
@@ -121,6 +122,11 @@ class ApiService {
 
   async getMovies(): Promise<ResType<MovieAPIType[]>> {
     const res = await this.client.get('http://localhost:5000/movies');
+    return res.data;
+  }
+
+  async createMovies(body: Movie[]): Promise<ResType<MovieAPIType[]>> {
+    const res = await this.client.post('http://localhost:5000/movies', body);
     return res.data;
   }
 

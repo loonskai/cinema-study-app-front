@@ -20,6 +20,22 @@ export default {
     } */
   },
 
+  async createMany(data: {
+    [key: number]: Movie;
+  }): Promise<MovieAPIType[] | null> {
+    try {
+      const body = Object.values(data);
+      const res = await apiService.createMovies(body);
+      if (res.error || !res.data) {
+        throw Error(res.message);
+      }
+      return res.data;
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  },
+
   async getExternalAPIMovieAll(): Promise<ExternalAPIMovie[] | null> {
     try {
       const { data } = await axios.get(

@@ -1,7 +1,6 @@
 import { ExternalAPIMovie, MovieAPIType } from '../interfaces/Api';
 
 export default class Movie {
-  readonly apiPosterUri = 'https://image.tmdb.org/t/p/w500';
   public id: number;
   public title: string;
   public overview: string;
@@ -12,6 +11,6 @@ export default class Movie {
     this.id = json.id;
     this.title = json.title;
     this.overview = json.overview;
-    this.poster = `${this.apiPosterUri}${posterPath}`;
+    this.poster = `https://image.tmdb.org/t/p/w500${posterPath}`;
   }
 }

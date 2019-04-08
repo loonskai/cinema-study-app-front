@@ -87,11 +87,12 @@ const MovieSection = ({ handleSnackbar }: any) => {
     e: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
     e.preventDefault();
-    /*     const result = api.addMovies(selectedExternalAPIMovies);
+    const result = await movieService.createMany(selectedExternalAPIMovies);
     if (result) {
       setSelectedMovies({});
       handleSnackbar('New movies added', 'success');
-    } */
+      await loadExternalAPIMovies();
+    }
   };
 
   useEffect(() => {
