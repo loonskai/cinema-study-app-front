@@ -16,7 +16,7 @@ import {
 interface Props {
   handleSelectItem: (id: string) => void;
   movies: Movie[];
-  moviesSelected: Movie[];
+  moviesSelected: { [key: number]: Movie };
 }
 
 const ListContainer = styled.div`
@@ -87,31 +87,33 @@ const ExternalAPIMoviesList = ({
 }: Props) => {
   return (
     <ListContainer>
-      {movies.map(movie => {
-        const isSelected = !!moviesSelected[movie.id];
-        const movieClass = classnames({
-          'movie-selected': isSelected
-        });
-        return (
-          <ListItem key={movie.id.toString()} className={movieClass}>
-            <div>
-              <ListItemPoster src={movie.poster} />
-            </div>
-            <div>
-              <ListItemTitle>{movie.title}</ListItemTitle>
-              <ListItemOverview>{movie.overview}</ListItemOverview>
-            </div>
-            <SelectButtonContainer>
-              <AddButton
-                icon={isSelected ? <DeleteIcon /> : <AddIcon />}
-                handleClick={handleSelectItem}
-                id={movie.id}
-                isSelected={isSelected}
-              />
-            </SelectButtonContainer>
-          </ListItem>
-        );
-      })}
+      {!movies
+        ? 'No movies'
+        : movies.map(movie => {
+            const isSelected = !!moviesSelected[movie.id];
+            const movieClass = classnames({
+              'movie-selected': isSelected
+            });
+            return (
+              <ListItem key={movie.id.toString()} className={movieClass}>
+                <div>
+                  <ListItemPoster src={movie.poster} />
+                </div>
+                <div>
+                  <ListItemTitle>{movie.title}</ListItemTitle>
+                  <ListItemOverview>{movie.overview}</ListItemOverview>
+                </div>
+                <SelectButtonContainer>
+                  <AddButton
+                    icon={isSelected ? <DeleteIcon /> : <AddIcon />}
+                    handleClick={handleSelectItem}
+                    id={movie.id}
+                    isSelected={isSelected}
+                  />
+                </SelectButtonContainer>
+              </ListItem>
+            );
+          })}
     </ListContainer>
   );
 };

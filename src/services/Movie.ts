@@ -4,7 +4,7 @@ import { apiKey } from '../credentials';
 import apiService from './Api';
 import Movie from '../classes/Movie';
 
-import { MovieAPIType, ExternalAPIMovie } from '../interfaces/Api';
+import { MovieAPIType, ExternalAPIMovie, ResType } from '../interfaces/Api';
 
 export default {
   async create(data: Movie[]): Promise<any> {
@@ -48,13 +48,17 @@ export default {
     }
   },
 
-  async getAll(): Promise<Movie[] | null> {
+  async getAll(stateSetter?: (data: Movie[]) => void): Promise<Movie[] | null> {
     try {
       const res = await apiService.getMovies();
       if (res.error || !res.data) {
         throw Error(res.message);
       }
-      return res.data.map(movie => new Movie(movie));
+      const result = res.data.map(movie => new Movie(movie));
+      if (stateSetter) {
+        stateSetter(result);
+      }
+      return result;
     } catch (error) {
       console.log(error);
       return null;
@@ -72,5 +76,29 @@ export default {
       console.error(error);
       return null;
     } */
+  },
+
+  async update(id: number, values: MovieAPIType): Promise<ResType<Movie>> {
+    try {
+      const { title, overview, poster } = values;
+      if (!id) {
+        throw Error('Cinema ID not defined');
+      }
+      if (!title || !overview || !poster) {
+        throw Error('Invalid values');
+      }
+      const { data } = await apiService.updateMovie(id, values);
+      const updatedMovie = new Movie(data);
+      return {
+        success: true,
+        data: updatedMovie
+      };
+    } catch (error) {
+      console.error(error);
+      return {
+        error: true,
+        message: error.message
+      };
+    }
   }
 };

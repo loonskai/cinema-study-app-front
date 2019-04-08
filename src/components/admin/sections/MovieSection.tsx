@@ -6,10 +6,12 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Movie from '../../../classes/Movie';
 import movieService from '../../../services/Movie';
 
+import parseFieldsFromEntity from '../../../helpers/parseFieldsFromEntity';
 import AdminFormContainer from '../AdminFormContainer';
 import ExternalAPIMoviesList from '../elements/ExternalAPIMoviesList';
 import SubmitButton from '../../buttons/SubmitButton';
 import HeaderButton from '../../buttons/HeaderButton';
+import AdminListItem from '../elements/AdminListItem';
 import Loader from '../../Loader';
 
 const SelectedDataController = styled.form`
@@ -30,25 +32,38 @@ const SelectedDataController = styled.form`
 `;
 
 const MovieSection = ({ handleSnackbar }: any) => {
-  const [isLoading, setLoading] = useState<boolean>(true);
-  const [externalAPIMovies, setExternalAPIMovies] = useState<Movie[]>([]);
-  const [selectedExternalAPIMovies, setSelectedMovies]: [any, any] = useState(
-    {}
+  const [isLoadingExternalMovies, setLoadingExternalMovies] = useState<boolean>(
+    true
   );
+  const [moviesList, setMoviesList] = useState<Movie[] | null>(null);
+  const [externalAPIMovies, setExternalAPIMovies] = useState<Movie[] | null>(
+    null
+  );
+  const [selectedExternalAPIMovies, setSelectedMovies] = useState<{
+    [key: number]: Movie;
+  }>({});
+
+  useEffect(() => {
+    if (!externalAPIMovies) {
+      loadExternalAPIMovies();
+    }
+    console.log(moviesList);
+    if (!moviesList) {
+      movieService.getAll(setMoviesList);
+    }
+  }, [moviesList, externalAPIMovies]);
 
   const handleSelectItem = (id: string) => {
-    const movieSelected = externalAPIMovies.find(
-      (movie: any) => movie.id === +id
-    );
-    if (selectedExternalAPIMovies[id]) {
-      const updatedMoviesSelected: any = Object.assign(
+    const movieSelected = externalAPIMovies.find(movie => movie.id === +id);
+    if (selectedExternalAPIMovies[+id]) {
+      const updatedMoviesSelected = Object.assign(
         {},
         selectedExternalAPIMovies
       );
-      delete updatedMoviesSelected[id];
+      delete updatedMoviesSelected[+id];
       setSelectedMovies(updatedMoviesSelected);
     } else {
-      const updatedMoviesSelected: any = Object.assign(
+      const updatedMoviesSelected = Object.assign(
         {},
         selectedExternalAPIMovies,
         {
@@ -78,12 +93,13 @@ const MovieSection = ({ handleSnackbar }: any) => {
         );
       }
       setExternalAPIMovies(filteredExternalAPIMovies);
+      setLoadingExternalMovies(false);
     } catch (error) {
       console.error(error);
     }
   };
 
-  const handleSubmit = async (
+  const handleAddMovies = async (
     e: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
     e.preventDefault();
@@ -91,49 +107,76 @@ const MovieSection = ({ handleSnackbar }: any) => {
     if (result) {
       setSelectedMovies({});
       handleSnackbar('New movies added', 'success');
+      await movieService.getAll(setMoviesList);
       await loadExternalAPIMovies();
     }
   };
 
-  useEffect(() => {
-    if (!externalAPIMovies.length) {
-      setLoading(true);
-      loadExternalAPIMovies();
+  const handleUpdate = async (id: number, inputValues: any): Promise<any> => {
+    const result = await movieService.update(id, inputValues);
+    if (result.error) {
+      handleSnackbar('Unable to update movie', 'error');
     } else {
-      setLoading(false);
+      handleSnackbar('Succesfully updated', 'success');
+      await movieService.getAll(setMoviesList);
+      await loadExternalAPIMovies();
+      return result.data;
     }
-  }, [externalAPIMovies, selectedExternalAPIMovies]);
+  };
+
+  const handleRemove = async (id: number) => {
+    const result = await movieService.delete(id);
+    if (!result) {
+      handleSnackbar('Unable to delete movie', 'error');
+    } else {
+      handleSnackbar('Movie deleted', 'warning');
+      await movieService.getAll(setMoviesList);
+      await loadExternalAPIMovies();
+    }
+  };
 
   return (
     <AdminFormContainer title="Add Movies">
-      {isLoading ? (
+      <SelectedDataController onSubmit={handleAddMovies}>
+        <div className="summary-line">
+          Movies selected: {Object.keys(selectedExternalAPIMovies).length}
+        </div>
+        <HeaderButton
+          text="Clear"
+          icon={<DeleteIcon />}
+          disabled={!Object.keys(selectedExternalAPIMovies).length}
+          handleClick={() => {
+            setSelectedMovies({});
+          }}
+        />
+        <SubmitButton
+          text="Add Movies"
+          icon={<AddIcon />}
+          disabled={!Object.keys(selectedExternalAPIMovies).length}
+          withoutContainer={true}
+        />
+      </SelectedDataController>
+      {isLoadingExternalMovies ? (
         <Loader />
       ) : (
+        <ExternalAPIMoviesList
+          handleSelectItem={handleSelectItem}
+          movies={externalAPIMovies || []}
+          moviesSelected={selectedExternalAPIMovies}
+        />
+      )}
+      {moviesList && !!moviesList.length && (
         <Fragment>
-          <SelectedDataController onSubmit={handleSubmit}>
-            <div className="summary-line">
-              Movies selected: {Object.keys(selectedExternalAPIMovies).length}
-            </div>
-            <HeaderButton
-              text="Clear"
-              icon={<DeleteIcon />}
-              disabled={!Object.keys(selectedExternalAPIMovies).length}
-              handleClick={() => {
-                setSelectedMovies({});
-              }}
+          <h3>Movies List</h3>
+          {moviesList.map(item => (
+            <AdminListItem
+              properties={parseFieldsFromEntity(item as any)}
+              key={item.id.toString()}
+              handleUpdate={handleUpdate}
+              handleRemove={handleRemove}
+              handleSnackbar={handleSnackbar}
             />
-            <SubmitButton
-              text="Add Movies"
-              icon={<AddIcon />}
-              disabled={!Object.keys(selectedExternalAPIMovies).length}
-              withoutContainer={true}
-            />
-          </SelectedDataController>
-          <ExternalAPIMoviesList
-            handleSelectItem={handleSelectItem}
-            movies={externalAPIMovies}
-            moviesSelected={selectedExternalAPIMovies}
-          />
+          ))}
         </Fragment>
       )}
     </AdminFormContainer>

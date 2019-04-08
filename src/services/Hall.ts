@@ -46,7 +46,6 @@ export default {
         throw Error(res.message);
       }
       const result = res.data.map((hall: HallAPIType) => new Hall(hall));
-      console.log(result);
       if (stateSetter) {
         stateSetter(result);
       }
