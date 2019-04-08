@@ -2,7 +2,7 @@ import { loadRowCategoryOptions, Option } from './loadSelectOptions';
 
 export interface AdminListItemType {
   name: string;
-  type: 'text' | 'number' | 'select' | 'checkbox';
+  type: 'text' | 'number' | 'select' | 'checkbox' | 'image' | 'textfield';
   value: string | number | boolean;
   label: string;
   options?: Option[];
@@ -39,6 +39,22 @@ export default (item: {
               name: key,
               label: 'Last in section',
               value: item[key] === 'Yes'
+            };
+          }
+          case 'overview': {
+            return {
+              type: 'textfield',
+              name: key,
+              label: 'Overview',
+              value: item[key]
+            };
+          }
+          case 'poster': {
+            return {
+              type: 'image',
+              name: key,
+              label: 'Poster',
+              value: item[key]
             };
           }
           default:

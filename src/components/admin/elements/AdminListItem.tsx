@@ -7,6 +7,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
 import MenuItem from '@material-ui/core/MenuItem';
 import Checkbox from '@material-ui/core/Checkbox';
+import TextField from '@material-ui/core/TextField';
 import styled from 'styled-components';
 
 import { AdminListItemType } from '../../../helpers/parseFieldsFromEntity';
@@ -80,6 +81,11 @@ const StyledFormControlLabel = styled(FormControlLabel)<any>`
   }
 `;
 
+const StyledImage = styled.img<any>`
+  width: 100px;
+  align-self: center;
+`;
+
 const AdminListItem = ({
   id,
   handleUpdate,
@@ -149,6 +155,14 @@ const AdminListItem = ({
           )
         );
       }
+      case 'image': {
+        return (
+          <Fragment>
+            <strong>{property.label}</strong>
+            <StyledImage src={property.value} />
+          </Fragment>
+        );
+      }
       default:
         return (
           <Fragment>
@@ -171,6 +185,38 @@ const AdminListItem = ({
             value={inputValues && inputValues[property.name]}
             onChange={handleChange}
             margin="none"
+            fullWidth={true}
+            InputLabelProps={{ classes: { focused: 'input-focused' } }}
+            InputProps={{ classes: { underline: 'input-underline' } }}
+          />
+        );
+      case 'textfield': {
+        return (
+          <TextField
+            type="text"
+            multiline
+            rowsMax="4"
+            label={property.label}
+            name={property.name}
+            value={inputValues && inputValues[property.name]}
+            onChange={handleChange}
+            margin="none"
+            fullWidth={true}
+            InputLabelProps={{ classes: { focused: 'input-focused' } }}
+            InputProps={{ classes: { underline: 'input-underline' } }}
+          />
+        );
+      }
+      case 'image':
+        return (
+          <TextField
+            type="text"
+            label={property.label}
+            name={property.name}
+            value={inputValues && inputValues[property.name]}
+            onChange={handleChange}
+            margin="none"
+            fullWidth={true}
             InputLabelProps={{ classes: { focused: 'input-focused' } }}
             InputProps={{ classes: { underline: 'input-underline' } }}
           />

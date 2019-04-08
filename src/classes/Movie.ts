@@ -7,10 +7,11 @@ export default class Movie {
   public poster: string;
 
   constructor(json: ExternalAPIMovie | MovieAPIType) {
-    const posterPath = json.poster_path || json.poster;
+    const posterPath =
+      json.poster || `https://image.tmdb.org/t/p/w500${json.poster_path}`;
     this.id = json.id;
     this.title = json.title;
     this.overview = json.overview;
-    this.poster = `https://image.tmdb.org/t/p/w500${posterPath}`;
+    this.poster = posterPath;
   }
 }
