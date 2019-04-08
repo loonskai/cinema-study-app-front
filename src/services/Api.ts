@@ -95,7 +95,7 @@ class ApiService {
     return res.data;
   }
 
-  async deleteCinema(id: number): Promise<any> {
+  async deleteCinema(id: number): Promise<boolean> {
     await this.client.delete(`http://localhost:5000/cinema/${id}`);
     return true;
   }
@@ -131,12 +131,16 @@ class ApiService {
   }
 
   async updateMovie(id: number, body: MovieAPIType): Promise<any> {
-    console.log('hello');
     const res = await this.client.patch(
       `http://localhost:5000/movies/${id}`,
       body
     );
     return res.data;
+  }
+
+  async deleteMovie(id: number): Promise<boolean> {
+    await this.client.delete(`http://localhost:5000/movies/${id}`);
+    return true;
   }
 
   /*   async getMovieById(id: string): Promise<ResType<MovieAPIType | Error>> {
@@ -177,25 +181,6 @@ class ApiService {
       });
     } catch (error) {
       console.error(error);
-    }
-  } */
-
-  /*   async addMovies(data: Movie[]): Promise<ResType<MovieAPIType[] | Error>> {
-    try {
-      return new Promise((res, rej) => {
-        console.log('create movie -->', data);
-        return res([]);
-      });
-      
-        const { data } = await this.client.post(`https://localhost:5000/movies`, data);
-        if (!data) {
-          throw Error('Unable to add movies');
-        }
-        return parseResponse.success(data);
-      
-    } catch (error) {
-      console.error(error);
-      return parseResponse.error(error);
     }
   } */
 

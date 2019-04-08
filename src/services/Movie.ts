@@ -7,19 +7,6 @@ import Movie from '../classes/Movie';
 import { MovieAPIType, ExternalAPIMovie, ResType } from '../interfaces/Api';
 
 export default {
-  async create(data: Movie[]): Promise<any> {
-    /*     try {
-      // console.log('create movie -->', data);
-      const res = await apiService.addMovies(data);
-      if (res.error || !res.data) {
-        throw Error(res.message);
-      }
-      return true;
-    } catch (error) {
-      console.error(error);
-    } */
-  },
-
   async createMany(data: {
     [key: number]: Movie;
   }): Promise<MovieAPIType[] | null> {
@@ -99,6 +86,19 @@ export default {
         error: true,
         message: error.message
       };
+    }
+  },
+
+  async delete(id: number): Promise<boolean | null> {
+    try {
+      if (!id) {
+        throw Error('Movie ID not defined');
+      }
+      await apiService.deleteMovie(id);
+      return true;
+    } catch (error) {
+      console.error(error);
+      return null;
     }
   }
 };
