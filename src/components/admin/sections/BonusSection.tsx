@@ -51,6 +51,7 @@ const BonusSection = ({ handleSnackbar }: any) => {
       setPrice('');
       setButtonDisabled(true);
       handleSnackbar('New service added', 'success');
+      await bonusService.getAll(setBonusList);
     }
   };
 
@@ -66,14 +67,13 @@ const BonusSection = ({ handleSnackbar }: any) => {
   };
 
   const handleRemove = async (id: number) => {
-    console.log('remove');
-    /*     const result = await cinemaService.delete(id);
+    const result = await bonusService.delete(id);
     if (!result) {
-      handleSnackbar('Unable to delete cinema', 'error');
+      handleSnackbar('Unable to delete bonus', 'error');
     } else {
-      handleSnackbar('Cinema deleted', 'warning');
-      await cinemaService.getAll(setCinemaList);
-    } */
+      handleSnackbar('Bonus deleted', 'warning');
+      await bonusService.getAll(setBonusList);
+    }
   };
 
   return (

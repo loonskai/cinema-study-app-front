@@ -12,9 +12,6 @@ import {
 } from '../interfaces/Api';
 import { SignInBodyType, SignUpBodyType } from '../interfaces/Auth';
 
-import parseResponse from '../helpers/parseResponse';
-
-// ADD verify token endpoint
 class ApiService {
   client: AxiosInstance;
   accessToken: string | null;
@@ -175,6 +172,11 @@ class ApiService {
       body
     );
     return res.data;
+  }
+
+  async deleteBonus(id: number): Promise<boolean> {
+    await this.client.delete(`http://localhost:5000/bonuses/${id}`);
+    return true;
   }
 
   /*   async loadRowCategories(hallId?: number) {

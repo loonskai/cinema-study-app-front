@@ -68,17 +68,18 @@ export default {
         message: error.message
       };
     }
-  }
-  /*   async delete(id: number): Promise<boolean | null> {
+  },
+
+  async delete(id: number): Promise<boolean | null> {
     try {
       if (!id) {
-        throw Error('Cinema ID not defined');
+        throw Error('Bonus ID not defined');
       }
-      await apiService.deleteCinema(id);
+      await apiService.deleteBonus(id);
       return true;
     } catch (error) {
       console.error(error);
       return null;
     }
-  } */
+  }
 };
