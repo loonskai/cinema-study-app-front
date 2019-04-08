@@ -56,3 +56,12 @@ export interface ExternalAPIMovie {
   vote_average: number;
   vote_count: number;
 }
+
+export interface BonusAPIType {
+  id?: number;
+  'cinema-id': number | string;
+  title: string;
+  price: number;
+  createdAt?: Date;
+  updatedAt?: Date;
+}

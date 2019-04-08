@@ -85,8 +85,8 @@ const NavPanel = ({ selectedTab, handleChange }: any) => {
           />
           <StyledTab
             icon={<RoomServiceIcon />}
-            label="Add services"
-            value={TabType.services}
+            label="Add bonus"
+            value={TabType.bonus}
             classes={{
               root: 'root',
               selected: 'selected',

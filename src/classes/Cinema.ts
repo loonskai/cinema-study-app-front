@@ -1,7 +1,5 @@
 import { CinemaAPIType } from '../interfaces/Api';
 
-import cinemaService from '../services/Cinema';
-
 export default class Cinema {
   public id: number;
   public title: string;

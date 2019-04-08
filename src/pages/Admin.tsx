@@ -5,7 +5,7 @@ import NavPanel from '../components/admin/elements/NavPanel';
 import CinemaSection from '../components/admin/sections/CinemaSection';
 import HallSection from '../components/admin/sections/HallSection';
 import MovieSection from '../components/admin/sections/MovieSection';
-import ServiceSection from '../components/admin/sections/ServiceSection';
+import BonusSection from '../components/admin/sections/BonusSection';
 import SessionSection from '../components/admin/sections/SessionSection';
 import { SnackbarContext } from '../Layout';
 import { TabType } from '../enums';
@@ -16,7 +16,7 @@ const Container = styled.div`
 `;
 
 const Admin = () => {
-  const [selectedTab, setSelectedTab] = useState(TabType.movie);
+  const [selectedTab, setSelectedTab] = useState(TabType.bonus);
 
   const getSelectedForm = (handleSnackbar: any) => {
     switch (selectedTab) {
@@ -26,8 +26,8 @@ const Admin = () => {
         return <HallSection handleSnackbar={handleSnackbar} />;
       case TabType.movie:
         return <MovieSection handleSnackbar={handleSnackbar} />;
-      case TabType.services:
-        return <ServiceSection handleSnackbar={handleSnackbar} />;
+      case TabType.bonus:
+        return <BonusSection handleSnackbar={handleSnackbar} />;
       case TabType.session:
         return <SessionSection handleSnackbar={handleSnackbar} />;
       default:

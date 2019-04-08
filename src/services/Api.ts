@@ -2,12 +2,13 @@ import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 
 import Movie from '../classes/Movie';
 import { HallCreateType } from '../services/Hall';
+import { BonusCreateType } from '../services/Bonus';
 import {
   ResType,
   UserAPIType,
   MovieAPIType,
   CinemaAPIType,
-  HallAPIType
+  BonusAPIType
 } from '../interfaces/Api';
 import { SignInBodyType, SignUpBodyType } from '../interfaces/Auth';
 
@@ -119,11 +120,25 @@ class ApiService {
   }
 
   /* MOVIES */
-
   async getMovies(): Promise<ResType<MovieAPIType[]>> {
     const res = await this.client.get('http://localhost:5000/movies');
     return res.data;
   }
+
+  /*   async getMovieById(id: string): Promise<ResType<MovieAPIType | Error>> {
+    try {
+      const { data } = await this.client.get(
+        `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}`
+      );
+      if (!data) {
+        throw Error('Cannot load movie from API');
+      }
+      return parseResponse.success(data);
+    } catch (error) {
+      console.error(error);
+      return parseResponse.error(error);
+    }
+  } */
 
   async createMovies(body: Movie[]): Promise<ResType<MovieAPIType[]>> {
     const res = await this.client.post('http://localhost:5000/movies', body);
@@ -143,20 +158,16 @@ class ApiService {
     return true;
   }
 
-  /*   async getMovieById(id: string): Promise<ResType<MovieAPIType | Error>> {
-    try {
-      const { data } = await this.client.get(
-        `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}`
-      );
-      if (!data) {
-        throw Error('Cannot load movie from API');
-      }
-      return parseResponse.success(data);
-    } catch (error) {
-      console.error(error);
-      return parseResponse.error(error);
-    }
-  } */
+  /* BONUSES */
+  async getBonuses(): Promise<ResType<BonusAPIType[]>> {
+    const res = await this.client.get('http://localhost:5000/bonuses');
+    return res.data;
+  }
+
+  async createBonus(body: BonusCreateType): Promise<any> {
+    const res = await this.client.post('http://localhost:5000/bonuses', body);
+    return res;
+  }
 
   /*   async loadRowCategories(hallId?: number) {
     try {
@@ -289,17 +300,6 @@ class ApiService {
   } */
 
   /** ADMIN OPERATIONS */
-
-  /*   async createService(data: any) {
-    try {
-      return new Promise((res, rej) => {
-        console.log('create service -->', data);
-        return res(true);
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  } */
 
   /*   async createSession(data: any) {
     try {

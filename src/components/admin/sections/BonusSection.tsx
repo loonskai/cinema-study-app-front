@@ -1,57 +1,71 @@
 import React, { useState, useEffect } from 'react';
 import AddIcon from '@material-ui/icons/Add';
 
-// import api from '../../ApiService';
-// import { loadAllCinemaOptions } from '../../helpers/loadSelectOptions';
+import Bonus from '../../../classes/Bonus';
+import bonusService from '../../../services/Bonus';
+import {
+  loadAllCinemaOptions,
+  Option
+} from '../../../helpers/loadSelectOptions';
 import AdminFormContainer from '../AdminFormContainer';
 import TextField from '../../fields/TextField/TextField';
 import SelectField from '../../fields/SelectField/SelectField';
 import SubmitButton from '../../buttons/SubmitButton';
 
-const ServiceSection = ({ handleSnackbar }: any) => {
-  const [cinemaOptions, setCinemaOptions] = useState(false);
-  const [cinema, setCinema] = useState('');
+const BonusSection = ({ handleSnackbar }: any) => {
+  const [bonusList, setBonusList] = useState<Bonus[] | null>(null);
+  const [cinemaOptions, setCinemaOptions] = useState<Option[] | null>(null);
+  const [cinemaID, setCinema] = useState('');
   const [title, setTitle] = useState('');
   const [price, setPrice] = useState('');
   const [buttonDisabled, setButtonDisabled] = useState(true);
 
   useEffect(() => {
-    if (title && cinema && !!price) {
+    if (title && cinemaID && !!price) {
       setButtonDisabled(false);
+    } else {
+      setButtonDisabled(true);
     }
-    /*     if (!cinemaOptions) {
+    if (!cinemaOptions) {
       loadAllCinemaOptions(setCinemaOptions);
-    } */
-  }, [title, cinema, price]);
+    }
+    if (!bonusList) {
+      bonusService.getAll(setBonusList);
+    }
+  }, [title, cinemaID, price, bonusList]);
 
   const handleSubmit = async (
     e: React.ChangeEvent<HTMLFormElement>
   ): Promise<void> => {
     e.preventDefault();
-    /*     const result = await api.createService({ title, cinema, price });
+    const result = await bonusService.create({
+      title,
+      cinemaID,
+      price: +price
+    });
     if (result) {
       setTitle('');
       setCinema('');
       setPrice('');
       setButtonDisabled(true);
       handleSnackbar('New service added', 'success');
-    } */
+    }
   };
 
   return (
-    <AdminFormContainer title="Add Services">
+    <AdminFormContainer title="Add Bonus">
       <form onSubmit={handleSubmit}>
         <SelectField
           id="cinema"
           type="select"
           options={cinemaOptions}
           label="Choose Cinema"
-          value={cinema}
+          value={cinemaID}
           handleChange={(value: string) => setCinema(value)}
         />
         <TextField
           name="title"
-          label="Service title"
+          label="Bonus title"
           value={title}
           handleChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
             setTitle(e.target.value)
@@ -59,7 +73,7 @@ const ServiceSection = ({ handleSnackbar }: any) => {
         />
         <TextField
           name="price"
-          label="Service price"
+          label="Bonus price"
           type="number"
           value={price}
           handleChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
@@ -67,7 +81,7 @@ const ServiceSection = ({ handleSnackbar }: any) => {
           }
         />
         <SubmitButton
-          text="Add Hall"
+          text="Add Bonus"
           icon={<AddIcon />}
           disabled={buttonDisabled}
         />
@@ -76,4 +90,4 @@ const ServiceSection = ({ handleSnackbar }: any) => {
   );
 };
 
-export default ServiceSection;
+export default BonusSection;

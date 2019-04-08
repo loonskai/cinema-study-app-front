@@ -6,8 +6,10 @@ import { RowItem } from '../elements/NewRowController';
 
 import hallService from '../../../services/Hall';
 
-import { Option } from '../../../helpers/loadSelectOptions';
-import { loadAllCinemaOptions } from '../../../helpers/loadSelectOptions';
+import {
+  loadAllCinemaOptions,
+  Option
+} from '../../../helpers/loadSelectOptions';
 import parseFieldsFromEntity from '../../../helpers/parseFieldsFromEntity';
 import AdminFormContainer from '../AdminFormContainer';
 import NewRowController from '../elements/NewRowController';
@@ -19,8 +21,8 @@ import AdminListItem from '../elements/AdminListItem';
 const HallSection = ({ handleSnackbar }: any) => {
   const [hallList, setHallList] = useState<Hall[] | null>(null);
   const [cinemaOptions, setCinemaOptions] = useState<Option[] | null>(null);
-  const [title, setTitle] = useState('Main Hall'); // EMPTY on default
-  const [cinemaID, setCinemaID] = useState('11'); // EMPTY on default
+  const [title, setTitle] = useState('');
+  const [cinemaID, setCinemaID] = useState('');
   const [rows, setRows] = useState<RowItem[]>([]);
   const [buttonDisabled, setButtonDisabled] = useState(true);
 
