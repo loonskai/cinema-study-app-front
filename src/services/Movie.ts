@@ -82,7 +82,7 @@ export default {
     try {
       const { title, overview, poster } = values;
       if (!id) {
-        throw Error('Cinema ID not defined');
+        throw Error('Movie ID not defined');
       }
       if (!title || !overview || !poster) {
         throw Error('Invalid values');

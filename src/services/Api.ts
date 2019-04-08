@@ -131,6 +131,7 @@ class ApiService {
   }
 
   async updateMovie(id: number, body: MovieAPIType): Promise<any> {
+    console.log('hello');
     const res = await this.client.patch(
       `http://localhost:5000/movies/${id}`,
       body

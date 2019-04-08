@@ -97,6 +97,7 @@ const HallSection = ({ handleSnackbar }: any) => {
           {hallList.map((item: Hall) => (
             <AdminListItem
               properties={parseFieldsFromEntity(item as any)}
+              id={item.id}
               key={item.id.toString()}
               handleUpdate={handleUpdate}
               handleRemove={handleRemove}

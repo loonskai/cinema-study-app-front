@@ -7,7 +7,6 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
 import MenuItem from '@material-ui/core/MenuItem';
 import Checkbox from '@material-ui/core/Checkbox';
-import TextField from '@material-ui/core/TextField';
 import styled from 'styled-components';
 
 import { AdminListItemType } from '../../../helpers/parseFieldsFromEntity';
@@ -273,6 +272,7 @@ const AdminListItem = ({
   };
 
   const saveItem = async () => {
+    console.log(id);
     const result = id && (await handleUpdate(id, inputValues));
     if (result) {
       setItemValues(result);

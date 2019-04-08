@@ -54,6 +54,7 @@ const MovieSection = ({ handleSnackbar }: any) => {
   }, [moviesList, externalAPIMovies]);
 
   const handleSelectItem = (id: string) => {
+    if (!externalAPIMovies) return;
     const movieSelected = externalAPIMovies.find(movie => movie.id === +id);
     if (selectedExternalAPIMovies[+id]) {
       const updatedMoviesSelected = Object.assign(
@@ -172,6 +173,7 @@ const MovieSection = ({ handleSnackbar }: any) => {
             <AdminListItem
               properties={parseFieldsFromEntity(item as any)}
               key={item.id.toString()}
+              id={item.id}
               handleUpdate={handleUpdate}
               handleRemove={handleRemove}
               handleSnackbar={handleSnackbar}
