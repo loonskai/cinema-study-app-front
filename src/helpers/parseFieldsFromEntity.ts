@@ -20,6 +20,7 @@ export default (item: {
       (key: string): AdminListItemType => {
         switch (key) {
           case 'quantity':
+          case 'price':
             return {
               type: 'number',
               name: key,

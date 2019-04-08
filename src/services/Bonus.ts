@@ -45,21 +45,21 @@ export default {
       console.error(error);
       return null;
     }
-  }
-  /*   async update(id: number, values: CinemaAPIType): Promise<ResType<Cinema>> {
+  },
+  async update(id: number, values: BonusCreateType): Promise<ResType<Bonus>> {
     try {
-      const { title, city } = values;
+      const { title, cinemaID, price } = values;
       if (!id) {
-        throw Error('Cinema ID not defined');
+        throw Error('Bonus ID not defined');
       }
-      if (!title || !city) {
+      if (!title || !cinemaID || price <= 0) {
         throw Error('Invalid values');
       }
-      const { data } = await apiService.updateCinema(id, { title, city });
-      const updatedCinema = new Cinema(data);
+      const { data } = await apiService.updateBonus(id, values);
+      const updatedBonus = new Bonus(data);
       return {
         success: true,
-        data: updatedCinema
+        data: updatedBonus
       };
     } catch (error) {
       console.error(error);
@@ -68,7 +68,7 @@ export default {
         message: error.message
       };
     }
-  }, */
+  }
   /*   async delete(id: number): Promise<boolean | null> {
     try {
       if (!id) {

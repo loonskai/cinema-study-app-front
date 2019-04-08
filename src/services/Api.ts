@@ -169,6 +169,14 @@ class ApiService {
     return res;
   }
 
+  async updateBonus(id: number, body: BonusCreateType): Promise<any> {
+    const res = await this.client.patch(
+      `http://localhost:5000/bonuses/${id}`,
+      body
+    );
+    return res.data;
+  }
+
   /*   async loadRowCategories(hallId?: number) {
     try {
       return new Promise((res, rej) => {

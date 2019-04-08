@@ -46,16 +46,6 @@ const CinemaSection = ({ handleSnackbar }: any) => {
     });
   };
 
-  const handleRemove = async (id: number) => {
-    const result = await cinemaService.delete(id);
-    if (!result) {
-      handleSnackbar('Unable to delete cinema', 'error');
-    } else {
-      handleSnackbar('Cinema deleted', 'warning');
-      await cinemaService.getAll(setCinemaList);
-    }
-  };
-
   const handleUpdate = async (id: number, inputValues: any): Promise<any> => {
     const result = await cinemaService.update(id, inputValues);
     if (result.error) {
@@ -64,6 +54,16 @@ const CinemaSection = ({ handleSnackbar }: any) => {
       handleSnackbar('Succesfully updated', 'success');
       await cinemaService.getAll(setCinemaList);
       return result.data;
+    }
+  };
+
+  const handleRemove = async (id: number) => {
+    const result = await cinemaService.delete(id);
+    if (!result) {
+      handleSnackbar('Unable to delete cinema', 'error');
+    } else {
+      handleSnackbar('Cinema deleted', 'warning');
+      await cinemaService.getAll(setCinemaList);
     }
   };
 
@@ -109,7 +109,6 @@ const CinemaSection = ({ handleSnackbar }: any) => {
         cinemaList.map((item: Cinema) => (
           <AdminListItem
             key={item.id.toString()}
-            // item={item}
             id={item.id}
             properties={parseFieldsFromEntity(item)}
             handleUpdate={handleUpdate}

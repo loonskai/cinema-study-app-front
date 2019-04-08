@@ -96,7 +96,7 @@ const HallSection = ({ handleSnackbar }: any) => {
       {hallList && !!hallList.length && (
         <Fragment>
           <h3>Hall List</h3>
-          {hallList.map((item: Hall) => (
+          {hallList.map(item => (
             <AdminListItem
               properties={parseFieldsFromEntity(item as any)}
               id={item.id}

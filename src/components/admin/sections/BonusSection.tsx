@@ -11,6 +11,8 @@ import AdminFormContainer from '../AdminFormContainer';
 import TextField from '../../fields/TextField/TextField';
 import SelectField from '../../fields/SelectField/SelectField';
 import SubmitButton from '../../buttons/SubmitButton';
+import AdminListItem from '../elements/AdminListItem';
+import parseFieldsFromEntity from '../../../helpers/parseFieldsFromEntity';
 
 const BonusSection = ({ handleSnackbar }: any) => {
   const [bonusList, setBonusList] = useState<Bonus[] | null>(null);
@@ -52,6 +54,28 @@ const BonusSection = ({ handleSnackbar }: any) => {
     }
   };
 
+  const handleUpdate = async (id: number, inputValues: any): Promise<any> => {
+    const result = await bonusService.update(id, inputValues);
+    if (result.error) {
+      handleSnackbar('Unable to update bonus', 'error');
+    } else {
+      handleSnackbar('Succesfully updated', 'success');
+      await bonusService.getAll(setBonusList);
+      return result.data;
+    }
+  };
+
+  const handleRemove = async (id: number) => {
+    console.log('remove');
+    /*     const result = await cinemaService.delete(id);
+    if (!result) {
+      handleSnackbar('Unable to delete cinema', 'error');
+    } else {
+      handleSnackbar('Cinema deleted', 'warning');
+      await cinemaService.getAll(setCinemaList);
+    } */
+  };
+
   return (
     <AdminFormContainer title="Add Bonus">
       <form onSubmit={handleSubmit}>
@@ -86,6 +110,17 @@ const BonusSection = ({ handleSnackbar }: any) => {
           disabled={buttonDisabled}
         />
       </form>
+      {bonusList &&
+        bonusList.map(item => (
+          <AdminListItem
+            properties={parseFieldsFromEntity(item as any)}
+            id={item.id}
+            key={item.id.toString()}
+            handleUpdate={handleUpdate}
+            handleRemove={handleRemove}
+            handleSnackbar={handleSnackbar}
+          />
+        ))}
     </AdminFormContainer>
   );
 };
