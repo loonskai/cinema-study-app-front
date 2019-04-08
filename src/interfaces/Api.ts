@@ -7,12 +7,6 @@ export interface ResType<Data> {
   data?: Data;
 }
 
-export interface MovieAPIType {
-  original_title: string;
-  overview: string;
-  poster_path: string;
-}
-
 export interface UserAPIType {
   token: string;
   user: string;
@@ -34,4 +28,31 @@ export interface HallAPIType {
   rows?: RowItem[];
   createdAt?: Date;
   updatedAt?: Date;
+}
+
+export interface MovieAPIType {
+  id: number;
+  title: string;
+  overview: string;
+  poster: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+// From TheMovieDatabase service
+export interface ExternalAPIMovie {
+  id: number;
+  title: string;
+  poster_path: string;
+  adult: boolean;
+  backdrop_path: string;
+  genre_ids: number[];
+  media_type: string;
+  original_language: string;
+  overview: string;
+  popularity: number;
+  release_date: string;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
 }

@@ -1,18 +1,17 @@
-import { MovieAPIType } from '../interfaces/Api';
+import { ExternalAPIMovie, MovieAPIType } from '../interfaces/Api';
 
 export default class Movie {
   readonly apiPosterUri = 'https://image.tmdb.org/t/p/w500';
+  public id: number;
   public title: string;
   public overview: string;
-  public posterPath: string;
+  public poster: string;
 
-  constructor(json: MovieAPIType) {
-    this.title = json.original_title;
+  constructor(json: ExternalAPIMovie | MovieAPIType) {
+    const posterPath = json.poster_path || json.poster;
+    this.id = json.id;
+    this.title = json.title;
     this.overview = json.overview;
-    this.posterPath = json.poster_path;
-  }
-
-  get poster(): string {
-    return `${this.apiPosterUri}${this.posterPath}`;
+    this.poster = `${this.apiPosterUri}${posterPath}`;
   }
 }

@@ -4,7 +4,9 @@ import classnames from 'classnames';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-// import api from '../../ApiService';
+import Movie from '../../../classes/Movie';
+import movieService from '../../../services/Movie';
+
 import AdminFormContainer from '../AdminFormContainer';
 import AddButton from '../../buttons/AddButton';
 import SubmitButton from '../../buttons/SubmitButton';
@@ -40,6 +42,10 @@ const LoadedMovie = styled.div`
   box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.3);
   transition: all 600ms cubic-bezier(0.165, 0.84, 0.44, 1);
 
+  && div {
+    text-align: center;
+  }
+
   &&.movie-selected {
     background: ${mainDarkColor};
     color: ${whiteColor};
@@ -57,7 +63,12 @@ const LoadedMovieTitle = styled.div`
   margin-bottom: 0.2rem;
 `;
 
-const LoadedMovieDescription = styled.div`
+const LoadedMoviePoster = styled.img`
+  width: 100px;
+  margin-right: 1rem;
+`;
+
+const LoadedMovieOverview = styled.div`
   font-size: 0.8rem;
   line-height: 1.2rem;
 `;
@@ -87,8 +98,8 @@ const SelectedDataController = styled.form`
 `;
 
 const MovieSection = ({ handleSnackbar }: any) => {
-  const [isLoading, setLoading] = useState(true);
-  const [loadedMovies, setLoadedMovies] = useState([]);
+  const [isLoading, setLoading] = useState<boolean>(true);
+  const [loadedMovies, setLoadedMovies] = useState<Movie[]>([]);
   const [selectedMovies, setSelectedMovies]: [any, any] = useState({});
 
   const handleSelectItem = (id: string) => {
@@ -107,14 +118,23 @@ const MovieSection = ({ handleSnackbar }: any) => {
 
   const loadExternalAPIMovies = async () => {
     try {
-      /* const data: any = await api.loadExternalAPIMovies();
-      const filteredData = data.map((movie: any) => ({
-        id: movie.id,
-        title: movie.original_title,
-        overview: movie.overview,
-        picture: `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-      }));
-      setLoadedMovies(filteredData); */
+      const externalAPIMovies = await movieService.getExternalAPIMovieAll();
+      if (!externalAPIMovies) {
+        throw Error('Unable to load movies from external API');
+      }
+      const apiMovies = await movieService.getAll();
+      let filteredExternalAPIMovies;
+      if (apiMovies) {
+        const usedIDs = apiMovies.map(movie => movie.id);
+        filteredExternalAPIMovies = externalAPIMovies
+          .map(movie => new Movie(movie))
+          .filter(movie => !usedIDs.includes(movie.id));
+      } else {
+        filteredExternalAPIMovies = externalAPIMovies.map(
+          movie => new Movie(movie)
+        );
+      }
+      setLoadedMovies(filteredExternalAPIMovies);
     } catch (error) {
       console.error(error);
     }
@@ -166,7 +186,7 @@ const MovieSection = ({ handleSnackbar }: any) => {
             />
           </SelectedDataController>
           <LoadedMoviesList>
-            {loadedMovies.map((movie: any) => {
+            {loadedMovies.map(movie => {
               const isSelected = !!selectedMovies[movie.id];
               const movieClass = classnames({
                 'movie-selected': isSelected
@@ -174,10 +194,11 @@ const MovieSection = ({ handleSnackbar }: any) => {
               return (
                 <LoadedMovie key={movie.id.toString()} className={movieClass}>
                   <div>
+                    <LoadedMoviePoster src={movie.poster} />
+                  </div>
+                  <div>
                     <LoadedMovieTitle>{movie.title}</LoadedMovieTitle>
-                    <LoadedMovieDescription>
-                      {movie.overview}
-                    </LoadedMovieDescription>
+                    <LoadedMovieOverview>{movie.overview}</LoadedMovieOverview>
                   </div>
                   <SelectButtonContainer>
                     <AddButton

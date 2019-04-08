@@ -1,11 +1,14 @@
+import axios from 'axios';
+import { apiKey } from '../credentials';
+
 import apiService from './Api';
 import Movie from '../classes/Movie';
 
-import { MovieAPIType } from '../interfaces/Api';
+import { MovieAPIType, ExternalAPIMovie } from '../interfaces/Api';
 
 export default {
   async create(data: Movie[]): Promise<any> {
-    try {
+    /*     try {
       // console.log('create movie -->', data);
       const res = await apiService.addMovies(data);
       if (res.error || !res.data) {
@@ -14,6 +17,18 @@ export default {
       return true;
     } catch (error) {
       console.error(error);
+    } */
+  },
+
+  async getExternalAPIMovieAll(): Promise<ExternalAPIMovie[] | null> {
+    try {
+      const { data } = await axios.get(
+        `https://api.themoviedb.org/4/list/1?page=1&api_key=${apiKey}`
+      );
+      return data.results;
+    } catch (error) {
+      console.error(error);
+      return null;
     }
   },
 
@@ -23,15 +38,15 @@ export default {
       if (res.error || !res.data) {
         throw Error(res.message);
       }
-      return res.data.map((movie: MovieAPIType) => new Movie(movie));
+      return res.data.map(movie => new Movie(movie));
     } catch (error) {
-      console.error(error);
+      console.log(error);
       return null;
     }
   },
 
   async getOneById(id: string): Promise<Movie | null> {
-    try {
+    /*     try {
       const res = await apiService.getMovieById(id);
       if (res.error || !res.data) {
         throw Error(res.message);
@@ -40,6 +55,6 @@ export default {
     } catch (error) {
       console.error(error);
       return null;
-    }
+    } */
   }
 };

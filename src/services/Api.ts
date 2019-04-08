@@ -1,5 +1,4 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
-import { apiKey } from '../credentials';
 
 import { HallCreateType } from '../services/Hall';
 import {
@@ -119,22 +118,13 @@ class ApiService {
   }
 
   /* MOVIES */
-  async getMovies(): Promise<ResType<MovieAPIType[] | Error>> {
-    try {
-      const { data } = await this.client.get(
-        `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&language=en-US&page=1`
-      );
-      if (!data || !data.results) {
-        throw Error('Cannot load movies list from API');
-      }
-      return parseResponse.success(data.results);
-    } catch (error) {
-      console.error(error);
-      return parseResponse.error(error);
-    }
+
+  async getMovies(): Promise<ResType<MovieAPIType[]>> {
+    const res = await this.client.get('http://localhost:5000/movies');
+    return res.data;
   }
 
-  async getMovieById(id: string): Promise<ResType<MovieAPIType | Error>> {
+  /*   async getMovieById(id: string): Promise<ResType<MovieAPIType | Error>> {
     try {
       const { data } = await this.client.get(
         `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}`
@@ -147,7 +137,7 @@ class ApiService {
       console.error(error);
       return parseResponse.error(error);
     }
-  }
+  } */
 
   /*   async loadRowCategories(hallId?: number) {
     try {
@@ -317,17 +307,6 @@ class ApiService {
         console.log('create session -->', data);
         return res(true);
       });
-    } catch (error) {
-      console.error(error);
-    }
-  } */
-
-  /*   async loadExternalAPIMovies() {
-    try {
-      const { data } = await this.client.get(
-        `https://api.themoviedb.org/4/list/1?page=1&api_key=${apiKey}`
-      );
-      return data.results;
     } catch (error) {
       console.error(error);
     }
