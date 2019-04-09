@@ -9,13 +9,12 @@ import SubmitButton from '../../buttons/SubmitButton';
 import {
   loadTimeOptions,
   loadMovieSuggestions,
-  loadCitySuggestions
+  loadCitySuggestions,
+  loadCinemaByCityOptions
 } from '../../../helpers/loadSelectOptions';
 /* import {
-  loadCinemaByCityOptions,
   loadHallsByCinemaOptions,
   loadTimeOptions,
-
 } from '../../helpers/loadSelectOptions'; */
 
 const SessionSection = ({ handleSnackbar }: any) => {
@@ -46,16 +45,12 @@ const SessionSection = ({ handleSnackbar }: any) => {
     if (!citySuggestions) {
       loadCitySuggestions(setCitySuggestions);
     }
-    /*
-    
-    
-
     if (citySelected) {
       loadCinemaByCityOptions(citySelected, setCinemaOptions);
     } else {
       setCinema('');
     }
-
+    /*
     if (cinema) {
       loadHallsByCinemaOptions(cinema, setHallOptions);
     } else {

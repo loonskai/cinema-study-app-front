@@ -5,6 +5,10 @@ import { ResType, CinemaAPIType } from '../interfaces/Api';
 import { parseErrorMessage } from '../helpers/parseResponse';
 import defineErrorField from '../helpers/defineErrorField';
 
+interface QueryParams {
+  city: string;
+}
+
 export default {
   async create(
     data: CinemaAPIType,
@@ -28,6 +32,28 @@ export default {
   ): Promise<Cinema[] | null> {
     try {
       const res = await apiService.getCinemas();
+      if (res.error || !res.data) {
+        throw Error(res.message);
+      }
+      const result = res.data.map(
+        (cinema: CinemaAPIType) => new Cinema(cinema)
+      );
+      if (stateSetter) {
+        stateSetter(result);
+      }
+      return result;
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  },
+
+  async getAllWithParams(
+    params: QueryParams,
+    stateSetter?: (data: Cinema[]) => void
+  ) {
+    try {
+      const res = await apiService.getCinemas(params);
       if (res.error || !res.data) {
         throw Error(res.message);
       }

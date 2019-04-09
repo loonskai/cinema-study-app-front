@@ -80,8 +80,10 @@ class ApiService {
     return res;
   }
 
-  async getCinemas(): Promise<any> {
-    const res = await this.client.get('http://localhost:5000/cinema');
+  async getCinemas(params?: any): Promise<any> {
+    const res = await this.client.get('http://localhost:5000/cinema', {
+      params
+    });
     return res.data;
   }
 

@@ -32,6 +32,22 @@ export const loadAllCinemaOptions = async (
   }
 };
 
+export const loadCinemaByCityOptions = async (
+  city: string,
+  optionsSetFunc: any
+) => {
+  try {
+    const cinemas: Cinema[] = await cinemaService.getAllWithParams({ city });
+    const customizedOptions = cinemas.map(cinema => ({
+      label: cinema.title,
+      value: cinema.id
+    }));
+    optionsSetFunc(customizedOptions);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const loadRowCategoryOptions = async (optionsSetFunc?: any) => {
   try {
     const res = await apiService.getRowCategories();
@@ -92,25 +108,6 @@ export const loadCitySuggestions = async (optionsSetFunc: any) => {
     console.error(error);
   }
 };
-
-/* export const loadCinemaByCityOptions = async (
-  city: any,
-  optionsSetFunc: any
-) => {
-  try {
-    const cinemas: any = await api.loadAllCinemas();
-    const filteredCinemas = cinemas.filter(
-      (cinema: any) => cinema.city === city
-    );
-    const customizedOptions = filteredCinemas.map((cinema: any) => ({
-      label: cinema.name,
-      value: cinema.id
-    }));
-    optionsSetFunc(customizedOptions);
-  } catch (error) {
-    console.error(error);
-  }
-}; */
 
 /* export const loadHallsByCinemaOptions = async (
   cinemaId: any,
