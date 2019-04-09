@@ -1,9 +1,8 @@
 import axios from 'axios';
-import { apiKey } from '../credentials';
 
-import apiService from './Api';
 import Movie from '../classes/Movie';
-
+import apiService from './Api';
+import { apiKey } from '../credentials';
 import { MovieAPIType, ExternalAPIMovie, ResType } from '../interfaces/Api';
 
 export default {
@@ -52,7 +51,7 @@ export default {
     }
   },
 
-  async getOneById(id: string): Promise<Movie | null> {
+  async getOneById(id: string): Promise<Movie | null | any> {
     /*     try {
       const res = await apiService.getMovieById(id);
       if (res.error || !res.data) {

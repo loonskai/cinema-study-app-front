@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AddIcon from '@material-ui/icons/Add';
 
+import sessionService from '../../../services/Session';
 import AdminFormContainer from '../AdminFormContainer';
 import TextField from '../../fields/TextField/TextField';
 import SelectField from '../../fields/SelectField/SelectField';
@@ -16,13 +17,13 @@ import {
 
 const SessionSection = ({ handleSnackbar }: any) => {
   const [date, setDate] = useState(new Date());
-  const [time, setTime] = useState('');
+  const [time, setTime] = useState('20:00');
   const [movieTyped, setMovieTyped] = useState('');
-  const [movieSelected, setMovieSelected] = useState('');
-  const [citySelected, setCitySelected] = useState('');
+  const [movieSelected, setMovieSelected] = useState('Avengers: Age of Ultron');
   const [cityTyped, setCityTyped] = useState('');
-  const [cinema, setCinema] = useState('');
-  const [hall, setHall] = useState('');
+  const [citySelected, setCitySelected] = useState('Minsk');
+  const [cinema, setCinema] = useState('12');
+  const [hall, setHall] = useState('2');
   const [buttonDisabled, setButtonDisabled] = useState(true);
 
   const [movieSuggestions, setMovieSuggestions] = useState(null);
@@ -68,21 +69,18 @@ const SessionSection = ({ handleSnackbar }: any) => {
     e: React.ChangeEvent<HTMLFormElement>
   ): Promise<void> => {
     e.preventDefault();
-    /*
     const body = {
       date,
       time,
       movie: movieSelected,
-      city: citySelected,
-      cinema,
       hall
     };
-    const result = await api.createSession(body);
+    const result = await sessionService.create(body);
     if (result) {
       setTime('');
       setButtonDisabled(true);
       handleSnackbar('New service added', 'success');
-    } */
+    }
   };
 
   return (

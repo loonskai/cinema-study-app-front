@@ -3,6 +3,7 @@ import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import Movie from '../classes/Movie';
 import { HallCreateType } from '../services/Hall';
 import { BonusCreateType } from '../services/Bonus';
+import { SessionCreateType } from '../services/Session';
 import {
   ResType,
   UserAPIType,
@@ -174,16 +175,9 @@ class ApiService {
     return true;
   }
 
-  /* ADDITIONAL DATA */
-  async getRowCategories() {
-    const res = await this.client.get(
-      'http://localhost:5000/data/row-categories'
-    );
-    return res.data;
-  }
-
-  async getCities() {
-    const res = await this.client.get('http://localhost:5000/data/cities');
+  /* SESSIONS */
+  async createSession(body: SessionCreateType): Promise<any> {
+    const res = await this.client.post('http://localhost:5000/sessions', body);
     return res.data;
   }
 
@@ -274,19 +268,18 @@ class ApiService {
       console.error(error);
     }
   } */
+  /* ADDITIONAL DATA */
+  async getRowCategories() {
+    const res = await this.client.get(
+      'http://localhost:5000/data/row-categories'
+    );
+    return res.data;
+  }
 
-  /** ADMIN OPERATIONS */
-
-  /*   async createSession(data: any) {
-    try {
-      return new Promise((res, rej) => {
-        console.log('create session -->', data);
-        return res(true);
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  } */
+  async getCities() {
+    const res = await this.client.get('http://localhost:5000/data/cities');
+    return res.data;
+  }
 }
 
 const api = new ApiService();
