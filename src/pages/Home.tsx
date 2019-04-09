@@ -1,18 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 import SearchIcon from '@material-ui/icons/Search';
-/* 
+
+import Movie from '../classes/Movie';
 import {
   loadCinemaByCityOptions,
   loadCitySuggestions,
   loadMovieSuggestions
-} from '../helpers/loadSelectOptions'; */
+} from '../helpers/loadSelectOptions';
 import PageTitle from '../components/PageTitle';
 import FieldContainer from '../components/fields/FieldContainer';
 import SubmitButton from '../components/buttons/SubmitButton';
 
-const Home = ({ history, movies }: any) => {
+interface Props extends RouteComponentProps {
+  movies: Movie[];
+}
+
+const Home = ({ history, movies }: Props) => {
   const [movieTyped, setMovieTyped] = useState('');
   const [movieSelected, setMovieSelected] = useState('');
   const [citySelected, setCitySelected] = useState('');
@@ -27,11 +32,9 @@ const Home = ({ history, movies }: any) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    const { id: movieId } = movies.find(
-      (movie: any) => movie.original_title === movieSelected
-    );
+    const movieToSearch = movies.find(movie => movie.title === movieSelected);
     history.push({
-      pathname: `/movies/${movieId}`,
+      pathname: `/movies/${movieToSearch && movieToSearch.id}`,
       state: {
         city: citySelected,
         cinema,
@@ -43,19 +46,19 @@ const Home = ({ history, movies }: any) => {
   useEffect(() => {
     setButtonDisabled(!movieSelected);
 
-    /*     if (!movieSuggestions) {
+    if (!movieSuggestions) {
       loadMovieSuggestions(setMovieSuggestions);
-    } */
-    /* 
+    }
+
     if (!citySuggestions) {
       loadCitySuggestions(setCitySuggestions);
-    } */
+    }
 
-    /*     if (citySelected) {
+    if (citySelected) {
       loadCinemaByCityOptions(citySelected, setCinemaOptions);
     } else {
       setCinema('');
-    } */
+    }
     if (movieSelected !== movieTyped) {
       setMovieSelected('');
       setCityTyped('');
@@ -118,6 +121,8 @@ const Home = ({ history, movies }: any) => {
   );
 };
 
-const connectedHome: any = connect(({ movies }: any) => ({ movies }))(Home);
+const connectedHome: any = connect(({ movies }: { movies: Movie[] }) => ({
+  movies
+}))(Home);
 
 export default withRouter(connectedHome);
