@@ -51,9 +51,9 @@ export default {
     }
   },
 
-  async getOneById(id: string): Promise<Movie | null | any> {
-    /*     try {
-      const res = await apiService.getMovieById(id);
+  async getById(id: string): Promise<Movie | null> {
+    try {
+      const res = await apiService.getMovieById(+id);
       if (res.error || !res.data) {
         throw Error(res.message);
       }
@@ -61,7 +61,7 @@ export default {
     } catch (error) {
       console.error(error);
       return null;
-    } */
+    }
   },
 
   async update(id: number, values: MovieAPIType): Promise<ResType<Movie>> {

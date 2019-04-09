@@ -119,20 +119,10 @@ class ApiService {
     return res.data;
   }
 
-  /*   async getMovieById(id: string): Promise<ResType<MovieAPIType | Error>> {
-    try {
-      const { data } = await this.client.get(
-        `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}`
-      );
-      if (!data) {
-        throw Error('Cannot load movie from API');
-      }
-      return parseResponse.success(data);
-    } catch (error) {
-      console.error(error);
-      return parseResponse.error(error);
-    }
-  } */
+  async getMovieById(id: number): Promise<ResType<MovieAPIType>> {
+    const res = await this.client.get(`http://localhost:5000/movies/${id}`);
+    return res.data;
+  }
 
   async createMovies(body: Movie[]): Promise<ResType<MovieAPIType[]>> {
     const res = await this.client.post('http://localhost:5000/movies', body);

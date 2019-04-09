@@ -2,6 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
 
+import movieService from '../services/Movie';
 import Loader from '../components/Loader';
 import PageTitle from '../components/PageTitle';
 import SearchSessionForm from '../components/forms/SearchSessionForm';
@@ -41,7 +42,7 @@ const MovieSingle: React.FC<RouteComponentProps> = ({ match, location }) => {
   });
 
   const loadData = async (id: string) => {
-    const movieLoaded = await api.loadMovieById(id);
+    const movieLoaded = await movieService.getById(id);
     setMovie(movieLoaded);
     setLoading(false);
   };
@@ -63,18 +64,15 @@ const MovieSingle: React.FC<RouteComponentProps> = ({ match, location }) => {
     <Loader />
   ) : (
     <Fragment>
-      <PageTitle text={movie.original_title} />
+      <PageTitle text={movie.title} />
       <MovieInfoContainer>
-        <StyledPoster
-          src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-          alt={movie.original_title}
-        />
+        <StyledPoster src={movie.poster} alt={movie.title} />
         <StyledDescription>
           <div>{movie.overview}</div>
-          <SearchSessionForm
+          {/*           <SearchSessionForm
             movieId={+matchExtended.params.id}
             initialValues={searchValues}
-          />
+          /> */}
         </StyledDescription>
       </MovieInfoContainer>
     </Fragment>
