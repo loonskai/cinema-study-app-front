@@ -4,7 +4,8 @@ import hallService from '../services/Hall';
 import Cinema from '../classes/Cinema';
 
 import { Dispatch, SetStateAction } from 'react';
-import api from '../services/Api';
+import apiService from '../services/Api';
+import movieService from '../services/Movie';
 
 export interface Option {
   value: string | number;
@@ -33,7 +34,7 @@ export const loadAllCinemaOptions = async (
 
 export const loadRowCategoryOptions = async (optionsSetFunc?: any) => {
   try {
-    const res = await api.getRowCategories();
+    const res = await apiService.getRowCategories();
     if (!res) {
       throw Error('Unable to load row categories');
     }
@@ -50,6 +51,45 @@ export const loadRowCategoryOptions = async (optionsSetFunc?: any) => {
   } catch (error) {
     console.error(error);
     optionsSetFunc([]);
+  }
+};
+
+export const loadTimeOptions = (optionsSetFunc: any) => {
+  const options = [] as Array<{ label: string; value: string }>;
+  for (let i = 0; i <= 23; i++) {
+    const label = i.toString().length > 1 ? `${i}:00` : `0${i}:00`;
+    options.push({
+      label,
+      value: label
+    });
+  }
+  optionsSetFunc(options);
+};
+
+// SUGGESTIONS
+export const loadMovieSuggestions = async (optionsSetFunc: any) => {
+  try {
+    const movies = await movieService.getAll();
+    const formatedMovies =
+      movies &&
+      movies.map(movie => ({
+        label: movie.title
+      }));
+    optionsSetFunc(formatedMovies);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const loadCitySuggestions = async (optionsSetFunc: any) => {
+  try {
+    const {
+      data: cities
+    }: { data: string[] | null } = await apiService.getCities();
+    const formatedCitites = cities && cities.map(city => ({ label: city }));
+    optionsSetFunc(formatedCitites);
+  } catch (error) {
+    console.error(error);
   }
 };
 
@@ -83,41 +123,6 @@ export const loadRowCategoryOptions = async (optionsSetFunc?: any) => {
       value: hall.id
     }));
     optionsSetFunc(customizedOptions);
-  } catch (error) {
-    console.error(error);
-  }
-}; */
-
-/* export const loadTimeOptions = (optionsSetFunc: any) => {
-  const options = [] as any;
-  for (let i = 0; i <= 23; i++) {
-    const label = i.toString().length > 1 ? `${i}:00` : `0${i}:00`;
-    options.push({
-      label,
-      value: label
-    });
-  }
-  optionsSetFunc(options);
-}; */
-
-// SUGGESTIONS
-/* export const loadCitySuggestions = async (optionsSetFunc: any) => {
-  try {
-    const cities: any = await api.loadCities();
-    const formatedCitites = cities.map((city: any) => ({ label: city }));
-    optionsSetFunc(formatedCitites);
-  } catch (error) {
-    console.error(error);
-  }
-}; */
-/* 
-export const loadMovieSuggestions = async (optionsSetFunc: any) => {
-  try {
-    const movies: any = await api.loadMoviesList();
-    const formatedMovies = movies.map((movie: any) => ({
-      label: movie.original_title
-    }));
-    optionsSetFunc(formatedMovies);
   } catch (error) {
     console.error(error);
   }

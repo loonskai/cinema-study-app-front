@@ -109,13 +109,6 @@ class ApiService {
     return res.data;
   }
 
-  async getRowCategories() {
-    const res = await this.client.get(
-      'http://localhost:5000/data/row-categories'
-    );
-    return res.data;
-  }
-
   /* MOVIES */
   async getMovies(): Promise<ResType<MovieAPIType[]>> {
     const res = await this.client.get('http://localhost:5000/movies');
@@ -177,6 +170,19 @@ class ApiService {
   async deleteBonus(id: number): Promise<boolean> {
     await this.client.delete(`http://localhost:5000/bonuses/${id}`);
     return true;
+  }
+
+  /* ADDITIONAL DATA */
+  async getRowCategories() {
+    const res = await this.client.get(
+      'http://localhost:5000/data/row-categories'
+    );
+    return res.data;
+  }
+
+  async getCities() {
+    const res = await this.client.get('http://localhost:5000/data/cities');
+    return res.data;
   }
 
   /*   async loadRowCategories(hallId?: number) {
@@ -287,22 +293,6 @@ class ApiService {
       return new Promise((res, rej) => {
         console.log('submit order -->', order);
         return res(true);
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  } */
-
-  /*   async loadCities() {
-    try {
-      const cities = Object.keys(
-        sessions.reduce((obj: any, session: any) => {
-          obj[session.city] = true;
-          return obj;
-        }, {})
-      );
-      return new Promise((res, rej) => {
-        return res(cities);
       });
     } catch (error) {
       console.error(error);

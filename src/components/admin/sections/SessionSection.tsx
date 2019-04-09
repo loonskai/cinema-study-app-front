@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import AddIcon from '@material-ui/icons/Add';
 
-// import api from '../../ApiService';
 import AdminFormContainer from '../AdminFormContainer';
 import TextField from '../../fields/TextField/TextField';
 import SelectField from '../../fields/SelectField/SelectField';
 import DateField from '../../fields/DateField';
 import SubmitButton from '../../buttons/SubmitButton';
+import {
+  loadTimeOptions,
+  loadMovieSuggestions,
+  loadCitySuggestions
+} from '../../../helpers/loadSelectOptions';
 /* import {
   loadCinemaByCityOptions,
   loadHallsByCinemaOptions,
   loadTimeOptions,
-  loadCitySuggestions,
-  loadMovieSuggestions
+
 } from '../../helpers/loadSelectOptions'; */
 
 const SessionSection = ({ handleSnackbar }: any) => {
@@ -43,6 +46,9 @@ const SessionSection = ({ handleSnackbar }: any) => {
     if (!citySuggestions) {
       loadCitySuggestions(setCitySuggestions);
     }
+    /*
+    
+    
 
     if (citySelected) {
       loadCinemaByCityOptions(citySelected, setCinemaOptions);
@@ -54,7 +60,7 @@ const SessionSection = ({ handleSnackbar }: any) => {
       loadHallsByCinemaOptions(cinema, setHallOptions);
     } else {
       setHall('');
-    }
+    } */
   }, [
     date,
     time,
@@ -70,7 +76,7 @@ const SessionSection = ({ handleSnackbar }: any) => {
   const handleSubmit = async (
     e: React.ChangeEvent<HTMLFormElement>
   ): Promise<void> => {
-    e.preventDefault();
+    /*     e.preventDefault();
     const body = {
       date,
       time,
@@ -84,7 +90,7 @@ const SessionSection = ({ handleSnackbar }: any) => {
       setTime('');
       setButtonDisabled(true);
       handleSnackbar('New service added', 'success');
-    }
+    } */
   };
 
   return (
