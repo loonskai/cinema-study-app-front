@@ -9,7 +9,8 @@ import {
   UserAPIType,
   MovieAPIType,
   CinemaAPIType,
-  BonusAPIType
+  BonusAPIType,
+  SessionAPIType
 } from '../interfaces/Api';
 import { SignInBodyType, SignUpBodyType } from '../interfaces/Auth';
 
@@ -178,6 +179,11 @@ class ApiService {
   /* SESSIONS */
   async createSession(body: SessionCreateType): Promise<any> {
     const res = await this.client.post('http://localhost:5000/sessions', body);
+    return res.data;
+  }
+
+  async getSessions(): Promise<ResType<SessionAPIType[]>> {
+    const res = await this.client.get('http://localhost:5000/sessions');
     return res.data;
   }
 

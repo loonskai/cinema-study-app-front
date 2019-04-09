@@ -47,7 +47,6 @@ const MovieSection = ({ handleSnackbar }: any) => {
     if (!externalAPIMovies) {
       loadExternalAPIMovies();
     }
-    console.log(moviesList);
     if (!moviesList) {
       movieService.getAll(setMoviesList);
     }

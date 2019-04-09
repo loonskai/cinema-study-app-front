@@ -2,6 +2,7 @@ import { ResType } from '../interfaces/Api';
 import { parseErrorMessage } from '../helpers/parseResponse';
 import defineErrorField from '../helpers/defineErrorField';
 import apiService from './Api';
+import Session from '../classes/Session';
 
 export interface SessionCreateType {
   date: Date;
@@ -26,6 +27,25 @@ export default {
       return typeof fields === 'object'
         ? errorsSetter(fields)
         : errorsSetter({ [fields]: message });
+    }
+  },
+
+  async getAll(
+    stateSetter?: (data: Session[]) => void
+  ): Promise<Session[] | null> {
+    try {
+      const res = await apiService.getSessions();
+      if (res.error || !res.data) {
+        throw Error(res.message);
+      }
+      const result = res.data.map(session => new Session(session));
+      if (stateSetter) {
+        stateSetter(result);
+      }
+      return result;
+    } catch (error) {
+      console.log(error);
+      return null;
     }
   }
 };

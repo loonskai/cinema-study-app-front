@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import AddIcon from '@material-ui/icons/Add';
 
+import Session from '../../../classes/Session';
 import sessionService from '../../../services/Session';
 import AdminFormContainer from '../AdminFormContainer';
 import TextField from '../../fields/TextField/TextField';
 import SelectField from '../../fields/SelectField/SelectField';
 import DateField from '../../fields/DateField';
 import SubmitButton from '../../buttons/SubmitButton';
+import AdminListItem from '../elements/AdminListItem';
 import {
   loadTimeOptions,
   loadMovieSuggestions,
@@ -14,8 +16,11 @@ import {
   loadCinemaByCityOptions,
   loadHallsByCinemaOptions
 } from '../../../helpers/loadSelectOptions';
+import parseFieldsFromEntity from '../../../helpers/parseFieldsFromEntity';
 
 const SessionSection = ({ handleSnackbar }: any) => {
+  const [sessionsList, setSessionsList] = useState<Session[] | null>(null);
+
   const [date, setDate] = useState(new Date());
   const [time, setTime] = useState('20:00');
   const [movieTyped, setMovieTyped] = useState('');
@@ -33,7 +38,7 @@ const SessionSection = ({ handleSnackbar }: any) => {
   const [timeOptions, setTimeOptions] = useState(null);
 
   useEffect(() => {
-    setButtonDisabled(!date || !time || !hall);
+    setButtonDisabled(!date || !time || !hall || !movieSelected);
     if (!timeOptions) {
       loadTimeOptions(setTimeOptions);
     }
@@ -52,6 +57,9 @@ const SessionSection = ({ handleSnackbar }: any) => {
       loadHallsByCinemaOptions(cinema, setHallOptions);
     } else {
       setHall('');
+    }
+    if (!sessionsList) {
+      sessionService.getAll(setSessionsList);
     }
   }, [
     date,
@@ -80,7 +88,31 @@ const SessionSection = ({ handleSnackbar }: any) => {
       setTime('');
       setButtonDisabled(true);
       handleSnackbar('New service added', 'success');
+      sessionService.getAll(setSessionsList);
     }
+  };
+
+  const handleUpdate = async (id: number, inputValues: any): Promise<any> => {
+    /*     const result = await movieService.update(id, inputValues);
+    if (result.error) {
+      handleSnackbar('Unable to update movie', 'error');
+    } else {
+      handleSnackbar('Succesfully updated', 'success');
+      await movieService.getAll(setMoviesList);
+      await loadExternalAPIMovies();
+      return result.data;
+    } */
+  };
+
+  const handleRemove = async (id: number) => {
+    /*     const result = await movieService.delete(id);
+    if (!result) {
+      handleSnackbar('Unable to delete movie', 'error');
+    } else {
+      handleSnackbar('Movie deleted', 'warning');
+      await movieService.getAll(setMoviesList);
+      await loadExternalAPIMovies();
+    } */
   };
 
   return (
@@ -142,6 +174,17 @@ const SessionSection = ({ handleSnackbar }: any) => {
           disabled={buttonDisabled}
         />
       </form>
+      {sessionsList &&
+        sessionsList.map(item => (
+          <AdminListItem
+            properties={parseFieldsFromEntity(item as any)}
+            key={item.id.toString()}
+            id={item.id}
+            handleUpdate={handleUpdate}
+            handleRemove={handleRemove}
+            handleSnackbar={handleSnackbar}
+          />
+        ))}
     </AdminFormContainer>
   );
 };

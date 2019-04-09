@@ -65,3 +65,14 @@ export interface BonusAPIType {
   createdAt?: Date;
   updatedAt?: Date;
 }
+
+export interface SessionAPIType {
+  id?: number;
+  date: Date;
+  'hall-id': number;
+  'movie-id': number;
+  movie: MovieAPIType;
+  hall: HallAPIType;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
