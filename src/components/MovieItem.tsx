@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Card from '@material-ui/core/Card';
 
+import Movie from '../classes/Movie';
 import DefaultButton from './../components/buttons/DefaultButton';
 
 const Container = styled(Card)<any>`
@@ -31,13 +32,10 @@ const StyledPoster = styled.img`
   align-self: center;
 `;
 
-const MovieItem = ({ data }: { data: any }) => (
+const MovieItem = ({ data }: { data: Movie }) => (
   <Container>
-    <StyledTitle>{data.original_title}</StyledTitle>
-    <StyledPoster
-      src={`https://image.tmdb.org/t/p/w500${data.poster_path}`}
-      alt={data.original_title}
-    />
+    <StyledTitle>{data.title}</StyledTitle>
+    <StyledPoster src={data.poster} alt={data.title} />
     <DefaultButton text="Details" to={`/movies/${data.id}`} />
   </Container>
 );

@@ -1,12 +1,18 @@
 import React, { Fragment, useState, useEffect } from 'react';
+import { RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
 
-// import api from '../ApiService';
 import Loader from '../components/Loader';
 import PageTitle from '../components/PageTitle';
 import SeatsContainer from '../components/seats/SeatsContainer';
 import StyledPoster from '../components/pictures/StyledPoster';
 import { containerGreyColor, whiteColor, greyColor } from '../constants';
+
+interface MatchExended {
+  params: {
+    id: string;
+  };
+}
 
 const Container = styled.div`
   width: 100%;
@@ -57,7 +63,8 @@ const SessionInfo = styled.div`
   box-shadow: 0px 0px 0px 1px ${greyColor};
 `;
 
-const SessionSingle = ({ match }: any) => {
+const SessionSingle: React.FC<RouteComponentProps> = ({ match }) => {
+  const matchExtended: MatchExended = match as any;
   const [session, setSession]: [any, any] = useState({});
   const [movie, setMovie]: [any, any] = useState({});
   const [isLoading, setLoading] = useState(true);
@@ -71,7 +78,7 @@ const SessionSingle = ({ match }: any) => {
   };
 
   useEffect(() => {
-    loadData(match.params.id);
+    loadData(matchExtended.params.id);
   }, []);
 
   return isLoading ? (

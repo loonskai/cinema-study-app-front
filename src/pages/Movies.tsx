@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
+import Movie from '../classes/Movie';
 import actions from './../redux/actions/index';
 import PageTitle from './../components/PageTitle';
 import MovieItem from './../components/MovieItem';
@@ -9,8 +10,8 @@ import Loader from './../components/Loader';
 import FieldContainer from '../components/fields/FieldContainer';
 
 interface Props {
-  loadMoviesList: any;
-  movies: Array<any>;
+  loadMoviesList: (dispatch?: any) => Promise<void>;
+  movies: Movie[];
 }
 
 const Container = styled.div`
@@ -27,9 +28,9 @@ const MoviesContainer = styled.div`
   justify-content: center;
 `;
 
-const Movies = ({ movies, loadMoviesList }: any) => {
-  const [isLoading, setLoading] = useState(true);
-  const [filterText, setFilterText] = useState('');
+const Movies: React.FC<Props> = ({ movies, loadMoviesList }) => {
+  const [isLoading, setLoading] = useState<boolean>(true);
+  const [filterText, setFilterText] = useState<string>('');
 
   useEffect(() => {
     if (!movies) {
@@ -48,12 +49,12 @@ const Movies = ({ movies, loadMoviesList }: any) => {
     const filteredMovies = !filterText
       ? movies
       : movies.filter((movie: any) =>
-          movie.original_title.toLowerCase().includes(filterText)
+          movie.title.toLowerCase().includes(filterText)
         );
     if (!filteredMovies.length) {
       return 'Nothing found';
     }
-    return filteredMovies.map((movie: any) => (
+    return filteredMovies.map(movie => (
       <MovieItem key={movie.id} data={movie} />
     ));
   };
@@ -76,6 +77,6 @@ const Movies = ({ movies, loadMoviesList }: any) => {
 };
 
 export default connect(
-  ({ movies }: { movies: any }) => ({ movies }),
+  ({ movies }: { movies: Movie[] }) => ({ movies }),
   actions
 )(Movies as any);

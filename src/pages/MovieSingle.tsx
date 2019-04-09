@@ -1,12 +1,17 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
 
-// import api from '../ApiService';
 import Loader from '../components/Loader';
 import PageTitle from '../components/PageTitle';
 import SearchSessionForm from '../components/forms/SearchSessionForm';
 import StyledPoster from '../components/pictures/StyledPoster';
+
+interface MatchExended {
+  params: {
+    id: string;
+  };
+}
 
 const MovieInfoContainer = styled.div`
   display: flex;
@@ -24,7 +29,8 @@ const StyledDescription = styled.div`
   }
 `;
 
-const MovieSingle = ({ match, location }: any) => {
+const MovieSingle: React.FC<RouteComponentProps> = ({ match, location }) => {
+  const matchExtended: MatchExended = match as any;
   const [movie, setMovie]: [any, any] = useState({});
   const [isLoading, setLoading] = useState(true);
   const [searchValues, setSearchValues] = useState({
@@ -41,7 +47,7 @@ const MovieSingle = ({ match, location }: any) => {
   };
 
   useEffect(() => {
-    loadData(match.params.id);
+    loadData(matchExtended.params.id);
     const { state: locationState } = location;
     if (locationState) {
       setSearchValues({
@@ -66,7 +72,7 @@ const MovieSingle = ({ match, location }: any) => {
         <StyledDescription>
           <div>{movie.overview}</div>
           <SearchSessionForm
-            movieId={+match.params.id}
+            movieId={+matchExtended.params.id}
             initialValues={searchValues}
           />
         </StyledDescription>

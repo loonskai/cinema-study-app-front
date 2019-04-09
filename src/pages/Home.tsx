@@ -17,7 +17,7 @@ interface Props extends RouteComponentProps {
   movies: Movie[];
 }
 
-const Home = ({ history, movies }: Props) => {
+const Home: React.FC<Props> = ({ history, movies }) => {
   const [movieTyped, setMovieTyped] = useState('');
   const [movieSelected, setMovieSelected] = useState('');
   const [citySelected, setCitySelected] = useState('');

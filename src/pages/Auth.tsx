@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
+import { RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
 
 import PageTitle from '../components/PageTitle';
@@ -14,6 +15,10 @@ import {
   greyColor,
   mainDarkColor
 } from './../constants';
+
+interface Props extends RouteComponentProps {
+  isAuth: boolean;
+}
 
 const Container = styled.div`
   max-width: 600px;
@@ -50,7 +55,7 @@ const snackbarStateDefault = {
   message: ''
 };
 
-const Auth = ({ isAuth, location, history }: any) => {
+const Auth: React.FC<Props> = ({ isAuth, location, history }) => {
   const redirectTo =
     (location &&
       location.state &&
