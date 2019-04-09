@@ -106,8 +106,8 @@ class ApiService {
     return res;
   }
 
-  async getHalls(): Promise<any> {
-    const res = await this.client.get('http://localhost:5000/hall');
+  async getHalls(params?: any): Promise<any> {
+    const res = await this.client.get('http://localhost:5000/hall', { params });
     return res.data;
   }
 
@@ -247,32 +247,6 @@ class ApiService {
     try {
       return new Promise((res, rej) => {
         return res(bonus);
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  } */
-
-  /*   async loadCinemasByCity(city: string) {
-    try {
-      const filteredCinemas = cinemas.filter(
-        (cinema: any) => cinema.city === city
-      );
-      return new Promise((res, rej) => {
-        return res(filteredCinemas);
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  } */
-
-  /*   async loadHallsByCinema(cinemaId: any) {
-    try {
-      const filteredHalls = halls.filter(
-        (hall: any) => hall.cinemaId === cinemaId
-      );
-      return new Promise((res, rej) => {
-        return res(filteredHalls);
       });
     } catch (error) {
       console.error(error);

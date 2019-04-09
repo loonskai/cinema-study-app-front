@@ -10,12 +10,9 @@ import {
   loadTimeOptions,
   loadMovieSuggestions,
   loadCitySuggestions,
-  loadCinemaByCityOptions
+  loadCinemaByCityOptions,
+  loadHallsByCinemaOptions
 } from '../../../helpers/loadSelectOptions';
-/* import {
-  loadHallsByCinemaOptions,
-  loadTimeOptions,
-} from '../../helpers/loadSelectOptions'; */
 
 const SessionSection = ({ handleSnackbar }: any) => {
   const [date, setDate] = useState(new Date());
@@ -50,12 +47,11 @@ const SessionSection = ({ handleSnackbar }: any) => {
     } else {
       setCinema('');
     }
-    /*
     if (cinema) {
       loadHallsByCinemaOptions(cinema, setHallOptions);
     } else {
       setHall('');
-    } */
+    }
   }, [
     date,
     time,
@@ -71,7 +67,8 @@ const SessionSection = ({ handleSnackbar }: any) => {
   const handleSubmit = async (
     e: React.ChangeEvent<HTMLFormElement>
   ): Promise<void> => {
-    /*     e.preventDefault();
+    e.preventDefault();
+    /*
     const body = {
       date,
       time,

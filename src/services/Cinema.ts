@@ -51,7 +51,7 @@ export default {
   async getAllWithParams(
     params: QueryParams,
     stateSetter?: (data: Cinema[]) => void
-  ) {
+  ): Promise<Cinema[] | null> {
     try {
       const res = await apiService.getCinemas(params);
       if (res.error || !res.data) {

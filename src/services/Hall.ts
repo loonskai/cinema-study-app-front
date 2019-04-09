@@ -15,6 +15,10 @@ export interface HallCreateType {
   }>;
 }
 
+interface QueryParams {
+  'cinema-id': number;
+}
+
 export default {
   async create(
     data: HallCreateType,
@@ -42,6 +46,26 @@ export default {
   async getAll(stateSetter?: (data: Hall[]) => void): Promise<Hall[] | null> {
     try {
       const res = await apiService.getHalls();
+      if (res.error || !res.data) {
+        throw Error(res.message);
+      }
+      const result = res.data.map((hall: HallAPIType) => new Hall(hall));
+      if (stateSetter) {
+        stateSetter(result);
+      }
+      return result;
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  },
+
+  async getAllWithParams(
+    params: QueryParams,
+    stateSetter?: (data: Hall[]) => void
+  ): Promise<Hall[] | null> {
+    try {
+      const res = await apiService.getHalls(params);
       if (res.error || !res.data) {
         throw Error(res.message);
       }

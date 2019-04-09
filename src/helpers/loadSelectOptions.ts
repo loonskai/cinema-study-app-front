@@ -1,10 +1,9 @@
-// import api from '../ApiService';
+import { Dispatch, SetStateAction } from 'react';
+
+import Cinema from '../classes/Cinema';
+import apiService from '../services/Api';
 import cinemaService from '../services/Cinema';
 import hallService from '../services/Hall';
-import Cinema from '../classes/Cinema';
-
-import { Dispatch, SetStateAction } from 'react';
-import apiService from '../services/Api';
 import movieService from '../services/Movie';
 
 export interface Option {
@@ -37,11 +36,33 @@ export const loadCinemaByCityOptions = async (
   optionsSetFunc: any
 ) => {
   try {
-    const cinemas: Cinema[] = await cinemaService.getAllWithParams({ city });
-    const customizedOptions = cinemas.map(cinema => ({
-      label: cinema.title,
-      value: cinema.id
-    }));
+    const cinemas = await cinemaService.getAllWithParams({ city });
+    const customizedOptions =
+      cinemas &&
+      cinemas.map(cinema => ({
+        label: cinema.title,
+        value: cinema.id
+      }));
+    optionsSetFunc(customizedOptions);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const loadHallsByCinemaOptions = async (
+  cinemaID: string,
+  optionsSetFunc: any
+) => {
+  try {
+    const halls = await hallService.getAllWithParams({
+      'cinema-id': +cinemaID
+    });
+    const customizedOptions =
+      halls &&
+      halls.map(hall => ({
+        label: hall.title,
+        value: hall.id
+      }));
     optionsSetFunc(customizedOptions);
   } catch (error) {
     console.error(error);
@@ -108,22 +129,6 @@ export const loadCitySuggestions = async (optionsSetFunc: any) => {
     console.error(error);
   }
 };
-
-/* export const loadHallsByCinemaOptions = async (
-  cinemaId: any,
-  optionsSetFunc: any
-) => {
-  try {
-    const halls: any = await api.loadHallsByCinema(cinemaId);
-    const customizedOptions = halls.map((hall: any) => ({
-      label: hall.name,
-      value: hall.id
-    }));
-    optionsSetFunc(customizedOptions);
-  } catch (error) {
-    console.error(error);
-  }
-}; */
 
 // DYNAMIC CHECKBOX LISTS
 /* export const loadCategoryCheckboxesByHall = async (
