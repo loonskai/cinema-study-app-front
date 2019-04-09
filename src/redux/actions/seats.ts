@@ -4,10 +4,10 @@ import { LOAD_ALL_SEATS } from './../../constants';
 
 const loadAllSeats = () => {
   return async (dispatch: any) => {
-    const seats = await api.loadAllSeats();
-    if (seats) {
-      dispatch({ type: LOAD_ALL_SEATS, payload: seats });
-    }
+    // const seats = await api.loadAllSeats();
+    // if (seats) {
+    //   dispatch({ type: LOAD_ALL_SEATS, payload: seats });
+    // }
   };
 };
 

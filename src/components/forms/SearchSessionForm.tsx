@@ -3,12 +3,14 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import SearchIcon from '@material-ui/icons/Search';
 
+import Session from '../../classes/Session';
 import actions from '../../redux/actions';
-/* import {
+import {
   loadCinemaByCityOptions,
   loadTimeOptions,
-  loadCitySuggestions
-} from '../../helpers/loadSelectOptions'; */
+  loadCitySuggestions,
+  loadHallsByCinemaOptions
+} from '../../helpers/loadSelectOptions';
 import FieldContainer from '../fields/FieldContainer';
 import SubmitButton from '../buttons/SubmitButton';
 import SessionsTable from '../SessionsTable';
@@ -33,17 +35,19 @@ const SearchSessionForm = ({
   sessions,
   initialValues
 }: any) => {
-  const [citySelected, setCitySelected] = useState(initialValues.city);
-  const [cityTyped, setCityTyped] = useState(initialValues.city);
-  const [cinemaOptions, setCinemaOptions] = useState(null);
-  const [cinema, setCinema] = useState(initialValues.cinema);
   const [date, setDate] = useState(initialValues.date);
   const [time, setTime] = useState(initialValues.time);
+  const [hall, setHall] = useState('');
+  const [citySelected, setCitySelected] = useState(initialValues.city);
+  const [cityTyped, setCityTyped] = useState(initialValues.city);
+  const [cinema, setCinema] = useState(initialValues.cinema);
   const [buttonDisabled, setButtonDisabled] = useState(true);
   const [displaySessionsTable, setDisplaySessionsTable] = useState(false);
 
-  const [citySuggestions, setCitySuggestions] = useState(null);
   const [timeOptions, setTimeOptions] = useState(null);
+  const [citySuggestions, setCitySuggestions] = useState(null);
+  const [cinemaOptions, setCinemaOptions] = useState(null);
+  const [hallOptions, setHallOptions] = useState(null);
 
   useEffect(() => {
     // If we come from main page search
@@ -71,11 +75,22 @@ const SearchSessionForm = ({
       setCitySelected('');
       setCinema('');
     }
-  }, [cityTyped, citySelected, timeOptions]);
+
+    if (cinema) {
+      loadHallsByCinemaOptions(cinema, setHallOptions);
+    } else {
+      setHall('');
+    }
+  }, [cityTyped, citySelected, cinema, hall, timeOptions]);
 
   const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    loadSessionsList();
+    const options = {
+      hall,
+      date,
+      time
+    };
+    loadSessionsList(options);
     setDisplaySessionsTable(true);
   };
 
@@ -102,6 +117,16 @@ const SearchSessionForm = ({
           value={cinema}
           handleChange={(value: string) => setCinema(value)}
           disabled={!citySelected}
+        />
+        <FieldContainer
+          id="hall"
+          type="select"
+          icon="cinema"
+          label="Hall"
+          value={hall}
+          options={hallOptions}
+          handleChange={(value: string) => setHall(value)}
+          disabled={!cinema}
         />
         <FieldContainer
           id="date"
@@ -132,11 +157,11 @@ const SearchSessionForm = ({
 };
 
 const mapStateToProps = (state: any, initialProps: any) => {
-  const { sessions } = state;
-  const { movieId } = initialProps;
+  const { sessions }: { sessions: Session[] } = state;
+  const { movieID } = initialProps;
   return {
     sessions:
-      sessions && sessions.filter((session: any) => session.movieId === movieId)
+      sessions && sessions.filter(session => session.movieID === movieID)
   };
 };
 

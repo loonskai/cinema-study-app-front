@@ -52,6 +52,7 @@ const FieldContainer = (props: Props) => {
       case 'city':
         return <LocationCity fontSize="large" {...other} />;
       case 'cinema':
+      case 'hall':
         return <Weekend fontSize="large" {...other} />;
       case 'date':
         return <CalendarToday fontSize="large" {...other} />;

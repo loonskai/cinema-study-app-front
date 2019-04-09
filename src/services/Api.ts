@@ -172,8 +172,10 @@ class ApiService {
     return res.data;
   }
 
-  async getSessions(): Promise<ResType<SessionAPIType[]>> {
-    const res = await this.client.get('http://localhost:5000/sessions');
+  async getSessions(params?: any): Promise<ResType<SessionAPIType[]>> {
+    const res = await this.client.get('http://localhost:5000/sessions', {
+      params
+    });
     return res.data;
   }
 
@@ -207,16 +209,6 @@ class ApiService {
     try {
       return new Promise((res, rej) => {
         return res(sessions.find(session => session.id === id));
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  } */
-
-  /*   async loadSessionsList(options: any) {
-    try {
-      return new Promise((res, rej) => {
-        setTimeout(() => res(sessions), 1000);
       });
     } catch (error) {
       console.error(error);

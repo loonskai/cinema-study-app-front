@@ -2,6 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
 
+import Movie from '../classes/Movie';
 import movieService from '../services/Movie';
 import Loader from '../components/Loader';
 import PageTitle from '../components/PageTitle';
@@ -32,8 +33,8 @@ const StyledDescription = styled.div`
 
 const MovieSingle: React.FC<RouteComponentProps> = ({ match, location }) => {
   const matchExtended: MatchExended = match as any;
-  const [movie, setMovie]: [any, any] = useState({});
-  const [isLoading, setLoading] = useState(true);
+  const [movie, setMovie] = useState<Movie | null>(null);
+  const [isLoading, setLoading] = useState<boolean>(true);
   const [searchValues, setSearchValues] = useState({
     city: '',
     cinema: '',
@@ -41,14 +42,11 @@ const MovieSingle: React.FC<RouteComponentProps> = ({ match, location }) => {
     time: ''
   });
 
-  const loadData = async (id: string) => {
-    const movieLoaded = await movieService.getById(id);
-    setMovie(movieLoaded);
-    setLoading(false);
-  };
-
   useEffect(() => {
-    loadData(matchExtended.params.id);
+    if (!movie) {
+      movieService.getById(matchExtended.params.id, setMovie);
+      setLoading(false);
+    }
     const { state: locationState } = location;
     if (locationState) {
       setSearchValues({
@@ -60,19 +58,20 @@ const MovieSingle: React.FC<RouteComponentProps> = ({ match, location }) => {
     }
   }, []);
 
+  const { title = '', poster = '', overview = '' } = movie || {};
   return isLoading ? (
     <Loader />
   ) : (
     <Fragment>
-      <PageTitle text={movie.title} />
+      <PageTitle text={title} />
       <MovieInfoContainer>
-        <StyledPoster src={movie.poster} alt={movie.title} />
+        <StyledPoster src={poster} alt={title} />
         <StyledDescription>
-          <div>{movie.overview}</div>
-          {/*           <SearchSessionForm
-            movieId={+matchExtended.params.id}
+          <div>{overview}</div>
+          <SearchSessionForm
+            movieID={+matchExtended.params.id}
             initialValues={searchValues}
-          /> */}
+          />
         </StyledDescription>
       </MovieInfoContainer>
     </Fragment>

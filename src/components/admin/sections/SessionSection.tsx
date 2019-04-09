@@ -59,7 +59,7 @@ const SessionSection = ({ handleSnackbar }: any) => {
       setHall('');
     }
     if (!sessionsList) {
-      sessionService.getAll(setSessionsList);
+      sessionService.getAll({}, setSessionsList);
     }
   }, [
     date,
@@ -88,32 +88,13 @@ const SessionSection = ({ handleSnackbar }: any) => {
       setTime('');
       setButtonDisabled(true);
       handleSnackbar('New service added', 'success');
-      sessionService.getAll(setSessionsList);
+      sessionService.getAll({}, setSessionsList);
     }
   };
 
-  const handleUpdate = async (id: number, inputValues: any): Promise<any> => {
-    /*     const result = await movieService.update(id, inputValues);
-    if (result.error) {
-      handleSnackbar('Unable to update movie', 'error');
-    } else {
-      handleSnackbar('Succesfully updated', 'success');
-      await movieService.getAll(setMoviesList);
-      await loadExternalAPIMovies();
-      return result.data;
-    } */
-  };
+  const handleUpdate = async (id: number, inputValues: any) => {};
 
-  const handleRemove = async (id: number) => {
-    /*     const result = await movieService.delete(id);
-    if (!result) {
-      handleSnackbar('Unable to delete movie', 'error');
-    } else {
-      handleSnackbar('Movie deleted', 'warning');
-      await movieService.getAll(setMoviesList);
-      await loadExternalAPIMovies();
-    } */
-  };
+  const handleRemove = async (id: number) => {};
 
   return (
     <AdminFormContainer title="Create Session">

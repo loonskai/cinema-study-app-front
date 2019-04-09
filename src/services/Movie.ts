@@ -51,13 +51,20 @@ export default {
     }
   },
 
-  async getById(id: string): Promise<Movie | null> {
+  async getById(
+    id: string,
+    stateSetter?: (data: Movie) => void
+  ): Promise<Movie | null> {
     try {
       const res = await apiService.getMovieById(+id);
       if (res.error || !res.data) {
         throw Error(res.message);
       }
-      return new Movie(res.data);
+      const result = new Movie(res.data);
+      if (stateSetter) {
+        stateSetter(result);
+      }
+      return result;
     } catch (error) {
       console.error(error);
       return null;

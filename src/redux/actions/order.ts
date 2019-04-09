@@ -4,10 +4,10 @@ import { SET_ORDER_INFO } from './../../constants';
 
 const setOrderInfo = (order: boolean) => {
   return (dispatch: any) => {
-    const result = api.reserve(order);
-    if (result) {
-      dispatch({ type: SET_ORDER_INFO, payload: order });
-    }
+    // const result = api.reserve(order);
+    // if (result) {
+    //   dispatch({ type: SET_ORDER_INFO, payload: order });
+    // }
   };
 };
 

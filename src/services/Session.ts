@@ -11,6 +11,8 @@ export interface SessionCreateType {
   hall: string | number;
 }
 
+interface QueryParams {}
+
 export default {
   async create(
     data: SessionCreateType,
@@ -31,10 +33,11 @@ export default {
   },
 
   async getAll(
+    params: QueryParams,
     stateSetter?: (data: Session[]) => void
   ): Promise<Session[] | null> {
     try {
-      const res = await apiService.getSessions();
+      const res = await apiService.getSessions(params);
       if (res.error || !res.data) {
         throw Error(res.message);
       }
