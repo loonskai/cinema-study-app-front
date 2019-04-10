@@ -190,32 +190,6 @@ class ApiService {
     return true;
   }
 
-  /*   async loadRowCategories(hallId?: number) {
-    try {
-      return new Promise((res, rej) => {
-        if (!hallId) {
-          return res(rowCategories);
-        }
-
-        const { rows: hallRows }: any = seats.find(
-          hall => hall.hallId === hallId
-        );
-        const hallCategoriesIDs: any = Object.keys(
-          hallRows.reduce((acc: any, row: any) => {
-            acc[row.categoryId] = true;
-            return acc;
-          }, {})
-        );
-        const filteredCategories = rowCategories.filter(category =>
-          hallCategoriesIDs.includes(category.id.toString())
-        );
-        return res(filteredCategories);
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  } */
-
   /*   async loadAllSeats() {
     try {
       return new Promise((res, rej) => {

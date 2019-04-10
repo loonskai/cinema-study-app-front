@@ -193,7 +193,7 @@ const AdminListItem = ({
         return (
           <TextField
             type="text"
-            multiline
+            multiline={true}
             rowsMax="4"
             label={property.label}
             name={property.name}
@@ -272,7 +272,6 @@ const AdminListItem = ({
   };
 
   const saveItem = async () => {
-    console.log(id);
     const result = id && (await handleUpdate(id, inputValues));
     if (result) {
       setItemValues(result);
