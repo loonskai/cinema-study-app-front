@@ -179,4 +179,4 @@ const mapStateToProps = (state: any, initialProps: any) => {
 export default connect(
   mapStateToProps,
   actions
-)(SearchSessionForm);
+)(SearchSessionForm as any);
