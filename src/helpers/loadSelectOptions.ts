@@ -72,7 +72,7 @@ export const loadHallsByCinemaOptions = async (
 export const loadRowCategoryOptions = async (optionsSetFunc?: any) => {
   try {
     const res = await apiService.getRowCategories();
-    if (!res) {
+    if (!res.data || res.error) {
       throw Error('Unable to load row categories');
     }
     const customizedOptions = res.data.map(
@@ -131,21 +131,27 @@ export const loadCitySuggestions = async (optionsSetFunc: any) => {
 };
 
 // DYNAMIC CHECKBOX LISTS
-/* export const loadCategoryCheckboxesByHall = async (
-  hallId: number,
+export const loadCategoryCheckboxesByHall = async (
+  hallID: number,
   optionsSetFunc: any
 ) => {
   try {
-    const hallCategories: any = await api.loadRowCategories(hallId);
-    const checkboxOptions = hallCategories.reduce((acc: any, category: any) => {
-      acc[category.id] = {
-        label: category.title,
-        value: false
-      };
-      return acc;
-    }, {});
+    const res = await apiService.getRowCategories({ hallID });
+    if (!res.data || res.error) {
+      throw Error('Unable to load row categories');
+    }
+    const checkboxOptions = res.data.reduce(
+      (acc, category) => {
+        acc[category.id] = {
+          label: category.title,
+          value: false
+        };
+        return acc;
+      },
+      {} as { [key: number]: { label: string; value: boolean } }
+    );
     optionsSetFunc(checkboxOptions);
   } catch (error) {
     console.error(error);
   }
-}; */
+};

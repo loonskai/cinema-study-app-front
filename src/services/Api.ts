@@ -10,7 +10,8 @@ import {
   MovieAPIType,
   CinemaAPIType,
   BonusAPIType,
-  SessionAPIType
+  SessionAPIType,
+  RowCategoryAPIType
 } from '../interfaces/Api';
 import { SignInBodyType, SignUpBodyType } from '../interfaces/Auth';
 
@@ -257,9 +258,12 @@ class ApiService {
     }
   } */
   /* ADDITIONAL DATA */
-  async getRowCategories() {
+  async getRowCategories(params?: any): Promise<ResType<RowCategoryAPIType[]>> {
     const res = await this.client.get(
-      'http://localhost:5000/data/row-categories'
+      'http://localhost:5000/data/row-categories',
+      {
+        params
+      }
     );
     return res.data;
   }

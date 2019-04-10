@@ -3,13 +3,20 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import actions from '../../redux/actions';
-// import { loadCategoryCheckboxesByHall } from '../../helpers/loadSelectOptions';
+import { loadCategoryCheckboxesByHall } from '../../helpers/loadSelectOptions';
 import SeatsMenu from './SeatsMenu';
 import OrderConfirmationModal from './OrderConfirmationModal';
 import OrderController from './OrderController';
 import OrderTimer from './OrderTimer';
 import SeatsScheme from './SeatsScheme';
 import { SnackbarContext } from '../../Layout';
+
+interface Props {
+  sessionID: number;
+  hallID: number;
+  order: any;
+  setOrderInfo: any;
+}
 
 const Container = styled.div`
   width: 100%;
@@ -39,16 +46,11 @@ const OrderStateContainer = styled.div`
   }
 `;
 
-const SeatsContainer = ({
-  sessionId,
-  hallId,
+const SeatsContainer: React.FC<Props> = ({
+  sessionID,
+  hallID,
   order,
   setOrderInfo
-}: {
-  sessionId: number;
-  hallId: number;
-  order: any;
-  setOrderInfo: any;
 }) => {
   const [rowCategories, setRowCategories] = useState<any>(null);
   const [isModalDisplayed, setModalDisplay] = useState<boolean>(false);
@@ -57,23 +59,24 @@ const SeatsContainer = ({
 
   useEffect(() => {
     setOrderInfo({
-      sessionId,
-      hallId: order.hallId,
+      sessionID,
+      hallID: order.hallID,
       seatsPicked: order.seatsPicked,
       bonuses: order.bonuses
     });
     if (!rowCategories) {
-      loadCategoryCheckboxesByHall(hallId, setRowCategories);
+      loadCategoryCheckboxesByHall(hallID, setRowCategories);
     }
   }, []);
 
-  const changeRowCategory = (key: any) => {
-    const newCategories = Object.assign({}, rowCategories, {
+  const changeRowCategory = (key: number): void => {
+    const newCategories = {
+      ...rowCategories,
       [key]: {
         label: rowCategories[key].label,
         value: !rowCategories[key].value
       }
-    });
+    };
     setRowCategories(newCategories);
   };
 
@@ -105,8 +108,8 @@ const SeatsContainer = ({
           price
         });
     setOrderInfo({
-      sessionId: order.sessionId,
-      hallId: order.hallId,
+      sessionID: order.sessionID,
+      hallID: order.hallID,
       seatsPicked: newSeatsPicked,
       bonuses: order.bonuses
     });
@@ -114,8 +117,8 @@ const SeatsContainer = ({
 
   const handleOrderClear = () => {
     setOrderInfo({
-      sessionId,
-      hallId: order.hallId,
+      sessionID,
+      hallID: order.hallID,
       seatsPicked: [],
       bonuses: null
     });
@@ -164,15 +167,15 @@ const SeatsContainer = ({
           </OrderStateContainer>
         )}
       </SnackbarContext.Consumer>
-      {rowCategories && (
+      {/*       {rowCategories && (
         <SeatsScheme
-          hallId={hallId}
+          hallId={hallID}
           order={order}
           rowCategories={rowCategories}
           handleSeatPick={handleSeatPick}
           orderTimeExpired={orderTimeExpired}
         />
-      )}
+      )} */}
     </Container>
   );
 };

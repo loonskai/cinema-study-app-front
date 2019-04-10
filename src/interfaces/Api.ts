@@ -77,3 +77,10 @@ export interface SessionAPIType {
   createdAt?: Date;
   updatedAt?: Date;
 }
+
+export interface RowCategoryAPIType {
+  id: number;
+  title: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+}

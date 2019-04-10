@@ -71,13 +71,6 @@ const SessionPage: React.FC<RouteComponentProps> = ({ match }) => {
   const [session, setSession] = useState<Session | null>(null);
   const [isLoading, setLoading] = useState<boolean>(true);
 
-  /*   const loadData = async (id: string) => {
-    const sessionLoaded = await ;
-    if (sessionLoaded) {
-      setMovie(new Movie(sessionLoaded.movie));
-    }
-  }; */
-
   useEffect(() => {
     sessionService.getById(matchExtended.params.id, setSession);
     setLoading(false);
@@ -115,7 +108,9 @@ const SessionPage: React.FC<RouteComponentProps> = ({ match }) => {
           </SessionInfo>
         </SessionOverview>
       </Container>
-      {/* <SeatsContainer sessionId={session.id} hallId={session.hallId} /> */}
+      {session && (
+        <SeatsContainer sessionID={session.id} hallID={session.hallID} />
+      )}
     </Fragment>
   );
 };
