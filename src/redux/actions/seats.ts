@@ -9,7 +9,7 @@ const loadAllSeats = () => {
       sessions &&
       sessions.map(session => ({
         hallID: session.hallID,
-        rows: session.rows.reverse()
+        rows: session.rows.sort((row1, row2) => +row1.id - +row2.id)
       }));
     if (seatsData) {
       dispatch({ type: LOAD_ALL_SEATS, payload: seatsData });

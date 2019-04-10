@@ -163,6 +163,7 @@ const AdminListItem = ({
         );
       }
       default:
+        console.log(property);
         return (
           <Fragment>
             <strong>{property.label}</strong>
@@ -284,13 +285,14 @@ const AdminListItem = ({
   return (
     <Container>
       <ItemsContainer>
-        {properties.map((property, index) => (
-          <ItemColumn key={index.toString()}>
-            {editMode
-              ? renderPropertiesEditMode(property)
-              : renderProperties(property)}
-          </ItemColumn>
-        ))}
+        {properties &&
+          properties.map((property, index) => (
+            <ItemColumn key={index.toString()}>
+              {editMode
+                ? renderPropertiesEditMode(property)
+                : renderProperties(property)}
+            </ItemColumn>
+          ))}
       </ItemsContainer>
       <ButtonsContainer>
         {editMode ? (

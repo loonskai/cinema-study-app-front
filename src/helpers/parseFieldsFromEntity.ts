@@ -15,7 +15,10 @@ export default (item: {
   [key: string]: string | number | boolean;
 }): AdminListItemType[] =>
   Object.keys(item)
-    .filter(key => key !== 'id' && !key.startsWith('_'))
+    .filter(
+      key =>
+        key !== 'id' && typeof item[key] !== 'object' && !key.startsWith('_')
+    )
     .map(
       (key: string): AdminListItemType => {
         switch (key) {
