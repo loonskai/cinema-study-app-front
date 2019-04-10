@@ -15,6 +15,17 @@ import FieldContainer from '../fields/FieldContainer';
 import SubmitButton from '../buttons/SubmitButton';
 import SessionsTable from '../SessionsTable';
 
+interface Props {
+  loadSessionsList: (dispatch?: any) => Promise<void>;
+  sessions: Session[];
+  initialValues: {
+    city?: string;
+    cinema?: string;
+    hall?: string;
+    date?: Date;
+  };
+}
+
 const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -30,14 +41,13 @@ const StyledForm = styled.form`
   width: 100%;
 `;
 
-const SearchSessionForm = ({
+const SearchSessionForm: React.FC<Props> = ({
   loadSessionsList,
   sessions,
   initialValues
-}: any) => {
+}) => {
   const [date, setDate] = useState(initialValues.date);
-  const [time, setTime] = useState(initialValues.time);
-  const [hall, setHall] = useState('');
+  const [hall, setHall] = useState(initialValues.hall);
   const [citySelected, setCitySelected] = useState(initialValues.city);
   const [cityTyped, setCityTyped] = useState(initialValues.city);
   const [cinema, setCinema] = useState(initialValues.cinema);
@@ -85,12 +95,8 @@ const SearchSessionForm = ({
 
   const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    const options = {
-      hall,
-      date,
-      time
-    };
-    loadSessionsList(options);
+    const params = { hall, date };
+    loadSessionsList(params);
     setDisplaySessionsTable(true);
   };
 
@@ -121,7 +127,7 @@ const SearchSessionForm = ({
         <FieldContainer
           id="hall"
           type="select"
-          icon="cinema"
+          icon="hall"
           label="Hall"
           value={hall}
           options={hallOptions}
@@ -135,15 +141,6 @@ const SearchSessionForm = ({
           label="Date"
           value={date}
           handleChange={setDate}
-        />
-        <FieldContainer
-          id="time"
-          type="select"
-          options={timeOptions}
-          icon="time"
-          label="Time"
-          value={time}
-          handleChange={setTime}
         />
         <SubmitButton
           text="Search"

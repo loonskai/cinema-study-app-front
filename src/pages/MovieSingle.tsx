@@ -38,8 +38,8 @@ const MovieSingle: React.FC<RouteComponentProps> = ({ match, location }) => {
   const [searchValues, setSearchValues] = useState({
     city: '',
     cinema: '',
-    date: new Date(),
-    time: ''
+    hall: '',
+    date: new Date()
   });
 
   useEffect(() => {
@@ -52,8 +52,8 @@ const MovieSingle: React.FC<RouteComponentProps> = ({ match, location }) => {
       setSearchValues({
         city: locationState.city || searchValues.city,
         cinema: locationState.cinema || searchValues.cinema,
-        date: locationState.date || searchValues.date,
-        time: locationState.time || searchValues.time
+        hall: locationState.hall || searchValues.hall,
+        date: locationState.date || searchValues.date
       });
     }
   }, []);

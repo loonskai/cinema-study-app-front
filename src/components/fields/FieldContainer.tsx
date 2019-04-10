@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Grid from '@material-ui/core/Grid';
 import LocalMovies from '@material-ui/icons/LocalMovies';
 import LocationCity from '@material-ui/icons/LocationCity';
+import Store from '@material-ui/icons/Store';
 import Weekend from '@material-ui/icons/Weekend';
 import Search from '@material-ui/icons/Search';
 import AccessTime from '@material-ui/icons/AccessTime';
@@ -52,6 +53,7 @@ const FieldContainer = (props: Props) => {
       case 'city':
         return <LocationCity fontSize="large" {...other} />;
       case 'cinema':
+        return <Store fontSize="large" {...other} />;
       case 'hall':
         return <Weekend fontSize="large" {...other} />;
       case 'date':

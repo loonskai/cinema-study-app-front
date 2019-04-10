@@ -5,9 +5,10 @@ import SearchIcon from '@material-ui/icons/Search';
 
 import Movie from '../classes/Movie';
 import {
-  loadCinemaByCityOptions,
+  loadMovieSuggestions,
   loadCitySuggestions,
-  loadMovieSuggestions
+  loadCinemaByCityOptions,
+  loadHallsByCinemaOptions
 } from '../helpers/loadSelectOptions';
 import PageTitle from '../components/PageTitle';
 import FieldContainer from '../components/fields/FieldContainer';
@@ -23,12 +24,14 @@ const Home: React.FC<Props> = ({ history, movies }) => {
   const [citySelected, setCitySelected] = useState('');
   const [cityTyped, setCityTyped] = useState('');
   const [cinema, setCinema] = useState('');
+  const [hall, setHall] = useState('');
   const [date, setDate] = useState(new Date());
   const [buttonDisabled, setButtonDisabled] = useState(true);
 
   const [movieSuggestions, setMovieSuggestions] = useState(null);
   const [citySuggestions, setCitySuggestions] = useState(null);
   const [cinemaOptions, setCinemaOptions] = useState(null);
+  const [hallOptions, setHallOptions] = useState(null);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
@@ -38,6 +41,7 @@ const Home: React.FC<Props> = ({ history, movies }) => {
       state: {
         city: citySelected,
         cinema,
+        hall,
         date
       }
     });
@@ -68,7 +72,12 @@ const Home: React.FC<Props> = ({ history, movies }) => {
       setCitySelected('');
       setCinema('');
     }
-  }, [movieSelected, movieTyped, citySelected, cityTyped]);
+    if (cinema) {
+      loadHallsByCinemaOptions(cinema, setHallOptions);
+    } else {
+      setHall('');
+    }
+  }, [movieSelected, movieTyped, citySelected, cityTyped, cinema]);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -103,6 +112,16 @@ const Home: React.FC<Props> = ({ history, movies }) => {
         value={cinema}
         handleChange={setCinema}
         disabled={!citySelected}
+      />
+      <FieldContainer
+        id="hall"
+        type="select"
+        options={hallOptions}
+        icon="hall"
+        label="Choose Hall"
+        value={hall}
+        handleChange={setHall}
+        disabled={!cinema}
       />
       <FieldContainer
         id="date"
