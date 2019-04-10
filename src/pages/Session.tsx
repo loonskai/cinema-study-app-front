@@ -2,6 +2,9 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
 
+import Session from '../classes/Session';
+import Movie from '../classes/Movie';
+import sessionService from '../services/Session';
 import Loader from '../components/Loader';
 import PageTitle from '../components/PageTitle';
 import SeatsContainer from '../components/seats/SeatsContainer';
@@ -63,22 +66,21 @@ const SessionInfo = styled.div`
   box-shadow: 0px 0px 0px 1px ${greyColor};
 `;
 
-const SessionSingle: React.FC<RouteComponentProps> = ({ match }) => {
+const SessionPage: React.FC<RouteComponentProps> = ({ match }) => {
   const matchExtended: MatchExended = match as any;
-  const [session, setSession]: [any, any] = useState({});
-  const [movie, setMovie]: [any, any] = useState({});
-  const [isLoading, setLoading] = useState(true);
+  const [session, setSession] = useState<Session | null>(null);
+  const [isLoading, setLoading] = useState<boolean>(true);
 
-  const loadData = async (id: string) => {
-    const sessionLoaded: any = await api.loadSessionById(+id);
-    const movieLoaded = await api.loadMovieById(sessionLoaded.movieId);
-    setSession(sessionLoaded);
-    setMovie(movieLoaded);
-    setLoading(false);
-  };
+  /*   const loadData = async (id: string) => {
+    const sessionLoaded = await ;
+    if (sessionLoaded) {
+      setMovie(new Movie(sessionLoaded.movie));
+    }
+  }; */
 
   useEffect(() => {
-    loadData(matchExtended.params.id);
+    sessionService.getById(matchExtended.params.id, setSession);
+    setLoading(false);
   }, []);
 
   return isLoading ? (
@@ -88,34 +90,34 @@ const SessionSingle: React.FC<RouteComponentProps> = ({ match }) => {
       <Container>
         <PosterContainer>
           <StyledSessionPoster
-            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-            alt={movie.original_title}
+            src={session && session.movie.poster}
+            alt={session && session.movie.title}
           />
         </PosterContainer>
         <SessionOverview>
           <div>
-            <PageTitle text={movie.original_title} />
-            {movie.overview}
+            <PageTitle text={session ? session.movie.title : ''} />
+            {session && session.movie.overview}
           </div>
           <SessionInfo>
             <div>
-              City: <strong>{session.city}</strong>
+              City: <strong>{session && session.city}</strong>
             </div>
             <div>
-              Cinema: <strong>{session.cinema}</strong>
+              Cinema: <strong>{session && session.cinemaTitle}</strong>
             </div>
             <div>
-              Date: <strong>{session.date}</strong>
+              Date: <strong>{session && session.date}</strong>
             </div>
             <div>
-              Time: <strong>{session.time}</strong>
+              Time: <strong>{session && session.time}</strong>
             </div>
           </SessionInfo>
         </SessionOverview>
       </Container>
-      <SeatsContainer sessionId={session.id} hallId={session.hallId} />
+      {/* <SeatsContainer sessionId={session.id} hallId={session.hallId} /> */}
     </Fragment>
   );
 };
 
-export default SessionSingle;
+export default SessionPage;

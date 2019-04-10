@@ -179,6 +179,11 @@ class ApiService {
     return res.data;
   }
 
+  async getSessionById(id: number): Promise<ResType<SessionAPIType>> {
+    const res = await this.client.get(`http://localhost:5000/sessions/${id}`);
+    return res.data;
+  }
+
   async deleteSession(id: number): Promise<boolean> {
     await this.client.delete(`http://localhost:5000/sessions/${id}`);
     return true;
@@ -204,16 +209,6 @@ class ApiService {
           hallCategoriesIDs.includes(category.id.toString())
         );
         return res(filteredCategories);
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  } */
-
-  /*   async loadSessionById(id: number) {
-    try {
-      return new Promise((res, rej) => {
-        return res(sessions.find(session => session.id === id));
       });
     } catch (error) {
       console.error(error);

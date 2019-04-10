@@ -52,6 +52,26 @@ export default {
     }
   },
 
+  async getById(
+    id: string,
+    stateSetter?: (data: Session) => void
+  ): Promise<Session | null> {
+    try {
+      const res = await apiService.getSessionById(+id);
+      if (res.error || !res.data) {
+        throw Error(res.message);
+      }
+      const result = new Session(res.data);
+      if (stateSetter) {
+        stateSetter(result);
+      }
+      return result;
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  },
+
   async delete(id: number): Promise<boolean | null> {
     try {
       if (!id) {

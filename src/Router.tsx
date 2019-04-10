@@ -7,7 +7,7 @@ import Movies from './pages/Movies';
 import Auth from './pages/Auth';
 import MovieSingle from './pages/MovieSingle';
 import UserProfile from './pages/UserProfile';
-import SessionSingle from './pages/SessionSingle';
+import Session from './pages/Session';
 import Admin from './pages/Admin';
 
 const Router = () => (
@@ -17,7 +17,7 @@ const Router = () => (
     <Route path="/movies/:id" component={MovieSingle} />
     <Route path="/auth" component={Auth} />
     <ProtectedRoute path="/profile" component={UserProfile} />
-    <ProtectedRoute path="/sessions/:id" component={SessionSingle} />
+    <ProtectedRoute path="/sessions/:id" component={Session} />
     <ProtectedRoute path="/admin" admin={true} component={Admin} />
   </Switch>
 );

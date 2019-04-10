@@ -52,7 +52,7 @@ export default {
   },
 
   async getById(
-    id: string,
+    id: string | number,
     stateSetter?: (data: Movie) => void
   ): Promise<Movie | null> {
     try {

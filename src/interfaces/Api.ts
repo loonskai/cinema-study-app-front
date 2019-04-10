@@ -25,6 +25,7 @@ export interface HallAPIType {
   id?: number;
   'cinema-id': number | string;
   title: string;
+  cinema: CinemaAPIType;
   rows?: RowItem[];
   createdAt?: Date;
   updatedAt?: Date;
