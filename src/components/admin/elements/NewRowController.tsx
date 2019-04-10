@@ -18,7 +18,7 @@ import AdminListItem from '../elements/AdminListItem';
 import { mainColor, mainDarkColor } from '../../../constants';
 
 export interface RowItem {
-  id?: string;
+  id: string;
   quantity: string;
   category: string;
   lastInSection: boolean;

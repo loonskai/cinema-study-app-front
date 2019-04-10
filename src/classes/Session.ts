@@ -1,21 +1,41 @@
 import moment from 'moment';
-import { SessionAPIType, CinemaAPIType, MovieAPIType } from '../interfaces/Api';
+import {
+  SessionAPIType,
+  MovieAPIType,
+  HallAPIType,
+  SeatItem
+} from '../interfaces/Api';
+
+const parseSeatItemsSortedObject = (itemsArray: SeatItem[]) =>
+  itemsArray.reduce(
+    (acc, item) => {
+      acc[item.row] = acc[item.row]
+        ? acc[item.row].concat(item.seat)
+        : [item.seat];
+      return acc;
+    },
+    {} as { [key: string]: number[] }
+  );
 
 export default class Session {
   public id: number;
   public movieID: number;
   public hallID: number;
   private _date!: string;
-  private _cinema: CinemaAPIType;
   private _movie: MovieAPIType;
+  private _hall: HallAPIType;
+  private _ordered: SeatItem[];
+  private _reserved: SeatItem[];
 
   constructor(json: SessionAPIType) {
     this.id = json.id as number;
     this.date = json.date.toString();
     this.movieID = json['movie-id'];
     this.hallID = json['hall-id'];
-    this._cinema = json.hall.cinema;
+    this._hall = json.hall;
     this._movie = json.movie;
+    this._ordered = json.ordered || [];
+    this._reserved = json.reserved || [];
   }
 
   set date(value) {
@@ -31,18 +51,28 @@ export default class Session {
   }
 
   get city() {
-    return this._cinema.city;
+    return this._hall.cinema.city;
   }
 
   get cinemaTitle() {
-    return this._cinema.title;
+    return this._hall.cinema.title;
   }
 
   get cinemaID() {
-    return this._cinema.id;
+    return this._hall.cinema.id;
   }
 
   get movie() {
     return this._movie;
+  }
+
+  get rows() {
+    const sortedOrderedObject = parseSeatItemsSortedObject(this._ordered);
+    const sortedReservedObject = parseSeatItemsSortedObject(this._reserved);
+    return this._hall.rows.map(row => ({
+      ...row,
+      reserved: sortedReservedObject[row.id] || [],
+      ordered: sortedOrderedObject[row.id] || []
+    }));
   }
 }

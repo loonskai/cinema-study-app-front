@@ -167,15 +167,15 @@ const SeatsContainer: React.FC<Props> = ({
           </OrderStateContainer>
         )}
       </SnackbarContext.Consumer>
-      {/*       {rowCategories && (
+      {rowCategories && (
         <SeatsScheme
           hallId={hallID}
-          order={order}
+          // order={order}
           rowCategories={rowCategories}
           handleSeatPick={handleSeatPick}
           orderTimeExpired={orderTimeExpired}
         />
-      )} */}
+      )}
     </Container>
   );
 };

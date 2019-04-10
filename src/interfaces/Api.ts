@@ -26,7 +26,7 @@ export interface HallAPIType {
   'cinema-id': number | string;
   title: string;
   cinema: CinemaAPIType;
-  rows?: RowItem[];
+  rows: RowItem[];
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -67,6 +67,11 @@ export interface BonusAPIType {
   updatedAt?: Date;
 }
 
+export interface SeatItem {
+  row: number;
+  seat: number;
+}
+
 export interface SessionAPIType {
   id?: number;
   date: Date;
@@ -74,6 +79,18 @@ export interface SessionAPIType {
   'movie-id': number;
   movie: MovieAPIType;
   hall: HallAPIType;
+  ordered: SeatItem[] | null;
+  reserved: SeatItem[] | null;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+export interface RowAPIType {
+  id: number | string;
+  quantity: number | string;
+  lastInSection: boolean | string;
+  'category-id'?: number;
+  'hall-id'?: number;
   createdAt?: Date;
   updatedAt?: Date;
 }

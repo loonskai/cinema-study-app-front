@@ -231,6 +231,7 @@ class ApiService {
       console.error(error);
     }
   } */
+
   /* ADDITIONAL DATA */
   async getRowCategories(params?: any): Promise<ResType<RowCategoryAPIType[]>> {
     const res = await this.client.get(

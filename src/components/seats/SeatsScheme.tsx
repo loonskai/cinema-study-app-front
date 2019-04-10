@@ -22,12 +22,12 @@ const Container = styled.div`
 
 const SeatsScheme = ({
   rowCategories,
-  order,
+  // order,
   handleSeatPick,
   seats,
   orderTimeExpired
 }: any) => {
-  const { seatsPicked } = order;
+  // const { seatsPicked } = order;
 
   const renderSeats = () => {
     if (!seats || !seats.rows || !seats.rows.length) {
@@ -41,10 +41,10 @@ const SeatsScheme = ({
         <Row key={`row-${rowIndex + 1}`} lastInSection={row.lastInSection}>
           <RowTitle row={rowIndex + 1} />
           {seatsArr.map((el, seatIndex) => {
-            const isSelected = seatsPicked.some(
+            /*             const isSelected = seatsPicked.some(
               (item: any) =>
                 item && item.row === rowIndex + 1 && item.seat === seatIndex + 1
-            );
+            ); */
             const isMuted =
               !rowCategories[row.categoryId].value &&
               rowCategoriesKeys.some((key: any) => rowCategories[key].value);
