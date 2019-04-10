@@ -27,8 +27,7 @@ const SeatsScheme = ({
   seats,
   orderTimeExpired
 }: any) => {
-  // const { seatsPicked } = order;
-
+  const { seatsPicked = [] } = {} /*order*/;
   const renderSeats = () => {
     if (!seats || !seats.rows || !seats.rows.length) {
       return 'No seats found';
@@ -36,26 +35,26 @@ const SeatsScheme = ({
     const { rows } = seats;
     const rowCategoriesKeys = Object.keys(rowCategories);
     return rows.map((row: any, rowIndex: number) => {
-      const seatsArr = new Array(row.seats).fill(true);
+      const seatsArr = new Array(row.quantity).fill(true);
       return (
         <Row key={`row-${rowIndex + 1}`} lastInSection={row.lastInSection}>
           <RowTitle row={rowIndex + 1} />
           {seatsArr.map((el, seatIndex) => {
-            /*             const isSelected = seatsPicked.some(
+            const isSelected = seatsPicked.some(
               (item: any) =>
                 item && item.row === rowIndex + 1 && item.seat === seatIndex + 1
-            ); */
+            );
             const isMuted =
-              !rowCategories[row.categoryId].value &&
+              !rowCategories[row['category-id']].value &&
               rowCategoriesKeys.some((key: any) => rowCategories[key].value);
 
             return (
               <SeatItem
                 key={`seat-${seatIndex + 1}`}
-                categoryId={row.categoryId}
+                categoryId={row['category-id']}
                 row={rowIndex + 1}
                 seat={seatIndex + 1}
-                price={row.price}
+                // price={row.price}
                 isSelected={isSelected}
                 isReserved={
                   orderTimeExpired || row.reserved.includes(seatIndex + 1)
@@ -79,5 +78,5 @@ const SeatsScheme = ({
 };
 
 export default connect(({ seats }: any, ownProps: any) => ({
-  seats: seats.find((hallSeats: any) => hallSeats.hallId === ownProps.hallId)
+  seats: seats.find((hallSeats: any) => hallSeats.hallID === ownProps.hallID)
 }))(SeatsScheme);

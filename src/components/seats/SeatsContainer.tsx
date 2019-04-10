@@ -123,7 +123,6 @@ const SeatsContainer: React.FC<Props> = ({
       bonuses: null
     });
   };
-
   return (
     <Container>
       <StyledTitle>Seats</StyledTitle>
@@ -169,7 +168,7 @@ const SeatsContainer: React.FC<Props> = ({
       </SnackbarContext.Consumer>
       {rowCategories && (
         <SeatsScheme
-          hallId={hallID}
+          hallID={hallID}
           // order={order}
           rowCategories={rowCategories}
           handleSeatPick={handleSeatPick}
