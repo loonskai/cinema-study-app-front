@@ -47,8 +47,22 @@ export default {
       }
       return result;
     } catch (error) {
-      console.log(error);
+      console.error(error);
       return null;
     }
+  },
+
+  async delete(id: number): Promise<boolean | null> {
+    try {
+      if (!id) {
+        throw Error('Session ID not defined');
+      }
+      await apiService.deleteSession(id);
+      return true;
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  }
   }
 };

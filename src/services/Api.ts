@@ -179,6 +179,11 @@ class ApiService {
     return res.data;
   }
 
+  async deleteSession(id: number): Promise<boolean> {
+    await this.client.delete(`http://localhost:5000/sessions/${id}`);
+    return true;
+  }
+
   /*   async loadRowCategories(hallId?: number) {
     try {
       return new Promise((res, rej) => {

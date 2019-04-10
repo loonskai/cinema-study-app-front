@@ -94,7 +94,15 @@ const SessionSection = ({ handleSnackbar }: any) => {
 
   const handleUpdate = async (id: number, inputValues: any) => {};
 
-  const handleRemove = async (id: number) => {};
+  const handleRemove = async (id: number) => {
+    const result = await sessionService.delete(id);
+    if (!result) {
+      handleSnackbar('Unable to delete session', 'error');
+    } else {
+      handleSnackbar('Session deleted', 'warning');
+      await sessionService.getAll({}, setSessionsList);
+    }
+  };
 
   return (
     <AdminFormContainer title="Create Session">
