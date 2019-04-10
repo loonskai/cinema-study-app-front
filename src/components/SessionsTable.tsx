@@ -66,7 +66,7 @@ const SessionsTable = ({ sessions }: any) => {
   }, [sessions]);
 
   const getRows = () => {
-    if (!sessions.length) {
+    if (!sessions || !sessions.length) {
       return (
         <TableRow>
           <WideCell>No sessions found</WideCell>

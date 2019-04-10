@@ -17,6 +17,7 @@ import SessionsTable from '../SessionsTable';
 
 interface Props {
   loadSessionsList: (dispatch?: any) => Promise<void>;
+  movieID: number;
   sessions: Session[];
   initialValues: {
     city?: string;
@@ -42,6 +43,7 @@ const StyledForm = styled.form`
 `;
 
 const SearchSessionForm: React.FC<Props> = ({
+  movieID,
   loadSessionsList,
   sessions,
   initialValues
@@ -62,7 +64,13 @@ const SearchSessionForm: React.FC<Props> = ({
   useEffect(() => {
     // If we come from main page search
     if (initialValues.city) {
-      loadSessionsList();
+      loadSessionsList({
+        cinema: initialValues.cinema,
+        city: initialValues.city,
+        'hall-id': initialValues.hall,
+        'movie-id': movieID,
+        date: initialValues.date
+      });
       setDisplaySessionsTable(true);
     }
 
@@ -95,7 +103,13 @@ const SearchSessionForm: React.FC<Props> = ({
 
   const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    const params = { hall, date };
+    const params = {
+      date,
+      cinema,
+      city: citySelected,
+      'movie-id': movieID,
+      'hall-id': hall
+    };
     loadSessionsList(params);
     setDisplaySessionsTable(true);
   };
