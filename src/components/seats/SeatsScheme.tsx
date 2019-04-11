@@ -7,6 +7,20 @@ import Row from './elements/Row';
 import RowTitle from './elements/RowTitle';
 import SeatItem from './elements/SeatItem';
 import { containerGreyColor } from '../../constants';
+import { OrderType, RowAPIType } from '../../interfaces/Api';
+
+interface Props {
+  rowCategories: any;
+  order: OrderType;
+  handleSeatPick: (
+    e: React.BaseSyntheticEvent<HTMLDivElement, MouseEvent>
+  ) => Promise<void>;
+  seats: {
+    hallID: number;
+    rows: RowAPIType[];
+  };
+  orderTimeExpired: any;
+}
 
 const Container = styled.div`
   position: relative;
@@ -20,33 +34,33 @@ const Container = styled.div`
   overflow-x: scroll;
 `;
 
-const SeatsScheme = ({
+const SeatsScheme: React.FC<Props> = ({
   rowCategories,
-  // order,
+  order,
   handleSeatPick,
   seats,
   orderTimeExpired
-}: any) => {
-  const { seatsPicked = [] } = {} /*order*/;
+}) => {
+  const { seatsPicked } = order;
   const renderSeats = () => {
     if (!seats || !seats.rows || !seats.rows.length) {
       return 'No seats found';
     }
     const { rows } = seats;
     const rowCategoriesKeys = Object.keys(rowCategories);
-    return rows.map((row: any, rowIndex: number) => {
-      const seatsArr = new Array(row.quantity).fill(true);
+    return rows.map((row, rowIndex: number) => {
+      const seatsArr = new Array(row.quantity).fill('row');
       return (
         <Row key={`row-${rowIndex + 1}`} lastInSection={row.lastInSection}>
           <RowTitle row={rowIndex + 1} />
           {seatsArr.map((el, seatIndex) => {
             const isSelected = seatsPicked.some(
-              (item: any) =>
+              item =>
                 item && item.row === rowIndex + 1 && item.seat === seatIndex + 1
             );
             const isMuted =
               !rowCategories[row['category-id']].value &&
-              rowCategoriesKeys.some((key: any) => rowCategories[key].value);
+              rowCategoriesKeys.some((key: string) => rowCategories[key].value);
 
             return (
               <SeatItem
@@ -54,12 +68,13 @@ const SeatsScheme = ({
                 categoryId={row['category-id']}
                 row={rowIndex + 1}
                 seat={seatIndex + 1}
-                // price={row.price}
+                price={row.price}
                 isSelected={isSelected}
                 isReserved={
-                  orderTimeExpired || row.reserved.includes(seatIndex + 1)
+                  orderTimeExpired ||
+                  (row.reserved && row.reserved.includes(seatIndex + 1))
                 }
-                isOrdered={row.ordered.includes(seatIndex + 1)}
+                isOrdered={row.ordered && row.ordered.includes(seatIndex + 1)}
                 isMuted={isMuted && !isSelected}
               />
             );

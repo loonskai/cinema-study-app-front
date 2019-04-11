@@ -1,13 +1,20 @@
 import { SET_ORDER_INFO } from './../../constants';
 
-// import api from '../../ApiService';
+import orderService from '../../services/Order';
 
-const setOrderInfo = (order: boolean) => {
-  return (dispatch: any) => {
-    // const result = api.reserve(order);
-    // if (result) {
-    //   dispatch({ type: SET_ORDER_INFO, payload: order });
-    // }
+import { OrderType } from '../../interfaces/Api';
+
+const setOrderInfo = (order: OrderType) => {
+  return async (dispatch: any) => {
+    /* const reserveResult = await orderService.reserve(
+      order,
+      true */ /* CHECK IF SEAT EXIST IN ORDER PICKED SEATS */
+    /* );
+    if (reserveResult) {
+      dispatch({ type: SET_ORDER_INFO, payload: order });
+    } */
+    console.log(order);
+    dispatch({ type: SET_ORDER_INFO, payload: order });
   };
 };
 

@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import actions from '../../redux/actions';
+import orderService from '../../services/Order';
+import { OrderType } from '../../interfaces/Api';
 import { loadCategoryCheckboxesByHall } from '../../helpers/loadSelectOptions';
 import SeatsMenu from './SeatsMenu';
 import OrderConfirmationModal from './OrderConfirmationModal';
@@ -14,7 +16,7 @@ import { SnackbarContext } from '../../Layout';
 interface Props {
   sessionID: number;
   hallID: number;
-  order: any;
+  order: OrderType;
   setOrderInfo: any;
 }
 
@@ -80,33 +82,36 @@ const SeatsContainer: React.FC<Props> = ({
     setRowCategories(newCategories);
   };
 
-  const handleSeatPick = (
+  const handleSeatPick = async (
     e: React.BaseSyntheticEvent<HTMLDivElement, MouseEvent>
-  ): void => {
+  ): Promise<void> => {
     if (!timerStarted) {
       setTimerStarted(true);
     }
-    const { seatsPicked } = order;
     const pickedRow = +e.target.dataset.row;
     const pickedSeat = +e.target.dataset.seat;
-    const free = e.target.dataset.free === 'true';
     const price = +e.target.dataset.price;
+
+    const { seatsPicked } = order;
+    const free = e.target.dataset.free === 'true';
     if (!pickedRow || !pickedSeat || !free) {
       return;
     }
 
     const pickedBefore = seatsPicked.some(
-      (seat: any) => seat.row === pickedRow && seat.seat === pickedSeat
+      item => item.row === pickedRow && item.seat === pickedSeat
     );
+
     const newSeatsPicked = pickedBefore
       ? seatsPicked.filter(
-          (item: any) => !(item.row === pickedRow && item.seat === pickedSeat)
+          item => !(item.row === pickedRow && item.seat === pickedSeat)
         )
       : seatsPicked.concat({
+          price,
           row: pickedRow,
-          seat: pickedSeat,
-          price
+          seat: pickedSeat
         });
+
     setOrderInfo({
       sessionID: order.sessionID,
       hallID: order.hallID,
@@ -169,7 +174,7 @@ const SeatsContainer: React.FC<Props> = ({
       {rowCategories && (
         <SeatsScheme
           hallID={hallID}
-          // order={order}
+          order={order}
           rowCategories={rowCategories}
           handleSeatPick={handleSeatPick}
           orderTimeExpired={orderTimeExpired}
@@ -180,7 +185,7 @@ const SeatsContainer: React.FC<Props> = ({
 };
 
 export default connect(
-  ({ order }: any) => ({
+  ({ order }: { order: OrderType }) => ({
     order
   }),
   actions

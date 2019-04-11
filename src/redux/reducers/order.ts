@@ -1,8 +1,8 @@
 import { SET_ORDER_INFO } from './../../constants';
 
 const initialState = {
-  sessionId: null,
-  hallId: null,
+  sessionID: null,
+  hallID: null,
   seatsPicked: [],
   bonuses: null
 };

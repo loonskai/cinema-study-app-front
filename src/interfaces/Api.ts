@@ -70,6 +70,7 @@ export interface BonusAPIType {
 export interface SeatItem {
   row: number;
   seat: number;
+  price?: number;
 }
 
 export interface SessionAPIType {
@@ -90,8 +91,11 @@ export interface RowAPIType {
   id: number | string;
   quantity: number | string;
   lastInSection: boolean | string;
-  'category-id'?: number;
+  'category-id': number;
   'hall-id'?: number;
+  price?: number;
+  reserved?: number[];
+  ordered?: number[];
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -101,4 +105,11 @@ export interface RowCategoryAPIType {
   title: string;
   createdAt?: Date;
   updatedAt?: Date;
+}
+
+export interface OrderType {
+  sessionID: number;
+  hallID: number;
+  seatsPicked: SeatItem[];
+  bonuses: any;
 }

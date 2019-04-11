@@ -11,7 +11,8 @@ import {
   CinemaAPIType,
   BonusAPIType,
   SessionAPIType,
-  RowCategoryAPIType
+  RowCategoryAPIType,
+  SeatItem
 } from '../interfaces/Api';
 import { SignInBodyType, SignUpBodyType } from '../interfaces/Auth';
 
@@ -190,21 +191,21 @@ class ApiService {
     return true;
   }
 
+  /* ORDERS */
+  async reserveSeat(item: SeatItem): Promise<boolean> {
+    await this.client.post('http://localhost:5000/order/reserve', item);
+    return true;
+  }
+
+  async cancelReserveSeat(item: SeatItem): Promise<boolean> {
+    await this.client.post('http://localhost:5000/order/cancel', item);
+    return true;
+  }
+
   /*   async loadSessionBonuses(sessionId: number) {
     try {
       return new Promise((res, rej) => {
         return res(bonus);
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  } */
-
-  /*   async reserve(options: any) {
-    try {
-      return new Promise((res, rej) => {
-        console.log('reserve seats -->', options);
-        return res(true);
       });
     } catch (error) {
       console.error(error);
