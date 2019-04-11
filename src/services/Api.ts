@@ -61,6 +61,11 @@ class ApiService {
     return data;
   }
 
+  async signOut(): Promise<boolean> {
+    await this.client.post('http://localhost:5000/auth/signout');
+    return true;
+  }
+
   async validateToken(token: string): Promise<ResType<UserAPIType>> {
     const res = await this.client.post('http://localhost:5000/auth/validate', {
       token
