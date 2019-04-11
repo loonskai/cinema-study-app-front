@@ -6,6 +6,7 @@ import LocalGroceryStoreIcon from '@material-ui/icons/LocalGroceryStore';
 
 import Bonus from '../../classes/Bonus';
 import bonusService from '../../services/Bonus';
+import orderService from '../../services/Order';
 import actions from '../../redux/actions';
 import BonusContainer from '../../components/bonus/BonusContainer';
 import SubmitButton from '../buttons/SubmitButton';
@@ -148,8 +149,8 @@ const OrderConfirmationModal: React.FC<Props> = ({
     try {
       e.preventDefault();
       const parsedOrder = parseOrderForAPI(order);
-      console.log('parsedOrder', parsedOrder);
-      /*       const result = await api.submitOrder(order);
+      const result = await orderService.create(parsedOrder);
+      /* 
       if (result) {
         setOrderInfo({
           sessionId: order.sessionID,
@@ -191,7 +192,10 @@ const OrderConfirmationModal: React.FC<Props> = ({
       </ModalWindow>
     </Container>
   );
-  const domNode: any = document.getElementById('modal');
+  const domNode: Element | null = document.getElementById('modal');
+  if (!domNode) {
+    return null;
+  }
   return createPortal(element, domNode);
 };
 

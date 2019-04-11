@@ -194,6 +194,11 @@ class ApiService {
   }
 
   /* ORDERS */
+  async createOrder(body: any): Promise<boolean> {
+    await this.client.post('http://localhost:5000/order', body);
+    return true;
+  }
+
   async toggleReservation(sessionID: number, item: SeatItem): Promise<boolean> {
     await this.client.post(
       `http://localhost:5000/order/reserve/${sessionID}`,
@@ -201,17 +206,6 @@ class ApiService {
     );
     return true;
   }
-
-  /*   async submitOrder(order: any) {
-    try {
-      return new Promise((res, rej) => {
-        console.log('submit order -->', order);
-        return res(true);
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  } */
 
   /* ADDITIONAL DATA */
   async getRowCategories(params?: any): Promise<ResType<RowCategoryAPIType[]>> {
