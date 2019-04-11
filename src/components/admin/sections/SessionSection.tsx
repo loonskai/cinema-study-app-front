@@ -95,11 +95,9 @@ const SessionSection = ({ handleSnackbar }: any) => {
       time,
       movie: movieSelected,
       hall,
-      prices: rowPrices
+      prices: rowPrices && Object.values(rowPrices)
     };
-    console.log(rowPrices);
-    // const result = await sessionService.create(body);
-    const result = false;
+    const result = await sessionService.create(body);
     if (result) {
       setTime('');
       setButtonDisabled(true);

@@ -190,16 +190,6 @@ class ApiService {
     return true;
   }
 
-  /*   async loadAllSeats() {
-    try {
-      return new Promise((res, rej) => {
-        return res(seats);
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  } */
-
   /*   async loadSessionBonuses(sessionId: number) {
     try {
       return new Promise((res, rej) => {
