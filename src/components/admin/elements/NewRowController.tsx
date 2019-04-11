@@ -21,6 +21,7 @@ export interface RowItem {
   id: string;
   quantity: string;
   category: string;
+  'category-id'?: number;
   lastInSection: boolean;
 }
 

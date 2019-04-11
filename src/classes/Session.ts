@@ -26,6 +26,7 @@ export default class Session {
   private _hall: HallAPIType;
   private _ordered: SeatItem[];
   private _reserved: SeatItem[];
+  private _prices: Array<{ id: number; price: number }>;
 
   constructor(json: SessionAPIType) {
     this.id = json.id as number;
@@ -36,6 +37,7 @@ export default class Session {
     this._movie = json.movie;
     this._ordered = json.ordered || [];
     this._reserved = json.reserved || [];
+    this._prices = json.prices || [];
   }
 
   set date(value) {
@@ -69,10 +71,16 @@ export default class Session {
   get rows() {
     const sortedOrderedObject = parseSeatItemsSortedObject(this._ordered);
     const sortedReservedObject = parseSeatItemsSortedObject(this._reserved);
-    return this._hall.rows.map(row => ({
-      ...row,
-      reserved: sortedReservedObject[row.id] || [],
-      ordered: sortedOrderedObject[row.id] || []
-    }));
+    return this._hall.rows.map(row => {
+      const priceObj = this._prices.find(
+        category => row['category-id'] === category.id
+      );
+      return {
+        ...row,
+        price: priceObj ? priceObj.price : 0,
+        reserved: sortedReservedObject[row.id] || [],
+        ordered: sortedOrderedObject[row.id] || []
+      };
+    });
   }
 }

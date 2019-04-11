@@ -81,6 +81,7 @@ export interface SessionAPIType {
   hall: HallAPIType;
   ordered: SeatItem[] | null;
   reserved: SeatItem[] | null;
+  prices: Array<{ id: number; price: number }>;
   createdAt?: Date;
   updatedAt?: Date;
 }
