@@ -38,9 +38,7 @@ const CategoryPriceInputs: React.FC<Props> = ({
   );
 
   useEffect(() => {
-    if (!categories) {
-      loadCategories();
-    }
+    loadCategories();
   }, [hallID]);
 
   const loadCategories = async () => {
@@ -97,7 +95,11 @@ const CategoryPriceInputs: React.FC<Props> = ({
               variant="outlined"
               margin="none"
               name={category.title}
-              value={prices ? prices[category.title].price : ''}
+              value={
+                prices && prices[category.title]
+                  ? prices[category.title].price
+                  : ''
+              }
               onChange={prices && handleChange}
             />
           </CategoryContainer>

@@ -32,7 +32,7 @@ const BonusSection = ({ handleSnackbar }: any) => {
       loadAllCinemaOptions(setCinemaOptions);
     }
     if (!bonusList) {
-      bonusService.getAll(setBonusList);
+      bonusService.getAll({}, setBonusList);
     }
   }, [title, cinemaID, price, bonusList]);
 
@@ -51,7 +51,7 @@ const BonusSection = ({ handleSnackbar }: any) => {
       setPrice('');
       setButtonDisabled(true);
       handleSnackbar('New service added', 'success');
-      await bonusService.getAll(setBonusList);
+      await bonusService.getAll({}, setBonusList);
     }
   };
 
@@ -61,7 +61,7 @@ const BonusSection = ({ handleSnackbar }: any) => {
       handleSnackbar('Unable to update bonus', 'error');
     } else {
       handleSnackbar('Succesfully updated', 'success');
-      await bonusService.getAll(setBonusList);
+      await bonusService.getAll({}, setBonusList);
       return result.data;
     }
   };
@@ -72,7 +72,7 @@ const BonusSection = ({ handleSnackbar }: any) => {
       handleSnackbar('Unable to delete bonus', 'error');
     } else {
       handleSnackbar('Bonus deleted', 'warning');
-      await bonusService.getAll(setBonusList);
+      await bonusService.getAll({}, setBonusList);
     }
   };
 

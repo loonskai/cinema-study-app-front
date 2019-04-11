@@ -15,6 +15,7 @@ import { SnackbarContext } from '../../Layout';
 
 interface Props {
   sessionID: number;
+  cinemaID: number;
   hallID: number;
   order: OrderType;
   setOrderInfo: any;
@@ -50,6 +51,7 @@ const OrderStateContainer = styled.div`
 
 const SeatsContainer: React.FC<Props> = ({
   sessionID,
+  cinemaID,
   hallID,
   order,
   setOrderInfo
@@ -168,6 +170,7 @@ const SeatsContainer: React.FC<Props> = ({
             />
             {isModalDisplayed && (
               <OrderConfirmationModal
+                cinemaID={cinemaID}
                 handleSnackbar={handleSnackbar}
                 handleClose={() => {
                   setModalDisplay(false);

@@ -4,13 +4,24 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import LocalGroceryStoreIcon from '@material-ui/icons/LocalGroceryStore';
 
-// import api from '../../ApiService';
+import Bonus from '../../classes/Bonus';
+import bonusService from '../../services/Bonus';
 import actions from '../../redux/actions';
 import BonusContainer from '../../components/bonus/BonusContainer';
 import SubmitButton from '../buttons/SubmitButton';
 import CloseModalButton from '../buttons/CloseModalButton';
 import { whiteColor, greyColor } from '../../constants';
 import calculateTotalPrice from '../../helpers/calculateTotalPrice';
+import { OrderType } from '../../interfaces/Api';
+
+interface Props {
+  cinemaID: number;
+  order: OrderType;
+  handleClose: any;
+  handleSnackbar: any;
+  setTimerOff: any;
+  setOrderInfo: any;
+}
 
 const Container = styled.div`
   position: fixed;
@@ -53,45 +64,41 @@ const TicketsAmount = styled.div`
   font-size: 0.875rem;
 `;
 
-const OrderConfirmationModal = ({
+const OrderConfirmationModal: React.FC<Props> = ({
+  cinemaID,
   order,
   handleClose,
   handleSnackbar,
   setTimerOff,
-  setOrderInfo // from redux
-}: any) => {
-  const { sessionId, seatsPicked } = order;
+  setOrderInfo
+}) => {
+  const { sessionID, seatsPicked } = order;
 
-  const [loadedBonuses, setLoadedBonuses]: [any, any] = useState(null);
+  const [loadedBonuses, setLoadedBonuses] = useState<Bonus[] | null>(null);
   const { bonuses } = order;
 
   useEffect(() => {
     if (!loadedBonuses) {
-      loadBonuses();
+      bonusService.getAll({ cinemaID }, setLoadedBonuses);
     } else if (!bonuses) {
-      const bonusesKeys = Object.keys(loadedBonuses);
-      const initialPickedBonuses = bonusesKeys.reduce((acc: any, bonus) => {
-        acc[bonus] = {
-          quantity: 0,
-          price: loadedBonuses[bonus].price
-        };
-        return acc;
-      }, {});
+      const initialPickedBonuses = loadedBonuses.reduce(
+        (acc, bonus) => {
+          acc[bonus.title] = {
+            quantity: 0,
+            price: bonus.price
+          };
+          return acc;
+        },
+        {} as { [key: string]: { quantity: number; price: number } }
+      );
       setOrderInfo({ ...order, bonuses: initialPickedBonuses });
     }
   }, [loadedBonuses]);
 
-  const loadBonuses = async () => {
-    try {
-      const data: any = await api.loadSessionBonuses(sessionId);
-      setLoadedBonuses(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const handleBonusesUpdate = (type: any, bonus: any) => {
-    const bonusType = Object.keys(bonus)[0];
+    console.log('type', type);
+    console.log('bonus', bonus);
+    /*     const bonusType = Object.keys(bonus)[0];
     let updatedPickedBonuses;
     switch (type) {
       case 'add': {
@@ -117,7 +124,7 @@ const OrderConfirmationModal = ({
     }
     if (updatedPickedBonuses) {
       setOrderInfo({ ...order, bonuses: updatedPickedBonuses });
-    }
+    } */
   };
 
   const handleBackgroundClick = (
@@ -133,10 +140,10 @@ const OrderConfirmationModal = ({
   ): Promise<void> => {
     try {
       e.preventDefault();
-      const result = await api.submitOrder(order);
+      /*       const result = await api.submitOrder(order);
       if (result) {
         setOrderInfo({
-          sessionId: order.sessionId,
+          sessionId: order.sessionID,
           hallId: order.hallId,
           seatsPicked: []
         });
@@ -146,7 +153,7 @@ const OrderConfirmationModal = ({
       } else {
         handleClose(false);
         handleSnackbar('Something went wrong', 'error');
-      }
+      } */
     } catch (error) {
       console.log(error);
     }
@@ -158,11 +165,13 @@ const OrderConfirmationModal = ({
         <CloseModalButton handleClick={() => handleClose(false)} />
         <TotalPrice>Total price: ${calculateTotalPrice(order)}</TotalPrice>
         <TicketsAmount>Tickets amount: {seatsPicked.length}</TicketsAmount>
-        <BonusContainer
-          bonuses={bonuses}
-          loadedBonuses={loadedBonuses}
-          handleBonusesUpdate={handleBonusesUpdate}
-        />
+        {loadedBonuses && bonuses && (
+          <BonusContainer
+            bonuses={bonuses}
+            loadedBonuses={loadedBonuses}
+            handleBonusesUpdate={handleBonusesUpdate}
+          />
+        )}
         <form onSubmit={handleSubmitOrder}>
           <SubmitButton
             icon={<LocalGroceryStoreIcon />}

@@ -145,8 +145,10 @@ class ApiService {
   }
 
   /* BONUSES */
-  async getBonuses(): Promise<ResType<BonusAPIType[]>> {
-    const res = await this.client.get('http://localhost:5000/bonuses');
+  async getBonuses(params?: any): Promise<ResType<BonusAPIType[]>> {
+    const res = await this.client.get('http://localhost:5000/bonuses', {
+      params
+    });
     return res.data;
   }
 
@@ -199,16 +201,6 @@ class ApiService {
     );
     return true;
   }
-
-  /*   async loadSessionBonuses(sessionId: number) {
-    try {
-      return new Promise((res, rej) => {
-        return res(bonus);
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  } */
 
   /*   async submitOrder(order: any) {
     try {

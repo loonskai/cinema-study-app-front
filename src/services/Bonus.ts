@@ -11,6 +11,10 @@ export interface BonusCreateType {
   price: number;
 }
 
+interface QueryParams {
+  cinemaID?: number;
+}
+
 export default {
   async create(
     data: BonusCreateType,
@@ -30,9 +34,12 @@ export default {
     }
   },
 
-  async getAll(stateSetter?: (data: Bonus[]) => void): Promise<Bonus[] | null> {
+  async getAll(
+    params: QueryParams,
+    stateSetter?: (data: Bonus[]) => void
+  ): Promise<Bonus[] | null> {
     try {
-      const res = await apiService.getBonuses();
+      const res = await apiService.getBonuses(params);
       if (res.error || !res.data) {
         throw Error(res.message);
       }

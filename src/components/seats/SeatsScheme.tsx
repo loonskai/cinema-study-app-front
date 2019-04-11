@@ -61,7 +61,6 @@ const SeatsScheme: React.FC<Props> = ({
             const isMuted =
               !rowCategories[row['category-id']].value &&
               rowCategoriesKeys.some((key: string) => rowCategories[key].value);
-
             return (
               <SeatItem
                 key={`seat-${seatIndex + 1}`}

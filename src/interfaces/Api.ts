@@ -14,7 +14,7 @@ export interface UserAPIType {
 }
 
 export interface CinemaAPIType {
-  id?: number;
+  id: number;
   title: string;
   city: string;
   createdAt?: Date;

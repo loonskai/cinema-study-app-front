@@ -30,7 +30,7 @@ const SessionSection = ({ handleSnackbar }: any) => {
   const [cityTyped, setCityTyped] = useState('');
   const [citySelected, setCitySelected] = useState('Minsk');
   const [cinema, setCinema] = useState('12');
-  const [hall, setHall] = useState('2');
+  const [hall, setHall] = useState('');
   const [rowPrices, setRowPrices] = useState<{
     [key: string]: PriceObj;
   } | null>(null);
@@ -168,7 +168,7 @@ const SessionSection = ({ handleSnackbar }: any) => {
           label="Choose Hall"
           value={hall}
           options={hallOptions}
-          handleChange={(value: string) => setHall(value)}
+          handleChange={setHall}
           disabled={!cinema}
         />
         {hall ? (
@@ -180,7 +180,7 @@ const SessionSection = ({ handleSnackbar }: any) => {
             }
           />
         ) : (
-          <div>Please, choose a hall</div>
+          <div>Please, select a hall</div>
         )}
         <SubmitButton
           text="Create session"

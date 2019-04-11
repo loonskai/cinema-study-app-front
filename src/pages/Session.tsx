@@ -109,7 +109,11 @@ const SessionPage: React.FC<RouteComponentProps> = ({ match }) => {
         </SessionOverview>
       </Container>
       {session && (
-        <SeatsContainer sessionID={session.id} hallID={session.hallID} />
+        <SeatsContainer
+          sessionID={session.id}
+          cinemaID={session.cinemaID}
+          hallID={session.hallID}
+        />
       )}
     </Fragment>
   );
