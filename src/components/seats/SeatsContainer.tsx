@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import actions from '../../redux/actions';
 import orderService from '../../services/Order';
+import actions from '../../redux/actions';
 import { OrderType } from '../../interfaces/Api';
 import { loadCategoryCheckboxesByHall } from '../../helpers/loadSelectOptions';
 import SeatsMenu from './SeatsMenu';
@@ -91,36 +91,43 @@ const SeatsContainer: React.FC<Props> = ({
     const pickedRow = +e.target.dataset.row;
     const pickedSeat = +e.target.dataset.seat;
     const price = +e.target.dataset.price;
-
-    const { seatsPicked } = order;
     const free = e.target.dataset.free === 'true';
     if (!pickedRow || !pickedSeat || !free) {
       return;
     }
 
+    const { seatsPicked } = order;
     const pickedBefore = seatsPicked.some(
       item => item.row === pickedRow && item.seat === pickedSeat
     );
+    /* API query*/
+    const isReservationSuccesful = await orderService.toggleReservation(
+      sessionID,
+      { row: pickedRow, seat: pickedSeat }
+    );
 
-    const newSeatsPicked = pickedBefore
-      ? seatsPicked.filter(
-          item => !(item.row === pickedRow && item.seat === pickedSeat)
-        )
-      : seatsPicked.concat({
-          price,
-          row: pickedRow,
-          seat: pickedSeat
-        });
+    if (isReservationSuccesful) {
+      const newSeatsPicked = pickedBefore
+        ? seatsPicked.filter(
+            item => !(item.row === pickedRow && item.seat === pickedSeat)
+          )
+        : seatsPicked.concat({
+            price,
+            row: pickedRow,
+            seat: pickedSeat
+          });
 
-    setOrderInfo({
-      sessionID: order.sessionID,
-      hallID: order.hallID,
-      seatsPicked: newSeatsPicked,
-      bonuses: order.bonuses
-    });
+      setOrderInfo({
+        sessionID: order.sessionID,
+        hallID: order.hallID,
+        seatsPicked: newSeatsPicked,
+        bonuses: order.bonuses
+      });
+    }
   };
 
   const handleOrderClear = () => {
+    /* RUN CLEAR ALL USERS RESERVED SEATS FOR THIS SESSION */
     setOrderInfo({
       sessionID,
       hallID: order.hallID,

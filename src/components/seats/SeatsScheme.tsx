@@ -19,7 +19,7 @@ interface Props {
     hallID: number;
     rows: RowAPIType[];
   };
-  orderTimeExpired: any;
+  orderTimeExpired: boolean;
 }
 
 const Container = styled.div`

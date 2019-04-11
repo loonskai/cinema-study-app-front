@@ -192,13 +192,11 @@ class ApiService {
   }
 
   /* ORDERS */
-  async reserveSeat(item: SeatItem): Promise<boolean> {
-    await this.client.post('http://localhost:5000/order/reserve', item);
-    return true;
-  }
-
-  async cancelReserveSeat(item: SeatItem): Promise<boolean> {
-    await this.client.post('http://localhost:5000/order/cancel', item);
+  async toggleReservation(sessionID: number, item: SeatItem): Promise<boolean> {
+    await this.client.post(
+      `http://localhost:5000/order/reserve/${sessionID}`,
+      item
+    );
     return true;
   }
 
