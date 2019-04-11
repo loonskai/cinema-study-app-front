@@ -5,6 +5,7 @@ import apiService from '../services/Api';
 import cinemaService from '../services/Cinema';
 import hallService from '../services/Hall';
 import movieService from '../services/Movie';
+import { RowCategoryAPIType } from '../interfaces/Api';
 
 export interface Option {
   value: string | number;
@@ -75,12 +76,10 @@ export const loadRowCategoryOptions = async (optionsSetFunc?: any) => {
     if (!res.data || res.error) {
       throw Error('Unable to load row categories');
     }
-    const customizedOptions = res.data.map(
-      (category: { id: number; title: string }) => ({
-        value: category.id,
-        label: category.title
-      })
-    );
+    const customizedOptions = res.data.map((category: RowCategoryAPIType) => ({
+      value: category.id,
+      label: category.title
+    }));
     if (!optionsSetFunc) {
       return customizedOptions;
     }

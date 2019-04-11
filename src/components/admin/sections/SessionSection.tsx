@@ -8,6 +8,7 @@ import TextField from '../../fields/TextField/TextField';
 import SelectField from '../../fields/SelectField/SelectField';
 import DateField from '../../fields/DateField';
 import SubmitButton from '../../buttons/SubmitButton';
+import CategoryPriceInputs from '../elements/CategoryPriceInputs';
 import AdminListItem from '../elements/AdminListItem';
 import {
   loadTimeOptions,
@@ -17,6 +18,7 @@ import {
   loadHallsByCinemaOptions
 } from '../../../helpers/loadSelectOptions';
 import parseFieldsFromEntity from '../../../helpers/parseFieldsFromEntity';
+import { PriceObj } from '../elements/CategoryPriceInputs';
 
 const SessionSection = ({ handleSnackbar }: any) => {
   const [sessionsList, setSessionsList] = useState<Session[] | null>(null);
@@ -29,6 +31,9 @@ const SessionSection = ({ handleSnackbar }: any) => {
   const [citySelected, setCitySelected] = useState('Minsk');
   const [cinema, setCinema] = useState('12');
   const [hall, setHall] = useState('2');
+  const [rowPrices, setRowPrices] = useState<{
+    [key: string]: PriceObj;
+  } | null>(null);
   const [buttonDisabled, setButtonDisabled] = useState(true);
 
   const [movieSuggestions, setMovieSuggestions] = useState(null);
@@ -58,6 +63,11 @@ const SessionSection = ({ handleSnackbar }: any) => {
     } else {
       setHall('');
     }
+    /*     if (hall) {
+      getHallRowCategoriesPriceInputs(+hall);
+    } else {
+      setRowCategories(null);
+    } */
     if (!sessionsList) {
       sessionService.getAll({}, setSessionsList);
     }
@@ -157,6 +167,17 @@ const SessionSection = ({ handleSnackbar }: any) => {
           handleChange={(value: string) => setHall(value)}
           disabled={!cinema}
         />
+        {hall ? (
+          <CategoryPriceInputs
+            hallID={+hall}
+            prices={rowPrices}
+            handleSetPrices={(prices: { [key: string]: PriceObj }) =>
+              setRowPrices(prices)
+            }
+          />
+        ) : (
+          <div>Please, choose a hall</div>
+        )}
         <SubmitButton
           text="Create session"
           icon={<AddIcon />}

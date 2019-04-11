@@ -163,7 +163,6 @@ const AdminListItem = ({
         );
       }
       default:
-        console.log(property);
         return (
           <Fragment>
             <strong>{property.label}</strong>
