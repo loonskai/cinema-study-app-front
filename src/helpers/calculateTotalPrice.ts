@@ -1,20 +1,4 @@
-interface BonusType {
-  quantity: number;
-  price: number;
-}
-
-interface SeatPickedType {
-  row: number;
-  seat: number;
-  price: number;
-}
-
-interface OrderType {
-  bonuses: { [key: string]: BonusType };
-  hallId: number;
-  seatsPicked: SeatPickedType[];
-  sessionId: number;
-}
+import { OrderType } from '../interfaces/Api';
 
 export default (order: OrderType): number => {
   const { seatsPicked, bonuses } = order;
@@ -26,7 +10,7 @@ export default (order: OrderType): number => {
     : 0;
 
   const seatsPrice = seatsPicked.reduce(
-    (sum: number, seat: any) => seat.price + sum,
+    (sum: number, seat) => (seat.price ? seat.price + sum : 0),
     0
   );
   return bonusesPrice + seatsPrice;

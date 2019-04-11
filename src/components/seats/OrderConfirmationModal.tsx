@@ -95,28 +95,27 @@ const OrderConfirmationModal: React.FC<Props> = ({
     }
   }, [loadedBonuses]);
 
-  const handleBonusesUpdate = (type: any, bonus: any) => {
-    console.log('type', type);
-    console.log('bonus', bonus);
-    /*     const bonusType = Object.keys(bonus)[0];
+  const handleBonusesUpdate = (type: string, bonus: Bonus) => {
     let updatedPickedBonuses;
     switch (type) {
       case 'add': {
-        updatedPickedBonuses = Object.assign({}, bonuses, {
-          [bonusType]: {
-            ...bonuses[bonusType],
-            quantity: bonuses[bonusType].quantity + 1
+        updatedPickedBonuses = {
+          ...bonuses,
+          [bonus.title]: {
+            ...bonuses[bonus.title],
+            quantity: bonuses[bonus.title].quantity + 1
           }
-        });
+        };
         break;
       }
       case 'remove': {
-        updatedPickedBonuses = Object.assign({}, bonuses, {
-          [bonusType]: {
-            ...bonuses[bonusType],
-            quantity: bonuses[bonusType].quantity - 1
+        updatedPickedBonuses = {
+          ...bonuses,
+          [bonus.title]: {
+            ...bonuses[bonus.title],
+            quantity: bonuses[bonus.title].quantity - 1
           }
-        });
+        };
         break;
       }
       default:
@@ -124,7 +123,7 @@ const OrderConfirmationModal: React.FC<Props> = ({
     }
     if (updatedPickedBonuses) {
       setOrderInfo({ ...order, bonuses: updatedPickedBonuses });
-    } */
+    }
   };
 
   const handleBackgroundClick = (
@@ -187,6 +186,6 @@ const OrderConfirmationModal: React.FC<Props> = ({
 };
 
 export default connect(
-  ({ order }: { order: any }) => ({ order }),
+  ({ order }: { order: OrderType }) => ({ order }),
   actions
 )(OrderConfirmationModal);
