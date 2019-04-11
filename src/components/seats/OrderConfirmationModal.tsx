@@ -12,6 +12,7 @@ import SubmitButton from '../buttons/SubmitButton';
 import CloseModalButton from '../buttons/CloseModalButton';
 import { whiteColor, greyColor } from '../../constants';
 import calculateTotalPrice from '../../helpers/calculateTotalPrice';
+import parseOrderForAPI from '../../helpers/parseOrderForAPI';
 import { OrderType } from '../../interfaces/Api';
 
 interface Props {
@@ -21,6 +22,12 @@ interface Props {
   handleSnackbar: any;
   setTimerOff: any;
   setOrderInfo: any;
+}
+
+export interface BonusOrderType {
+  id: number;
+  quantity: number;
+  price: number;
 }
 
 const Container = styled.div`
@@ -84,12 +91,13 @@ const OrderConfirmationModal: React.FC<Props> = ({
       const initialPickedBonuses = loadedBonuses.reduce(
         (acc, bonus) => {
           acc[bonus.title] = {
+            id: bonus.id,
             quantity: 0,
             price: bonus.price
           };
           return acc;
         },
-        {} as { [key: string]: { quantity: number; price: number } }
+        {} as { [key: string]: BonusOrderType }
       );
       setOrderInfo({ ...order, bonuses: initialPickedBonuses });
     }
@@ -139,6 +147,8 @@ const OrderConfirmationModal: React.FC<Props> = ({
   ): Promise<void> => {
     try {
       e.preventDefault();
+      const parsedOrder = parseOrderForAPI(order);
+      console.log('parsedOrder', parsedOrder);
       /*       const result = await api.submitOrder(order);
       if (result) {
         setOrderInfo({
