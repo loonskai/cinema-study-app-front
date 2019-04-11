@@ -53,7 +53,7 @@ const CategoryPriceInputs: React.FC<Props> = ({
         (acc, category) => {
           acc[category.title] = {
             id: category.id,
-            price: ''
+            price: 0
           };
           return acc;
         },

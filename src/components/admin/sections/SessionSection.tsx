@@ -43,7 +43,14 @@ const SessionSection = ({ handleSnackbar }: any) => {
   const [timeOptions, setTimeOptions] = useState(null);
 
   useEffect(() => {
-    setButtonDisabled(!date || !time || !hall || !movieSelected);
+    setButtonDisabled(
+      !date ||
+        !time ||
+        !hall ||
+        !movieSelected ||
+        !rowPrices ||
+        Object.values(rowPrices).some(category => !category.price)
+    );
     if (!timeOptions) {
       loadTimeOptions(setTimeOptions);
     }
@@ -63,11 +70,6 @@ const SessionSection = ({ handleSnackbar }: any) => {
     } else {
       setHall('');
     }
-    /*     if (hall) {
-      getHallRowCategoriesPriceInputs(+hall);
-    } else {
-      setRowCategories(null);
-    } */
     if (!sessionsList) {
       sessionService.getAll({}, setSessionsList);
     }
@@ -80,6 +82,7 @@ const SessionSection = ({ handleSnackbar }: any) => {
     cityTyped,
     cinema,
     hall,
+    rowPrices,
     timeOptions
   ]);
 
@@ -91,9 +94,12 @@ const SessionSection = ({ handleSnackbar }: any) => {
       date,
       time,
       movie: movieSelected,
-      hall
+      hall,
+      prices: rowPrices
     };
-    const result = await sessionService.create(body);
+    console.log(rowPrices);
+    // const result = await sessionService.create(body);
+    const result = false;
     if (result) {
       setTime('');
       setButtonDisabled(true);
