@@ -34,5 +34,13 @@ export default {
       item
     });
     return true;
+  },
+
+  async clearReservation(sessionID: number, items: SeatItem[]) {
+    socket.emit('clearReservation', {
+      sessionID,
+      items
+    });
+    return true;
   }
 };

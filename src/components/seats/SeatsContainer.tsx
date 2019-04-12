@@ -143,6 +143,7 @@ const SeatsContainer: React.FC<Props> = ({
 
   const handleOrderClear = async () => {
     // await orderService.clearReservation(sessionID, order.seatsPicked);
+    await Socket.clearReservation(sessionID, order.seatsPicked);
     setOrderInfo({
       sessionID,
       hallID: order.hallID,
