@@ -44,6 +44,10 @@ export default class Session {
     this._date = value;
   }
 
+  get dateOriginalFormat() {
+    return new Date(this._date);
+  }
+
   get date() {
     return moment(this._date).format('LL');
   }

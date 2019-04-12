@@ -71,10 +71,20 @@ const HistorySection: React.FC<Props> = ({ orders }) => {
   };
 
   const filterOrdersOnDate = () => {
-    const today = new Date();
-    console.log(today);
-    console.log(orders);
-    return orders;
+    const now = new Date();
+    const filteredOrders =
+      orders &&
+      orders.filter(order => {
+        switch (tabSelected) {
+          case 'upcoming':
+            return order.session.dateOriginalFormat >= now;
+          case 'past':
+            return order.session.dateOriginalFormat < now;
+          default:
+            return false;
+        }
+      });
+    return filteredOrders;
   };
 
   const renderOrders = () => {
