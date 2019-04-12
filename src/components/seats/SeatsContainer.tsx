@@ -185,6 +185,7 @@ const SeatsContainer: React.FC<Props> = ({
       {rowCategories && (
         <SeatsScheme
           hallID={hallID}
+          sessionID={sessionID}
           order={order}
           rowCategories={rowCategories}
           handleSeatPick={handleSeatPick}

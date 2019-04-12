@@ -8,6 +8,7 @@ const loadAllSeats = () => {
     const seatsData =
       sessions &&
       sessions.map(session => ({
+        sessionID: session.id,
         hallID: session.hallID,
         rows: session.rows.sort((row1, row2) => +row1.id - +row2.id)
       }));

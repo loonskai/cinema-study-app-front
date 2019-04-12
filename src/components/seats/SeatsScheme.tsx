@@ -100,11 +100,13 @@ const SeatsScheme: React.FC<Props> = ({
   );
 };
 
-const mapStateToProps = ({ seats }: any, ownProps: any) => ({
-  seats:
-    seats &&
-    seats.find((hallSeats: any) => hallSeats.hallID === ownProps.hallID)
-});
+const mapStateToProps = ({ seats }: any, ownProps: any) => {
+  const { sessionID } = ownProps;
+  return {
+    seats:
+      seats && seats.find((hallSeats: any) => hallSeats.sessionID === sessionID)
+  };
+};
 
 export default connect(
   mapStateToProps,
