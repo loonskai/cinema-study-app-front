@@ -5,13 +5,14 @@ import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 import Movie from '../../../classes/Movie';
-import AddButton from '../../buttons/AddButton';
 import {
   containerGreyColor,
   whiteColor,
   mainDarkColor,
   greyColor
 } from '../../../constants';
+
+import AddButton from '../../buttons/AddButton';
 
 interface Props {
   handleSelectItem: (id: string) => void;

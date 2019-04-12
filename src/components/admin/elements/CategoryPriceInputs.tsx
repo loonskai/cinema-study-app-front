@@ -2,8 +2,8 @@ import React, { Fragment, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import TextField from '@material-ui/core/TextField';
 
-import apiService from '../../../services/Api';
 import { RowCategoryAPIType } from '../../../interfaces/Api';
+import apiService from '../../../services/Api';
 
 export interface PriceObj {
   id: number;

@@ -10,8 +10,9 @@ import Checkbox from '@material-ui/core/Checkbox';
 import styled from 'styled-components';
 
 import { AdminListItemType } from '../../../helpers/parseFieldsFromEntity';
-import UpdateItemButton from '../../buttons/UpdateItemButton';
 import { mainColor } from '../../../constants';
+
+import UpdateItemButton from '../../buttons/UpdateItemButton';
 
 interface Props {
   handleSnackbar: (message: string, status: string) => void;

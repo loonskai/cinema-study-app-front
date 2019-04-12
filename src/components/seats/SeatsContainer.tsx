@@ -71,6 +71,9 @@ const SeatsContainer: React.FC<Props> = ({
     if (!rowCategories) {
       loadCategoryCheckboxesByHall(hallID, setRowCategories);
     }
+    return () => {
+      /* RUN CLEAN RESERVATION FUNCTION */
+    };
   }, []);
 
   const changeRowCategory = (key: number): void => {
@@ -128,7 +131,7 @@ const SeatsContainer: React.FC<Props> = ({
     }
   };
 
-  const handleOrderClear = async (seats?: any) => {
+  const handleOrderClear = async () => {
     await orderService.clearReservation(sessionID, order.seatsPicked);
     setOrderInfo({
       sessionID,

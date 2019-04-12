@@ -11,11 +11,12 @@ import {
   Option
 } from '../../../helpers/loadSelectOptions';
 import { AdminListItemType } from '../../../helpers/parseFieldsFromEntity';
+import { mainColor, mainDarkColor } from '../../../constants';
+
+import AdminListItem from '../elements/AdminListItem';
+import RoundButton from '../../buttons/RoundButton';
 import TextField from '../../fields/TextField/TextField';
 import SelectField from '../../fields/SelectField/SelectField';
-import RoundButton from '../../buttons/RoundButton';
-import AdminListItem from '../elements/AdminListItem';
-import { mainColor, mainDarkColor } from '../../../constants';
 
 export interface RowItem {
   id: string;

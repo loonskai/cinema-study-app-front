@@ -1,4 +1,4 @@
-import { HallAPIType, RowAPIType } from '../interfaces/Api';
+import { HallAPIType } from '../interfaces/Api';
 import { RowItem } from '../components/admin/elements/NewRowController';
 
 export default class Hall {
