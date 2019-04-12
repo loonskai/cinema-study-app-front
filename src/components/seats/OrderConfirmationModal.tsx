@@ -150,12 +150,12 @@ const OrderConfirmationModal: React.FC<Props> = ({
       e.preventDefault();
       const parsedOrder = parseOrderForAPI(order);
       const result = await orderService.create(parsedOrder);
-      /* 
       if (result) {
         setOrderInfo({
-          sessionId: order.sessionID,
-          hallId: order.hallId,
-          seatsPicked: []
+          sessionID: order.sessionID,
+          hallID: order.hallID,
+          seatsPicked: [],
+          bonuses: null
         });
         handleClose(false);
         setTimerOff();
@@ -163,7 +163,7 @@ const OrderConfirmationModal: React.FC<Props> = ({
       } else {
         handleClose(false);
         handleSnackbar('Something went wrong', 'error');
-      } */
+      }
     } catch (error) {
       console.log(error);
     }
