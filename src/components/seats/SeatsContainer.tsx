@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
+import Socket from '../../services/Socket';
 import orderService from '../../services/Order';
 import actions from '../../redux/actions';
 import { OrderReduxType } from '../../interfaces/Api';
@@ -62,6 +63,8 @@ const SeatsContainer: React.FC<Props> = ({
   const [orderTimeExpired, setOrderTimeExpired] = useState<boolean>(false);
 
   useEffect(() => {
+    Socket.connect();
+
     setOrderInfo({
       sessionID,
       hallID: order.hallID,

@@ -72,7 +72,6 @@ const SessionsTable: React.FC<Props> = ({ sessions }) => {
 
   const getRows = () => {
     if (!sessions || !sessions.length) {
-      console.log(sessions);
       return (
         <TableRow>
           <WideCell>No sessions found</WideCell>
