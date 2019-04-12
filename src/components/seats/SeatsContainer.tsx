@@ -109,10 +109,14 @@ const SeatsContainer: React.FC<Props> = ({
       item => item.row === pickedRow && item.seat === pickedSeat
     );
     /* API query*/
-    const isReservationSuccesful = await orderService.toggleReservation(
+    /*     const isReservationSuccesful = await orderService.toggleReservation(
       sessionID,
       { row: pickedRow, seat: pickedSeat }
-    );
+    ); */
+    const isReservationSuccesful = await Socket.toggleReservation(sessionID, {
+      row: pickedRow,
+      seat: pickedSeat
+    });
 
     if (isReservationSuccesful) {
       const newSeatsPicked = pickedBefore
