@@ -1,6 +1,6 @@
-import { OrderType } from '../interfaces/Api';
+import { OrderReduxType } from '../interfaces/Api';
 
-export default (order: OrderType): number => {
+export default (order: OrderReduxType): number => {
   const { seatsPicked, bonuses } = order;
 
   const bonusesPrice = bonuses

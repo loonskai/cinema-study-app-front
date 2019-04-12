@@ -73,16 +73,6 @@ class ApiService {
     return res.data;
   }
 
-  /*   async loadUserInfo() {
-    try {
-      return new Promise((res, rej) => {
-        return res(userData);
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  } */
-
   /* CINEMAS */
   async createCinema(body: CinemaAPIType): Promise<any> {
     const res = await this.client.post('http://localhost:5000/cinema', body);
@@ -202,6 +192,11 @@ class ApiService {
   async createOrder(body: any): Promise<boolean> {
     await this.client.post('http://localhost:5000/order', body);
     return true;
+  }
+
+  async getPersonalOrders(): Promise<any> {
+    const res = await this.client.get('http://localhost:5000/order/my');
+    return res.data;
   }
 
   async toggleReservation(sessionID: number, item: SeatItem): Promise<boolean> {

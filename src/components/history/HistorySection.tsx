@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
+import Order from '../../classes/Order';
 import HistorySectionTabs from './HistorySectionTabs';
 import { greyColor, whiteColor, containerGreyColor } from '../../constants';
+
+interface Props {
+  orders: Order[] | null;
+}
 
 const Container = styled.div`
   width: 100%;
@@ -47,7 +52,7 @@ const TextRow = styled.div`
   margin-bottom: 0.3rem;
 `;
 
-const HistorySection = ({ orders }: any) => {
+const HistorySection: React.FC<Props> = ({ orders }) => {
   const [tabSelected, setTebSelected] = useState('upcoming');
 
   const handleTabSelect = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -65,26 +70,32 @@ const HistorySection = ({ orders }: any) => {
     }
   };
 
+  const filterOrdersOnDate = () => {
+    const today = new Date();
+    console.log(today);
+    console.log(orders);
+    return orders;
+  };
+
   const renderOrders = () => {
-    const ordersToRender = orders[tabSelected];
+    const ordersToRender = orders && filterOrdersOnDate();
     if (!ordersToRender) {
       return 'Nothing found';
     }
-    return ordersToRender.map((order: any, index: number) => {
+    return ordersToRender.map((order, index: number) => {
       return (
         <OrderContainer
           key={index.toString()}
           isRelevant={tabSelected === 'upcoming'}
         >
           <MainTextRow>
-            {order.city}, {order.cinema} cinema
+            {order.cinema.city}, {order.cinema.title} cinema
           </MainTextRow>
           <MainTextRow>
-            {order.date}, {order.time}
+            {order.session.date}, {order.session.time}
           </MainTextRow>
           <TextRow>Movie: {order.movie.title}</TextRow>
-          <TextRow>Tickets amount: {order.order.length}</TextRow>
-          <TextRow>Total price: ${order.totalPrice}</TextRow>
+          <TextRow>Tickets amount: {order.seats.length}</TextRow>
         </OrderContainer>
       );
     });

@@ -1,8 +1,8 @@
 import { SET_ORDER_INFO } from './../../constants';
 
-import { OrderType } from '../../interfaces/Api';
+import { OrderReduxType } from '../../interfaces/Api';
 
-const setOrderInfo = (order: OrderType) => {
+const setOrderInfo = (order: OrderReduxType) => {
   return async (dispatch: any) => {
     dispatch({ type: SET_ORDER_INFO, payload: order });
   };

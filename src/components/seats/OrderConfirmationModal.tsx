@@ -14,11 +14,11 @@ import CloseModalButton from '../buttons/CloseModalButton';
 import { whiteColor, greyColor } from '../../constants';
 import calculateTotalPrice from '../../helpers/calculateTotalPrice';
 import parseOrderForAPI from '../../helpers/parseOrderForAPI';
-import { OrderType } from '../../interfaces/Api';
+import { OrderReduxType } from '../../interfaces/Api';
 
 interface Props {
   cinemaID: number;
-  order: OrderType;
+  order: OrderReduxType;
   handleClose: any;
   handleSnackbar: any;
   setTimerOff: any;
@@ -200,6 +200,6 @@ const OrderConfirmationModal: React.FC<Props> = ({
 };
 
 export default connect(
-  ({ order }: { order: OrderType }) => ({ order }),
+  ({ order }: { order: OrderReduxType }) => ({ order }),
   actions
 )(OrderConfirmationModal);

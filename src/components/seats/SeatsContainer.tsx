@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import orderService from '../../services/Order';
 import actions from '../../redux/actions';
-import { OrderType } from '../../interfaces/Api';
+import { OrderReduxType } from '../../interfaces/Api';
 import { loadCategoryCheckboxesByHall } from '../../helpers/loadSelectOptions';
 import SeatsMenu from './SeatsMenu';
 import OrderConfirmationModal from './OrderConfirmationModal';
@@ -17,7 +17,7 @@ interface Props {
   sessionID: number;
   cinemaID: number;
   hallID: number;
-  order: OrderType;
+  order: OrderReduxType;
   setOrderInfo: any;
 }
 
@@ -128,7 +128,7 @@ const SeatsContainer: React.FC<Props> = ({
     }
   };
 
-  const handleOrderClear = async () => {
+  const handleOrderClear = async (seats?: any) => {
     await orderService.clearReservation(sessionID, order.seatsPicked);
     setOrderInfo({
       sessionID,
@@ -196,7 +196,7 @@ const SeatsContainer: React.FC<Props> = ({
 };
 
 export default connect(
-  ({ order }: { order: OrderType }) => ({
+  ({ order }: { order: OrderReduxType }) => ({
     order
   }),
   actions

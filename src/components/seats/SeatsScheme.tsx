@@ -8,11 +8,11 @@ import Row from './elements/Row';
 import RowTitle from './elements/RowTitle';
 import SeatItem from './elements/SeatItem';
 import { containerGreyColor } from '../../constants';
-import { OrderType, RowAPIType } from '../../interfaces/Api';
+import { OrderReduxType, RowAPIType } from '../../interfaces/Api';
 
 interface Props {
   rowCategories: any;
-  order: OrderType;
+  order: OrderReduxType;
   handleSeatPick: (
     e: React.BaseSyntheticEvent<HTMLDivElement, MouseEvent>
   ) => Promise<void>;

@@ -107,9 +107,33 @@ export interface RowCategoryAPIType {
   updatedAt?: Date;
 }
 
-export interface OrderType {
+export interface OrderReduxType {
   sessionID: number;
   hallID: number;
   seatsPicked: SeatItem[];
   bonuses: any;
+}
+
+export interface OrderAPIType {
+  id: number;
+  user: {
+    id: number;
+    email: string;
+    username: string;
+  };
+  session: {
+    id: number;
+    date: Date;
+    movie: MovieAPIType;
+    hall: HallAPIType;
+  };
+  seats: SeatItem[];
+  bonuses: Array<{
+    id: number;
+    title: string;
+    price: number;
+    quantity: number;
+  }>;
+  createdAt: Date;
+  updatedAt: Date;
 }
