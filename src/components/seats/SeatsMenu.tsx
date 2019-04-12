@@ -32,7 +32,7 @@ const StyledCheckbox = styled(Checkbox)<any>`
   }
 `;
 
-const SeatsMenu = ({ onChangeRowCategory, rowCategories }: any) => {
+const SeatsMenu = ({ handleChangeRowCategory, rowCategories }: any) => {
   const renderCategoriesCheckboxes = (rowCategories: any) => {
     const keys = Object.keys(rowCategories);
     if (!rowCategories || !keys.length) {
@@ -47,7 +47,7 @@ const SeatsMenu = ({ onChangeRowCategory, rowCategories }: any) => {
             value={key}
             classes={{ checked: 'checked' }}
             onChange={(e: React.ChangeEvent<HTMLSelectElement>): void => {
-              onChangeRowCategory(e.target.value);
+              handleChangeRowCategory(e.target.value);
             }}
           />
         }

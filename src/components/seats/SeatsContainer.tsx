@@ -128,8 +128,8 @@ const SeatsContainer: React.FC<Props> = ({
     }
   };
 
-  const handleOrderClear = () => {
-    /* RUN CLEAR ALL USERS RESERVED SEATS FOR THIS SESSION */
+  const handleOrderClear = async () => {
+    await orderService.clearReservation(sessionID, order.seatsPicked);
     setOrderInfo({
       sessionID,
       hallID: order.hallID,
@@ -137,12 +137,13 @@ const SeatsContainer: React.FC<Props> = ({
       bonuses: null
     });
   };
+
   return (
     <Container>
       <StyledTitle>Seats</StyledTitle>
       {rowCategories && (
         <SeatsMenu
-          obChangeRowCategory={changeRowCategory}
+          handleChangeRowCategory={changeRowCategory}
           rowCategories={rowCategories}
         />
       )}

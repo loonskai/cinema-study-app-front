@@ -212,6 +212,14 @@ class ApiService {
     return true;
   }
 
+  async clearReservation(sessionID: number, items: any): Promise<boolean> {
+    await this.client.post(
+      `http://localhost:5000/order/reserve/clear/${sessionID}`,
+      items
+    );
+    return true;
+  }
+
   /* ADDITIONAL DATA */
   async getRowCategories(params?: any): Promise<ResType<RowCategoryAPIType[]>> {
     const res = await this.client.get(

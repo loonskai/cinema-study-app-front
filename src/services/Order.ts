@@ -24,6 +24,19 @@ export default {
     }
   },
 
+  async clearReservation(
+    sessionID: number,
+    seats: Array<{ row: number; seat: number }>
+  ) {
+    try {
+      const res = await apiService.clearReservation(sessionID, seats);
+      return true;
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  },
+
   async create(order: OrderAPIType): Promise<any> {
     try {
       const res = await apiService.createOrder(order);
