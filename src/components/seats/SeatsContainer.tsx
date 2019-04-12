@@ -20,6 +20,7 @@ interface Props {
   hallID: number;
   order: OrderReduxType;
   setOrderInfo: any;
+  loadAllSeats: any;
 }
 
 const Container = styled.div`
@@ -55,7 +56,8 @@ const SeatsContainer: React.FC<Props> = ({
   cinemaID,
   hallID,
   order,
-  setOrderInfo
+  setOrderInfo,
+  loadAllSeats
 }) => {
   const [rowCategories, setRowCategories] = useState<any>(null);
   const [isModalDisplayed, setModalDisplay] = useState<boolean>(false);
@@ -63,7 +65,7 @@ const SeatsContainer: React.FC<Props> = ({
   const [orderTimeExpired, setOrderTimeExpired] = useState<boolean>(false);
 
   useEffect(() => {
-    Socket.connect();
+    Socket.connect(loadAllSeats);
 
     setOrderInfo({
       sessionID,
@@ -76,6 +78,7 @@ const SeatsContainer: React.FC<Props> = ({
     }
     return () => {
       /* RUN CLEAN RESERVATION FUNCTION */
+      Socket.disconnect();
     };
   }, []);
 
@@ -139,7 +142,7 @@ const SeatsContainer: React.FC<Props> = ({
   };
 
   const handleOrderClear = async () => {
-    await orderService.clearReservation(sessionID, order.seatsPicked);
+    // await orderService.clearReservation(sessionID, order.seatsPicked);
     setOrderInfo({
       sessionID,
       hallID: order.hallID,

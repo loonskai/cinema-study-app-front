@@ -5,7 +5,7 @@ import { SeatItem } from '../interfaces/Api';
 const socket = io('http://localhost:5000');
 
 export default {
-  async connect() {
+  async connect(action?: any) {
     socket.on('connect', () => {
       socket
         .emit('authenticate', { token: apiService.accessToken })
@@ -18,9 +18,14 @@ export default {
 
       socket.on('refreshSeats', () => {
         console.log('refresh seats');
+        action();
       });
     });
     socket.emit('connect');
+  },
+
+  async disconnect() {
+    socket.disconnect();
   },
 
   async toggleReservation(sessionID: number, item: SeatItem) {
