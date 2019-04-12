@@ -17,7 +17,6 @@ interface Props {
 
 const App: React.FC<Props> = ({
   validateToken,
-  loadAllSeats,
   loadMoviesList,
   loadSessionsList
 }) => {
@@ -28,7 +27,6 @@ const App: React.FC<Props> = ({
     }
     loadMoviesList();
     loadSessionsList();
-    loadAllSeats();
   }, []);
 
   return (

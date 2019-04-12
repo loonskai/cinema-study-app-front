@@ -110,6 +110,7 @@ const SearchSessionForm: React.FC<Props> = ({
       'movie-id': movieID,
       'hall-id': hall
     };
+    console.log('params', params);
     loadSessionsList(params);
     setDisplaySessionsTable(true);
   };

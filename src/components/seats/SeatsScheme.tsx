@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
+import actions from '../../redux/actions';
 import Screen from './elements/Screen';
 import Row from './elements/Row';
 import RowTitle from './elements/RowTitle';
@@ -20,6 +21,7 @@ interface Props {
     rows: RowAPIType[];
   };
   orderTimeExpired: boolean;
+  loadAllSeats: any;
 }
 
 const Container = styled.div`
@@ -39,9 +41,16 @@ const SeatsScheme: React.FC<Props> = ({
   order,
   handleSeatPick,
   seats,
-  orderTimeExpired
+  orderTimeExpired,
+  loadAllSeats
 }) => {
+  useEffect(() => {
+    if (!seats) {
+      loadAllSeats();
+    }
+  }, []);
   const { seatsPicked } = order;
+
   const renderSeats = () => {
     if (!seats || !seats.rows || !seats.rows.length) {
       return 'No seats found';
@@ -91,6 +100,13 @@ const SeatsScheme: React.FC<Props> = ({
   );
 };
 
-export default connect(({ seats }: any, ownProps: any) => ({
-  seats: seats.find((hallSeats: any) => hallSeats.hallID === ownProps.hallID)
-}))(SeatsScheme);
+const mapStateToProps = ({ seats }: any, ownProps: any) => ({
+  seats:
+    seats &&
+    seats.find((hallSeats: any) => hallSeats.hallID === ownProps.hallID)
+});
+
+export default connect(
+  mapStateToProps,
+  actions
+)(SeatsScheme);

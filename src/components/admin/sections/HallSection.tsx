@@ -82,15 +82,15 @@ const HallSection = ({ handleSnackbar }: any) => {
           value={cinemaID}
           handleChange={(value: string) => setCinemaID(value)}
         />
-        <NewRowController
-          prevRows={rows}
-          handleSnackbar={handleSnackbar}
-          rowsSetter={setRows}
-        />
         <SubmitButton
           text="Add Hall"
           icon={<AddIcon />}
           disabled={buttonDisabled}
+        />
+        <NewRowController
+          prevRows={rows}
+          handleSnackbar={handleSnackbar}
+          rowsSetter={setRows}
         />
       </form>
       {hallList && !!hallList.length && (
