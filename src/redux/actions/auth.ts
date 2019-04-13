@@ -5,10 +5,11 @@ import { UserAPIType } from '../../interfaces/Api';
 const signIn = (data: UserAPIType): any => {
   try {
     return async (dispatch: any) => {
-      const { role } = data;
+      const { role, userID } = data;
       dispatch({
         type: SIGN_IN,
         payload: {
+          userID,
           isAdmin: role === 'admin'
         }
       });
@@ -39,6 +40,7 @@ const validateToken = (token: string) => {
         dispatch({
           type: SIGN_IN,
           payload: {
+            userID: userData.userID,
             isAuth: true,
             isAdmin: userData.role === 'admin'
           }

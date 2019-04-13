@@ -56,6 +56,7 @@ const SeatsContainer: React.FC<Props> = ({
   cinemaID,
   hallID,
   order,
+  userID,
   setOrderInfo,
   loadAllSeats
 }) => {
@@ -77,7 +78,7 @@ const SeatsContainer: React.FC<Props> = ({
       loadCategoryCheckboxesByHall(hallID, setRowCategories);
     }
     return () => {
-      /* RUN CLEAN RESERVATION FUNCTION */
+      // TODO - RUN CLEAN RESERVATION FUNCTION
       Socket.disconnect();
     };
   }, []);
@@ -124,10 +125,16 @@ const SeatsContainer: React.FC<Props> = ({
     if (isReservationSuccesful) {
       const newSeatsPicked = pickedBefore
         ? seatsPicked.filter(
-            item => !(item.row === pickedRow && item.seat === pickedSeat)
+            item =>
+              !(
+                item.row === pickedRow &&
+                item.seat === pickedSeat &&
+                item.userID === userID
+              )
           )
         : seatsPicked.concat({
             price,
+            userID,
             row: pickedRow,
             seat: pickedSeat
           });
@@ -211,8 +218,15 @@ const SeatsContainer: React.FC<Props> = ({
 };
 
 export default connect(
-  ({ order }: { order: OrderReduxType }) => ({
-    order
+  ({
+    order,
+    auth
+  }: {
+    order: OrderReduxType;
+    auth: { isAuth: boolean; isAdmin: boolean; userID: number | null };
+  }) => ({
+    order,
+    userID: auth.userID
   }),
   actions
 )(SeatsContainer);

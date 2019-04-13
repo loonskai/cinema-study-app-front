@@ -20,6 +20,7 @@ interface Props {
     hallID: number;
     rows: RowAPIType[];
   };
+  userID: number | null;
   orderTimeExpired: boolean;
   loadAllSeats: any;
 }
@@ -41,6 +42,7 @@ const SeatsScheme: React.FC<Props> = ({
   order,
   handleSeatPick,
   seats,
+  userID,
   orderTimeExpired,
   loadAllSeats
 }) => {
@@ -70,6 +72,10 @@ const SeatsScheme: React.FC<Props> = ({
             const isMuted =
               !rowCategories[row['category-id']].value &&
               rowCategoriesKeys.some((key: string) => rowCategories[key].value);
+            const isReserved =
+              !isSelected &&
+              (orderTimeExpired ||
+                (row.reserved && row.reserved.includes(seatIndex + 1)));
             return (
               <SeatItem
                 key={`seat-${seatIndex + 1}`}
@@ -78,10 +84,7 @@ const SeatsScheme: React.FC<Props> = ({
                 seat={seatIndex + 1}
                 price={row.price}
                 isSelected={isSelected}
-                isReserved={
-                  orderTimeExpired ||
-                  (row.reserved && row.reserved.includes(seatIndex + 1))
-                }
+                isReserved={isReserved}
                 isOrdered={row.ordered && row.ordered.includes(seatIndex + 1)}
                 isMuted={isMuted && !isSelected}
               />
@@ -100,9 +103,10 @@ const SeatsScheme: React.FC<Props> = ({
   );
 };
 
-const mapStateToProps = ({ seats }: any, ownProps: any) => {
+const mapStateToProps = ({ seats, auth }: any, ownProps: any) => {
   const { sessionID } = ownProps;
   return {
+    userID: auth.userID,
     seats:
       seats && seats.find((hallSeats: any) => hallSeats.sessionID === sessionID)
   };

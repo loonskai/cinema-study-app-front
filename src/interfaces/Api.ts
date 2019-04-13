@@ -9,6 +9,7 @@ export interface ResType<Data> {
 
 export interface UserAPIType {
   token: string;
+  userID: number;
   user: string;
   role: 'admin' | 'client';
 }
@@ -71,6 +72,7 @@ export interface SeatItem {
   row: number;
   seat: number;
   price?: number;
+  userID?: number | null;
 }
 
 export interface SessionAPIType {
