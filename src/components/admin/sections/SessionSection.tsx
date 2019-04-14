@@ -24,12 +24,12 @@ const SessionSection = ({ handleSnackbar }: any) => {
   const [sessionsList, setSessionsList] = useState<Session[] | null>(null);
 
   const [date, setDate] = useState(new Date());
-  const [time, setTime] = useState('20:00');
+  const [time, setTime] = useState('');
   const [movieTyped, setMovieTyped] = useState('');
-  const [movieSelected, setMovieSelected] = useState('Avengers: Age of Ultron');
+  const [movieSelected, setMovieSelected] = useState('');
   const [cityTyped, setCityTyped] = useState('');
-  const [citySelected, setCitySelected] = useState('Minsk');
-  const [cinema, setCinema] = useState('12');
+  const [citySelected, setCitySelected] = useState('');
+  const [cinema, setCinema] = useState('');
   const [hall, setHall] = useState('');
   const [rowPrices, setRowPrices] = useState<{
     [key: string]: PriceObj;

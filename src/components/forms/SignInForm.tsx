@@ -28,9 +28,9 @@ interface InputValues {
 const SignInForm: React.FC<Props> = ({ signIn, onSuccess }) => {
   const [signInWith, setSignInWith] = useState<string>('email');
   const [values, setValues] = useState<InputValues>({
-    email: 'admin@mail.com',
+    email: '',
     username: '',
-    password: 'Testing123'
+    password: ''
   });
   const [inputErrors, setInputErrors] = useState<InputErrors>({
     email: null,

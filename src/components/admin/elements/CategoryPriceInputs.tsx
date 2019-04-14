@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import TextField from '@material-ui/core/TextField';
 
@@ -51,7 +51,7 @@ const CategoryPriceInputs: React.FC<Props> = ({
         (acc, category) => {
           acc[category.title] = {
             id: category.id,
-            price: 10 // 0 ON DEFAULT
+            price: 0
           };
           return acc;
         },

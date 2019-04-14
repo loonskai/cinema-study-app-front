@@ -25,10 +25,10 @@ interface InputErrors {
 
 const SignUpForm: React.FC<Props> = ({ onSuccess }) => {
   const [values, setValues] = useState<InputValues>({
-    email: 'client@mail.com',
-    username: 'client',
-    password: 'Testing123',
-    confirmPassword: 'Testing123'
+    email: '',
+    username: '',
+    password: '',
+    confirmPassword: ''
   });
   const [inputErrors, setInputErrors] = useState<InputErrors>({
     email: null,
