@@ -2,7 +2,6 @@ import axios from 'axios';
 
 import Movie from '../classes/Movie';
 import apiService from './Api';
-import { apiKey } from '../credentials';
 import { MovieAPIType, ExternalAPIMovie, ResType } from '../interfaces/Api';
 
 export default {
@@ -25,7 +24,9 @@ export default {
   async getExternalAPIMovieAll(): Promise<ExternalAPIMovie[] | null> {
     try {
       const { data } = await axios.get(
-        `https://api.themoviedb.org/4/list/1?page=1&api_key=${apiKey}`
+        `${process.env.THE_MOVIE_DB_MOVIES_LIST_URI}&api_key=${
+          process.env.THE_MOVIE_DB_API_KEY
+        }`
       );
       return data.results;
     } catch (error) {

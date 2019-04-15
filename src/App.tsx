@@ -15,6 +15,8 @@ interface Props {
   loadSessionsList: (dispatch?: any) => Promise<void>;
 }
 
+console.log(process.env.HI);
+
 const App: React.FC<Props> = ({
   validateToken,
   loadMoviesList,
