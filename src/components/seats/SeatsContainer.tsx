@@ -68,7 +68,6 @@ const SeatsContainer: React.FC<Props> = ({
 
   useEffect(() => {
     Socket.connect(loadAllSeats);
-
     setOrderInfo({
       sessionID,
       hallID: order.hallID,
