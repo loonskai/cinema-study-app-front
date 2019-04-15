@@ -1,4 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 
 import Order from '../classes/Order';
 import orderService from '../services/Order';
@@ -6,7 +7,14 @@ import Loader from '../components/Loader';
 import PageTitle from '../components/PageTitle';
 import HistorySection from '../components/history/HistorySection';
 
-const UserProfile: React.FC = () => {
+interface UserDataType {
+  isAuth: boolean;
+  isAdmin: boolean;
+  userID: number | null;
+  userName: string | null;
+}
+
+const UserProfile: React.FC<{ userName: string }> = ({ userName }) => {
   const [orders, setOrders] = useState<Order[] | null>(null);
   const [isLoading, setLoading] = useState<boolean>(true);
 
@@ -19,14 +27,12 @@ const UserProfile: React.FC = () => {
     <Loader />
   ) : (
     <Fragment>
-      <PageTitle
-        text={`Welcome, ${
-          orders && !!orders.length ? orders[0].user.username : 'Anonymous'
-        }`}
-      />
+      <PageTitle text={`Welcome, ${userName}`} />
       <HistorySection orders={orders} />
     </Fragment>
   );
 };
 
-export default UserProfile;
+export default connect(({ auth }: { auth: UserDataType }) => ({
+  userName: auth.userName || 'Anonymous'
+}))(UserProfile);

@@ -11,6 +11,7 @@ export interface UserAPIType {
   token: string;
   userID: number;
   user: string;
+  userName: string;
   role: 'admin' | 'client';
 }
 
