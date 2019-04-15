@@ -1,14 +1,28 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import actions from '../../redux/actions';
+import { OrderReduxType } from '../../interfaces/Api';
+import Socket from '../../services/Socket';
+import { loadCategoryCheckboxesByHall } from '../../helpers/loadSelectOptions';
+
+import { SnackbarContext } from '../../Layout';
 import SeatsMenu from './SeatsMenu';
 import OrderConfirmationModal from './OrderConfirmationModal';
 import OrderController from './OrderController';
 import OrderTimer from './OrderTimer';
 import SeatsScheme from './SeatsScheme';
-import { SnackbarContext } from '../../Layout';
+
+interface Props {
+  sessionID: number;
+  cinemaID: number;
+  hallID: number;
+  userID: number | null;
+  order: OrderReduxType;
+  setOrderInfo: any;
+  loadAllSeats: any;
+}
 
 const Container = styled.div`
   width: 100%;
@@ -38,93 +52,103 @@ const OrderStateContainer = styled.div`
   }
 `;
 
-const SeatsContainer = ({
-  sessionId,
+const SeatsContainer: React.FC<Props> = ({
+  sessionID,
+  cinemaID,
+  hallID,
   order,
-  setOrderInfo
-}: {
-  sessionId: number;
-  order: any;
-  setOrderInfo: any;
+  userID,
+  setOrderInfo,
+  loadAllSeats
 }) => {
-  const [options, setOptions]: [any, any] = useState({
-    vip: {
-      label: 'VIP',
-      value: false
-    },
-    basic: {
-      label: 'Basic',
-      value: false
-    }
-  });
-  const [isModalDisplayed, setModalDisplay]: [boolean, any] = useState(false);
-  const [timerStarted, setTimerStarted]: [boolean, any] = useState(false);
-  // We assing it to the function from OrderTimer child component and run it on the first seat pick
-  let startTimerFunc = () => {};
+  const [rowCategories, setRowCategories] = useState<any>(null);
+  const [isModalDisplayed, setModalDisplay] = useState<boolean>(false);
+  const [timerStarted, setTimerStarted] = useState<boolean>(false);
+  const [orderTimeExpired, setOrderTimeExpired] = useState<boolean>(false);
 
   useEffect(() => {
+    Socket.connect(loadAllSeats);
+
     setOrderInfo({
-      sessionId,
-      hallId: order.hallId,
+      sessionID,
+      hallID: order.hallID,
       seatsPicked: order.seatsPicked,
       bonuses: order.bonuses
     });
+    if (!rowCategories) {
+      loadCategoryCheckboxesByHall(hallID, setRowCategories);
+    }
+    return () => {
+      // TODO - RUN CLEAN RESERVATION FUNCTION
+      Socket.disconnect();
+    };
   }, []);
 
-  const changeHall = (value: any) => {
-    setOrderInfo({
-      sessionId: order.sessionId,
-      hallId: value,
-      seatsPicked: [],
-      bonuses: null
-    });
-  };
-
-  const changeOptions = (key: any) => {
-    const newOptions = Object.assign({}, options, {
+  const changeRowCategory = (key: number): void => {
+    const newCategories = {
+      ...rowCategories,
       [key]: {
-        label: options[key].label,
-        value: !options[key].value
+        label: rowCategories[key].label,
+        value: !rowCategories[key].value
       }
-    });
-    setOptions(newOptions);
+    };
+    setRowCategories(newCategories);
   };
 
-  const handleSeatPick = (e: any) => {
-    if (!timerStarted && startTimerFunc) {
+  const handleSeatPick = async (
+    e: React.BaseSyntheticEvent<HTMLDivElement, MouseEvent>
+  ): Promise<void> => {
+    if (!timerStarted) {
       setTimerStarted(true);
-      startTimerFunc();
     }
-    const { seatsPicked } = order;
     const pickedRow = +e.target.dataset.row;
     const pickedSeat = +e.target.dataset.seat;
-    const free = e.target.dataset.free === 'true';
     const price = +e.target.dataset.price;
-    if (!pickedRow || !pickedSeat || !free) return;
+    const free = e.target.dataset.free === 'true';
+    if (!pickedRow || !pickedSeat || !free) {
+      return;
+    }
+
+    const { seatsPicked } = order;
     const pickedBefore = seatsPicked.some(
-      (seat: any) => seat.row === pickedRow && seat.seat === pickedSeat
+      item => item.row === pickedRow && item.seat === pickedSeat
     );
-    const newSeatsPicked = pickedBefore
-      ? seatsPicked.filter(
-          (item: any) => !(item.row === pickedRow && item.seat === pickedSeat)
-        )
-      : seatsPicked.concat({
-          row: pickedRow,
-          seat: pickedSeat,
-          price
-        });
-    setOrderInfo({
-      sessionId: order.sessionId,
-      hallId: order.hallId,
-      seatsPicked: newSeatsPicked,
-      bonuses: order.bonuses
+    const isReservationSuccesful = await Socket.toggleReservation(sessionID, {
+      row: pickedRow,
+      seat: pickedSeat
     });
+
+    if (isReservationSuccesful) {
+      const newSeatsPicked = pickedBefore
+        ? seatsPicked.filter(
+            item =>
+              !(
+                item.row === pickedRow &&
+                item.seat === pickedSeat &&
+                item.userID === userID
+              )
+          )
+        : seatsPicked.concat({
+            price,
+            userID,
+            row: pickedRow,
+            seat: pickedSeat
+          });
+
+      setOrderInfo({
+        sessionID: order.sessionID,
+        hallID: order.hallID,
+        seatsPicked: newSeatsPicked,
+        bonuses: order.bonuses
+      });
+    }
   };
 
-  const handleOrderClear = () => {
+  const handleOrderClear = async () => {
+    await Socket.clearReservation(sessionID, order.seatsPicked);
     setOrderInfo({
-      sessionId,
-      hallId: order.hallId,
+      sessionID,
+      hallID: order.hallID,
       seatsPicked: [],
       bonuses: null
     });
@@ -133,57 +157,71 @@ const SeatsContainer = ({
   return (
     <Container>
       <StyledTitle>Seats</StyledTitle>
-      <SeatsMenu
-        onHallChange={changeHall}
-        onOptionsChange={changeOptions}
-        options={options}
-        hallSelected={order.hallId || ''}
-      />
-      {order.hallId && (
-        <Fragment>
-          <SnackbarContext.Consumer>
-            {({ handleSnackbar }: any) => (
-              <OrderStateContainer>
-                <OrderController
-                  handleOrderClear={handleOrderClear}
-                  handleOrderSubmit={() => setModalDisplay(true)}
-                  order={order}
-                  handleSnackbar={handleSnackbar}
-                />
-                <OrderTimer
-                  startTimer={(func: any) => (startTimerFunc = func)}
-                  handleExpire={() => {
-                    setModalDisplay(false);
-                    handleOrderClear();
-                    handleSnackbar('Reservation time expired', 'warning');
-                  }}
-                  handleSnackbar={handleSnackbar}
-                />
-                {isModalDisplayed && (
-                  <OrderConfirmationModal
-                    handleSnackbar={handleSnackbar}
-                    handleClose={() => {
-                      setModalDisplay(false);
-                    }}
-                  />
-                )}
-              </OrderStateContainer>
+      {rowCategories && (
+        <SeatsMenu
+          handleChangeRowCategory={changeRowCategory}
+          rowCategories={rowCategories}
+        />
+      )}
+      <SnackbarContext.Consumer>
+        {({ handleSnackbar }: any) => (
+          <OrderStateContainer>
+            <OrderController
+              handleOrderClear={handleOrderClear}
+              handleOrderSubmit={() => setModalDisplay(true)}
+              order={order}
+              handleSnackbar={handleSnackbar}
+            />
+            <OrderTimer
+              timerStarted={timerStarted}
+              setTimerOff={() => setTimerStarted(false)}
+              handleExpire={(showSnackbar: boolean) => {
+                setModalDisplay(false);
+                setOrderTimeExpired(true);
+                handleOrderClear();
+                if (showSnackbar) {
+                  handleSnackbar('Reservation time expired', 'warning');
+                }
+              }}
+              handleSnackbar={handleSnackbar}
+            />
+            {isModalDisplayed && (
+              <OrderConfirmationModal
+                cinemaID={cinemaID}
+                handleSnackbar={handleSnackbar}
+                handleClose={() => {
+                  setModalDisplay(false);
+                }}
+                setTimerOff={() => setTimerStarted(false)}
+              />
             )}
-          </SnackbarContext.Consumer>
-          <SeatsScheme
-            order={order}
-            options={options}
-            handleSeatPick={handleSeatPick}
-          />
-        </Fragment>
+          </OrderStateContainer>
+        )}
+      </SnackbarContext.Consumer>
+      {rowCategories && (
+        <SeatsScheme
+          hallID={hallID}
+          sessionID={sessionID}
+          order={order}
+          rowCategories={rowCategories}
+          handleSeatPick={handleSeatPick}
+          orderTimeExpired={orderTimeExpired}
+        />
       )}
     </Container>
   );
 };
 
 export default connect(
-  ({ order }: any) => ({
-    order
+  ({
+    order,
+    auth
+  }: {
+    order: OrderReduxType;
+    auth: { isAuth: boolean; isAdmin: boolean; userID: number | null };
+  }) => ({
+    order,
+    userID: auth.userID
   }),
   actions
 )(SeatsContainer);

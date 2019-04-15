@@ -1,25 +1,44 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState } from 'react';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
+
+import authService from '../../services/Auth';
 
 import TextField from '../fields/TextField/TextField';
 import SubmitButton from '../buttons/SubmitButton';
-import { users } from '../../mocks';
 
-const SignUpForm = ({ onSuccess }: any) => {
-  const [values, setValues] = useState({
+interface Props {
+  onSuccess: () => void;
+}
+
+interface InputValues {
+  email: string;
+  username: string;
+  password: string;
+  confirmPassword: string;
+}
+
+interface InputErrors {
+  email: string | null;
+  username: string | null;
+  password: string | null;
+  confirmPassword: string | null;
+}
+
+const SignUpForm: React.FC<Props> = ({ onSuccess }) => {
+  const [values, setValues] = useState<InputValues>({
     email: '',
     username: '',
     password: '',
     confirmPassword: ''
   });
-  const [inputErrors, setInputErrors]: [any, any] = useState({
+  const [inputErrors, setInputErrors] = useState<InputErrors>({
     email: null,
     username: null,
     password: null,
     confirmPassword: null
   });
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setValues({
       ...values,
       [e.target.name]: e.target.value
@@ -30,28 +49,12 @@ const SignUpForm = ({ onSuccess }: any) => {
     });
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ): Promise<void> => {
     e.preventDefault();
-    const { email, username, password, confirmPassword } = values;
-    const user = users.find(
-      user => user.email === email || user.username === username
-    );
-    if (user && user.email === email) {
-      setInputErrors({ ...inputErrors, email: 'Email already in use' });
-    } else if (user && user.username === username) {
-      setInputErrors({ ...inputErrors, username: 'Username already in use' });
-    } else if (password.length < 8) {
-      setInputErrors({
-        ...inputErrors,
-        password: 'Password should have min 8 characters length'
-      });
-    } else if (password !== confirmPassword) {
-      setInputErrors({
-        ...inputErrors,
-        confirmPassword: 'Passwords do not match'
-      });
-    } else {
-      console.log('succesfully signed up');
+    const successMessage = await authService.signUp(values, setInputErrors);
+    if (successMessage) {
       onSuccess();
     }
   };
@@ -66,7 +69,6 @@ const SignUpForm = ({ onSuccess }: any) => {
           type="email"
           value={values.email}
           handleChange={handleChange}
-          withoutSuggestions={true}
         />
         <TextField
           name="username"
@@ -74,7 +76,6 @@ const SignUpForm = ({ onSuccess }: any) => {
           error={!!inputErrors.username}
           value={values.username}
           handleChange={handleChange}
-          withoutSuggestions={true}
         />
         <TextField
           name="password"
@@ -83,7 +84,6 @@ const SignUpForm = ({ onSuccess }: any) => {
           type="password"
           value={values.password}
           handleChange={handleChange}
-          withoutSuggestions={true}
         />
         <TextField
           name="confirmPassword"
@@ -92,7 +92,6 @@ const SignUpForm = ({ onSuccess }: any) => {
           type="password"
           value={values.confirmPassword}
           handleChange={handleChange}
-          withoutSuggestions={true}
         />
         <SubmitButton
           text="Sign up"

@@ -2,47 +2,70 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PersonIcon from '@material-ui/icons/Person';
 
-import actions from '../../redux/actions/index';
+import actions from '../../redux/actions';
+import authService from '../../services/Auth';
+
 import RadioFieldGroup from '../fields/RadioFieldGroup';
 import TextField from '../fields/TextField/TextField';
 import SubmitButton from '../buttons/SubmitButton';
-import { users } from '../../mocks';
 
-const SignInForm = ({ signIn, onSuccess }: any) => {
-  const [signInWith, setSignInWith] = useState('email');
-  const [values, setValues] = useState({
-    email: 'client@mail.com',
+interface Props {
+  signIn: any;
+  onSuccess: () => void;
+}
+
+interface InputErrors {
+  email: string | null;
+  username: string | null;
+  password: string | null;
+}
+
+interface InputValues {
+  email: string;
+  username: string;
+  password: string;
+}
+
+const SignInForm: React.FC<Props> = ({ signIn, onSuccess }) => {
+  const [signInWith, setSignInWith] = useState<string>('email');
+  const [values, setValues] = useState<InputValues>({
+    email: '',
     username: '',
-    password: 'Password123'
+    password: ''
+  });
+  const [inputErrors, setInputErrors] = useState<InputErrors>({
+    email: null,
+    username: null,
+    password: null
   });
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setValues({
       ...values,
       [e.target.name]: e.target.value
     });
+    setInputErrors({
+      ...inputErrors,
+      [e.target.name]: null
+    });
   };
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (
+    e: React.ChangeEvent<HTMLFormElement>
+  ): Promise<void> => {
     e.preventDefault();
-    const { email, username, password } = values;
-    const user = users.find(
-      user => user.email === email || user.username === username
-    );
-    if (!user) {
-      console.error('user not found');
-    } else if (user.password !== password) {
-      console.error('wrong password');
-    } else {
-      const result = await signIn(values);
+    const data = await authService.signIn(values, setInputErrors);
+    if (data) {
+      const result = await signIn(data);
       if (result) {
-        console.log('succesfully signed in');
         onSuccess();
       }
     }
   };
 
-  const handleToggleSignInWith = (e: any) => {
+  const handleToggleSignInWith = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ): void => {
     const { value } = e.target;
     let targetToClear;
     switch (value) {
@@ -59,6 +82,11 @@ const SignInForm = ({ signIn, onSuccess }: any) => {
     setValues({
       ...values,
       [targetToClear as string]: ''
+    });
+    setInputErrors({
+      email: null,
+      username: null,
+      password: null
     });
   };
 
@@ -82,29 +110,29 @@ const SignInForm = ({ signIn, onSuccess }: any) => {
       {signInWith === 'email' && (
         <TextField
           name="email"
-          label="Email"
+          label={inputErrors.email || 'Email'}
+          error={!!inputErrors.email}
           type="email"
           value={values.email}
           handleChange={handleChange}
-          withoutSuggestions={true}
         />
       )}
       {signInWith === 'username' && (
         <TextField
           name="username"
-          label="Username"
+          label={inputErrors.username || 'Username'}
+          error={!!inputErrors.username}
           value={values.username}
           handleChange={handleChange}
-          withoutSuggestions={true}
         />
       )}
       <TextField
         name="password"
-        label="Password"
+        label={inputErrors.password || 'Password'}
+        error={!!inputErrors.password}
         type="password"
         value={values.password}
         handleChange={handleChange}
-        withoutSuggestions={true}
       />
       <SubmitButton
         text="Sign in"

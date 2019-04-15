@@ -1,13 +1,19 @@
-import { SIGN_IN, SIGN_UP, SIGN_OUT } from './../../constants';
-import api from './../../ApiService';
+import { SIGN_IN, SIGN_OUT } from './../../constants';
+import authService from '../../services/Auth';
+import { UserAPIType } from '../../interfaces/Api';
 
-const signIn = (values: any) => {
+const signIn = (data: UserAPIType): any => {
   try {
     return async (dispatch: any) => {
-      const token = await api.signIn(values);
-      if (!token) throw new Error('cannot get token from api service');
-      dispatch({ type: SIGN_IN, payload: true });
-      sessionStorage.setItem('token', token.toString());
+      const { role, userID, userName } = data;
+      dispatch({
+        type: SIGN_IN,
+        payload: {
+          userID,
+          userName,
+          isAdmin: role === 'admin'
+        }
+      });
       return true;
     };
   } catch (error) {
@@ -18,23 +24,28 @@ const signIn = (values: any) => {
 const signOut = () => {
   try {
     return async (dispatch: any) => {
-      await api.signOut();
+      await authService.signOut();
       dispatch({ type: SIGN_OUT });
-      sessionStorage.removeItem('token');
+      return true;
     };
   } catch (error) {
     console.log(error);
   }
 };
 
-const signUp = () => {};
-
 const validateToken = (token: string) => {
   try {
     return async (dispatch: any) => {
-      const tokenIsValid = await api.validateToken(token);
-      if (tokenIsValid) {
-        dispatch({ type: SIGN_IN, payload: true });
+      const userData = await authService.validateToken(token);
+      if (userData) {
+        dispatch({
+          type: SIGN_IN,
+          payload: {
+            userID: userData.userID,
+            userName: userData.userName,
+            isAdmin: userData.role === 'admin'
+          }
+        });
       }
     };
   } catch (error) {
@@ -44,7 +55,6 @@ const validateToken = (token: string) => {
 
 export default {
   signIn,
-  signUp,
   signOut,
   validateToken
 };

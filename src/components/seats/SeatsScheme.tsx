@@ -1,13 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import api from '../../ApiService';
+import actions from '../../redux/actions';
 import Screen from './elements/Screen';
 import Row from './elements/Row';
 import RowTitle from './elements/RowTitle';
 import SeatItem from './elements/SeatItem';
 import { containerGreyColor } from '../../constants';
+import { OrderReduxType, RowAPIType } from '../../interfaces/Api';
+
+interface Props {
+  rowCategories: any;
+  order: OrderReduxType;
+  handleSeatPick: (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => Promise<void>;
+  seats: {
+    hallID: number;
+    rows: RowAPIType[];
+  };
+  orderTimeExpired: boolean;
+  loadAllSeats: any;
+}
 
 const Container = styled.div`
   position: relative;
@@ -21,38 +36,54 @@ const Container = styled.div`
   overflow-x: scroll;
 `;
 
-const SeatsScheme = ({ options, order, handleSeatPick, seats }: any) => {
-  const { hallId, seatsPicked } = order;
+const SeatsScheme: React.FC<Props> = ({
+  rowCategories,
+  order,
+  handleSeatPick,
+  seats,
+  orderTimeExpired,
+  loadAllSeats
+}) => {
+  useEffect(() => {
+    if (!seats) {
+      loadAllSeats();
+    }
+  }, []);
+  const { seatsPicked } = order;
 
   const renderSeats = () => {
     if (!seats || !seats.rows || !seats.rows.length) {
       return 'No seats found';
     }
     const { rows } = seats;
-    const optionsKeys = Object.keys(options);
-    return rows.map((row: any, rowIndex: number) => {
-      const seatsArr = new Array(row.seats).fill(true);
+    const rowCategoriesKeys = Object.keys(rowCategories);
+    return rows.map((row, rowIndex: number) => {
+      const seatsArr = new Array(row.quantity).fill('row');
       return (
         <Row key={`row-${rowIndex + 1}`} lastInSection={row.lastInSection}>
           <RowTitle row={rowIndex + 1} />
           {seatsArr.map((el, seatIndex) => {
             const isSelected = seatsPicked.some(
-              (item: any) =>
+              item =>
                 item && item.row === rowIndex + 1 && item.seat === seatIndex + 1
             );
             const isMuted =
-              !options[row.category].value &&
-              optionsKeys.some((key: any) => options[key].value);
+              !rowCategories[row['category-id']].value &&
+              rowCategoriesKeys.some((key: string) => rowCategories[key].value);
+            const isReserved =
+              !isSelected &&
+              (orderTimeExpired ||
+                (row.reserved && row.reserved.includes(seatIndex + 1)));
             return (
               <SeatItem
                 key={`seat-${seatIndex + 1}`}
-                category={row.category}
+                categoryId={row['category-id']}
                 row={rowIndex + 1}
                 seat={seatIndex + 1}
                 price={row.price}
                 isSelected={isSelected}
-                isReserved={row.reserved.includes(seatIndex + 1)}
-                isOrdered={row.ordered.includes(seatIndex + 1)}
+                isReserved={isReserved}
+                isOrdered={row.ordered && row.ordered.includes(seatIndex + 1)}
                 isMuted={isMuted && !isSelected}
               />
             );
@@ -70,6 +101,15 @@ const SeatsScheme = ({ options, order, handleSeatPick, seats }: any) => {
   );
 };
 
-export default connect(({ seats, order }: any) => ({
-  seats: seats.find((hallSeats: any) => hallSeats.hallId === order.hallId)
-}))(SeatsScheme);
+const mapStateToProps = ({ seats, auth }: any, ownProps: any) => {
+  const { sessionID } = ownProps;
+  return {
+    seats:
+      seats && seats.find((hallSeats: any) => hallSeats.sessionID === sessionID)
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  actions
+)(SeatsScheme);

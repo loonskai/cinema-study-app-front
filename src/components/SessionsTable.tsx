@@ -1,9 +1,15 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import styled from 'styled-components';
 
+import Session from '../classes/Session';
+import { greyColor, whiteColor, containerGreyColor } from './../constants';
+
 import Loader from '../components/Loader';
 import DefaultButton from './../components/buttons/DefaultButton';
-import { greyColor, whiteColor, containerGreyColor } from './../constants';
+
+interface Props {
+  sessions: Session[];
+}
 
 const Container = styled.div`
   position: relative;
@@ -56,7 +62,7 @@ const WideCell = styled(TableCell)`
   grid-column: 1 / 5;
 `;
 
-const SessionsTable = ({ sessions }: any) => {
+const SessionsTable: React.FC<Props> = ({ sessions }) => {
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -66,7 +72,7 @@ const SessionsTable = ({ sessions }: any) => {
   }, [sessions]);
 
   const getRows = () => {
-    if (!sessions.length) {
+    if (!sessions || !sessions.length) {
       return (
         <TableRow>
           <WideCell>No sessions found</WideCell>
@@ -81,13 +87,13 @@ const SessionsTable = ({ sessions }: any) => {
           <TableCell>Date and time</TableCell>
           <TableCell />
         </TableRow>
-        {sessions.map((session: any) => (
+        {sessions.map(session => (
           <TableRow key={session.id.toString()}>
             <TableCell>
               <span>{session.city}</span>
             </TableCell>
             <TableCell>
-              <span>{session.cinema}</span>
+              <span>{session.cinemaTitle}</span>
             </TableCell>
             <TableCell>
               <CellLine>{session.date}</CellLine>

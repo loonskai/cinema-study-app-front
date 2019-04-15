@@ -8,12 +8,11 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { mainColor } from '../../constants';
 
 interface Props {
-  entity: string;
   id: string;
   label: string;
   type: string;
   value?: Date | string;
-  handleChange: (param: any) => any;
+  handleChange: (param: Date) => void;
 }
 
 const StyledPicker = styled(DatePicker)<any>`

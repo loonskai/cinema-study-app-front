@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import Autosuggest from 'react-autosuggest';
 import parse from 'autosuggest-highlight/parse';
 import MenuItem from '@material-ui/core/MenuItem';
+import styled from 'styled-components';
 
 import * as StyledContainers from './styled';
 import { match } from '../../../helpers/autosuggestHighlightMatch';
 
 interface Props {
-  entity?: string;
   id?: string;
   name?: string;
   label?: string;
@@ -16,11 +16,9 @@ interface Props {
   value?: string | Date;
   disabled?: boolean;
   error?: boolean;
-  handleChange: (param: any) => any;
-  handleSelect?: (param: any) => any;
-  withoutSuggestions?: boolean;
-  movies: any;
-  sessions: any;
+  initialSuggestions?: any;
+  handleChange: (param: any) => void;
+  handleSelect?: (param: any) => void;
 }
 
 function renderInputComponent(inputProps: any) {
@@ -60,18 +58,25 @@ function renderSuggestion(
   const matches = match(suggestion.label, query);
   const parts: Array<{ text: string; highlight: boolean }> =
     matches && parse(suggestion.label, matches);
+
+  const SuggestionItemChar = styled.span`
+    &.highlighted {
+      font-weight: 700;
+    }
+  `;
+
   return (
     <MenuItem selected={isHighlighted} component="div">
       <div>
         {parts.map((part, index: number) =>
           part.highlight ? (
-            <span key={index.toString()} style={{ fontWeight: 'bold' }}>
+            <SuggestionItemChar key={index.toString()} className="highlighted">
               {part.text}
-            </span>
+            </SuggestionItemChar>
           ) : (
-            <strong key={index.toString()} style={{ fontWeight: 'normal' }}>
+            <SuggestionItemChar key={index.toString()}>
               {part.text}
-            </strong>
+            </SuggestionItemChar>
           )
         )}
       </div>
@@ -82,19 +87,15 @@ function renderSuggestion(
 const TextField = ({
   handleChange,
   handleSelect,
-  entity,
   label,
   value,
   type,
   disabled,
   error,
   name,
-  withoutSuggestions = false,
-  movies,
-  sessions
+  initialSuggestions
 }: Props) => {
-  /* Returns in case when we don't need suggestions list */
-  if (withoutSuggestions) {
+  if (!initialSuggestions) {
     return (
       <StyledContainers.Input
         name={name}
@@ -109,41 +110,18 @@ const TextField = ({
     );
   }
 
-  /* Returns in case when we have suggestions list */
-  const [suggestions, setSuggestions]: [any, any] = useState([]);
+  const [relevantSuggestions, setRelevantSuggestions]: [any, any] = useState(
+    []
+  );
 
-  const getSuggestions = (entity: string, value: string): any => {
-    // Get suggestion options depending on props.entity
-    let suggestions;
-    switch (entity) {
-      case 'movie': {
-        suggestions = movies.map((movie: any) => ({
-          label: movie.original_title
-        }));
-        break;
-      }
-      case 'city': {
-        suggestions = Object.keys(
-          sessions.reduce((obj: any, session: any) => {
-            obj[session.city] = true;
-            return obj;
-          }, {})
-        ).map(city => ({ label: city }));
-        break;
-      }
-      default: {
-        suggestions = [];
-        break;
-      }
-    }
-
-    const suggestionsFiltered = suggestions.filter((suggestion: any) =>
+  const getSuggestions = (initialSuggestions: any, value: string): any => {
+    const suggestionsFiltered = initialSuggestions.filter((suggestion: any) =>
       suggestion.label.toLowerCase().includes(value)
     );
     return suggestionsFiltered.length ? suggestionsFiltered : [null];
   };
 
-  const handleSuggestionsFetchRequested = (entity: any) => (obj: {
+  const handleSuggestionsFetchRequested = (suggestions: any) => (obj: {
     value: string;
     reason: string;
   }) => {
@@ -152,15 +130,17 @@ const TextField = ({
     if (!inputValue) {
       return;
     }
-    setSuggestions(getSuggestions(entity, inputValue));
+    setRelevantSuggestions(getSuggestions(suggestions, inputValue));
   };
 
-  const handleSuggestionClearRequested = () => setSuggestions([]);
+  const handleSuggestionClearRequested = () => setRelevantSuggestions([]);
 
   const autosuggestProps = {
     renderInputComponent,
-    suggestions,
-    onSuggestionsFetchRequested: handleSuggestionsFetchRequested(entity),
+    suggestions: relevantSuggestions,
+    onSuggestionsFetchRequested: handleSuggestionsFetchRequested(
+      initialSuggestions
+    ),
     onSuggestionsClearRequested: handleSuggestionClearRequested,
     getSuggestionValue,
     renderSuggestion
@@ -175,9 +155,9 @@ const TextField = ({
           value: value as string,
           disabled,
           onChange: (
-            e: React.FormEvent<HTMLInputElement>,
+            e: React.ChangeEvent<HTMLInputElement>,
             { newValue }: { newValue: string }
-          ) => {
+          ): void => {
             handleChange(newValue);
           }
         }}
@@ -203,6 +183,4 @@ const TextField = ({
   );
 };
 
-export default connect(({ movies, sessions }: any) => ({ movies, sessions }))(
-  TextField
-);
+export default connect(({ movies }: any) => ({ movies }))(TextField);

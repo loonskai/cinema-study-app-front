@@ -4,9 +4,29 @@ import styled from 'styled-components';
 import SearchIcon from '@material-ui/icons/Search';
 
 import actions from '../../redux/actions';
+import Session from '../../classes/Session';
+import {
+  loadCinemaByCityOptions,
+  loadTimeOptions,
+  loadCitySuggestions,
+  loadHallsByCinemaOptions
+} from '../../helpers/loadSelectOptions';
+
+import SessionsTable from '../SessionsTable';
 import FieldContainer from '../fields/FieldContainer';
 import SubmitButton from '../buttons/SubmitButton';
-import SessionsTable from '../SessionsTable';
+
+interface Props {
+  loadSessionsList: (dispatch?: any) => Promise<void>;
+  movieID: number;
+  sessions: Session[];
+  initialValues: {
+    city?: string;
+    cinema?: string;
+    hall?: string;
+    date?: Date;
+  };
+}
 
 const Container = styled.div`
   display: flex;
@@ -23,30 +43,49 @@ const StyledForm = styled.form`
   width: 100%;
 `;
 
-const SearchSessionForm = ({
+const SearchSessionForm: React.FC<Props> = ({
+  movieID,
   loadSessionsList,
-  loadCinemasByCity,
   sessions,
   initialValues
-}: any) => {
+}) => {
+  const [date, setDate] = useState(initialValues.date);
+  const [hall, setHall] = useState(initialValues.hall);
   const [citySelected, setCitySelected] = useState(initialValues.city);
   const [cityTyped, setCityTyped] = useState(initialValues.city);
   const [cinema, setCinema] = useState(initialValues.cinema);
-  const [date, setDate] = useState(initialValues.date);
-  const [time, setTime] = useState(initialValues.time);
   const [buttonDisabled, setButtonDisabled] = useState(true);
   const [displaySessionsTable, setDisplaySessionsTable] = useState(false);
+
+  const [timeOptions, setTimeOptions] = useState(null);
+  const [citySuggestions, setCitySuggestions] = useState(null);
+  const [cinemaOptions, setCinemaOptions] = useState(null);
+  const [hallOptions, setHallOptions] = useState(null);
 
   useEffect(() => {
     // If we come from main page search
     if (initialValues.city) {
-      loadSessionsList();
+      loadSessionsList({
+        cinema: initialValues.cinema,
+        city: initialValues.city,
+        'hall-id': initialValues.hall,
+        'movie-id': movieID,
+        date: initialValues.date
+      });
       setDisplaySessionsTable(true);
     }
 
+    if (!timeOptions) {
+      loadTimeOptions(setTimeOptions);
+    }
+
+    if (!citySuggestions) {
+      loadCitySuggestions(setCitySuggestions);
+    }
+
     if (citySelected) {
+      loadCinemaByCityOptions(citySelected, setCinemaOptions);
       setButtonDisabled(false);
-      loadCinemasByCity(citySelected);
     } else {
       setCinema('');
     }
@@ -55,11 +94,25 @@ const SearchSessionForm = ({
       setCitySelected('');
       setCinema('');
     }
-  }, [cityTyped, citySelected]);
 
-  const handleSubmit = (e: any) => {
+    if (cinema) {
+      loadHallsByCinemaOptions(cinema, setHallOptions);
+    } else {
+      setHall('');
+    }
+  }, [cityTyped, citySelected, cinema, hall, timeOptions]);
+
+  const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    loadSessionsList();
+    const params = {
+      date,
+      cinema,
+      city: citySelected,
+      'movie-id': movieID,
+      'hall-id': hall
+    };
+    console.log('params', params);
+    loadSessionsList(params);
     setDisplaySessionsTable(true);
   };
 
@@ -70,36 +123,40 @@ const SearchSessionForm = ({
         <FieldContainer
           id="city"
           type="text"
-          entity="city"
+          icon="city"
           label="City"
           value={citySelected === cityTyped ? citySelected : cityTyped}
           handleChange={setCityTyped}
           handleSelect={setCitySelected}
+          initialSuggestions={citySuggestions}
         />
         <FieldContainer
           id="cinema"
           type="select"
-          entity="cinema"
+          options={cinemaOptions}
+          icon="cinema"
           label="Cinema"
           value={cinema}
-          handleChange={setCinema}
+          handleChange={(value: string) => setCinema(value)}
           disabled={!citySelected}
+        />
+        <FieldContainer
+          id="hall"
+          type="select"
+          icon="hall"
+          label="Hall"
+          value={hall}
+          options={hallOptions}
+          handleChange={(value: string) => setHall(value)}
+          disabled={!cinema}
         />
         <FieldContainer
           id="date"
           type="date"
-          entity="date"
+          icon="date"
           label="Date"
           value={date}
           handleChange={setDate}
-        />
-        <FieldContainer
-          id="time"
-          type="select"
-          entity="time"
-          label="Time"
-          value={time}
-          handleChange={setTime}
         />
         <SubmitButton
           text="Search"
@@ -113,15 +170,15 @@ const SearchSessionForm = ({
 };
 
 const mapStateToProps = (state: any, initialProps: any) => {
-  const { sessions } = state;
-  const { movieId } = initialProps;
+  const { sessions }: { sessions: Session[] } = state;
+  const { movieID } = initialProps;
   return {
     sessions:
-      sessions && sessions.filter((session: any) => session.movieId === movieId)
+      sessions && sessions.filter(session => session.movieID === movieID)
   };
 };
 
 export default connect(
   mapStateToProps,
   actions
-)(SearchSessionForm);
+)(SearchSessionForm as any);

@@ -1,12 +1,20 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
 
-import api from '../ApiService';
+import Movie from '../classes/Movie';
+import movieService from '../services/Movie';
+
 import Loader from '../components/Loader';
 import PageTitle from '../components/PageTitle';
 import SearchSessionForm from '../components/forms/SearchSessionForm';
 import StyledPoster from '../components/pictures/StyledPoster';
+
+interface MatchExended {
+  params: {
+    id: string;
+  };
+}
 
 const MovieInfoContainer = styled.div`
   display: flex;
@@ -24,49 +32,45 @@ const StyledDescription = styled.div`
   }
 `;
 
-const MovieSingle = ({ match, location }: any) => {
-  const [movie, setMovie]: [any, any] = useState({});
-  const [isLoading, setLoading] = useState(true);
+const MovieSingle: React.FC<RouteComponentProps> = ({ match, location }) => {
+  const matchExtended: MatchExended = match as any;
+  const [movie, setMovie] = useState<Movie | null>(null);
+  const [isLoading, setLoading] = useState<boolean>(true);
   const [searchValues, setSearchValues] = useState({
     city: '',
     cinema: '',
-    date: new Date(),
-    time: ''
+    hall: '',
+    date: new Date()
   });
 
-  const loadData = async (id: string) => {
-    const movieLoaded = await api.loadMovieById(id);
-    setMovie(movieLoaded);
-    setLoading(false);
-  };
-
   useEffect(() => {
-    loadData(match.params.id);
+    if (!movie) {
+      movieService.getById(matchExtended.params.id, setMovie);
+      setLoading(false);
+    }
     const { state: locationState } = location;
     if (locationState) {
       setSearchValues({
         city: locationState.city || searchValues.city,
         cinema: locationState.cinema || searchValues.cinema,
-        date: locationState.date || searchValues.date,
-        time: locationState.time || searchValues.time
+        hall: locationState.hall || searchValues.hall,
+        date: locationState.date || searchValues.date
       });
     }
   }, []);
 
+  const { title = '', poster = '', overview = '' } = movie || {};
   return isLoading ? (
     <Loader />
   ) : (
     <Fragment>
-      <PageTitle text={movie.original_title} />
+      <PageTitle text={title} />
       <MovieInfoContainer>
-        <StyledPoster
-          src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-          alt={movie.original_title}
-        />
+        <StyledPoster src={poster} alt={title} />
         <StyledDescription>
-          <div>{movie.overview}</div>
+          <div>{overview}</div>
           <SearchSessionForm
-            movieId={+match.params.id}
+            movieID={+matchExtended.params.id}
             initialValues={searchValues}
           />
         </StyledDescription>

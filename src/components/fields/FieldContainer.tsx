@@ -3,18 +3,20 @@ import styled from 'styled-components';
 import Grid from '@material-ui/core/Grid';
 import LocalMovies from '@material-ui/icons/LocalMovies';
 import LocationCity from '@material-ui/icons/LocationCity';
+import Store from '@material-ui/icons/Store';
 import Weekend from '@material-ui/icons/Weekend';
 import Search from '@material-ui/icons/Search';
 import AccessTime from '@material-ui/icons/AccessTime';
 import CalendarToday from '@material-ui/icons/CalendarToday';
 
+import { mainDarkColor, greyColor } from '../../constants';
+
 import TextField from './TextField/TextField';
 import SelectField from './SelectField/SelectField';
 import DateField from './DateField';
-import { mainDarkColor, greyColor } from '../../constants';
 
 interface Props {
-  entity: string;
+  options?: any;
   handleChange: (data: any) => any;
   handleSelect?: (data: any) => any;
   id: string;
@@ -23,7 +25,7 @@ interface Props {
   disabled?: boolean;
   value?: string | Date;
   icon?: string;
-  withoutSuggestions?: boolean;
+  initialSuggestions?: any;
 }
 
 const getField = (props: Props) => {
@@ -52,6 +54,8 @@ const FieldContainer = (props: Props) => {
       case 'city':
         return <LocationCity fontSize="large" {...other} />;
       case 'cinema':
+        return <Store fontSize="large" {...other} />;
+      case 'hall':
         return <Weekend fontSize="large" {...other} />;
       case 'date':
         return <CalendarToday fontSize="large" {...other} />;
@@ -76,7 +80,7 @@ const FieldContainer = (props: Props) => {
       alignItems="center"
     >
       <Grid item={true}>
-        <IconStyled icon={props.icon || props.entity} />
+        <IconStyled icon={props.icon} />
       </Grid>
       <Grid item={true} lg={gridInputWidth}>
         {getField(props)}

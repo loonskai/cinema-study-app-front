@@ -1,10 +1,11 @@
-import React, { createContext, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import Root from './Root';
+import { whiteColor, containerGreyColor } from './constants';
+
+import Router from './Router';
 import Header from './components/Header';
 import PopUpSnackbar from './components/PopUpSnackbar';
-import { whiteColor, containerGreyColor } from './constants';
 
 const Container = styled.div`
   position: relative;
@@ -30,7 +31,17 @@ const ContentContainer = styled.div`
   }
 `;
 
-export const SnackbarContext = React.createContext({});
+interface SnackbarState {
+  isOpen: boolean;
+  variant: string;
+  message: string;
+}
+
+interface SnackbarProviderStore {
+  handleSnackbar: (message: string, variant: string) => void;
+}
+
+export const SnackbarContext = React.createContext({} as SnackbarProviderStore);
 
 const snackbarStateDefault = {
   isOpen: false,
@@ -38,10 +49,12 @@ const snackbarStateDefault = {
   message: ''
 };
 
-const Layout = () => {
-  const [snackbar, setSnackbarInfo] = useState(snackbarStateDefault);
+const Layout: React.FC = () => {
+  const [snackbar, setSnackbarInfo] = useState<SnackbarState>(
+    snackbarStateDefault
+  );
 
-  const handleSnackbar = (message: string, variant: string) => {
+  const handleSnackbar = (message: string, variant: string): void => {
     setSnackbarInfo({
       isOpen: true,
       variant,
@@ -62,7 +75,7 @@ const Layout = () => {
       <Header />
       <ContentContainer>
         <SnackbarContext.Provider value={{ handleSnackbar }}>
-          <Root />
+          <Router />
         </SnackbarContext.Provider>
       </ContentContainer>
     </Container>

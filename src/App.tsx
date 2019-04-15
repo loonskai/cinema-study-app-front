@@ -8,20 +8,25 @@ import store from './redux/store';
 import actions from './redux/actions';
 import Layout from './Layout';
 
-const App = ({
+interface Props {
+  validateToken: (token: string) => boolean;
+  loadAllSeats: (dispatch?: any) => Promise<void>;
+  loadMoviesList: (dispatch?: any) => Promise<void>;
+  loadSessionsList: (dispatch?: any) => Promise<void>;
+}
+
+const App: React.FC<Props> = ({
   validateToken,
-  loadAllSeats,
   loadMoviesList,
   loadSessionsList
-}: any) => {
+}) => {
   useEffect(() => {
-    const token = sessionStorage.getItem('token');
+    const token: string | null = sessionStorage.getItem('accessToken');
     if (token) {
       validateToken(token);
     }
     loadMoviesList();
     loadSessionsList();
-    loadAllSeats();
   }, []);
 
   return (
@@ -36,7 +41,7 @@ const App = ({
 const ConnectedApp = connect(
   null,
   actions
-)(App);
+)(App as any);
 
 ReactDOM.render(
   <Provider store={store}>

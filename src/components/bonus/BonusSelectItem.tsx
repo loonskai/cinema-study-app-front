@@ -3,8 +3,9 @@ import styled from 'styled-components';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 
-import RoundButton from '../buttons/RoundButton';
 import { addButtonColor, removeButtonColor, greyColor } from '../../constants';
+
+import RoundButton from '../buttons/RoundButton';
 
 const Container = styled.div`
   display: flex;
@@ -25,13 +26,9 @@ const BonusController = styled.div`
 const ValueContainer = styled.div``;
 
 const BonusSelectItem = ({ bonus, handleBonusesUpdate, value }: any) => {
-  const bonusKey = Object.keys(bonus)[0];
-  const bonusTitle =
-    Object.keys(bonus)[0]
-      .charAt(0)
-      .toUpperCase() +
-    bonusKey.slice(1) +
-    ` ($${bonus[bonusKey].price})`;
+  const bonusTitle = `${bonus.title.charAt(0).toUpperCase()}${bonus.title.slice(
+    1
+  )} ($${bonus.price})`;
 
   const handleBonusClick = (type: string) => {
     handleBonusesUpdate(type, bonus);

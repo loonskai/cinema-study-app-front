@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import HistorySectionTabs from './HistorySectionTabs';
+import Order from '../../classes/Order';
 import { greyColor, whiteColor, containerGreyColor } from '../../constants';
+
+import HistorySectionTabs from './HistorySectionTabs';
+
+interface Props {
+  orders: Order[] | null;
+}
 
 const Container = styled.div`
   width: 100%;
@@ -47,41 +53,60 @@ const TextRow = styled.div`
   margin-bottom: 0.3rem;
 `;
 
-const HistorySection = ({ orders }: any) => {
-  console.log('orders', orders);
+const HistorySection: React.FC<Props> = ({ orders }) => {
   const [tabSelected, setTebSelected] = useState('upcoming');
 
-  const handleTabSelect = (e: any) => {
-    const { name }: { name: string } = e.target.dataset;
-    if (tabSelected === name) return;
+  const handleTabSelect = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const { name } = e.target.dataset;
+    if (tabSelected === name) {
+      return;
+    }
     switch (name) {
       case 'upcoming':
       case 'past': {
         setTebSelected(name);
       }
       default:
-        return null;
+        return;
     }
   };
 
+  const filterOrdersOnDate = () => {
+    const now = new Date();
+    const filteredOrders =
+      orders &&
+      orders.filter(order => {
+        switch (tabSelected) {
+          case 'upcoming':
+            return order.session.dateOriginalFormat >= now;
+          case 'past':
+            return order.session.dateOriginalFormat < now;
+          default:
+            return false;
+        }
+      });
+    return filteredOrders;
+  };
+
   const renderOrders = () => {
-    const ordersToRender = orders[tabSelected];
-    if (!ordersToRender) return 'Nothing found';
-    return ordersToRender.map((order: any, index: number) => {
+    const ordersToRender = orders && filterOrdersOnDate();
+    if (!ordersToRender) {
+      return 'Nothing found';
+    }
+    return ordersToRender.map((order, index: number) => {
       return (
         <OrderContainer
           key={index.toString()}
           isRelevant={tabSelected === 'upcoming'}
         >
           <MainTextRow>
-            {order.city}, {order.cinema} cinema
+            {order.cinema.city}, {order.cinema.title} cinema
           </MainTextRow>
           <MainTextRow>
-            {order.date}, {order.time}
+            {order.session.date}, {order.session.time}
           </MainTextRow>
           <TextRow>Movie: {order.movie.title}</TextRow>
-          <TextRow>Tickets amount: {order.order.length}</TextRow>
-          <TextRow>Total price: ${order.totalPrice}</TextRow>
+          <TextRow>Tickets amount: {order.seats.length}</TextRow>
         </OrderContainer>
       );
     });

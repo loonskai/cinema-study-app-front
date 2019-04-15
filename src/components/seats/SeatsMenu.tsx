@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
-import SelectField from '../fields/SelectField/SelectField';
 import { greyColor, whiteColor, mainColor } from '../../constants';
 
 const Container = styled.div`
@@ -33,29 +32,26 @@ const StyledCheckbox = styled(Checkbox)<any>`
   }
 `;
 
-const SeatsMenu = ({
-  onHallChange,
-  onOptionsChange,
-  options,
-  hallSelected
-}: any) => {
-  const renderOptions = (options: any) => {
-    const keys = Object.keys(options);
-    if (!options || !keys.length) return 'No options';
+const SeatsMenu = ({ handleChangeRowCategory, rowCategories }: any) => {
+  const renderCategoriesCheckboxes = (rowCategories: any) => {
+    const keys = Object.keys(rowCategories);
+    if (!rowCategories || !keys.length) {
+      return 'No options';
+    }
     return keys.map(key => (
       <FormControlLabel
         key={key}
         control={
           <StyledCheckbox
-            checked={options[key].value}
+            checked={rowCategories[key].value}
             value={key}
             classes={{ checked: 'checked' }}
-            onChange={(e: any) => {
-              onOptionsChange(e.target.value);
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>): void => {
+              handleChangeRowCategory(e.target.value);
             }}
           />
         }
-        label={options[key].label}
+        label={rowCategories[key].label}
       />
     ));
   };
@@ -63,21 +59,11 @@ const SeatsMenu = ({
   return (
     <Container>
       <Row>
-        <SelectField
-          id="hall"
-          type="select"
-          entity="hall"
-          label="Choose Hall"
-          value={hallSelected}
-          handleChange={onHallChange}
-        />
+        Choose seat options:
+        <CheckboxContainer>
+          {renderCategoriesCheckboxes(rowCategories)}
+        </CheckboxContainer>
       </Row>
-      {hallSelected && (
-        <Row>
-          Choose seat options:
-          <CheckboxContainer>{renderOptions(options)}</CheckboxContainer>
-        </Row>
-      )}
     </Container>
   );
 };

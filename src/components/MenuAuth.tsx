@@ -5,8 +5,10 @@ import styled from 'styled-components';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import UndoIcon from '@material-ui/icons/Undo';
+import SecurityIcon from '@material-ui/icons/Security';
 
 import actions from './../redux/actions/index';
+
 import HeaderButton from './buttons/HeaderButton';
 
 const StyledAuthMenu = styled.div`
@@ -21,24 +23,31 @@ const StyledAccountCircle = styled(AccountCircle)<any>`
   }
 `;
 
+const StyledAdminIcon = styled(SecurityIcon)<any>`
+  && {
+    margin: 0 0.5rem;
+    cursor: pointer;
+  }
+`;
+
 const MenuAuth = (props: any) => {
-  const { isAuth, signOut } = props;
+  const { isAuth, isAdmin, signOut } = props;
 
   const handleSignOut = async () => {
     await signOut();
-    console.log('succesfully signed out');
     props.history.push('/auth');
   };
 
-  const handleProfileRedirect = () => {
-    props.history.push('/profile');
-  };
+  const handleProfileRedirect = () => props.history.push('/profile');
+
+  const handleAdminRedirect = () => props.history.push('/admin');
 
   return (
     <StyledAuthMenu>
       {isAuth ? (
         <React.Fragment>
           <StyledAccountCircle onClick={handleProfileRedirect} />
+          {isAdmin && <StyledAdminIcon onClick={handleAdminRedirect} />}
           <HeaderButton
             text="Sign Out"
             icon={<UndoIcon />}
@@ -54,7 +63,8 @@ const MenuAuth = (props: any) => {
 
 const mapStateToProps = ({ auth }: any) => {
   return {
-    isAuth: auth.isAuth
+    isAuth: auth.isAuth,
+    isAdmin: auth.isAdmin
   };
 };
 

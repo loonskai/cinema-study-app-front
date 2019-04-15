@@ -1,12 +1,18 @@
 import { LOAD_ALL_SEATS } from './../../constants';
-
-import api from '../../ApiService';
+import sessionService from '../../services/Session';
 
 const loadAllSeats = () => {
   return async (dispatch: any) => {
-    const seats = await api.loadAllSeats();
-    if (seats) {
-      dispatch({ type: LOAD_ALL_SEATS, payload: seats });
+    const sessions = await sessionService.getAll({});
+    const seatsData =
+      sessions &&
+      sessions.map(session => ({
+        sessionID: session.id,
+        hallID: session.hallID,
+        rows: session.rows.sort((row1, row2) => +row1.id - +row2.id)
+      }));
+    if (seatsData) {
+      dispatch({ type: LOAD_ALL_SEATS, payload: seatsData });
     }
   };
 };

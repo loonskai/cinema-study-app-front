@@ -1,4 +1,6 @@
-export default (order: any) => {
+import { OrderReduxType } from '../interfaces/Api';
+
+export default (order: OrderReduxType): number => {
   const { seatsPicked, bonuses } = order;
 
   const bonusesPrice = bonuses
@@ -8,7 +10,7 @@ export default (order: any) => {
     : 0;
 
   const seatsPrice = seatsPicked.reduce(
-    (sum: number, seat: any) => seat.price + sum,
+    (sum: number, seat) => (seat.price ? seat.price + sum : 0),
     0
   );
   return bonusesPrice + seatsPrice;

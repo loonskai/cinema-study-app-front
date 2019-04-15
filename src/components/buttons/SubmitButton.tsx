@@ -9,6 +9,7 @@ interface Props {
   handleClick?: (e: React.FormEvent<HTMLInputElement>) => void;
   disabled: boolean;
   icon: any;
+  withoutContainer?: boolean;
 }
 
 const Container = styled.div`
@@ -31,8 +32,8 @@ const StyledButton = styled(Button)<any>`
   }
 `;
 
-const SubmitButton = ({ text, disabled, icon }: Props) => (
-  <Container>
+const SubmitButton = ({ text, disabled, icon, withoutContainer }: Props) => {
+  const button = (
     <StyledButton
       variant="contained"
       color="primary"
@@ -42,7 +43,9 @@ const SubmitButton = ({ text, disabled, icon }: Props) => (
       {icon}
       {text}
     </StyledButton>
-  </Container>
-);
+  );
+
+  return withoutContainer ? button : <Container>{button}</Container>;
+};
 
 export default SubmitButton;
