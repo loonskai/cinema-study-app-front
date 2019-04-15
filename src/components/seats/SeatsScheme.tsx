@@ -14,13 +14,12 @@ interface Props {
   rowCategories: any;
   order: OrderReduxType;
   handleSeatPick: (
-    e: React.BaseSyntheticEvent<HTMLDivElement, MouseEvent>
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => Promise<void>;
   seats: {
     hallID: number;
     rows: RowAPIType[];
   };
-  userID: number | null;
   orderTimeExpired: boolean;
   loadAllSeats: any;
 }
@@ -42,7 +41,6 @@ const SeatsScheme: React.FC<Props> = ({
   order,
   handleSeatPick,
   seats,
-  userID,
   orderTimeExpired,
   loadAllSeats
 }) => {
@@ -106,7 +104,6 @@ const SeatsScheme: React.FC<Props> = ({
 const mapStateToProps = ({ seats, auth }: any, ownProps: any) => {
   const { sessionID } = ownProps;
   return {
-    userID: auth.userID,
     seats:
       seats && seats.find((hallSeats: any) => hallSeats.sessionID === sessionID)
   };

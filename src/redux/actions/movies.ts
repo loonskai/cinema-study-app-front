@@ -1,8 +1,5 @@
 import { LOAD_MOVIES_LIST } from './../../constants';
-// import api from './../../ApiService';
 import movieService from '../../services/Movie';
-
-import { ResType, MovieAPIType } from '../../interfaces/Api';
 
 const loadMoviesList = () => {
   try {

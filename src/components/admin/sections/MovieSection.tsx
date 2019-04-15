@@ -5,14 +5,14 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 import Movie from '../../../classes/Movie';
 import movieService from '../../../services/Movie';
-
 import parseFieldsFromEntity from '../../../helpers/parseFieldsFromEntity';
+
 import AdminFormContainer from '../AdminFormContainer';
+import Loader from '../../Loader';
 import ExternalAPIMoviesList from '../elements/ExternalAPIMoviesList';
+import AdminListItem from '../elements/AdminListItem';
 import SubmitButton from '../../buttons/SubmitButton';
 import HeaderButton from '../../buttons/HeaderButton';
-import AdminListItem from '../elements/AdminListItem';
-import Loader from '../../Loader';
 
 const SelectedDataController = styled.form`
   max-width: 220px;

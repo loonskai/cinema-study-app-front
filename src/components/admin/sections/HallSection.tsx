@@ -3,20 +3,19 @@ import AddIcon from '@material-ui/icons/Add';
 
 import Hall from '../../../classes/Hall';
 import { RowItem } from '../elements/NewRowController';
-
 import hallService from '../../../services/Hall';
-
 import {
   loadAllCinemaOptions,
   Option
 } from '../../../helpers/loadSelectOptions';
 import parseFieldsFromEntity from '../../../helpers/parseFieldsFromEntity';
+
 import AdminFormContainer from '../AdminFormContainer';
 import NewRowController from '../elements/NewRowController';
+import AdminListItem from '../elements/AdminListItem';
 import TextField from '../../fields/TextField/TextField';
 import SelectField from '../../fields/SelectField/SelectField';
 import SubmitButton from '../../buttons/SubmitButton';
-import AdminListItem from '../elements/AdminListItem';
 
 const HallSection = ({ handleSnackbar }: any) => {
   const [hallList, setHallList] = useState<Hall[] | null>(null);

@@ -80,8 +80,6 @@ const OrderConfirmationModal: React.FC<Props> = ({
   setTimerOff,
   setOrderInfo
 }) => {
-  const { sessionID, seatsPicked } = order;
-
   const [loadedBonuses, setLoadedBonuses] = useState<Bonus[] | null>(null);
   const { bonuses } = order;
 
@@ -174,7 +172,9 @@ const OrderConfirmationModal: React.FC<Props> = ({
       <ModalWindow>
         <CloseModalButton handleClick={() => handleClose(false)} />
         <TotalPrice>Total price: ${calculateTotalPrice(order)}</TotalPrice>
-        <TicketsAmount>Tickets amount: {seatsPicked.length}</TicketsAmount>
+        <TicketsAmount>
+          Tickets amount: {order.seatsPicked.length}
+        </TicketsAmount>
         {loadedBonuses && bonuses && (
           <BonusContainer
             bonuses={bonuses}

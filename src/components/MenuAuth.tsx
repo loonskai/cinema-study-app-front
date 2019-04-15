@@ -8,6 +8,7 @@ import UndoIcon from '@material-ui/icons/Undo';
 import SecurityIcon from '@material-ui/icons/Security';
 
 import actions from './../redux/actions/index';
+
 import HeaderButton from './buttons/HeaderButton';
 
 const StyledAuthMenu = styled.div`

@@ -11,9 +11,7 @@ export interface AdminListItemType {
 const upperCaseFirstLetter = (word: string) =>
   word[0].toUpperCase() + word.slice(1);
 
-export default (item: {
-  [key: string]: string | number | boolean;
-}): AdminListItemType[] =>
+export default (item: any): AdminListItemType[] =>
   Object.keys(item)
     .filter(
       key =>

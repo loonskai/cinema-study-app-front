@@ -3,13 +3,13 @@ import { RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Session from '../classes/Session';
-import Movie from '../classes/Movie';
 import sessionService from '../services/Session';
+import { containerGreyColor, whiteColor, greyColor } from '../constants';
+
 import Loader from '../components/Loader';
 import PageTitle from '../components/PageTitle';
 import SeatsContainer from '../components/seats/SeatsContainer';
 import StyledPoster from '../components/pictures/StyledPoster';
-import { containerGreyColor, whiteColor, greyColor } from '../constants';
 
 interface MatchExended {
   params: {

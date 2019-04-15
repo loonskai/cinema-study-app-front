@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import AddIcon from '@material-ui/icons/Add';
 
 import Cinema from '../../../classes/Cinema';
-
 import parseFieldsFromEntity from '../../../helpers/parseFieldsFromEntity';
 import cinemaService from '../../../services/Cinema';
+
 import AdminFormContainer from '../AdminFormContainer';
+import AdminListItem from '../elements/AdminListItem';
 import TextField from '../../fields/TextField/TextField';
 import SubmitButton from '../../buttons/SubmitButton';
-import AdminListItem from '../elements/AdminListItem';
 
 interface InputErrors {
   title: string | null;

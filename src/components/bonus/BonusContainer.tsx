@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import Bonus from '../../classes/Bonus';
+
 import BonusSelectItem from './BonusSelectItem';
 
 const Container = styled.div`

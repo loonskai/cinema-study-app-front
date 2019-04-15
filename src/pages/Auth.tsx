@@ -49,12 +49,6 @@ const StyledTab = styled.div<any>`
   padding: 1rem;
 `;
 
-const snackbarStateDefault = {
-  isOpen: false,
-  variant: 'info',
-  message: ''
-};
-
 const Auth: React.FC<Props> = ({ isAuth, location, history }) => {
   const redirectTo =
     (location &&

@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import Movie from '../classes/Movie';
 import actions from './../redux/actions/index';
+
 import PageTitle from './../components/PageTitle';
 import MovieItem from './../components/MovieItem';
 import Loader from './../components/Loader';

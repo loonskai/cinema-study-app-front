@@ -1,7 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import ProtectedRoute from './components/ProtectedRoute';
 import Home from './pages/Home';
 import Movies from './pages/Movies';
 import Auth from './pages/Auth';
@@ -9,6 +8,7 @@ import MovieSingle from './pages/MovieSingle';
 import UserProfile from './pages/UserProfile';
 import Session from './pages/Session';
 import Admin from './pages/Admin';
+import ProtectedRoute from './components/ProtectedRoute';
 
 const Router = () => (
   <Switch>

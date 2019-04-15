@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
+import { TabType } from '../enums';
+
+import { SnackbarContext } from '../Layout';
 import NavPanel from '../components/admin/elements/NavPanel';
 import CinemaSection from '../components/admin/sections/CinemaSection';
 import HallSection from '../components/admin/sections/HallSection';
 import MovieSection from '../components/admin/sections/MovieSection';
 import BonusSection from '../components/admin/sections/BonusSection';
 import SessionSection from '../components/admin/sections/SessionSection';
-import { SnackbarContext } from '../Layout';
-import { TabType } from '../enums';
 
 const Container = styled.div`
   display: flex;

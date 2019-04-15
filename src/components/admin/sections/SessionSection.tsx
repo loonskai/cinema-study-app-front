@@ -3,13 +3,6 @@ import AddIcon from '@material-ui/icons/Add';
 
 import Session from '../../../classes/Session';
 import sessionService from '../../../services/Session';
-import AdminFormContainer from '../AdminFormContainer';
-import TextField from '../../fields/TextField/TextField';
-import SelectField from '../../fields/SelectField/SelectField';
-import DateField from '../../fields/DateField';
-import SubmitButton from '../../buttons/SubmitButton';
-import CategoryPriceInputs from '../elements/CategoryPriceInputs';
-import AdminListItem from '../elements/AdminListItem';
 import {
   loadTimeOptions,
   loadMovieSuggestions,
@@ -18,7 +11,15 @@ import {
   loadHallsByCinemaOptions
 } from '../../../helpers/loadSelectOptions';
 import parseFieldsFromEntity from '../../../helpers/parseFieldsFromEntity';
+
+import AdminFormContainer from '../AdminFormContainer';
+import AdminListItem from '../elements/AdminListItem';
+import CategoryPriceInputs from '../elements/CategoryPriceInputs';
 import { PriceObj } from '../elements/CategoryPriceInputs';
+import TextField from '../../fields/TextField/TextField';
+import SelectField from '../../fields/SelectField/SelectField';
+import DateField from '../../fields/DateField';
+import SubmitButton from '../../buttons/SubmitButton';
 
 const SessionSection = ({ handleSnackbar }: any) => {
   const [sessionsList, setSessionsList] = useState<Session[] | null>(null);

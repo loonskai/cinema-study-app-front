@@ -4,10 +4,11 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Tabs from '@material-ui/core/Tabs';
 
+import { mainDarkColor, mainColor } from './../constants';
+
 import Logo from './Logo';
 import MenuTab from './MenuTab';
 import MenuAuth from './MenuAuth';
-import { mainDarkColor, mainColor } from './../constants';
 
 const StyledAppBar = styled(AppBar)<any>`
   && {

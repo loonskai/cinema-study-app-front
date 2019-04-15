@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Card from '@material-ui/core/Card';
 
 import Movie from '../classes/Movie';
+
 import DefaultButton from './../components/buttons/DefaultButton';
 
 const Container = styled(Card)<any>`

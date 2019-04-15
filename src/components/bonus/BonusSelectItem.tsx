@@ -3,8 +3,9 @@ import styled from 'styled-components';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 
-import RoundButton from '../buttons/RoundButton';
 import { addButtonColor, removeButtonColor, greyColor } from '../../constants';
+
+import RoundButton from '../buttons/RoundButton';
 
 const Container = styled.div`
   display: flex;

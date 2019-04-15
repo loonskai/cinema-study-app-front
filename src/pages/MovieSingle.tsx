@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import Movie from '../classes/Movie';
 import movieService from '../services/Movie';
+
 import Loader from '../components/Loader';
 import PageTitle from '../components/PageTitle';
 import SearchSessionForm from '../components/forms/SearchSessionForm';

@@ -1,5 +1,4 @@
 import { SET_ORDER_INFO } from './../../constants';
-
 import { OrderReduxType } from '../../interfaces/Api';
 
 const setOrderInfo = (order: OrderReduxType) => {

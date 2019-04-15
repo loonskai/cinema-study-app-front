@@ -2,22 +2,23 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import Socket from '../../services/Socket';
-import orderService from '../../services/Order';
 import actions from '../../redux/actions';
 import { OrderReduxType } from '../../interfaces/Api';
+import Socket from '../../services/Socket';
 import { loadCategoryCheckboxesByHall } from '../../helpers/loadSelectOptions';
+
+import { SnackbarContext } from '../../Layout';
 import SeatsMenu from './SeatsMenu';
 import OrderConfirmationModal from './OrderConfirmationModal';
 import OrderController from './OrderController';
 import OrderTimer from './OrderTimer';
 import SeatsScheme from './SeatsScheme';
-import { SnackbarContext } from '../../Layout';
 
 interface Props {
   sessionID: number;
   cinemaID: number;
   hallID: number;
+  userID: number | null;
   order: OrderReduxType;
   setOrderInfo: any;
   loadAllSeats: any;
@@ -112,11 +113,6 @@ const SeatsContainer: React.FC<Props> = ({
     const pickedBefore = seatsPicked.some(
       item => item.row === pickedRow && item.seat === pickedSeat
     );
-    /* API query*/
-    /*     const isReservationSuccesful = await orderService.toggleReservation(
-      sessionID,
-      { row: pickedRow, seat: pickedSeat }
-    ); */
     const isReservationSuccesful = await Socket.toggleReservation(sessionID, {
       row: pickedRow,
       seat: pickedSeat
@@ -149,7 +145,6 @@ const SeatsContainer: React.FC<Props> = ({
   };
 
   const handleOrderClear = async () => {
-    // await orderService.clearReservation(sessionID, order.seatsPicked);
     await Socket.clearReservation(sessionID, order.seatsPicked);
     setOrderInfo({
       sessionID,

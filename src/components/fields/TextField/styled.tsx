@@ -6,7 +6,7 @@ import Paper from '@material-ui/core/Paper';
 import { mainColor, whiteColor } from '../../../constants';
 
 export const Input = styled(initialProps => {
-  /* We can expand InputProps with inputRef if necessary (i.e. for react-autosuggest renderInputComponent method) */
+  // We can expand InputProps with inputRef if necessary (i.e. for react-autosuggest renderInputComponent method)
   const InputProps = {
     classes: {
       root: 'cssOutlinedInput',

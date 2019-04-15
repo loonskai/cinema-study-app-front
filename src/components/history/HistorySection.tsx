@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import Order from '../../classes/Order';
-import HistorySectionTabs from './HistorySectionTabs';
 import { greyColor, whiteColor, containerGreyColor } from '../../constants';
+
+import HistorySectionTabs from './HistorySectionTabs';
 
 interface Props {
   orders: Order[] | null;

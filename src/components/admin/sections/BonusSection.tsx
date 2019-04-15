@@ -7,12 +7,13 @@ import {
   loadAllCinemaOptions,
   Option
 } from '../../../helpers/loadSelectOptions';
-import AdminFormContainer from '../AdminFormContainer';
-import TextField from '../../fields/TextField/TextField';
-import SelectField from '../../fields/SelectField/SelectField';
-import SubmitButton from '../../buttons/SubmitButton';
-import AdminListItem from '../elements/AdminListItem';
 import parseFieldsFromEntity from '../../../helpers/parseFieldsFromEntity';
+
+import AdminFormContainer from '../AdminFormContainer';
+import AdminListItem from '../elements/AdminListItem';
+import SelectField from '../../fields/SelectField/SelectField';
+import TextField from '../../fields/TextField/TextField';
+import SubmitButton from '../../buttons/SubmitButton';
 
 const BonusSection = ({ handleSnackbar }: any) => {
   const [bonusList, setBonusList] = useState<Bonus[] | null>(null);

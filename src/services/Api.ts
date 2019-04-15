@@ -8,7 +8,6 @@ import {
   ResType,
   UserAPIType,
   MovieAPIType,
-  CinemaAPIType,
   BonusAPIType,
   SessionAPIType,
   RowCategoryAPIType,
@@ -74,7 +73,7 @@ class ApiService {
   }
 
   /* CINEMAS */
-  async createCinema(body: CinemaAPIType): Promise<any> {
+  async createCinema(body: any): Promise<any> {
     const res = await this.client.post('http://localhost:5000/cinema', body);
     return res;
   }
@@ -86,7 +85,10 @@ class ApiService {
     return res.data;
   }
 
-  async updateCinema(id: number, body: CinemaAPIType): Promise<any> {
+  async updateCinema(
+    id: number,
+    body: { title: string; city: string }
+  ): Promise<any> {
     const res = await this.client.patch(
       `http://localhost:5000/cinema/${id}`,
       body

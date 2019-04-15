@@ -3,17 +3,18 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import SearchIcon from '@material-ui/icons/Search';
 
-import Session from '../../classes/Session';
 import actions from '../../redux/actions';
+import Session from '../../classes/Session';
 import {
   loadCinemaByCityOptions,
   loadTimeOptions,
   loadCitySuggestions,
   loadHallsByCinemaOptions
 } from '../../helpers/loadSelectOptions';
+
+import SessionsTable from '../SessionsTable';
 import FieldContainer from '../fields/FieldContainer';
 import SubmitButton from '../buttons/SubmitButton';
-import SessionsTable from '../SessionsTable';
 
 interface Props {
   loadSessionsList: (dispatch?: any) => Promise<void>;

@@ -1,4 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react';
+import styled from 'styled-components';
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -7,7 +8,6 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
 import MenuItem from '@material-ui/core/MenuItem';
 import Checkbox from '@material-ui/core/Checkbox';
-import styled from 'styled-components';
 
 import { AdminListItemType } from '../../../helpers/parseFieldsFromEntity';
 import { mainColor } from '../../../constants';
@@ -16,8 +16,8 @@ import UpdateItemButton from '../../buttons/UpdateItemButton';
 
 interface Props {
   handleSnackbar: (message: string, status: string) => void;
-  handleUpdate: (id: number | string, values: any) => any;
-  handleRemove: (id: number | string) => void;
+  handleUpdate: (id: any, values: any) => any;
+  handleRemove: (id: any) => void;
   properties: AdminListItemType[];
   id?: string | number;
 }

@@ -1,5 +1,4 @@
 import { LOAD_ALL_SEATS } from './../../constants';
-
 import sessionService from '../../services/Session';
 
 const loadAllSeats = () => {

@@ -2,6 +2,7 @@ import React, { Fragment, useState } from 'react';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
 import authService from '../../services/Auth';
+
 import TextField from '../fields/TextField/TextField';
 import SubmitButton from '../buttons/SubmitButton';
 

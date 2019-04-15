@@ -9,10 +9,11 @@ import Search from '@material-ui/icons/Search';
 import AccessTime from '@material-ui/icons/AccessTime';
 import CalendarToday from '@material-ui/icons/CalendarToday';
 
+import { mainDarkColor, greyColor } from '../../constants';
+
 import TextField from './TextField/TextField';
 import SelectField from './SelectField/SelectField';
 import DateField from './DateField';
-import { mainDarkColor, greyColor } from '../../constants';
 
 interface Props {
   options?: any;

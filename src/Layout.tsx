@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
+import { whiteColor, containerGreyColor } from './constants';
+
 import Router from './Router';
 import Header from './components/Header';
 import PopUpSnackbar from './components/PopUpSnackbar';
-import { whiteColor, containerGreyColor } from './constants';
 
 const Container = styled.div`
   position: relative;

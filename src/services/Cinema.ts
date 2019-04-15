@@ -11,7 +11,10 @@ interface QueryParams {
 
 export default {
   async create(
-    data: CinemaAPIType,
+    data: {
+      title: string;
+      city: string;
+    },
     errorsSetter: any
   ): Promise<ResType<string>> {
     try {

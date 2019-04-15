@@ -1,6 +1,5 @@
 import apiService from './Api';
 import Bonus from '../classes/Bonus';
-
 import { ResType, BonusAPIType } from '../interfaces/Api';
 import { parseErrorMessage } from '../helpers/parseResponse';
 import defineErrorField from '../helpers/defineErrorField';

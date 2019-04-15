@@ -10,6 +10,7 @@ import {
   loadCinemaByCityOptions,
   loadHallsByCinemaOptions
 } from '../helpers/loadSelectOptions';
+
 import PageTitle from '../components/PageTitle';
 import FieldContainer from '../components/fields/FieldContainer';
 import SubmitButton from '../components/buttons/SubmitButton';

@@ -25,7 +25,7 @@ export const snackbarInfoColor = '#4DBCE9';
 export const goldColor = '#FACA66';
 export const schemeVipSectionBg = '#FEFBAF';
 
-/* redux actions */
+/* Redux actions */
 export const SIGN_IN = 'SIGN_IN';
 export const SIGN_UP = 'SIGN_UP';
 export const SIGN_OUT = 'SIGN_OUT';

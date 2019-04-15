@@ -100,7 +100,7 @@ const CategoryPriceInputs: React.FC<Props> = ({
                   ? prices[category.title].price
                   : ''
               }
-              onChange={prices && handleChange}
+              onChange={prices ? handleChange : undefined}
             />
           </CategoryContainer>
         ))}

@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PersonIcon from '@material-ui/icons/Person';
 
+import actions from '../../redux/actions';
 import authService from '../../services/Auth';
-import actions from '../../redux/actions/index';
+
 import RadioFieldGroup from '../fields/RadioFieldGroup';
 import TextField from '../fields/TextField/TextField';
 import SubmitButton from '../buttons/SubmitButton';

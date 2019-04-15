@@ -2,8 +2,6 @@ import apiService from './Api';
 
 import { SeatItem, OrderAPIType } from '../interfaces/Api';
 import Order from '../classes/Order';
-import { parseErrorMessage } from '../helpers/parseResponse';
-import defineErrorField from '../helpers/defineErrorField';
 
 export interface OrderAPIType {
   sessionID: number;
@@ -11,7 +9,7 @@ export interface OrderAPIType {
   bonuses: {
     id: number;
     quantity: number;
-  };
+  }[];
 }
 
 export default {
@@ -38,7 +36,7 @@ export default {
     }
   },
 
-  async create(order: OrderAPIType): Promise<any> {
+  async create(order: any): Promise<any> {
     try {
       const res = await apiService.createOrder(order);
       return true;

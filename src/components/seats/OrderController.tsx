@@ -3,9 +3,10 @@ import styled from 'styled-components';
 import DeleteIcon from '@material-ui/icons/Delete';
 import LocalGroceryStoreIcon from '@material-ui/icons/LocalGroceryStore';
 
+import calculateTotalPrice from '../../helpers/calculateTotalPrice';
+
 import HeaderButton from '../buttons/HeaderButton';
 import SubmitButton from '../buttons/SubmitButton';
-import calculateTotalPrice from '../../helpers/calculateTotalPrice';
 
 const Container = styled.form`
   padding: 1rem 0;

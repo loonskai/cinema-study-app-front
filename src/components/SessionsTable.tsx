@@ -2,9 +2,10 @@ import React, { Fragment, useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import Session from '../classes/Session';
+import { greyColor, whiteColor, containerGreyColor } from './../constants';
+
 import Loader from '../components/Loader';
 import DefaultButton from './../components/buttons/DefaultButton';
-import { greyColor, whiteColor, containerGreyColor } from './../constants';
 
 interface Props {
   sessions: Session[];
