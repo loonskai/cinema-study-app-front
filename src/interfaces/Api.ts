@@ -10,8 +10,8 @@ export interface ResType<Data> {
 export interface UserAPIType {
   token: string;
   userID: number;
-  user: string;
-  userName: string;
+  email: string;
+  username: string;
   role: 'admin' | 'client';
 }
 

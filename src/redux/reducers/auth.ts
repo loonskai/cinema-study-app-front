@@ -1,3 +1,4 @@
+import { Action } from 'redux';
 import { SIGN_IN, SIGN_OUT } from './../../constants';
 
 export interface AuthState {
@@ -19,7 +20,7 @@ export interface SignInAction {
 
 export interface SignOutAction {
   type: typeof SIGN_OUT;
-  payload: undefined;
+  payload?: undefined;
 }
 
 type AuthActionType = SignInAction | SignOutAction;

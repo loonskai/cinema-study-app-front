@@ -1,17 +1,25 @@
-import { SIGN_IN, SIGN_OUT } from './../../constants';
-import authService from '../../services/Auth';
+import { Dispatch } from 'redux';
+import { ThunkAction } from 'redux-thunk';
+import { AppState } from '../reducers/index';
+import { SignInAction, SignOutAction } from '../reducers/auth';
 import { UserAPIType } from '../../interfaces/Api';
 
-const signIn = (data: UserAPIType): any => {
+import { SIGN_IN, SIGN_OUT } from './../../constants';
+import authService from '../../services/Auth';
+
+const signIn = (
+  data: UserAPIType
+): ThunkAction<void, AppState, null, SignInAction> | undefined => {
   try {
-    return async (dispatch: any) => {
-      const { role, userID, userName } = data;
+    return async (dispatch: Dispatch<SignInAction>): Promise<boolean> => {
+      const { userID, username, role } = data;
       dispatch({
         type: SIGN_IN,
         payload: {
+          isAuth: true,
+          isAdmin: role === 'admin',
           userID,
-          userName,
-          isAdmin: role === 'admin'
+          username
         }
       });
       return true;
@@ -21,9 +29,11 @@ const signIn = (data: UserAPIType): any => {
   }
 };
 
-const signOut = () => {
+const signOut = ():
+  | ThunkAction<void, AppState, null, SignOutAction>
+  | undefined => {
   try {
-    return async (dispatch: any) => {
+    return async (dispatch: Dispatch<SignOutAction>): Promise<boolean> => {
       await authService.signOut();
       dispatch({ type: SIGN_OUT });
       return true;
@@ -33,17 +43,20 @@ const signOut = () => {
   }
 };
 
-const validateToken = (token: string) => {
+const validateToken = (
+  token: string
+): ThunkAction<void, AppState, null, SignInAction> | undefined => {
   try {
-    return async (dispatch: any) => {
+    return async (dispatch: Dispatch<SignInAction>): Promise<void> => {
       const userData = await authService.validateToken(token);
       if (userData) {
         dispatch({
           type: SIGN_IN,
           payload: {
+            isAuth: true,
+            isAdmin: userData.role === 'admin',
             userID: userData.userID,
-            userName: userData.userName,
-            isAdmin: userData.role === 'admin'
+            username: userData.userName
           }
         });
       }

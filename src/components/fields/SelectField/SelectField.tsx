@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 
+import { AppState } from '../../../redux/reducers/index';
+
 import * as StyledContainers from './styled';
 
 interface Props {
@@ -73,4 +75,4 @@ const SelectField = ({
   );
 };
 
-export default connect(({ cinemas }: any) => ({ cinemas }))(SelectField);
+export default connect(({ cinemas }: AppState) => ({ cinemas }))(SelectField);

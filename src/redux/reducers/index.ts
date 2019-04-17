@@ -13,7 +13,7 @@ import order from './order';
 import seats from './seats';
 import cinemas from './cinemas';
 
-export interface ReduxState {
+export interface AppState {
   auth: AuthState;
   movies: Movie[] | null;
   sessions: Session[] | null;
