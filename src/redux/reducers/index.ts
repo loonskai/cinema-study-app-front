@@ -1,5 +1,7 @@
 import { combineReducers } from 'redux';
 
+import { AuthState } from '../reducers/auth';
+
 import { SeatItem } from '../../interfaces/Api';
 import Movie from '../../classes/Movie';
 import Session from '../../classes/Session';
@@ -12,12 +14,7 @@ import seats from './seats';
 import cinemas from './cinemas';
 
 export interface ReduxState {
-  auth: {
-    isAuth: boolean;
-    isAdmin: boolean;
-    userID: number | null;
-    userName: number | null;
-  };
+  auth: AuthState;
   movies: Movie[] | null;
   sessions: Session[] | null;
   order: {
