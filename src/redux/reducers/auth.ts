@@ -1,4 +1,3 @@
-import { Action } from 'redux';
 import { SIGN_IN, SIGN_OUT } from './../../constants';
 
 export interface AuthState {
