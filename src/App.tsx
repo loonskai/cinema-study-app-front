@@ -43,11 +43,13 @@ const ConnectedApp = connect(
   actions
 )(App as any);
 
-ReactDOM.render(
-  <Provider store={store}>
-    <ConnectedApp />
-  </Provider>,
-  document.getElementById('root')
-);
+if (process.env.NODE_ENV !== 'test') {
+  ReactDOM.render(
+    <Provider store={store}>
+      <ConnectedApp />
+    </Provider>,
+    document.getElementById('root')
+  );
+}
 
 export default App;
