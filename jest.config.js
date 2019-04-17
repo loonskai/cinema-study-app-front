@@ -5,6 +5,10 @@ module.exports = {
   },
   testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+  setupFilesAfterEnv: ['<rootDir>/src/setupEnzyme.ts'],
   snapshotSerializers: ['enzyme-to-json/serializer'],
-  setupFilesAfterEnv: ['<rootDir>/src/setupEnzyme.ts']
+  transform: {
+    '^.+\\.tsx?$': 'ts-jest',
+    '^.+\\.svg$': '<rootDir>/src/__test__/transformers/svg.ts'
+  }
 };

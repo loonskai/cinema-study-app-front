@@ -4,7 +4,7 @@
   "description": "Study project",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watch",
+    "test": "jest --no-cache --watch",
     "start": "rm -rf ./node_modules/@types/react-native & webpack-dev-server --content-base ./dist --hot --inline --history-api-fallback --colors --port 3000 --watch-content-base",
     "build": "webpack --config webpack.config.js --watch",
     "lint": "tslint --project tsconfig.json"
@@ -57,6 +57,9 @@
     "uuid": "^3.3.2"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.4.3",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/preset-typescript": "^7.3.3",
     "@types/enzyme": "^3.9.1",
     "@types/enzyme-adapter-react-16": "^1.0.5",
     "@types/jest": "^24.0.11",

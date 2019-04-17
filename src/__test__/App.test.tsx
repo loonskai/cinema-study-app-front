@@ -4,6 +4,13 @@ import App from '../App';
 
 describe('<App />', () => {
   it('renders without crashing', () => {
-    shallow(<App />);
+    shallow(
+      <App
+        validateToken={(str: string) => true}
+        loadAllSeats={async () => {}}
+        loadMoviesList={async () => {}}
+        loadSessionsList={async () => {}}
+      />
+    );
   });
 });
